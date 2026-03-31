@@ -5,27 +5,20 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ─── HERO: Анимация появления строк ───
-
-gsap.to('.hero-badge', {
-    opacity: 1,
-    y: 0,
-    duration: 0.8,
-    delay: 0.3,
-    ease: 'power3.out',
-    onStart: function() {
-        gsap.set('.hero-badge', { opacity: 0, y: 20 });
-    }
-});
+// ─── HERO: Строки появляются одна за другой ───
 
 gsap.set('.hero-badge', { opacity: 0, y: 20 });
+gsap.to('.hero-badge', {
+    opacity: 1, y: 0,
+    duration: 1, delay: 0.3,
+    ease: 'power3.out'
+});
 
 document.querySelectorAll('.hero-line').forEach((line, i) => {
     gsap.to(line, {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        delay: 0.5 + i * 0.15,
+        opacity: 1, y: 0,
+        duration: 1.1,
+        delay: 0.6 + i * 0.18,
         ease: 'power3.out'
     });
 });
@@ -33,14 +26,14 @@ document.querySelectorAll('.hero-line').forEach((line, i) => {
 gsap.set('.hero-sub', { opacity: 0, y: 20 });
 gsap.to('.hero-sub', {
     opacity: 1, y: 0,
-    duration: 0.8, delay: 1.1,
+    duration: 0.9, delay: 1.3,
     ease: 'power3.out'
 });
 
 gsap.set('.hero-btn', { opacity: 0, y: 20 });
 gsap.to('.hero-btn', {
     opacity: 1, y: 0,
-    duration: 0.8, delay: 1.3,
+    duration: 0.9, delay: 1.5,
     ease: 'power3.out'
 });
 
@@ -54,7 +47,7 @@ ScrollTrigger.create({
     onEnterBack: () => document.getElementById('navbar').classList.remove('scrolled')
 });
 
-// ─── FADE-UP: Универсальная анимация появления ───
+// ─── FADE-UP: Универсальная анимация ───
 
 document.querySelectorAll('.fade-up').forEach(el => {
     const delay = parseFloat(el.dataset.delay) || 0;
@@ -67,7 +60,7 @@ document.querySelectorAll('.fade-up').forEach(el => {
             gsap.to(el, {
                 opacity: 1,
                 y: 0,
-                duration: 0.8,
+                duration: 0.9,
                 delay: delay,
                 ease: 'power3.out'
             });
@@ -75,7 +68,41 @@ document.querySelectorAll('.fade-up').forEach(el => {
     });
 });
 
-// ─── СЕРИИ: Автоматическая смена шагов при скролле ───
+// ─── БОЛЬШАЯ ЦИТАТА: Строки появляются с parallax ───
+
+document.querySelectorAll('.quote-line').forEach((line, i) => {
+    gsap.to(line, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.quote-section',
+            start: `top ${75 - i * 8}%`,
+            once: true
+        }
+    });
+});
+
+// ─── TEXT REVEAL: Слова появляются с 3D-вращением ───
+
+document.querySelectorAll('.reveal-word').forEach((word, i) => {
+    gsap.to(word, {
+        opacity: 1,
+        y: 0,
+        rotateX: 0,
+        duration: 1,
+        delay: i * 0.12,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.text-reveal',
+            start: 'top 75%',
+            once: true
+        }
+    });
+});
+
+// ─── СЕРИИ: Pinned с переключением шагов ───
 
 document.querySelectorAll('.series-section').forEach(section => {
     const steps = section.querySelectorAll('.series-step');
@@ -84,7 +111,6 @@ document.querySelectorAll('.series-section').forEach(section => {
 
     if (steps.length <= 1) return;
 
-    // Pinned эффект
     ScrollTrigger.create({
         trigger: section,
         start: 'top top',
@@ -106,10 +132,9 @@ document.querySelectorAll('.series-section').forEach(section => {
                 steps[currentStep].classList.add('active');
                 dots[currentStep].classList.add('active');
 
-                // Анимация текста
                 gsap.fromTo(steps[currentStep],
-                    { opacity: 0, y: 20 },
-                    { opacity: 1, y: 0, duration: 0.4 }
+                    { opacity: 0, y: 24 },
+                    { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
                 );
             }
         }
@@ -150,7 +175,7 @@ if (track) {
     });
 }
 
-// ─── ЦИФРЫ: Counter анимация ───
+// ─── ЦИФРЫ: Counter ───
 
 document.querySelectorAll('.number-value').forEach(el => {
     const target = parseInt(el.dataset.target);
@@ -163,7 +188,7 @@ document.querySelectorAll('.number-value').forEach(el => {
             const obj = { val: 0 };
             gsap.to(obj, {
                 val: target,
-                duration: 2,
+                duration: 2.2,
                 ease: 'power2.out',
                 onUpdate: () => {
                     el.textContent = Math.round(obj.val).toLocaleString('ru-RU');
@@ -173,25 +198,25 @@ document.querySelectorAll('.number-value').forEach(el => {
     });
 });
 
-// ─── SMOOTH: Плавное появление секций при смене dark/light ───
+// ─── PARALLAX: Секции с лёгким движением ───
 
-document.querySelectorAll('.about, .catalog, .buy').forEach(section => {
+gsap.utils.toArray('.about, .catalog, .buy').forEach(section => {
     gsap.fromTo(section,
-        { opacity: 0.8 },
+        { opacity: 0.7 },
         {
             opacity: 1,
-            duration: 0.5,
+            duration: 0.6,
             scrollTrigger: {
                 trigger: section,
-                start: 'top 80%',
-                end: 'top 20%',
+                start: 'top 85%',
+                end: 'top 30%',
                 scrub: true
             }
         }
     );
 });
 
-// ─── PRODUCT CARD: Лёгкий 3D tilt при наведении ───
+// ─── PRODUCT CARD: 3D tilt ───
 
 document.querySelectorAll('.product-card-frame').forEach(card => {
     card.addEventListener('mousemove', (e) => {
@@ -200,28 +225,28 @@ document.querySelectorAll('.product-card-frame').forEach(card => {
         const y = e.clientY - rect.top;
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        const rotateX = (y - centerY) / 20;
-        const rotateY = (centerX - x) / 20;
+        const rotateX = (y - centerY) / 25;
+        const rotateY = (centerX - x) / 25;
 
-        card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
     });
 
     card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(600px) rotateX(0) rotateY(0) scale(1)';
+        card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale(1)';
     });
 });
 
-// ─── КАТАЛОГ КАРТОЧКИ: hover-анимация цветных точек ───
+// ─── КАТАЛОГ: Hover-анимация цветных точек ───
 
 document.querySelectorAll('.catalog-card').forEach(card => {
     card.addEventListener('mouseenter', () => {
         const dots = card.querySelectorAll('.patch-dot');
         dots.forEach((dot, i) => {
             gsap.to(dot, {
-                scale: 1.3,
-                duration: 0.3,
-                delay: i * 0.05,
-                ease: 'back.out(2)'
+                scale: 1.4,
+                duration: 0.4,
+                delay: i * 0.06,
+                ease: 'back.out(3)'
             });
         });
     });
@@ -234,4 +259,17 @@ document.querySelectorAll('.catalog-card').forEach(card => {
     });
 });
 
-console.log('AWS Brand Site loaded');
+// ─── PARALLAX: Сетка hero двигается при скролле ───
+
+gsap.to('.hero-bg-grid', {
+    yPercent: 30,
+    ease: 'none',
+    scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true
+    }
+});
+
+console.log('AWS Brand Site v2 loaded');

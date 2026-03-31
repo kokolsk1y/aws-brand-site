@@ -1,18 +1,18 @@
 /* ============================
    AWS Brand Site — style.css
-   Palette v3: Matte Military
+   Palette v4: AWS Card Green
    ============================ */
 
 :root {
-    --black: #1A231A;        /* угольно-зелёный */
-    --dark: #2D3B2D;         /* хаки тёмный */
-    --gray-900: #3E4F3E;     /* хаки средний */
-    --gray-600: #6B7D6B;     /* приглушённый хаки */
-    --gray-400: #99A899;     /* мягкий зелёно-серый */
-    --gray-200: #CDD4CD;     /* светлый хаки */
-    --gray-100: #F2F0EB;     /* серо-бежевый */
-    --white: #E8E5DF;        /* тёплый серый */
-    --accent: #B8963E;       /* бронза/старое золото */
+    --black: #1B3A12;        /* глубокий тёмно-зелёный */
+    --dark: #266B1A;         /* тёмный зелёный (из логотипа) */
+    --gray-900: #3A8A2A;     /* насыщенный зелёный */
+    --gray-600: #6AAF4E;     /* средний зелёный */
+    --gray-400: #9ECC88;     /* светло-зелёный приглушённый */
+    --gray-200: #D2E8C6;     /* пастельный зелёный */
+    --gray-100: #F0F6EC;     /* почти белый с зеленцой */
+    --white: #FFFFFF;        /* чистый белый */
+    --accent: #78B44B;       /* фирменный зелёный AWS (с карточки) */
 
     --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-serif: 'Playfair Display', Georgia, serif;
@@ -64,14 +64,14 @@ body {
     padding: 20px 40px;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    background: rgba(26,35,26,0.7);
+    background: rgba(27,58,18,0.7);
     border-bottom: 1px solid rgba(255,255,255,0.05);
     transition: all 0.4s ease;
 }
 
 .navbar.scrolled {
     padding: 14px 40px;
-    background: rgba(26,35,26,0.95);
+    background: rgba(27,58,18,0.95);
 }
 
 .nav-logo {
@@ -145,8 +145,8 @@ body {
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(184,150,62,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(184,150,62,0.04) 1px, transparent 1px);
+        linear-gradient(rgba(120,180,75,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(120,180,75,0.04) 1px, transparent 1px);
     background-size: 80px 80px;
     mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
     -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
@@ -1233,7 +1233,7 @@ body {
 
 @keyframes glowPulse {
     0%, 100% { box-shadow: 0 40px 80px rgba(0,0,0,0.15); }
-    50% { box-shadow: 0 40px 80px rgba(0,0,0,0.15), 0 0 40px rgba(184,150,62,0.15); }
+    50% { box-shadow: 0 40px 80px rgba(0,0,0,0.15), 0 0 40px rgba(120,180,75,0.15); }
 }
 
 .gray-frame.glow-active {
@@ -1242,7 +1242,7 @@ body {
 
 @keyframes glowPulseLight {
     0%, 100% { box-shadow: 0 40px 80px rgba(0,0,0,0.06); }
-    50% { box-shadow: 0 40px 80px rgba(0,0,0,0.06), 0 0 40px rgba(184,150,62,0.12); }
+    50% { box-shadow: 0 40px 80px rgba(0,0,0,0.06), 0 0 40px rgba(120,180,75,0.12); }
 }
 
 /* ─── Ripple эффект (Uno SoftTouch) ─── */
@@ -1255,7 +1255,7 @@ body {
     height: 100px;
     margin: -50px 0 0 -50px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(184,150,62,0.3), transparent 70%);
+    background: radial-gradient(circle, rgba(120,180,75,0.3), transparent 70%);
     pointer-events: none;
 }
 

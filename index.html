@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS — Awesome Products</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ========== НАВИГАЦИЯ ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-logo">AWS</div>
+        <div class="nav-links">
+            <a href="#about">О бренде</a>
+            <a href="#aura">Aura</a>
+            <a href="#uno">Uno</a>
+            <a href="#catalog">Каталог</a>
+            <a href="#buy">Где купить</a>
+        </div>
+        <div class="nav-burger" id="burger">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- ========== ЭКРАН 1: HERO ========== -->
+    <section class="hero" id="hero">
+        <div class="hero-bg-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge">AWESOME PRODUCTS</div>
+            <h1 class="hero-title">
+                <span class="hero-line">Технологии</span>
+                <span class="hero-line">комфорта</span>
+                <span class="hero-line accent">для вашего дома</span>
+            </h1>
+            <p class="hero-sub">Электрика и аксессуары нового поколения.<br>Минималистичный дизайн. Безупречное качество.</p>
+            <a href="#catalog" class="hero-btn">Смотреть каталог <span class="arrow">&darr;</span></a>
+        </div>
+        <div class="hero-scroll-hint">
+            <div class="scroll-line"></div>
+            <span>Листайте</span>
+        </div>
+    </section>
+
+    <!-- ========== ЭКРАН 2: О БРЕНДЕ ========== -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-label">О бренде</div>
+            <h2 class="section-title fade-up">Каждая деталь<br><span class="accent">имеет значение</span></h2>
+            <div class="about-grid">
+                <div class="about-card fade-up" data-delay="0">
+                    <div class="about-icon">
+                        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="24" cy="24" r="20"/>
+                            <path d="M16 24l5 5 11-11"/>
+                        </svg>
+                    </div>
+                    <h3>Качество</h3>
+                    <p>Высококачественные материалы и строгий контроль на каждом этапе производства</p>
+                </div>
+                <div class="about-card fade-up" data-delay="0.15">
+                    <div class="about-icon">
+                        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M24 4v16l12 8"/>
+                            <circle cx="24" cy="24" r="20"/>
+                        </svg>
+                    </div>
+                    <h3>Практичность</h3>
+                    <p>Продуманные решения, которые упрощают монтаж и повседневное использование</p>
+                </div>
+                <div class="about-card fade-up" data-delay="0.3">
+                    <div class="about-icon">
+                        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="8" y="8" width="32" height="32" rx="4"/>
+                            <circle cx="24" cy="24" r="8"/>
+                        </svg>
+                    </div>
+                    <h3>Дизайн</h3>
+                    <p>Лаконичный, универсальный стиль — чёрный и белый, которые подходят любому интерьеру</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ЭКРАН 3: СЕРИЯ AURA (pinned) ========== -->
+    <section class="series-section dark" id="aura">
+        <div class="series-pin-wrapper">
+            <div class="series-layout">
+                <div class="series-image">
+                    <div class="product-card-frame">
+                        <div class="product-placeholder white">
+                            <span>AURA</span>
+                            <small>фото товара</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="series-info">
+                    <div class="series-steps">
+                        <div class="series-step active" data-step="0">
+                            <div class="series-label">Серия</div>
+                            <h2 class="series-name">AURA</h2>
+                            <p class="series-desc">Элегантный дизайн для современных интерьеров. Чистые линии и классические формы, которые не устаревают.</p>
+                        </div>
+                        <div class="series-step" data-step="1">
+                            <div class="series-label">Ассортимент</div>
+                            <h2 class="series-name">AURA</h2>
+                            <p class="series-desc">Выключатели одноклавишные, розетки RJ45 Cat.5e, рамки. Всё для электрики вашего дома.</p>
+                        </div>
+                        <div class="series-step" data-step="2">
+                            <div class="series-label">Цвета</div>
+                            <h2 class="series-name">AURA</h2>
+                            <div class="color-options">
+                                <div class="color-dot white-dot"><span>Белый</span></div>
+                                <div class="color-dot black-dot"><span>Чёрный</span></div>
+                            </div>
+                            <p class="series-desc">Два цвета — для светлых и тёмных интерьеров. Универсальность без компромиссов.</p>
+                        </div>
+                    </div>
+                    <div class="series-progress">
+                        <div class="series-progress-dot active"></div>
+                        <div class="series-progress-dot"></div>
+                        <div class="series-progress-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ЭКРАН 4: СЕРИЯ UNO (pinned) ========== -->
+    <section class="series-section light" id="uno">
+        <div class="series-pin-wrapper">
+            <div class="series-layout reverse">
+                <div class="series-image">
+                    <div class="product-card-frame gray-frame">
+                        <div class="product-placeholder dark">
+                            <span>UNO</span>
+                            <small>фото товара</small>
+                        </div>
+                        <div class="badge-new">NEW</div>
+                    </div>
+                </div>
+                <div class="series-info">
+                    <div class="series-steps">
+                        <div class="series-step active" data-step="0">
+                            <div class="series-label">Серия</div>
+                            <h2 class="series-name dark-text">UNO<br><span class="softtouch-tag">SoftTouch</span></h2>
+                            <p class="series-desc dark-text">Тактильный комфорт каждый день. Покрытие SoftTouch — приятно нажимать.</p>
+                        </div>
+                        <div class="series-step" data-step="1">
+                            <div class="series-label dark-text">Технология</div>
+                            <h2 class="series-name dark-text">UNO</h2>
+                            <p class="series-desc dark-text">Перекрёстные выключатели с бархатистым покрытием. Тихий ход клавиши, надёжный механизм.</p>
+                        </div>
+                        <div class="series-step" data-step="2">
+                            <div class="series-label dark-text">Цвета</div>
+                            <h2 class="series-name dark-text">UNO</h2>
+                            <div class="color-options">
+                                <div class="color-dot white-dot bordered"><span class="dark-text">Белый</span></div>
+                                <div class="color-dot black-dot"><span>Чёрный</span></div>
+                            </div>
+                            <p class="series-desc dark-text">Матовое SoftTouch покрытие в двух вариантах.</p>
+                        </div>
+                    </div>
+                    <div class="series-progress">
+                        <div class="series-progress-dot active dark-dot"></div>
+                        <div class="series-progress-dot dark-dot"></div>
+                        <div class="series-progress-dot dark-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ЭКРАН 5: КАТАЛОГ (горизонтальный скролл) ========== -->
+    <section class="catalog" id="catalog">
+        <div class="container">
+            <div class="section-label">Каталог</div>
+            <h2 class="section-title fade-up">Всё для <span class="accent">электрики</span></h2>
+        </div>
+        <div class="catalog-track-wrapper">
+            <div class="catalog-track">
+                <div class="catalog-card fade-up">
+                    <div class="catalog-img">
+                        <div class="product-placeholder small white">
+                            <span>Aura / Uno</span>
+                        </div>
+                    </div>
+                    <h3>Розетки и выключатели</h3>
+                    <p>Серии Aura и Uno SoftTouch</p>
+                    <span class="catalog-count">от 138 &#8381;</span>
+                </div>
+                <div class="catalog-card fade-up">
+                    <div class="catalog-img">
+                        <div class="product-placeholder small white">
+                            <span>AWS-H03</span>
+                        </div>
+                    </div>
+                    <h3>Удлинители бытовые</h3>
+                    <p>1.5м — 3м, 3 гнезда</p>
+                    <span class="catalog-count">от 209 &#8381;</span>
+                </div>
+                <div class="catalog-card fade-up">
+                    <div class="catalog-img">
+                        <div class="product-placeholder small white">
+                            <span>AWS-HZ2</span>
+                        </div>
+                    </div>
+                    <h3>Удлинители садовые</h3>
+                    <p>10м — 15м, усиленный кабель</p>
+                    <span class="catalog-count">от 768 &#8381;</span>
+                </div>
+                <div class="catalog-card fade-up">
+                    <div class="catalog-img">
+                        <div class="product-placeholder small white">
+                            <span>SAT / FTP</span>
+                        </div>
+                    </div>
+                    <h3>Кабели связи</h3>
+                    <p>ТВ и компьютерные, медь</p>
+                    <span class="catalog-count">от 26 &#8381;/м</span>
+                </div>
+                <div class="catalog-card fade-up">
+                    <div class="catalog-img colorful">
+                        <div class="patch-colors">
+                            <div class="patch-dot" style="background:#F5C542"></div>
+                            <div class="patch-dot" style="background:#4CAF50"></div>
+                            <div class="patch-dot" style="background:#E53935"></div>
+                            <div class="patch-dot" style="background:#9E9E9E"></div>
+                        </div>
+                        <span>Патч-корды</span>
+                    </div>
+                    <h3>Патч-корды UTP</h3>
+                    <p>Cat.5e, 0.5м — 15м, 4 цвета</p>
+                    <span class="catalog-count">от 36 &#8381;</span>
+                </div>
+                <div class="catalog-card fade-up">
+                    <div class="catalog-img">
+                        <div class="product-placeholder small white">
+                            <span>SN-224</span>
+                        </div>
+                    </div>
+                    <h3>Клеммы</h3>
+                    <p>0.5—2.5мм, быстрый монтаж</p>
+                    <span class="catalog-count">от 1 700 &#8381;/100шт</span>
+                </div>
+                <div class="catalog-card fade-up">
+                    <div class="catalog-img">
+                        <div class="product-placeholder small white">
+                            <span>SLN</span>
+                        </div>
+                    </div>
+                    <h3>Промышленные разъёмы</h3>
+                    <p>16A—32A, IP44/IP67, 380В</p>
+                    <span class="catalog-count">от 364 &#8381;</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ЭКРАН 6: ЦИФРЫ ========== -->
+    <section class="numbers dark" id="numbers">
+        <div class="container">
+            <div class="numbers-grid">
+                <div class="number-item fade-up">
+                    <div class="number-value" data-target="50">0</div>
+                    <div class="number-plus">+</div>
+                    <div class="number-label">товаров<br>в каталоге</div>
+                </div>
+                <div class="number-item fade-up" data-delay="0.1">
+                    <div class="number-value" data-target="7">0</div>
+                    <div class="number-label">категорий<br>продукции</div>
+                </div>
+                <div class="number-item fade-up" data-delay="0.2">
+                    <div class="number-value" data-target="2">0</div>
+                    <div class="number-label">дизайнерские<br>серии</div>
+                </div>
+                <div class="number-item fade-up" data-delay="0.3">
+                    <div class="number-value" data-target="1000">0</div>
+                    <div class="number-plus">+</div>
+                    <div class="number-label">довольных<br>клиентов</div>
+                </div>
+            </div>
+            <p class="numbers-tagline fade-up">От розетки до промышленного разъёма —<br>всё под одним брендом</p>
+        </div>
+    </section>
+
+    <!-- ========== ЭКРАН 7: ГДЕ КУПИТЬ ========== -->
+    <section class="buy" id="buy">
+        <div class="container">
+            <div class="section-label">Где купить</div>
+            <h2 class="section-title fade-up">Выбирайте <span class="accent">удобный способ</span></h2>
+            <div class="buy-grid">
+                <a href="#" class="buy-card ozon fade-up" data-delay="0">
+                    <div class="buy-icon">
+                        <svg viewBox="0 0 80 32" fill="currentColor" style="width:80px">
+                            <text x="0" y="26" font-size="28" font-weight="800" font-family="Inter,sans-serif">OZON</text>
+                        </svg>
+                    </div>
+                    <p>Маркетплейс</p>
+                    <span class="buy-arrow">&rarr;</span>
+                </a>
+                <a href="#" class="buy-card shop fade-up" data-delay="0.15">
+                    <div class="buy-icon">
+                        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="6" y="14" width="36" height="28" rx="2"/>
+                            <path d="M16 14V10a8 8 0 0116 0v4"/>
+                        </svg>
+                    </div>
+                    <p>Наш магазин</p>
+                    <span class="buy-arrow">&rarr;</span>
+                </a>
+                <a href="#" class="buy-card partners fade-up" data-delay="0.3">
+                    <div class="buy-icon">
+                        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="16" cy="20" r="8"/>
+                            <circle cx="32" cy="20" r="8"/>
+                            <path d="M8 40c0-6 4-10 8-10h4"/>
+                            <path d="M28 40c0-6 4-10 8-10"/>
+                        </svg>
+                    </div>
+                    <p>Партнёры</p>
+                    <span class="buy-arrow">&rarr;</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logo">AWS</div>
+                <div class="footer-tagline">Awesome Products</div>
+            </div>
+            <div class="footer-links">
+                <a href="#">Telegram</a>
+                <a href="#">WhatsApp</a>
+                <a href="#">Email</a>
+            </div>
+            <div class="footer-copy">&copy; 2026 AWSProducts. Все права защищены.</div>
+        </div>
+    </footer>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

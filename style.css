@@ -678,7 +678,9 @@ body {
    ============================ */
 
 .arsenal-section {
-    min-height: 100vh;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
     background: var(--black);
     display: flex;
     flex-direction: column;
@@ -690,35 +692,39 @@ body {
 }
 
 .arsenal-content {
-    padding: 80px 24px 60px;
+    padding: 0 24px;
     position: relative;
     z-index: 2;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .arsenal-number {
-    margin-bottom: 24px;
+    margin-bottom: 32px;
+    line-height: 1;
 }
 
 .arsenal-num {
-    font-size: clamp(80px, 14vw, 160px);
+    font-size: clamp(72px, 12vw, 140px);
     font-weight: 900;
     color: var(--white);
-    line-height: 1;
-    letter-spacing: -6px;
+    line-height: 0.9;
+    letter-spacing: -4px;
     opacity: 0.15;
     display: inline-block;
 }
 
 .arsenal-plus {
-    font-size: clamp(40px, 6vw, 72px);
+    font-size: clamp(36px, 5vw, 60px);
     font-weight: 300;
     color: var(--accent);
     vertical-align: top;
-    margin-left: -8px;
+    margin-left: -4px;
 }
 
 .arsenal-headline {
-    font-size: clamp(32px, 5vw, 60px);
+    font-size: clamp(30px, 5vw, 56px);
     font-weight: 800;
     line-height: 1.2;
     letter-spacing: -1px;
@@ -730,6 +736,7 @@ body {
     color: var(--gray-400);
     font-weight: 300;
     letter-spacing: 0.3px;
+    margin-bottom: 16px;
 }
 
 .reveal-word {
@@ -739,23 +746,26 @@ body {
 }
 
 .arsenal-tickers {
-    width: 100%;
-    padding: 40px 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 0 40px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 }
 
 .arsenal-ticker {
     overflow: hidden;
     border-top: 1px solid rgba(255,255,255,0.05);
-    padding: 16px 0;
+    padding: 14px 0;
 }
 
 .ticker-track {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 32px;
     white-space: nowrap;
     width: max-content;
 }
@@ -769,9 +779,9 @@ body {
 }
 
 .ticker-track span {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--gray-600);
 }
@@ -779,6 +789,7 @@ body {
 .ticker-sep {
     color: var(--accent) !important;
     font-weight: 300 !important;
+    letter-spacing: 0 !important;
 }
 
 @keyframes tickerLeft {
@@ -1004,21 +1015,27 @@ body {
 
 .buy-header {
     text-align: center;
-    margin-bottom: 64px;
+    margin-bottom: 80px;
+}
+
+.buy-header .section-label {
+    margin-bottom: 16px;
 }
 
 .buy-headline {
-    font-size: clamp(32px, 5vw, 52px);
+    font-size: clamp(40px, 6vw, 64px);
     font-weight: 800;
-    line-height: 1.2;
-    letter-spacing: -1px;
+    line-height: 1.15;
+    letter-spacing: -1.5px;
     color: var(--dark);
 }
 
 .buy-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 20px;
+    max-width: 960px;
+    margin: 0 auto;
 }
 
 .buy-card {
@@ -1032,23 +1049,23 @@ body {
     text-decoration: none;
     color: var(--dark);
     background: #FFFFFF;
-    border: 1px solid transparent;
+    border: 1px solid var(--gray-200);
     transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     overflow: hidden;
 }
 
 .buy-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 40px 80px rgba(0,0,0,0.08);
+    transform: translateY(-8px);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.06);
     border-color: var(--accent);
 }
 
 .buy-card-top {
-    padding: 48px 32px 32px;
+    padding: 32px 24px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 14px;
     flex: 1;
 }
 
@@ -1058,26 +1075,23 @@ body {
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--accent);
-    background: rgba(184,150,62,0.08);
-    padding: 6px 16px;
-    border-radius: 100px;
 }
 
 .buy-icon-large {
-    width: 64px;
-    height: 64px;
+    width: 40px;
+    height: 40px;
     color: var(--dark);
 }
 
 .buy-desc {
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.6;
     color: var(--gray-600);
-    max-width: 240px;
+    max-width: 220px;
 }
 
 .buy-card-bottom {
-    padding: 20px 32px;
+    padding: 16px 24px;
     border-top: 1px solid var(--gray-200);
     display: flex;
     justify-content: center;

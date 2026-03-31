@@ -178,36 +178,46 @@ document.querySelectorAll('.about-card').forEach(card => {
 
 // ─── ЦИТАТА: Scale-up из точки ───
 
-gsap.set('.big-quote', {
-    scale: 0.4,
-    opacity: 0
-});
+const bigQuote = document.querySelector('.big-quote');
+const quoteAuthor = document.querySelector('.quote-author');
 
-gsap.to('.big-quote', {
-    scale: 1,
-    opacity: 1,
-    ease: 'power2.out',
-    scrollTrigger: {
+if (bigQuote) {
+    gsap.set(bigQuote, { scale: 0.5, opacity: 0 });
+    gsap.set('.quote-line', { opacity: 0, y: 30 });
+
+    ScrollTrigger.create({
         trigger: '.quote-section',
-        start: 'top 80%',
-        end: 'top 20%',
-        scrub: true
-    }
-});
+        start: 'top 75%',
+        once: true,
+        onEnter: () => {
+            gsap.to(bigQuote, {
+                scale: 1,
+                opacity: 1,
+                duration: 1.2,
+                ease: 'power3.out'
+            });
 
-gsap.set('.quote-author', { opacity: 0, y: 20 });
-ScrollTrigger.create({
-    trigger: '.quote-section',
-    start: 'top 30%',
-    once: true,
-    onEnter: () => {
-        gsap.to('.quote-author', {
-            opacity: 1, y: 0,
-            duration: 0.8,
-            ease: 'power3.out'
-        });
-    }
-});
+            document.querySelectorAll('.quote-line').forEach((line, i) => {
+                gsap.to(line, {
+                    opacity: 1, y: 0,
+                    duration: 0.9,
+                    delay: 0.3 + i * 0.15,
+                    ease: 'power3.out'
+                });
+            });
+
+            if (quoteAuthor) {
+                gsap.set(quoteAuthor, { opacity: 0, y: 20 });
+                gsap.to(quoteAuthor, {
+                    opacity: 1, y: 0,
+                    duration: 0.8,
+                    delay: 1,
+                    ease: 'power3.out'
+                });
+            }
+        }
+    });
+}
 
 // ─── СЕРИИ: Pinned + Glow пульсация ───
 

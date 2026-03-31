@@ -268,7 +268,13 @@ body {
     border-top: 1px solid rgba(255,255,255,0.05);
     border-bottom: 1px solid rgba(255,255,255,0.05);
     background: var(--dark);
+    position: relative;
+}
+
+.marquee-inner {
     display: flex;
+    width: max-content;
+    animation: marqueeScroll 30s linear infinite;
 }
 
 .marquee-track {
@@ -276,7 +282,6 @@ body {
     align-items: center;
     gap: 40px;
     white-space: nowrap;
-    animation: marqueeScroll 20s linear infinite;
     flex-shrink: 0;
     padding-right: 40px;
 }
@@ -300,7 +305,7 @@ body {
 
 @keyframes marqueeScroll {
     0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
+    100% { transform: translateX(-50%); }
 }
 
 /* ============================
@@ -774,7 +779,20 @@ body {
     overflow: hidden;
     border-top: 1px solid rgba(255,255,255,0.05);
     padding: 14px 0;
+    position: relative;
+}
+
+.ticker-inner {
     display: flex;
+    width: max-content;
+}
+
+.ticker-left .ticker-inner {
+    animation: tickerLeft 30s linear infinite;
+}
+
+.ticker-right .ticker-inner {
+    animation: tickerRight 35s linear infinite;
 }
 
 .ticker-track {
@@ -784,14 +802,6 @@ body {
     white-space: nowrap;
     flex-shrink: 0;
     padding-right: 32px;
-}
-
-.ticker-left .ticker-track {
-    animation: tickerLeft 20s linear infinite;
-}
-
-.ticker-right .ticker-track {
-    animation: tickerRight 25s linear infinite;
 }
 
 .ticker-track span {
@@ -810,11 +820,11 @@ body {
 
 @keyframes tickerLeft {
     0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
+    100% { transform: translateX(-50%); }
 }
 
 @keyframes tickerRight {
-    0% { transform: translateX(-100%); }
+    0% { transform: translateX(-50%); }
     100% { transform: translateX(0); }
 }
 

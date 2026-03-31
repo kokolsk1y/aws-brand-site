@@ -3,15 +3,15 @@
    ============================ */
 
 :root {
-    --black: #0A0A0A;
-    --dark: #1A1A1A;
-    --gray-900: #2A2A2A;
-    --gray-600: #6B6B6B;
-    --gray-400: #9E9E9E;
-    --gray-200: #E0E0E0;
-    --gray-100: #F5F5F5;
-    --white: #FFFFFF;
-    --accent: #C8A46E; /* gold accent */
+    --black: #0A1F17;        /* почти чёрный с зеленью */
+    --dark: #0B3D2E;         /* глубокий зелёный */
+    --gray-900: #15503E;     /* зелёный средний */
+    --gray-600: #5A7D6F;     /* приглушённый зелёно-серый */
+    --gray-400: #8FA99C;     /* мягкий зелёно-серый */
+    --gray-200: #D4D9D2;     /* светлый зелёно-серый */
+    --gray-100: #F7F5F0;     /* кремовый */
+    --white: #EDECE8;        /* мягкий белый */
+    --accent: #C9A84C;       /* тёплое золото */
     --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --radius: 16px;
     --radius-sm: 8px;

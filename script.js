@@ -1,584 +1,289 @@
 /* ============================
    AWS Brand Site — script.js
-   v3: Full dynamics + interactions
+   v5: Werkel-inspired
+   Lenis + Swiper + GSAP ScrollTrigger
    ============================ */
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ─── HERO: Строки появляются ───
+// ─── LENIS: Плавный скролл ───
 
-gsap.set('.hero-badge', { opacity: 0, y: 20 });
-gsap.to('.hero-badge', {
-    opacity: 1, y: 0,
-    duration: 1, delay: 0.3,
-    ease: 'power3.out'
+const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+    touchMultiplier: 2
 });
 
-document.querySelectorAll('.hero-line').forEach((line, i) => {
-    gsap.to(line, {
-        opacity: 1, y: 0,
-        duration: 1.1,
-        delay: 0.6 + i * 0.18,
-        ease: 'power3.out'
-    });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => lenis.raf(time * 1000));
+gsap.ticker.lagSmoothing(0);
+
+// ─── SIDE MENU ───
+
+const menuToggle = document.getElementById('menuToggle');
+const menuClose = document.getElementById('menuClose');
+const menuOverlay = document.getElementById('menuOverlay');
+const sideMenu = document.getElementById('sideMenu');
+
+function openMenu() {
+    sideMenu.classList.add('open');
+    lenis.stop();
+}
+
+function closeMenu() {
+    sideMenu.classList.remove('open');
+    lenis.start();
+}
+
+menuToggle.addEventListener('click', openMenu);
+menuClose.addEventListener('click', closeMenu);
+menuOverlay.addEventListener('click', closeMenu);
+
+// Закрытие при клике на ссылку
+sideMenu.querySelectorAll('.side-menu__item').forEach(link => {
+    link.addEventListener('click', closeMenu);
 });
 
-gsap.set('.hero-sub', { opacity: 0, y: 20 });
-gsap.to('.hero-sub', {
-    opacity: 1, y: 0,
-    duration: 0.9, delay: 1.3,
-    ease: 'power3.out'
-});
+// ─── HERO SWIPER ───
 
-gsap.set('.hero-btn', { opacity: 0, y: 20 });
-gsap.to('.hero-btn', {
-    opacity: 1, y: 0,
-    duration: 0.9, delay: 1.5,
-    ease: 'power3.out'
-});
-
-// ─── HERO: Parallax-рассеивание при скролле ───
-
-gsap.to('.hero-badge', {
-    y: -80, opacity: 0,
-    ease: 'none',
-    scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: '60% top',
-        scrub: true
+const heroSwiper = new Swiper('.hero-swiper', {
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
+    speed: 1000,
+    autoplay: {
+        delay: 5000,
+        disableOnInteraction: false
+    },
+    loop: true,
+    pagination: {
+        el: '.hero-pagination',
+        clickable: true
     }
 });
 
-gsap.to('.hero-title', {
-    y: -120, opacity: 0, scale: 0.95,
-    ease: 'none',
-    scrollTrigger: {
-        trigger: '.hero',
-        start: '10% top',
-        end: '70% top',
-        scrub: true
-    }
+// Смена темы хедера по слайду
+const header = document.getElementById('header');
+
+function updateHeaderTheme() {
+    const activeSlide = document.querySelector('.swiper-slide-active .hero-slide');
+    if (!activeSlide) return;
+    const theme = activeSlide.dataset.theme || 'dark';
+    header.classList.remove('dark', 'light');
+    header.classList.add(theme);
+}
+
+updateHeaderTheme();
+heroSwiper.on('slideChange', updateHeaderTheme);
+
+// Анимация контента слайда
+heroSwiper.on('slideChangeTransitionStart', () => {
+    const activeContent = document.querySelector('.swiper-slide-active .hero-slide__content');
+    if (!activeContent) return;
+
+    gsap.fromTo(activeContent.querySelector('.hero-slide__label'),
+        { opacity: 0, y: 20 },
+        { opacity: 0.6, y: 0, duration: 0.8, delay: 0.3, ease: 'power3.out' }
+    );
+    gsap.fromTo(activeContent.querySelector('.hero-slide__title'),
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 1, delay: 0.4, ease: 'power3.out' }
+    );
+    gsap.fromTo(activeContent.querySelector('.hero-slide__btn'),
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8, delay: 0.7, ease: 'power3.out' }
+    );
 });
 
-gsap.to('.hero-sub', {
-    y: -40, opacity: 0,
-    ease: 'none',
-    scrollTrigger: {
-        trigger: '.hero',
-        start: '15% top',
-        end: '65% top',
-        scrub: true
-    }
-});
+// Начальная анимация первого слайда
+gsap.fromTo('.swiper-slide-active .hero-slide__label',
+    { opacity: 0, y: 20 },
+    { opacity: 0.6, y: 0, duration: 0.8, delay: 0.5, ease: 'power3.out' }
+);
+gsap.fromTo('.swiper-slide-active .hero-slide__title',
+    { opacity: 0, y: 40 },
+    { opacity: 1, y: 0, duration: 1, delay: 0.6, ease: 'power3.out' }
+);
+gsap.fromTo('.swiper-slide-active .hero-slide__btn',
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, duration: 0.8, delay: 0.9, ease: 'power3.out' }
+);
 
-gsap.to('.hero-btn', {
-    y: 60, opacity: 0,
-    ease: 'none',
-    scrollTrigger: {
-        trigger: '.hero',
-        start: '10% top',
-        end: '55% top',
-        scrub: true
-    }
-});
-
-gsap.to('.hero-bg-grid', {
-    yPercent: 40, opacity: 0,
-    ease: 'none',
-    scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true
-    }
-});
-
-gsap.to('.hero-scroll-hint', {
-    opacity: 0, y: 20,
-    ease: 'none',
-    scrollTrigger: {
-        trigger: '.hero',
-        start: '5% top',
-        end: '20% top',
-        scrub: true
-    }
-});
-
-// ─── NAVBAR ───
+// ─── HEADER: scrolled state ───
 
 ScrollTrigger.create({
     trigger: '.hero',
-    start: 'top top',
-    end: '100px top',
-    onLeave: () => document.getElementById('navbar').classList.add('scrolled'),
-    onEnterBack: () => document.getElementById('navbar').classList.remove('scrolled')
-});
-
-// ─── FADE-UP: Универсальная ───
-
-document.querySelectorAll('.fade-up').forEach(el => {
-    const delay = parseFloat(el.dataset.delay) || 0;
-
-    ScrollTrigger.create({
-        trigger: el,
-        start: 'top 88%',
-        once: true,
-        onEnter: () => {
-            gsap.to(el, {
-                opacity: 1, y: 0,
-                duration: 0.9,
-                delay: delay,
-                ease: 'power3.out'
-            });
-        }
-    });
-});
-
-// ─── О БРЕНДЕ: Номера считают + золотая линия ───
-
-document.querySelectorAll('.about-number').forEach(el => {
-    const text = el.textContent; // "01", "02", "03"
-    const target = parseInt(text);
-
-    ScrollTrigger.create({
-        trigger: el,
-        start: 'top 85%',
-        once: true,
-        onEnter: () => {
-            const obj = { val: 0 };
-            gsap.to(obj, {
-                val: target,
-                duration: 1.5,
-                ease: 'power2.out',
-                onUpdate: () => {
-                    el.textContent = String(Math.round(obj.val)).padStart(2, '0');
-                }
-            });
-        }
-    });
-});
-
-// Золотая линия под карточками
-document.querySelectorAll('.about-card').forEach(card => {
-    ScrollTrigger.create({
-        trigger: card,
-        start: 'top 80%',
-        once: true,
-        onEnter: () => {
-            gsap.to(card, {
-                '--line-scale': 1,
-                duration: 0.8,
-                delay: 0.3,
-                ease: 'power2.inOut'
-            });
-        }
-    });
-});
-
-// ─── ЦИТАТА: Scale-up из точки ───
-
-const bigQuote = document.querySelector('.big-quote');
-const quoteAuthor = document.querySelector('.quote-author');
-
-if (bigQuote) {
-    gsap.set(bigQuote, { scale: 0.5, opacity: 0 });
-    gsap.set('.quote-line', { opacity: 0, y: 30 });
-
-    ScrollTrigger.create({
-        trigger: '.quote-section',
-        start: 'top 75%',
-        once: true,
-        onEnter: () => {
-            gsap.to(bigQuote, {
-                scale: 1,
-                opacity: 1,
-                duration: 1.2,
-                ease: 'power3.out'
-            });
-
-            document.querySelectorAll('.quote-line').forEach((line, i) => {
-                gsap.to(line, {
-                    opacity: 1, y: 0,
-                    duration: 0.9,
-                    delay: 0.3 + i * 0.15,
-                    ease: 'power3.out'
-                });
-            });
-
-            if (quoteAuthor) {
-                gsap.set(quoteAuthor, { opacity: 0, y: 20 });
-                gsap.to(quoteAuthor, {
-                    opacity: 1, y: 0,
-                    duration: 0.8,
-                    delay: 1,
-                    ease: 'power3.out'
-                });
-            }
-        }
-    });
-}
-
-// ─── СЕРИИ: Pinned + Glow пульсация ───
-
-document.querySelectorAll('.series-section').forEach(section => {
-    const steps = section.querySelectorAll('.series-step');
-    const dots = section.querySelectorAll('.series-progress-dot');
-    const frame = section.querySelector('.product-card-frame');
-    let currentStep = 0;
-
-    if (steps.length <= 1) return;
-
-    // Glow пульсация на фрейме
-    if (frame) {
-        ScrollTrigger.create({
-            trigger: section,
-            start: 'top 50%',
-            once: true,
-            onEnter: () => {
-                frame.classList.add('glow-active');
-            }
-        });
-    }
-
-    ScrollTrigger.create({
-        trigger: section,
-        start: 'top top',
-        end: `+=${steps.length * 60}%`,
-        pin: section.querySelector('.series-pin-wrapper'),
-        scrub: 0.5,
-        onUpdate: (self) => {
-            const newStep = Math.min(
-                Math.floor(self.progress * steps.length),
-                steps.length - 1
-            );
-
-            if (newStep !== currentStep) {
-                steps[currentStep].classList.remove('active');
-                dots[currentStep].classList.remove('active');
-
-                currentStep = newStep;
-
-                steps[currentStep].classList.add('active');
-                dots[currentStep].classList.add('active');
-
-                // Анимация текста
-                gsap.fromTo(steps[currentStep],
-                    { opacity: 0, y: 24 },
-                    { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
-                );
-
-                // Рамка слегка поворачивается
-                if (frame) {
-                    gsap.to(frame, {
-                        rotateY: currentStep * 2 - 2,
-                        duration: 0.6,
-                        ease: 'power2.out'
-                    });
-                }
-            }
-        }
-    });
-});
-
-// ─── UNO: Ripple-эффект при входе ───
-
-ScrollTrigger.create({
-    trigger: '#uno',
-    start: 'top 60%',
-    once: true,
+    start: 'bottom top',
     onEnter: () => {
-        const frame = document.querySelector('#uno .product-card-frame');
-        if (frame) {
-            const ripple = document.createElement('div');
-            ripple.className = 'ripple-effect';
-            frame.appendChild(ripple);
-
-            gsap.fromTo(ripple,
-                { scale: 0, opacity: 0.6 },
-                {
-                    scale: 3, opacity: 0,
-                    duration: 1.2,
-                    ease: 'power2.out',
-                    onComplete: () => ripple.remove()
-                }
-            );
-        }
+        header.classList.add('scrolled');
+        header.classList.remove('dark', 'light');
+    },
+    onLeaveBack: () => {
+        header.classList.remove('scrolled');
+        updateHeaderTheme();
     }
 });
 
-// ─── АРСЕНАЛ: Число масштабируется + слова появляются ───
+// ─── HIGHLIGHTS: Горизонтальный скролл с parallax ───
 
-const arsenalNum = document.querySelector('.arsenal-num');
-if (arsenalNum) {
-    const target = parseInt(arsenalNum.dataset.target);
+const highlightsSection = document.querySelector('.highlights');
+const highlightsContainer = document.querySelector('.highlights__container');
 
-    // Число считает вверх
-    ScrollTrigger.create({
-        trigger: '.arsenal-section',
-        start: 'top 70%',
-        once: true,
-        onEnter: () => {
-            const obj = { val: 0 };
-            gsap.to(obj, {
-                val: target,
-                duration: 2.5,
-                ease: 'power2.out',
-                onUpdate: () => {
-                    arsenalNum.textContent = Math.round(obj.val);
-                }
-            });
+if (highlightsSection && highlightsContainer) {
+    const totalScroll = highlightsContainer.scrollWidth - window.innerWidth;
 
-            // Число становится ярче
-            gsap.to(arsenalNum, {
-                opacity: 0.4,
-                duration: 2,
-                ease: 'power2.out'
-            });
-        }
-    });
-
-    // Число масштабируется при скролле
-    gsap.to('.arsenal-number', {
-        scale: 1.15,
+    gsap.to(highlightsContainer, {
+        x: () => -totalScroll,
         ease: 'none',
         scrollTrigger: {
-            trigger: '.arsenal-section',
-            start: 'top bottom',
-            end: 'center center',
-            scrub: true
+            trigger: highlightsSection,
+            start: 'center center',
+            end: () => '+=' + totalScroll,
+            pin: '.highlights__pin',
+            scrub: true,
+            invalidateOnRefresh: true
         }
     });
 }
 
-// Слова появляются
-document.querySelectorAll('.arsenal-section .reveal-word').forEach((word, i) => {
-    gsap.to(word, {
-        opacity: 1,
-        y: 0,
-        rotateX: 0,
-        duration: 1,
-        delay: i * 0.18,
+// ─── CATEGORIES: Появление карточек ───
+
+document.querySelectorAll('.categories__item').forEach((item, i) => {
+    gsap.from(item, {
+        opacity: 0,
+        y: 40,
+        duration: 0.8,
+        delay: (i % 2) * 0.15,
         ease: 'power3.out',
         scrollTrigger: {
-            trigger: '.arsenal-section',
-            start: 'top 60%',
+            trigger: item,
+            start: 'top 85%',
             once: true
         }
     });
 });
 
-// ─── КАТАЛОГ: Карточки влетают веером ───
+// ─── ABOUT BRAND: Появление текста ───
 
-const catalogCards = document.querySelectorAll('.catalog-card');
-catalogCards.forEach((card, i) => {
-    gsap.set(card, {
-        opacity: 0,
-        x: -100 + (i * 15),
-        y: 40,
-        rotation: -8 + (i * 2),
-        scale: 0.85
+const aboutSection = document.querySelector('.about-brand');
+if (aboutSection) {
+    gsap.from('.about-brand__label', {
+        opacity: 0, y: 30,
+        duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: aboutSection, start: 'top 70%', once: true }
     });
 
-    ScrollTrigger.create({
-        trigger: '.catalog-track-wrapper',
-        start: 'top 80%',
-        once: true,
-        onEnter: () => {
-            gsap.to(card, {
-                opacity: 1,
-                x: 0,
-                y: 0,
-                rotation: 0,
-                scale: 1,
-                duration: 0.8,
-                delay: i * 0.08,
-                ease: 'back.out(1.2)'
-            });
-        }
-    });
-});
-
-// Drag-скролл
-const track = document.querySelector('.catalog-track');
-let isDown = false;
-let startX;
-let scrollLeft;
-
-if (track) {
-    track.addEventListener('mousedown', (e) => {
-        isDown = true;
-        track.style.cursor = 'grabbing';
-        startX = e.pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
+    gsap.from('.about-brand__title', {
+        opacity: 0, y: 40,
+        duration: 1,
+        delay: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: aboutSection, start: 'top 70%', once: true }
     });
 
-    track.addEventListener('mouseleave', () => {
-        isDown = false;
-        track.style.cursor = 'grab';
+    gsap.from('.about-brand__desc', {
+        opacity: 0, y: 30,
+        duration: 0.8,
+        delay: 0.3,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: aboutSection, start: 'top 70%', once: true }
     });
 
-    track.addEventListener('mouseup', () => {
-        isDown = false;
-        track.style.cursor = 'grab';
+    gsap.from('.about-brand__link', {
+        opacity: 0, y: 20,
+        duration: 0.6,
+        delay: 0.45,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: aboutSection, start: 'top 70%', once: true }
     });
 
-    track.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - track.offsetLeft;
-        const walk = (x - startX) * 2;
-        track.scrollLeft = scrollLeft - walk;
+    gsap.from('.about-brand__image', {
+        opacity: 0, y: 60,
+        duration: 1,
+        delay: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: aboutSection, start: 'top 70%', once: true }
     });
 }
 
-// ─── ЦИФРЫ: Counter с bounce ───
+// ─── ADVANTAGES SWIPER ───
 
-document.querySelectorAll('.number-value').forEach(el => {
-    const target = parseInt(el.dataset.target);
-
-    ScrollTrigger.create({
-        trigger: el,
-        start: 'top 88%',
-        once: true,
-        onEnter: () => {
-            const obj = { val: 0 };
-            gsap.to(obj, {
-                val: target,
-                duration: 2,
-                ease: 'power2.out',
-                onUpdate: () => {
-                    el.textContent = Math.round(obj.val).toLocaleString('ru-RU');
-                },
-                onComplete: () => {
-                    // Bounce при достижении
-                    gsap.fromTo(el,
-                        { scale: 1 },
-                        {
-                            scale: 1.15,
-                            duration: 0.2,
-                            ease: 'power2.out',
-                            yoyo: true,
-                            repeat: 1
-                        }
-                    );
-                    // Золотая вспышка на "+"
-                    const plus = el.parentElement.querySelector('.number-plus');
-                    if (plus) {
-                        gsap.fromTo(plus,
-                            { scale: 1, opacity: 0.5 },
-                            {
-                                scale: 1.5, opacity: 1,
-                                duration: 0.3,
-                                ease: 'power2.out',
-                                yoyo: true,
-                                repeat: 1
-                            }
-                        );
-                    }
-                }
-            });
-        }
-    });
+const advantagesSwiper = new Swiper('.advantages-swiper', {
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
+    speed: 800,
+    autoplay: {
+        delay: 8000,
+        disableOnInteraction: false
+    },
+    loop: true,
+    pagination: {
+        el: '.advantages-pagination',
+        clickable: true
+    }
 });
 
-// ─── ГДЕ КУПИТЬ: 3D Flip при входе ───
+// Анимация контента при смене слайда
+advantagesSwiper.on('slideChangeTransitionStart', () => {
+    const content = document.querySelector('.swiper-slide-active .advantages__slide-content');
+    if (!content) return;
 
-document.querySelectorAll('.buy-card').forEach((card, i) => {
-    gsap.set(card, {
-        opacity: 0,
-        rotateY: 90,
-        transformPerspective: 800
-    });
-
-    ScrollTrigger.create({
-        trigger: '.buy-grid',
-        start: 'top 80%',
-        once: true,
-        onEnter: () => {
-            gsap.to(card, {
-                opacity: 1,
-                rotateY: 0,
-                duration: 0.8,
-                delay: i * 0.15,
-                ease: 'back.out(1.5)'
-            });
-        }
-    });
-});
-
-// ─── PRODUCT CARD: 3D tilt ───
-
-document.querySelectorAll('.product-card-frame').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = (y - centerY) / 25;
-        const rotateY = (centerX - x) / 25;
-
-        gsap.to(card, {
-            rotateX: rotateX,
-            rotateY: rotateY,
-            scale: 1.02,
-            duration: 0.4,
-            ease: 'power2.out',
-            transformPerspective: 800
-        });
-    });
-
-    card.addEventListener('mouseleave', () => {
-        gsap.to(card, {
-            rotateX: 0,
-            rotateY: 0,
-            scale: 1,
-            duration: 0.6,
-            ease: 'power2.out'
-        });
-    });
-});
-
-// ─── КАТАЛОГ: Hover цветные точки ───
-
-document.querySelectorAll('.catalog-card').forEach(card => {
-    card.addEventListener('mouseenter', () => {
-        const dots = card.querySelectorAll('.patch-dot');
-        dots.forEach((dot, i) => {
-            gsap.to(dot, {
-                scale: 1.4,
-                duration: 0.4,
-                delay: i * 0.06,
-                ease: 'back.out(3)'
-            });
-        });
-    });
-
-    card.addEventListener('mouseleave', () => {
-        const dots = card.querySelectorAll('.patch-dot');
-        dots.forEach(dot => {
-            gsap.to(dot, { scale: 1, duration: 0.3 });
-        });
-    });
-});
-
-// ─── СЕКЦИИ: Плавное появление ───
-
-gsap.utils.toArray('.about, .catalog, .buy').forEach(section => {
-    gsap.fromTo(section,
-        { opacity: 0.6 },
-        {
-            opacity: 1,
-            duration: 0.5,
-            scrollTrigger: {
-                trigger: section,
-                start: 'top 90%',
-                end: 'top 40%',
-                scrub: true
-            }
-        }
+    gsap.fromTo(content.querySelector('.advantages__num'),
+        { opacity: 0, x: -20 },
+        { opacity: 1, x: 0, duration: 0.6, delay: 0.2, ease: 'power3.out' }
+    );
+    gsap.fromTo(content.querySelector('.advantages__heading'),
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8, delay: 0.3, ease: 'power3.out' }
+    );
+    gsap.fromTo(content.querySelector('.advantages__text'),
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8, delay: 0.45, ease: 'power3.out' }
     );
 });
 
-console.log('AWS Brand Site v3 — full dynamics loaded');
+// ─── WHERE BUY: Появление карточек ───
+
+document.querySelectorAll('.where-buy__card').forEach((card, i) => {
+    gsap.from(card, {
+        opacity: 0,
+        y: 40,
+        duration: 0.8,
+        delay: i * 0.12,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.where-buy__grid',
+            start: 'top 80%',
+            once: true
+        }
+    });
+});
+
+// ─── WHERE BUY TITLE ───
+
+gsap.from('.where-buy__title', {
+    opacity: 0, y: 40,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+        trigger: '.where-buy',
+        start: 'top 75%',
+        once: true
+    }
+});
+
+// ─── FOOTER: мягкое появление ───
+
+gsap.from('.footer__top', {
+    opacity: 0, y: 30,
+    duration: 0.8,
+    ease: 'power3.out',
+    scrollTrigger: {
+        trigger: '.footer',
+        start: 'top 85%',
+        once: true
+    }
+});
+
+console.log('AWS Brand Site v5 — Werkel-inspired loaded');

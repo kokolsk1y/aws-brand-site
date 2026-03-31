@@ -297,19 +297,62 @@ ScrollTrigger.create({
     }
 });
 
-// ─── TEXT REVEAL: 3D-вращение слов ───
+// ─── АРСЕНАЛ: Число масштабируется + слова появляются ───
 
-document.querySelectorAll('.reveal-word').forEach((word, i) => {
+const arsenalNum = document.querySelector('.arsenal-num');
+if (arsenalNum) {
+    const target = parseInt(arsenalNum.dataset.target);
+
+    // Число считает вверх
+    ScrollTrigger.create({
+        trigger: '.arsenal-section',
+        start: 'top 70%',
+        once: true,
+        onEnter: () => {
+            const obj = { val: 0 };
+            gsap.to(obj, {
+                val: target,
+                duration: 2.5,
+                ease: 'power2.out',
+                onUpdate: () => {
+                    arsenalNum.textContent = Math.round(obj.val);
+                }
+            });
+
+            // Число становится ярче
+            gsap.to(arsenalNum, {
+                opacity: 0.4,
+                duration: 2,
+                ease: 'power2.out'
+            });
+        }
+    });
+
+    // Число масштабируется при скролле
+    gsap.to('.arsenal-number', {
+        scale: 1.15,
+        ease: 'none',
+        scrollTrigger: {
+            trigger: '.arsenal-section',
+            start: 'top bottom',
+            end: 'center center',
+            scrub: true
+        }
+    });
+}
+
+// Слова появляются
+document.querySelectorAll('.arsenal-section .reveal-word').forEach((word, i) => {
     gsap.to(word, {
         opacity: 1,
         y: 0,
         rotateX: 0,
         duration: 1,
-        delay: i * 0.15,
+        delay: i * 0.18,
         ease: 'power3.out',
         scrollTrigger: {
-            trigger: '.text-reveal',
-            start: 'top 75%',
+            trigger: '.arsenal-section',
+            start: 'top 60%',
             once: true
         }
     });

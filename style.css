@@ -1046,6 +1046,53 @@ body {
     transform: translateY(40px);
 }
 
+/* ─── Glow пульсация на product frame ─── */
+
+.product-card-frame.glow-active {
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { box-shadow: 0 40px 80px rgba(0,0,0,0.15); }
+    50% { box-shadow: 0 40px 80px rgba(0,0,0,0.15), 0 0 40px rgba(184,150,62,0.15); }
+}
+
+.gray-frame.glow-active {
+    animation: glowPulseLight 3s ease-in-out infinite;
+}
+
+@keyframes glowPulseLight {
+    0%, 100% { box-shadow: 0 40px 80px rgba(0,0,0,0.06); }
+    50% { box-shadow: 0 40px 80px rgba(0,0,0,0.06), 0 0 40px rgba(184,150,62,0.12); }
+}
+
+/* ─── Ripple эффект (Uno SoftTouch) ─── */
+
+.ripple-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    margin: -50px 0 0 -50px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,150,62,0.3), transparent 70%);
+    pointer-events: none;
+}
+
+/* ─── About card золотая линия (CSS custom property) ─── */
+
+.about-card::after {
+    transform: scaleX(var(--line-scale, 0));
+}
+
+/* ─── Number bounce ─── */
+
+.number-value {
+    display: inline-block;
+    transform-origin: center bottom;
+}
+
 /* ============================
    RESPONSIVE
    ============================ */

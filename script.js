@@ -1,7 +1,7 @@
 /* ============================
    AWS Brand Site — script.js
-   v5: Werkel-inspired
-   Lenis + Swiper + GSAP ScrollTrigger
+   v6: По ТЗ Яны
+   Lenis + Swiper + GSAP
    ============================ */
 
 gsap.registerPlugin(ScrollTrigger);
@@ -41,8 +41,15 @@ menuClose.addEventListener('click', closeMenu);
 menuOverlay.addEventListener('click', closeMenu);
 
 // Закрытие при клике на ссылку
-sideMenu.querySelectorAll('.side-menu__item').forEach(link => {
+sideMenu.querySelectorAll('.side-menu__item, .side-menu__sub').forEach(link => {
     link.addEventListener('click', closeMenu);
+});
+
+// Dropdown категорий
+document.querySelectorAll('.side-menu__toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+        btn.parentElement.classList.toggle('open');
+    });
 });
 
 // ─── HERO SWIPER ───
@@ -52,7 +59,7 @@ const heroSwiper = new Swiper('.hero-swiper', {
     fadeEffect: { crossFade: true },
     speed: 1000,
     autoplay: {
-        delay: 5000,
+        delay: 6000,
         disableOnInteraction: false
     },
     loop: true,
@@ -62,52 +69,44 @@ const heroSwiper = new Swiper('.hero-swiper', {
     }
 });
 
-// Смена темы хедера по слайду
+// Смена темы хедера
 const header = document.getElementById('header');
 
 function updateHeaderTheme() {
     const activeSlide = document.querySelector('.swiper-slide-active .hero-slide');
     if (!activeSlide) return;
     const theme = activeSlide.dataset.theme || 'dark';
-    header.classList.remove('dark', 'light');
-    header.classList.add(theme);
+    if (!header.classList.contains('scrolled')) {
+        header.classList.remove('dark', 'light');
+        header.classList.add(theme);
+    }
 }
 
 updateHeaderTheme();
 heroSwiper.on('slideChange', updateHeaderTheme);
 
-// Анимация контента слайда
-heroSwiper.on('slideChangeTransitionStart', () => {
-    const activeContent = document.querySelector('.swiper-slide-active .hero-slide__content');
-    if (!activeContent) return;
+// Анимация контента слайда при смене
+function animateSlideContent() {
+    const active = document.querySelector('.swiper-slide-active .hero-slide__content');
+    if (!active) return;
 
-    gsap.fromTo(activeContent.querySelector('.hero-slide__label'),
-        { opacity: 0, y: 20 },
-        { opacity: 0.6, y: 0, duration: 0.8, delay: 0.3, ease: 'power3.out' }
-    );
-    gsap.fromTo(activeContent.querySelector('.hero-slide__title'),
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 1, delay: 0.4, ease: 'power3.out' }
-    );
-    gsap.fromTo(activeContent.querySelector('.hero-slide__btn'),
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8, delay: 0.7, ease: 'power3.out' }
-    );
-});
+    const label = active.querySelector('.hero-slide__label');
+    const title = active.querySelector('.hero-slide__title');
+    const subtitle = active.querySelector('.hero-slide__subtitle');
+    const btn = active.querySelector('.hero-slide__btn');
+    const tags = active.querySelector('.hero-slide__tags');
 
-// Начальная анимация первого слайда
-gsap.fromTo('.swiper-slide-active .hero-slide__label',
-    { opacity: 0, y: 20 },
-    { opacity: 0.6, y: 0, duration: 0.8, delay: 0.5, ease: 'power3.out' }
-);
-gsap.fromTo('.swiper-slide-active .hero-slide__title',
-    { opacity: 0, y: 40 },
-    { opacity: 1, y: 0, duration: 1, delay: 0.6, ease: 'power3.out' }
-);
-gsap.fromTo('.swiper-slide-active .hero-slide__btn',
-    { opacity: 0, y: 20 },
-    { opacity: 1, y: 0, duration: 0.8, delay: 0.9, ease: 'power3.out' }
-);
+    if (label) gsap.fromTo(label, { opacity: 0, y: 15 }, { opacity: 0.5, y: 0, duration: 0.7, delay: 0.2, ease: 'power3.out' });
+    if (title) gsap.fromTo(title, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.9, delay: 0.3, ease: 'power3.out' });
+    if (subtitle) gsap.fromTo(subtitle, { opacity: 0, y: 20 }, { opacity: 0.6, y: 0, duration: 0.8, delay: 0.5, ease: 'power3.out' });
+    if (btn) gsap.fromTo(btn, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.6, ease: 'power3.out' });
+    if (tags) gsap.fromTo(tags, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.7, ease: 'power3.out' });
+}
+
+heroSwiper.on('slideChangeTransitionStart', animateSlideContent);
+
+// Начальная анимация
+setTimeout(animateSlideContent, 300);
 
 // ─── HEADER: scrolled state ───
 
@@ -124,82 +123,106 @@ ScrollTrigger.create({
     }
 });
 
-// ─── HIGHLIGHTS: Горизонтальный скролл с parallax ───
+// ─── SERIES: Появление карточек ───
 
-const highlightsSection = document.querySelector('.highlights');
-const highlightsContainer = document.querySelector('.highlights__container');
-
-if (highlightsSection && highlightsContainer) {
-    const totalScroll = highlightsContainer.scrollWidth - window.innerWidth;
-
-    gsap.to(highlightsContainer, {
-        x: () => -totalScroll,
-        ease: 'none',
-        scrollTrigger: {
-            trigger: highlightsSection,
-            start: 'center center',
-            end: () => '+=' + totalScroll,
-            pin: '.highlights__pin',
-            scrub: true,
-            invalidateOnRefresh: true
-        }
-    });
-}
-
-// ─── CATEGORIES: Появление карточек ───
-
-document.querySelectorAll('.categories__item').forEach((item, i) => {
-    gsap.from(item, {
+const seriesCards = document.querySelectorAll('.series__card');
+seriesCards.forEach((card, i) => {
+    gsap.from(card, {
         opacity: 0,
-        y: 40,
+        y: 50,
         duration: 0.8,
-        delay: (i % 2) * 0.15,
+        delay: i * 0.12,
         ease: 'power3.out',
         scrollTrigger: {
-            trigger: item,
-            start: 'top 85%',
+            trigger: '.series__grid',
+            start: 'top 80%',
             once: true
         }
     });
 });
 
-// ─── ABOUT BRAND: Появление текста ───
+// Series header
+gsap.from('.series__header', {
+    opacity: 0, y: 40,
+    duration: 0.9,
+    ease: 'power3.out',
+    scrollTrigger: {
+        trigger: '.series',
+        start: 'top 75%',
+        once: true
+    }
+});
 
-const aboutSection = document.querySelector('.about-brand');
+// ─── CONSTRUCTOR: Chip toggle ───
+
+document.querySelectorAll('.constructor__option').forEach(option => {
+    const chips = option.querySelectorAll('.constructor__chip');
+    chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            chips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+        });
+    });
+});
+
+// Constructor появление
+gsap.from('.constructor', {
+    opacity: 0, y: 40,
+    duration: 0.9,
+    ease: 'power3.out',
+    scrollTrigger: {
+        trigger: '.constructor',
+        start: 'top 80%',
+        once: true
+    }
+});
+
+// ─── CATEGORIES: Появление карточек ───
+
+document.querySelectorAll('.categories__card').forEach((card, i) => {
+    gsap.from(card, {
+        opacity: 0,
+        y: 40,
+        scale: 0.97,
+        duration: 0.7,
+        delay: i * 0.08,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.categories__grid',
+            start: 'top 80%',
+            once: true
+        }
+    });
+});
+
+gsap.from('.categories__header', {
+    opacity: 0, y: 30,
+    duration: 0.8,
+    ease: 'power3.out',
+    scrollTrigger: {
+        trigger: '.categories',
+        start: 'top 75%',
+        once: true
+    }
+});
+
+// ─── ABOUT BRAND ───
+
+const aboutSection = document.querySelector('.about');
 if (aboutSection) {
-    gsap.from('.about-brand__label', {
-        opacity: 0, y: 30,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: aboutSection, start: 'top 70%', once: true }
+    const aboutEls = ['.about .label', '.about__title', '.about__desc', '.about__link'];
+    aboutEls.forEach((sel, i) => {
+        gsap.from(sel, {
+            opacity: 0, y: 30,
+            duration: 0.8,
+            delay: i * 0.12,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: aboutSection, start: 'top 70%', once: true }
+        });
     });
 
-    gsap.from('.about-brand__title', {
-        opacity: 0, y: 40,
-        duration: 1,
-        delay: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: aboutSection, start: 'top 70%', once: true }
-    });
-
-    gsap.from('.about-brand__desc', {
-        opacity: 0, y: 30,
-        duration: 0.8,
-        delay: 0.3,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: aboutSection, start: 'top 70%', once: true }
-    });
-
-    gsap.from('.about-brand__link', {
-        opacity: 0, y: 20,
-        duration: 0.6,
-        delay: 0.45,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: aboutSection, start: 'top 70%', once: true }
-    });
-
-    gsap.from('.about-brand__image', {
-        opacity: 0, y: 60,
+    gsap.from('.about__image', {
+        opacity: 0, y: 50, scale: 0.97,
         duration: 1,
         delay: 0.2,
         ease: 'power3.out',
@@ -226,31 +249,36 @@ const advantagesSwiper = new Swiper('.advantages-swiper', {
 
 // Анимация контента при смене слайда
 advantagesSwiper.on('slideChangeTransitionStart', () => {
-    const content = document.querySelector('.swiper-slide-active .advantages__slide-content');
+    const content = document.querySelector('.swiper-slide-active .advantages__content');
     if (!content) return;
 
-    gsap.fromTo(content.querySelector('.advantages__num'),
-        { opacity: 0, x: -20 },
-        { opacity: 1, x: 0, duration: 0.6, delay: 0.2, ease: 'power3.out' }
-    );
-    gsap.fromTo(content.querySelector('.advantages__heading'),
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8, delay: 0.3, ease: 'power3.out' }
-    );
-    gsap.fromTo(content.querySelector('.advantages__text'),
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8, delay: 0.45, ease: 'power3.out' }
-    );
+    const num = content.querySelector('.advantages__num');
+    const heading = content.querySelector('.advantages__heading');
+    const text = content.querySelector('.advantages__text');
+
+    if (num) gsap.fromTo(num, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.6, delay: 0.15, ease: 'power3.out' });
+    if (heading) gsap.fromTo(heading, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.25, ease: 'power3.out' });
+    if (text) gsap.fromTo(text, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.35, ease: 'power3.out' });
 });
 
-// ─── WHERE BUY: Появление карточек ───
+// ─── WHERE BUY ───
+
+gsap.from('.where-buy__title', {
+    opacity: 0, y: 40,
+    duration: 0.9,
+    ease: 'power3.out',
+    scrollTrigger: {
+        trigger: '.where-buy',
+        start: 'top 75%',
+        once: true
+    }
+});
 
 document.querySelectorAll('.where-buy__card').forEach((card, i) => {
     gsap.from(card, {
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        delay: i * 0.12,
+        opacity: 0, y: 40,
+        duration: 0.7,
+        delay: i * 0.1,
         ease: 'power3.out',
         scrollTrigger: {
             trigger: '.where-buy__grid',
@@ -260,20 +288,7 @@ document.querySelectorAll('.where-buy__card').forEach((card, i) => {
     });
 });
 
-// ─── WHERE BUY TITLE ───
-
-gsap.from('.where-buy__title', {
-    opacity: 0, y: 40,
-    duration: 1,
-    ease: 'power3.out',
-    scrollTrigger: {
-        trigger: '.where-buy',
-        start: 'top 75%',
-        once: true
-    }
-});
-
-// ─── FOOTER: мягкое появление ───
+// ─── FOOTER ───
 
 gsap.from('.footer__top', {
     opacity: 0, y: 30,
@@ -286,4 +301,19 @@ gsap.from('.footer__top', {
     }
 });
 
-console.log('AWS Brand Site v5 — Werkel-inspired loaded');
+// ─── PARALLAX: лёгкий эффект на секциях ───
+
+document.querySelectorAll('.series__card-visual, .categories__card-img, .about__image').forEach(el => {
+    gsap.to(el, {
+        yPercent: -5,
+        ease: 'none',
+        scrollTrigger: {
+            trigger: el,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+        }
+    });
+});
+
+console.log('AWS Brand Site v6 — По ТЗ Яны loaded');

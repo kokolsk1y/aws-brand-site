@@ -59,7 +59,7 @@ const heroSwiper = new Swiper('.hero-swiper', {
     fadeEffect: { crossFade: true },
     speed: 1000,
     autoplay: {
-        delay: 6000,
+        delay: 4200,
         disableOnInteraction: false
     },
     loop: true,
@@ -105,8 +105,18 @@ function animateSlideContent() {
 
 heroSwiper.on('slideChangeTransitionStart', animateSlideContent);
 
+// Перезапуск видео при смене слайда
+heroSwiper.on('slideChangeTransitionStart', () => {
+    const activeSlide = document.querySelector('.swiper-slide-active .hero-slide__video');
+    if (activeSlide) {
+        activeSlide.currentTime = 0;
+        activeSlide.play();
+    }
+});
+
 // Начальная анимация
 setTimeout(animateSlideContent, 300);
+
 
 // ─── HEADER: scrolled state ───
 

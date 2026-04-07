@@ -396,6 +396,7 @@ a { text-decoration: none; color: inherit; }
     line-height: 1.08;
     letter-spacing: -2px;
     margin-bottom: 16px;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
 }
 
 .hero-slide__subtitle {

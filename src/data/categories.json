@@ -1,0 +1,51 @@
+{
+  "extensions-home": {
+    "slug": "extensions-home",
+    "title": "Удлинители бытовые",
+    "subtitle": "1.5 — 5 м · 5 моделей",
+    "description": "Надёжные удлинители для дома. Качественный кабель ПВС, защёлкивающиеся гнёзда без усилия, корпус из ABS-пластика устойчивого к нагреву.",
+    "cover": "/img/products/AWS-H03-1,5.webp",
+    "filters": [
+      { "key": "all", "label": "Все", "test": "true" },
+      { "key": "1.5m", "label": "1.5 м", "test": "i.name.includes('1,5м')" },
+      { "key": "3m", "label": "3 м", "test": "i.name.includes('3м')" },
+      { "key": "5m", "label": "5 м", "test": "i.name.includes('5м')" },
+      { "key": "earth", "label": "С заземлением", "test": "i.name.includes('с/з')" }
+    ]
+  },
+  "extensions-garden": {
+    "slug": "extensions-garden",
+    "title": "Удлинители садовые",
+    "subtitle": "10 — 25 м · 3 модели",
+    "description": "Садовые удлинители для работы вне помещения. Морозостойкая оранжевая изоляция, повышенная заметность, прочный кабель ПВС.",
+    "cover": "/img/products/AWS-HZ2-01-15.webp"
+  },
+  "power-connectors": {
+    "slug": "power-connectors",
+    "title": "Силовые разъёмы",
+    "subtitle": "IP68 коннекторы · 2 модели",
+    "description": "Промышленные коннекторы IP68 для герметичного соединения кабелей. Выдерживают погружение и устойчивы к пыли.",
+    "cover": "/img/products/SN-33.webp"
+  },
+  "clamps": {
+    "slug": "clamps",
+    "title": "Клеммы",
+    "subtitle": "0.2 — 4 мм² · 18 моделей",
+    "description": "Соединительные клеммы Wago-style: рычажковые и классические. Защёлкивание с первого раза, надёжный контакт без пайки.",
+    "cover": "/img/products/SN-221412.webp"
+  },
+  "patch-cords": {
+    "slug": "patch-cords",
+    "title": "Патч-корды UTP",
+    "subtitle": "Cat.5e / Cat.6e · 0.5 — 30 м · 25 моделей",
+    "description": "Патч-корды для сетевого оборудования. Литые коннекторы RJ45, разные длины и цвета для удобной маркировки.",
+    "cover": "/img/products/AWS-13010.webp"
+  },
+  "cables": {
+    "slug": "cables",
+    "title": "Кабель",
+    "subtitle": "FTP / UTP / SAT · 19 моделей",
+    "description": "Сетевой и ТВ-кабель в бухтах. Медные жилы, варианты для внутренней и наружной прокладки, гелевая защита для премиум-серий.",
+    "cover": "/img/products/AWS-12982.webp"
+  }
+}

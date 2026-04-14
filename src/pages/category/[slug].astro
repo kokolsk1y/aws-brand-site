@@ -1,0 +1,486 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import categoriesMeta from '../../data/categories.json';
+import productsAll from '../../../public/products.json';
+
+export async function getStaticPaths() {
+  return Object.keys(categoriesMeta).map(slug => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const category = categoriesMeta[slug];
+
+// Маппинг slug → ключ в products.json
+const slugToKey = {
+  'extensions-home': 'udl_home',
+  'extensions-garden': 'udl_garden',
+  'power-connectors': 'power',
+  'clamps': 'clamps',
+  'patch-cords': 'patch',
+  'cables': 'cable'
+};
+
+const productData = productsAll[slugToKey[slug]] || { items: [] };
+const products = productData.items || [];
+
+// Cross-sell: 3 случайные другие категории
+const otherCats = Object.values(categoriesMeta)
+  .filter(c => c.slug !== slug)
+  .slice(0, 3);
+
+// Парсинг характеристик — универсально для всех категорий
+function extractMeta(name) {
+  const meta = [];
+  // Длина в метрах (удлинители, патчи, кабели)
+  const len = name.match(/(\d+(?:[,.]\d+)?)\s*м(?![м²])/);
+  if (len) meta.push(`${len[1].replace(',', '.')} м`);
+  // Гнёзда (удлинители)
+  const sockets = name.match(/(\d+)\s*гн/);
+  if (sockets) meta.push(`${sockets[1]} гнёзд`);
+  // Заземление
+  if (/с\/з/.test(name)) meta.push('с заземлением');
+  else if (/б\/з/.test(name)) meta.push('без заземл.');
+  // IP-класс (разъёмы, коннекторы)
+  const ip = name.match(/IP\s*(\d{2})/i);
+  if (ip) meta.push(`IP${ip[1]}`);
+  // Сила тока (клеммы, разъёмы)
+  const amp = name.match(/(\d+)\s*А(?![a-z])/);
+  if (amp) meta.push(`${amp[1]} А`);
+  // Отверстия (клеммы)
+  const holes = name.match(/(\d+)\s*отверст/i);
+  if (holes) meta.push(`${holes[1]} отв.`);
+  // Рычажковая клемма
+  if (/рычажк/i.test(name)) meta.push('рычажк.');
+  // Категория кабеля (Cat.5e, Cat.6)
+  const cat = name.match(/CAT\.?\s*(\d[a-zA-Z]*)/i);
+  if (cat) meta.push(`Cat.${cat[1]}`);
+  // Тип экранирования кабеля
+  if (/FTP/i.test(name) && !meta.some(m => /FTP/i.test(m))) meta.push('FTP');
+  if (/\bUTP\b/i.test(name) && !meta.some(m => /UTP/i.test(m))) meta.push('UTP');
+  if (/SAT-\d+/i.test(name)) meta.push('SAT');
+  // Применение
+  if (/OUTDOOR/i.test(name)) meta.push('Outdoor');
+  else if (/INDOOR/i.test(name)) meta.push('Indoor');
+  // Сечение провода (клеммы)
+  const wire = name.match(/(\d+(?:[,.]\d+)?)-(\d+(?:[,.]\d+)?)\s*мм²?/);
+  if (wire) meta.push(`${wire[1].replace(',','.')}–${wire[2].replace(',','.')} мм²`);
+  return meta.slice(0, 3); // максимум 3 чипа
+}
+
+function shortName(name) {
+  // Убираем суффикс AWSproducts/AWSPRODUCTS, артикул в скобках, лишние характеристики
+  return name
+    .replace(/\s*\(AWSPRODUCTS\)/gi, '')
+    .replace(/AWS-\S+/g, '')
+    .replace(/AWSproducts?/gi, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+---
+<BaseLayout title={`${category.title} — AWS Products`} description={category.description}>
+
+  <!-- HERO КАТЕГОРИИ -->
+  <section class="cat-hero">
+    <div class="cat-hero__inner">
+      <nav class="cat-hero__crumbs">
+        <a href="/">Главная</a>
+        <span>/</span>
+        <a href="/#categories">Ассортимент</a>
+        <span>/</span>
+        <span class="cat-hero__crumbs-current">{category.title}</span>
+      </nav>
+
+      <div class="cat-hero__grid">
+        <div class="cat-hero__text">
+          <p class="label">Категория</p>
+          <h1 class="cat-hero__title">{category.title}</h1>
+          <p class="cat-hero__subtitle">{category.subtitle}</p>
+          <p class="cat-hero__desc">{category.description}</p>
+        </div>
+        <div class="cat-hero__media">
+          <img src={category.cover} alt={category.title} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ФИЛЬТРЫ + GRID -->
+  <section class="cat-products">
+    <div class="cat-products__inner">
+      {category.filters && (
+        <div class="cat-filters" id="catFilters">
+          {category.filters.map(f => (
+            <button class={`cat-filters__chip ${f.key === 'all' ? 'active' : ''}`} data-filter={f.key}>{f.label}</button>
+          ))}
+        </div>
+      )}
+
+      <div class="cat-grid" id="catGrid">
+        {products.map(p => {
+          const meta = extractMeta(p.name);
+          return (
+            <a href={`/product/${p.article}`} class="prod-card" data-name={p.name} data-tilt data-tilt-max="6">
+              <div class="prod-card__img">
+                <img src={p.photo.replace(/^img\//, '/img/')} alt={p.name} loading="lazy" />
+              </div>
+              <div class="prod-card__info">
+                <span class="prod-card__article">{p.article}</span>
+                <h3 class="prod-card__name">{shortName(p.name)}</h3>
+                {meta.length > 0 && (
+                  <div class="prod-card__meta">
+                    {meta.map(m => <span class="prod-card__chip">{m}</span>)}
+                  </div>
+                )}
+              </div>
+            </a>
+          );
+        })}
+      </div>
+
+      {products.length === 0 && (
+        <div class="cat-empty">Каталог в подготовке. Скоро здесь появятся товары.</div>
+      )}
+    </div>
+  </section>
+
+  <!-- CROSS-SELL -->
+  <section class="cat-related">
+    <div class="cat-related__inner">
+      <p class="label">Другие категории</p>
+      <h2 class="cat-related__title">Возможно вас<br>заинтересует</h2>
+      <div class="cat-related__grid">
+        {otherCats.map(c => (
+          <a href={`/category/${c.slug}`} class="cat-related__card" data-tilt data-tilt-max="5">
+            <div class="cat-related__img">
+              <img src={c.cover} alt={c.title} loading="lazy" />
+            </div>
+            <h3 class="cat-related__name">{c.title}</h3>
+            <span class="cat-related__sub">{c.subtitle}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cat-cta">
+    <div class="cat-cta__inner">
+      <h2 class="cat-cta__title">Не нашли подходящий?</h2>
+      <p class="cat-cta__sub">Напишите нам — подберём вариант под вашу задачу</p>
+      <a href="mailto:info@awsproducts.ru" class="btn-switch">Связаться</a>
+    </div>
+  </section>
+
+  <!-- МОДАЛКА «Где купить» -->
+  <div class="buy-modal" id="buyModal" hidden>
+    <div class="buy-modal__overlay" id="buyModalOverlay"></div>
+    <div class="buy-modal__panel">
+      <button class="buy-modal__close" id="buyModalClose" aria-label="Закрыть">&times;</button>
+      <p class="label">Где купить</p>
+      <h3 class="buy-modal__title" id="buyModalTitle">Товар</h3>
+      <p class="buy-modal__article" id="buyModalArticle"></p>
+      <div class="buy-modal__links">
+        <a href="https://www.ozon.ru/seller/awsproducts/" target="_blank" rel="noopener" class="buy-modal__link">
+          <span class="buy-modal__link-logo">OZON</span>
+          <span class="buy-modal__link-text">Маркетплейс Ozon</span>
+          <span class="buy-modal__link-arrow">→</span>
+        </a>
+        <a href="https://www.wildberries.ru/seller/awsproducts" target="_blank" rel="noopener" class="buy-modal__link">
+          <span class="buy-modal__link-logo">WB</span>
+          <span class="buy-modal__link-text">Wildberries</span>
+          <span class="buy-modal__link-arrow">→</span>
+        </a>
+        <a href="https://stv39.ru/help/nashi-partnery/awsproducts/" target="_blank" rel="noopener" class="buy-modal__link">
+          <span class="buy-modal__link-logo">ЭЦ</span>
+          <span class="buy-modal__link-text">Электроцентр</span>
+          <span class="buy-modal__link-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    // Фильтры товаров
+    const filtersEl = document.getElementById('catFilters');
+    const grid = document.getElementById('catGrid');
+    if (filtersEl && grid) {
+      filtersEl.querySelectorAll('.cat-filters__chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          filtersEl.querySelectorAll('.cat-filters__chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          const key = chip.dataset.filter;
+          const cards = grid.querySelectorAll('.prod-card');
+          cards.forEach(card => {
+            const name = card.dataset.name || '';
+            let show = true;
+            if (key === '1.5m') show = name.includes('1,5м');
+            else if (key === '3m') show = /(?<!\d,)3м/.test(name);
+            else if (key === '5m') show = /(?<!\d,)5м/.test(name);
+            else if (key === 'earth') show = name.includes('с/з');
+            card.style.display = show ? '' : 'none';
+          });
+        });
+      });
+    }
+
+    // Модалка «Где купить»
+    const modal = document.getElementById('buyModal');
+    const overlay = document.getElementById('buyModalOverlay');
+    const closeBtn = document.getElementById('buyModalClose');
+    const titleEl = document.getElementById('buyModalTitle');
+    const articleEl = document.getElementById('buyModalArticle');
+
+    function openBuy(article, name) {
+      if (!modal) return;
+      titleEl.textContent = name || article;
+      articleEl.textContent = 'Артикул: ' + article;
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+    function closeBuy() {
+      if (!modal) return;
+      modal.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.prod-card__cta[data-buy]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const card = btn.closest('.prod-card');
+        const name = card?.querySelector('.prod-card__name')?.textContent.trim() || '';
+        openBuy(btn.dataset.buy, name);
+      });
+    });
+
+    if (overlay) overlay.addEventListener('click', closeBuy);
+    if (closeBtn) closeBtn.addEventListener('click', closeBuy);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBuy(); });
+  </script>
+
+  <style is:global>
+    /* === CATEGORY PAGE === */
+    .cat-hero {
+      background: linear-gradient(180deg, var(--warm-100, #f7f4ef) 0%, var(--white, #fff) 100%);
+      padding: 120px 0 80px;
+    }
+    .cat-hero__inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+    .cat-hero__crumbs {
+      display: flex; gap: 12px; align-items: center;
+      font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--gray-400, #999); margin-bottom: 48px;
+    }
+    .cat-hero__crumbs a { color: var(--gray-400, #999); text-decoration: none; transition: color 0.2s; }
+    .cat-hero__crumbs a:hover { color: var(--black, #111); }
+    .cat-hero__crumbs span { opacity: 0.4; }
+    .cat-hero__crumbs-current { color: var(--black, #111) !important; opacity: 1 !important; }
+
+    .cat-hero__grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: center;
+    }
+    .cat-hero__text .label { margin-bottom: 16px; }
+    .cat-hero__title {
+      font-size: clamp(48px, 6vw, 96px);
+      font-weight: 800; line-height: 0.95;
+      letter-spacing: -2px; margin-bottom: 24px;
+      color: var(--black, #111);
+    }
+    .cat-hero__subtitle {
+      font-size: 18px; font-weight: 500;
+      color: var(--gray-600, #666); margin-bottom: 24px;
+    }
+    .cat-hero__desc {
+      font-size: 16px; line-height: 1.7;
+      color: var(--gray-600, #666); max-width: 480px;
+    }
+    .cat-hero__media {
+      aspect-ratio: 4/3;
+      background: var(--warm-200, #ede7de);
+      border-radius: 16px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px;
+    }
+    .cat-hero__media img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+
+    /* Фильтры */
+    .cat-products { padding: 60px 0 100px; background: var(--white, #fff); }
+    .cat-products__inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+
+    .cat-filters {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      margin-bottom: 48px; position: sticky; top: 80px; z-index: 5;
+      background: var(--white, #fff); padding: 16px 0; border-bottom: 1px solid var(--gray-100, #f0eee9);
+    }
+    .cat-filters__chip {
+      font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 10px 22px; border: 1px solid var(--gray-200, #ddd);
+      border-radius: 100px; background: transparent; color: var(--gray-600, #666);
+      cursor: pointer; transition: all 0.2s ease;
+    }
+    .cat-filters__chip:hover { border-color: var(--black, #111); color: var(--black, #111); }
+    .cat-filters__chip.active {
+      background: var(--black, #111); color: var(--white, #fff); border-color: var(--black, #111);
+    }
+
+    /* Grid карточек */
+    .cat-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+    }
+    .prod-card {
+      background: var(--white, #fff);
+      border-radius: 12px; overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex; flex-direction: column;
+      text-decoration: none; color: inherit;
+    }
+    .prod-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+    .prod-card__img {
+      aspect-ratio: 1/1; background: var(--warm-200, #ede7de);
+      display: flex; align-items: center; justify-content: center;
+      padding: 36px; overflow: hidden;
+      transition: background 0.4s;
+    }
+    .prod-card:hover .prod-card__img { background: var(--warm-100, #f7f4ef); }
+    .prod-card__img img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      mix-blend-mode: multiply;
+      transition: transform 0.4s ease;
+    }
+    .prod-card:hover .prod-card__img img { transform: scale(1.06); }
+
+    .prod-card__info { padding: 20px 24px 16px; flex-grow: 1; }
+    .prod-card__article {
+      font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--gray-400, #999); display: block; margin-bottom: 6px;
+    }
+    .prod-card__name {
+      font-size: 16px; font-weight: 700; line-height: 1.35;
+      color: var(--black, #111); margin-bottom: 12px;
+    }
+    .prod-card__meta { display: flex; gap: 6px; flex-wrap: wrap; }
+    .prod-card__chip {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase;
+      padding: 4px 10px; border: 1px solid var(--gray-200, #ddd); border-radius: 100px;
+      color: var(--gray-600, #666);
+    }
+    .prod-card__cta {
+      margin: 0 24px 24px; align-self: flex-start;
+      font-size: 11px !important; padding: 12px 24px !important;
+    }
+
+    .cat-empty {
+      text-align: center; padding: 80px 20px;
+      font-size: 14px; color: var(--gray-400, #999); letter-spacing: 1px; text-transform: uppercase;
+    }
+
+    /* Cross-sell */
+    .cat-related { background: var(--warm-100, #f7f4ef); padding: 100px 0; }
+    .cat-related__inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+    .cat-related .label { margin-bottom: 16px; }
+    .cat-related__title {
+      font-size: clamp(36px, 4vw, 64px);
+      font-weight: 800; line-height: 1; letter-spacing: -1.5px;
+      margin-bottom: 56px; color: var(--black, #111);
+    }
+    .cat-related__grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .cat-related__card {
+      text-decoration: none; color: inherit;
+      background: var(--white, #fff); border-radius: 12px; overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .cat-related__card:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(0,0,0,0.06); }
+    .cat-related__img {
+      aspect-ratio: 16/10; background: var(--warm-200, #ede7de);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px; overflow: hidden;
+    }
+    .cat-related__img img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      mix-blend-mode: multiply;
+      transition: transform 0.4s ease;
+    }
+    .cat-related__card:hover .cat-related__img img { transform: scale(1.05); }
+    .cat-related__name {
+      padding: 20px 20px 4px;
+      font-size: 16px; font-weight: 700; color: var(--black, #111);
+    }
+    .cat-related__sub {
+      padding: 0 20px 20px; display: block;
+      font-size: 12px; color: var(--gray-600, #666);
+    }
+
+    /* CTA */
+    .cat-cta {
+      background: var(--dark, #1a1612);
+      padding: 120px 0; text-align: center;
+    }
+    .cat-cta__inner { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    .cat-cta__title {
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 800; line-height: 1.05; letter-spacing: -1px;
+      margin-bottom: 16px;
+      color: #ffffff !important;
+    }
+    .cat-cta__sub {
+      font-size: 17px; line-height: 1.6;
+      color: rgba(255,255,255,0.65) !important;
+      margin-bottom: 40px;
+    }
+    .cat-cta .btn-switch {
+      margin: 0 auto;
+    }
+
+    /* МОДАЛКА */
+    .buy-modal { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; }
+    .buy-modal[hidden] { display: none; }
+    .buy-modal__overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); }
+    .buy-modal__panel {
+      position: relative; background: var(--white, #fff); border-radius: 16px;
+      padding: 48px; max-width: 480px; width: calc(100% - 40px); max-height: 90vh; overflow: auto;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.4); animation: modalIn 0.3s ease;
+    }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .buy-modal__close {
+      position: absolute; top: 16px; right: 16px; width: 36px; height: 36px;
+      background: transparent; border: none; cursor: pointer; font-size: 28px; color: var(--gray-400, #999);
+      transition: color 0.2s;
+    }
+    .buy-modal__close:hover { color: var(--black, #111); }
+    .buy-modal__title { font-size: 24px; font-weight: 700; margin: 12px 0 4px; color: var(--black, #111); }
+    .buy-modal__article { font-size: 12px; color: var(--gray-400, #999); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 28px; }
+    .buy-modal__links { display: flex; flex-direction: column; gap: 12px; }
+    .buy-modal__link {
+      display: flex; align-items: center; gap: 16px;
+      padding: 18px 20px; border: 1px solid var(--gray-200, #ddd); border-radius: 10px;
+      text-decoration: none; color: var(--black, #111);
+      transition: all 0.2s ease;
+    }
+    .buy-modal__link:hover { background: var(--black, #111); color: var(--white, #fff); border-color: var(--black, #111); transform: translateX(4px); }
+    .buy-modal__link-logo {
+      font-size: 13px; font-weight: 800; letter-spacing: 1px;
+      width: 50px; flex-shrink: 0;
+    }
+    .buy-modal__link-text { flex-grow: 1; font-size: 14px; font-weight: 500; }
+    .buy-modal__link-arrow { font-size: 18px; opacity: 0.5; transition: transform 0.2s; }
+    .buy-modal__link:hover .buy-modal__link-arrow { transform: translateX(4px); opacity: 1; }
+
+    /* Адаптив */
+    @media (max-width: 900px) {
+      .cat-hero__inner { padding: 0 24px; }
+      .cat-hero__grid { grid-template-columns: 1fr; gap: 40px; }
+      .cat-products__inner { padding: 0 24px; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .cat-related__inner, .cat-cta__inner { padding: 0 24px; }
+      .cat-related__grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .cat-grid { grid-template-columns: 1fr; }
+      .cat-hero { padding: 80px 0 40px; }
+    }
+  </style>
+</BaseLayout>

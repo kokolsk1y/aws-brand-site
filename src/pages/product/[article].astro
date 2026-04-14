@@ -1,0 +1,519 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import categoriesMeta from '../../data/categories.json';
+import seriesData from '../../data/series.json';
+import productsAll from '../../../public/products.json';
+
+// Маппинг: ключ в products.json → slug категории на сайте
+const keyToCategory = {
+  'udl_home': 'extensions-home',
+  'udl_garden': 'extensions-garden',
+  'power': 'power-connectors',
+  'clamps': 'clamps',
+  'patch': 'patch-cords',
+  'cable': 'cables'
+};
+
+// Собираем все товары из products.json + series.json
+function collectAll() {
+  const all = [];
+  // 1. Из products.json — 6 категорий
+  for (const [key, data] of Object.entries(productsAll)) {
+    const catSlug = keyToCategory[key];
+    if (!data.items) continue;
+    for (const item of data.items) {
+      all.push({
+        article: item.article,
+        name: item.name,
+        photo: item.photo.replace(/^img\//, '/img/'),
+        category: catSlug,
+        categoryTitle: categoriesMeta[catSlug]?.title || data.title,
+        isProduct: true
+      });
+    }
+  }
+  // 2. Из series.json — товары серий UNO/AURA
+  for (const [slug, series] of Object.entries(seriesData)) {
+    if (!series.groups) continue;
+    for (const groupKey of ['switches', 'sockets', 'frames', 'accessories', 'other']) {
+      const items = series.groups[groupKey] || [];
+      for (const item of items) {
+        all.push({
+          article: item.article,
+          name: item.name,
+          photo: `/img/products/${item.article}.webp`,
+          category: null,
+          categoryTitle: null,
+          series: slug,
+          seriesName: series.name,
+          color: item.color,
+          groupKey,
+          isSeries: true
+        });
+      }
+    }
+  }
+  return all;
+}
+
+export async function getStaticPaths() {
+  const all = [];
+  // Повторяем логику сбора (нельзя вызвать функцию из body вне getStaticPaths)
+  const keyToCat = {
+    'udl_home': 'extensions-home', 'udl_garden': 'extensions-garden',
+    'power': 'power-connectors', 'clamps': 'clamps',
+    'patch': 'patch-cords', 'cable': 'cables'
+  };
+  for (const [key, data] of Object.entries(productsAll)) {
+    if (!data.items) continue;
+    for (const item of data.items) {
+      all.push({ article: item.article, source: 'cat', key, data: item });
+    }
+  }
+  for (const [slug, series] of Object.entries(seriesData)) {
+    if (!series.groups) continue;
+    for (const groupKey of ['switches', 'sockets', 'frames', 'accessories', 'other']) {
+      const items = series.groups[groupKey] || [];
+      for (const item of items) {
+        all.push({ article: item.article, source: 'series', slug, groupKey, data: item });
+      }
+    }
+  }
+  return all.map(p => ({ params: { article: p.article }, props: { meta: p } }));
+}
+
+const { article } = Astro.params;
+const { meta } = Astro.props;
+
+// Достаём полные данные
+let product;
+if (meta.source === 'cat') {
+  const catSlug = keyToCategory[meta.key];
+  product = {
+    article: meta.data.article,
+    name: meta.data.name,
+    photo: meta.data.photo.replace(/^img\//, '/img/'),
+    category: catSlug,
+    categoryTitle: categoriesMeta[catSlug]?.title,
+    crumbType: 'category'
+  };
+} else {
+  const series = seriesData[meta.slug];
+  product = {
+    article: meta.data.article,
+    name: meta.data.name,
+    photo: `/img/products/${meta.data.article}.webp`,
+    color: meta.data.color,
+    groupKey: meta.groupKey,
+    series: meta.slug,
+    seriesName: series.name,
+    crumbType: 'series'
+  };
+}
+
+// Парсинг меты как на category странице
+function extractMeta(name) {
+  const m = [];
+  const len = name.match(/(\d+(?:[,.]\d+)?)\s*м(?![м²])/);
+  if (len) m.push(`${len[1].replace(',', '.')} м`);
+  const sockets = name.match(/(\d+)\s*гн/);
+  if (sockets) m.push(`${sockets[1]} гнёзд`);
+  if (/с\/з/.test(name)) m.push('с заземлением');
+  else if (/б\/з/.test(name)) m.push('без заземления');
+  const ip = name.match(/IP\s*(\d{2})/i);
+  if (ip) m.push(`IP${ip[1]}`);
+  const amp = name.match(/(\d+)\s*А(?![a-z])/);
+  if (amp) m.push(`${amp[1]} А`);
+  const holes = name.match(/(\d+)\s*отверст/i);
+  if (holes) m.push(`${holes[1]} отв.`);
+  if (/рычажк/i.test(name)) m.push('рычажк.');
+  const cat = name.match(/CAT\.?\s*(\d[a-zA-Z]*)/i);
+  if (cat) m.push(`Cat.${cat[1]}`);
+  if (/FTP/i.test(name) && !m.some(x => /FTP/i.test(x))) m.push('FTP');
+  if (/\bUTP\b/i.test(name) && !m.some(x => /UTP/i.test(x))) m.push('UTP');
+  if (/SAT-\d+/i.test(name)) m.push('SAT');
+  if (/OUTDOOR/i.test(name)) m.push('Outdoor');
+  else if (/INDOOR/i.test(name)) m.push('Indoor');
+  const wire = name.match(/(\d+(?:[,.]\d+)?)-(\d+(?:[,.]\d+)?)\s*мм²?/);
+  if (wire) m.push(`${wire[1].replace(',','.')}–${wire[2].replace(',','.')} мм²`);
+  return m;
+}
+
+function shortName(name) {
+  return name
+    .replace(/\s*\(AWSPRODUCTS\)/gi, '')
+    .replace(/\s*AWSproducts?/gi, '')
+    .replace(/\"Uno\"|\"Аура\"|\"Aura\"/gi, '')
+    .replace(/\bSoftTouch\b/gi, '')
+    .replace(/[A-Z]\d+[A-Z]?-\S+/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const meta3 = extractMeta(product.name);
+const title = shortName(product.name);
+
+// Связанные товары (до 4 штук из той же категории/серии)
+function findRelated() {
+  const list = [];
+  if (product.crumbType === 'category') {
+    const key = Object.keys(keyToCategory).find(k => keyToCategory[k] === product.category);
+    const data = productsAll[key];
+    if (data?.items) {
+      list.push(...data.items.filter(i => i.article !== product.article).slice(0, 4).map(i => ({
+        article: i.article,
+        name: shortName(i.name),
+        photo: i.photo.replace(/^img\//, '/img/'),
+        meta: extractMeta(i.name).slice(0, 2)
+      })));
+    }
+  } else {
+    const series = seriesData[product.series];
+    if (series?.groups?.[product.groupKey]) {
+      list.push(...series.groups[product.groupKey]
+        .filter(i => i.article !== product.article)
+        .slice(0, 4)
+        .map(i => ({
+          article: i.article,
+          name: i.name,
+          photo: `/img/products/${i.article}.webp`,
+          meta: extractMeta(i.name).slice(0, 2)
+        })));
+    }
+  }
+  return list;
+}
+
+const related = findRelated();
+
+// Генерим подробное описание на основе типа
+function buildDescription() {
+  const base = [];
+  if (/удлинитель/i.test(product.name)) {
+    base.push('Надёжный удлинитель с качественным кабелем ПВС и защёлкивающимися гнёздами. Корпус из ABS-пластика устойчивого к нагреву. Прочный провод с изолирующим слоем, обеспечивающим безопасное соединение.');
+  } else if (/клемма/i.test(product.name)) {
+    if (/рычажк/i.test(product.name)) {
+      base.push('Рычажковая клемма для быстрого соединения проводов без пайки. Защёлкивается с первого раза — надёжный контакт обеспечен. Подходит для многожильного и одножильного провода.');
+    } else {
+      base.push('Винтовая клемма для надёжного соединения проводов в распределительных коробках, светильниках и бытовой электрике. Полированные латунные контакты обеспечивают стабильное соединение.');
+    }
+  } else if (/патч-корд/i.test(product.name)) {
+    base.push('Патч-корд для соединения сетевого оборудования. Литые RJ45 коннекторы с позолоченными контактами — стабильная передача данных. Гибкий кабель с защитой от перелома.');
+  } else if (/^кабель/i.test(product.name)) {
+    base.push('Сетевой кабель с медными жилами категории 5e/6. Подходит для передачи данных и телевизионного сигнала. Есть версии для внутренней (Indoor) и наружной (Outdoor) прокладки.');
+  } else if (/коннектор/i.test(product.name)) {
+    base.push('Герметичный кабельный коннектор с классом защиты IP68 — выдерживает погружение и пыль. Используется для уличного освещения, насосов и других уличных систем.');
+  } else if (/выключатель/i.test(product.name)) {
+    const series = product.seriesName || 'AWS';
+    base.push(`Выключатель серии ${series}. Soft-touch покрытие клавиши, тихий ход, латунные контакты для стабильной работы в течение многих лет.`);
+  } else if (/розетк/i.test(product.name)) {
+    base.push(`Розетка с защитой от детей — шторки закрывают отверстия пока не вставишь вилку. Корпус из прочного ABS, контактные группы — полированная латунь.`);
+  } else if (/рамка/i.test(product.name)) {
+    base.push(`Рамка для монтажа электроустановочных изделий. Точная геометрия, ровные линии, ABS-пластик устойчивый к УФ и пожелтению.`);
+  } else {
+    base.push('Изделие бренда AWS Products. Качественные материалы, надёжная сборка, долгая эксплуатация.');
+  }
+  base.push('Совместимо со стандартными подрозетниками 68 мм. Быстрый монтаж благодаря винтовым зажимам и чёткой маркировке контактов.');
+  return base;
+}
+
+const description = buildDescription();
+---
+<BaseLayout title={`${title} — AWS Products`} description={description[0]}>
+
+  <!-- HERO ТОВАРА -->
+  <section class="prod-hero">
+    <div class="prod-hero__inner">
+      <nav class="prod-hero__crumbs">
+        <a href="/">Главная</a>
+        <span>/</span>
+        {product.crumbType === 'category' ? (
+          <>
+            <a href="/#categories">Ассортимент</a>
+            <span>/</span>
+            <a href={`/category/${product.category}`}>{product.categoryTitle}</a>
+          </>
+        ) : (
+          <>
+            <a href="/#series">Коллекции</a>
+            <span>/</span>
+            <a href={`/series/${product.series}`}>Серия {product.seriesName}</a>
+          </>
+        )}
+        <span>/</span>
+        <span class="prod-hero__crumbs-current">{product.article}</span>
+      </nav>
+
+      <div class="prod-hero__grid">
+        <div class="prod-hero__media" id="prodHeroMedia" data-zoom>
+          <img src={product.photo} alt={title} class="prod-hero__img" id="prodHeroImg" onerror="this.style.display='none';this.parentElement.querySelector('.prod-hero__placeholder').style.display='flex'" />
+          <div class="prod-hero__placeholder" style="display:none">Фото готовится</div>
+          <div class="prod-hero__lens" id="prodHeroLens" aria-hidden="true"></div>
+          <span class="prod-hero__zoom-hint">Наведите, чтобы увеличить</span>
+        </div>
+
+        <div class="prod-hero__text">
+          <span class="prod-hero__article">{product.article}</span>
+          <h1 class="prod-hero__title">{title}</h1>
+
+          {meta3.length > 0 && (
+            <div class="prod-hero__meta">
+              {meta3.map(m => <span class="prod-hero__chip">{m}</span>)}
+            </div>
+          )}
+
+          <div class="prod-hero__desc">
+            {description.map(p => <p>{p}</p>)}
+          </div>
+
+          <button class="btn-switch" id="buyBtn">Где купить</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Связанные товары -->
+  {related.length > 0 && (
+    <section class="prod-related">
+      <div class="prod-related__inner">
+        <p class="label">Похожие</p>
+        <h2 class="prod-related__title">
+          {product.crumbType === 'category' ? 'Другие из этой категории' : 'Ещё из этой серии'}
+        </h2>
+        <div class="prod-related__grid">
+          {related.map(r => (
+            <a href={`/product/${encodeURIComponent(r.article)}`} class="prod-related__card" data-tilt data-tilt-max="5">
+              <div class="prod-related__img">
+                <img src={r.photo} alt={r.name} loading="lazy" onerror="this.style.display='none'" />
+              </div>
+              <div class="prod-related__body">
+                <span class="prod-related__article">{r.article}</span>
+                <h3 class="prod-related__name">{r.name}</h3>
+                {r.meta.length > 0 && (
+                  <div class="prod-related__meta">
+                    {r.meta.map(m => <span class="prod-related__chip">{m}</span>)}
+                  </div>
+                )}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="cat-cta">
+    <div class="cat-cta__inner">
+      <h2 class="cat-cta__title">Не нашли нужный артикул?</h2>
+      <p class="cat-cta__sub">Напишите нам — проконсультируем и подскажем аналог</p>
+      <a href="mailto:info@awsproducts.ru" class="btn-switch">Связаться</a>
+    </div>
+  </section>
+
+  <!-- МОДАЛКА «Где купить» -->
+  <div class="buy-modal" id="buyModal" hidden>
+    <div class="buy-modal__overlay" id="buyModalOverlay"></div>
+    <div class="buy-modal__panel">
+      <button class="buy-modal__close" id="buyModalClose" aria-label="Закрыть">&times;</button>
+      <p class="label">Где купить</p>
+      <h3 class="buy-modal__title">{title}</h3>
+      <p class="buy-modal__article">Артикул: {product.article}</p>
+      <div class="buy-modal__links">
+        <a href="https://www.ozon.ru/seller/awsproducts/" target="_blank" rel="noopener" class="buy-modal__link">
+          <span class="buy-modal__link-logo">OZON</span>
+          <span class="buy-modal__link-text">Маркетплейс Ozon</span>
+          <span class="buy-modal__link-arrow">→</span>
+        </a>
+        <a href="https://www.wildberries.ru/seller/awsproducts" target="_blank" rel="noopener" class="buy-modal__link">
+          <span class="buy-modal__link-logo">WB</span>
+          <span class="buy-modal__link-text">Wildberries</span>
+          <span class="buy-modal__link-arrow">→</span>
+        </a>
+        <a href="https://stv39.ru/help/nashi-partnery/awsproducts/" target="_blank" rel="noopener" class="buy-modal__link">
+          <span class="buy-modal__link-logo">ЭЦ</span>
+          <span class="buy-modal__link-text">Электроцентр</span>
+          <span class="buy-modal__link-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    const modal = document.getElementById('buyModal');
+    const overlay = document.getElementById('buyModalOverlay');
+    const closeBtn = document.getElementById('buyModalClose');
+    const buyBtn = document.getElementById('buyBtn');
+    function openBuy() { if (modal) { modal.hidden = false; document.body.style.overflow = 'hidden'; } }
+    function closeBuy() { if (modal) { modal.hidden = true; document.body.style.overflow = ''; } }
+    if (buyBtn) buyBtn.addEventListener('click', openBuy);
+    if (overlay) overlay.addEventListener('click', closeBuy);
+    if (closeBtn) closeBtn.addEventListener('click', closeBuy);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBuy(); });
+
+    // Cursor zoom лупа
+    (function () {
+      const wrap = document.getElementById('prodHeroMedia');
+      const img = document.getElementById('prodHeroImg');
+      const lens = document.getElementById('prodHeroLens');
+      if (!wrap || !img || !lens) return;
+      let raf = null;
+      wrap.addEventListener('mousemove', e => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          const rect = wrap.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const bx = (x / rect.width) * 100;
+          const by = (y / rect.height) * 100;
+          lens.style.left = x + 'px';
+          lens.style.top = y + 'px';
+          lens.style.backgroundImage = `url(${img.src})`;
+          lens.style.backgroundSize = `${rect.width * 2.2}px ${rect.height * 2.2}px`;
+          lens.style.backgroundPosition = `${bx}% ${by}%`;
+          raf = null;
+        });
+      }, { passive: true });
+      wrap.addEventListener('mouseenter', () => wrap.classList.add('is-zooming'));
+      wrap.addEventListener('mouseleave', () => wrap.classList.remove('is-zooming'));
+    })();
+  </script>
+
+  <style is:global>
+    .prod-hero {
+      background: linear-gradient(180deg, var(--warm-100, #f7f4ef) 0%, var(--white, #fff) 100%);
+      padding: 120px 0 80px;
+    }
+    .prod-hero__inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+    .prod-hero__crumbs {
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+      font-size: 11px; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--gray-400, #999); margin-bottom: 48px;
+    }
+    .prod-hero__crumbs a { color: var(--gray-400, #999); text-decoration: none; transition: color 0.2s; }
+    .prod-hero__crumbs a:hover { color: var(--black, #111); }
+    .prod-hero__crumbs span { opacity: 0.4; }
+    .prod-hero__crumbs-current { color: var(--black, #111) !important; opacity: 1 !important; }
+
+    .prod-hero__grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+    }
+    .prod-hero__media {
+      aspect-ratio: 1/1; background: var(--warm-200, #ede7de);
+      border-radius: 16px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      padding: 60px; position: sticky; top: 100px;
+      cursor: zoom-in;
+    }
+    .prod-hero__media img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+    .prod-hero__lens {
+      position: absolute;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      background-repeat: no-repeat;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 12px 40px rgba(0,0,0,0.18);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 2;
+    }
+    .prod-hero__media.is-zooming .prod-hero__lens { opacity: 1; }
+    .prod-hero__zoom-hint {
+      position: absolute; bottom: 20px; right: 20px;
+      font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(0,0,0,0.4);
+      padding: 8px 14px; border-radius: 100px;
+      background: rgba(255,255,255,0.7); backdrop-filter: blur(6px);
+      transition: opacity 0.25s ease;
+    }
+    .prod-hero__media.is-zooming .prod-hero__zoom-hint { opacity: 0; }
+    .prod-hero__placeholder {
+      font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(0,0,0,0.25);
+      border: 1.5px dashed rgba(0,0,0,0.15); padding: 20px 28px; border-radius: 4px;
+    }
+    .prod-hero__text { padding: 12px 0; }
+    .prod-hero__article {
+      font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gray-400, #999); margin-bottom: 16px; display: block;
+    }
+    .prod-hero__title {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 800; line-height: 1.05; letter-spacing: -1px;
+      margin-bottom: 24px; color: var(--black, #111);
+    }
+    .prod-hero__meta {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+    }
+    .prod-hero__chip {
+      font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
+      padding: 6px 14px; border: 1px solid var(--gray-200, #ddd); border-radius: 100px;
+      color: var(--gray-600, #666);
+    }
+    .prod-hero__desc {
+      font-size: 15px; line-height: 1.75; color: var(--gray-600, #666);
+      margin-bottom: 36px; max-width: 520px;
+    }
+    .prod-hero__desc p { margin-bottom: 16px; }
+    .prod-hero__desc p:last-child { margin-bottom: 0; }
+
+    /* Related */
+    .prod-related { background: var(--warm-100, #f7f4ef); padding: 100px 0; }
+    .prod-related__inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+    .prod-related .label { margin-bottom: 16px; }
+    .prod-related__title {
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 800; letter-spacing: -1px;
+      margin-bottom: 48px; color: var(--black, #111);
+    }
+    .prod-related__grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .prod-related__card {
+      text-decoration: none; color: inherit;
+      background: var(--white, #fff); border-radius: 12px; overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .prod-related__card:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(0,0,0,0.07); }
+    .prod-related__img {
+      aspect-ratio: 1/1; background: var(--warm-200, #ede7de);
+      display: flex; align-items: center; justify-content: center; padding: 28px;
+    }
+    .prod-related__img img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      mix-blend-mode: multiply;
+      transition: transform 0.4s ease;
+    }
+    .prod-related__card:hover .prod-related__img img { transform: scale(1.05); }
+    .prod-related__body { padding: 18px 20px 20px; }
+    .prod-related__article {
+      font-size: 10px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--gray-400, #999); display: block; margin-bottom: 5px;
+    }
+    .prod-related__name {
+      font-size: 13px; font-weight: 600; line-height: 1.4;
+      color: var(--black, #111); margin-bottom: 10px;
+    }
+    .prod-related__meta { display: flex; gap: 5px; flex-wrap: wrap; }
+    .prod-related__chip {
+      font-size: 9px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase;
+      padding: 3px 8px; border: 1px solid var(--gray-200, #ddd); border-radius: 100px;
+      color: var(--gray-600, #666);
+    }
+
+    @media (max-width: 900px) {
+      .prod-hero__inner, .prod-related__inner { padding: 0 24px; }
+      .prod-hero__grid { grid-template-columns: 1fr; gap: 40px; }
+      .prod-hero__media { position: static; padding: 40px; }
+      .prod-related__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .prod-hero { padding: 80px 0 40px; }
+      .prod-related__grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</BaseLayout>

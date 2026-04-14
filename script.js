@@ -114,6 +114,39 @@ heroSwiper.on('slideChangeTransitionStart', () => {
     }
 });
 
+// Автопереход слайдов 2 и 3 — запускаем crossfade ЗА `SWIPER_SPEED` до окончания видео,
+// чтобы переход закончился ровно к концу видео и стоп-кадр не был виден.
+const SYNC_ON_ENDED = new Set([1, 2]);
+const SWIPER_SPEED = 1000; // мс crossfade (должно совпадать с конфигом выше)
+let currentTimeHandler = null;
+
+function bindVideoEndSync() {
+    if (currentTimeHandler) {
+        currentTimeHandler.video.removeEventListener('timeupdate', currentTimeHandler.fn);
+        currentTimeHandler = null;
+    }
+    if (!SYNC_ON_ENDED.has(heroSwiper.realIndex)) return;
+
+    const activeVideo = document.querySelector('.swiper-slide-active .hero-slide__video');
+    if (!activeVideo) return;
+
+    let triggered = false;
+    const fn = () => {
+        if (triggered) return;
+        if (!activeVideo.duration || isNaN(activeVideo.duration)) return;
+        const remaining = activeVideo.duration - activeVideo.currentTime;
+        if (remaining <= SWIPER_SPEED / 1000) {
+            triggered = true;
+            heroSwiper.slideNext();
+        }
+    };
+    activeVideo.addEventListener('timeupdate', fn);
+    currentTimeHandler = { video: activeVideo, fn };
+}
+
+heroSwiper.on('slideChangeTransitionEnd', bindVideoEndSync);
+setTimeout(bindVideoEndSync, 500);
+
 // Начальная анимация
 setTimeout(animateSlideContent, 300);
 
@@ -163,14 +196,122 @@ gsap.from('.series__header', {
     }
 });
 
-// ─── CONSTRUCTOR: Chip toggle ───
+// ─── SERIES CARDS: Переключатель цвета (статичное фото) ───
+
+document.querySelectorAll('.series__card').forEach(card => {
+    const photo = card.querySelector('.series__photo');
+    if (!photo) return;
+    const img = photo.querySelector('.series__photo-img');
+    const ph = photo.querySelector('.series__photo-placeholder');
+    const sources = {
+        white: photo.dataset.white || '',
+        black: photo.dataset.black || ''
+    };
+    const dots = card.querySelectorAll('.dot[data-color]');
+
+    function showPlaceholder() {
+        if (img) img.style.display = 'none';
+        if (ph) ph.style.display = '';
+    }
+    function showImage() {
+        if (img) img.style.display = '';
+        if (ph) ph.style.display = 'none';
+    }
+
+    if (img) {
+        img.addEventListener('error', showPlaceholder);
+        img.addEventListener('load', showImage);
+    }
+
+    function setColor(color) {
+        const src = sources[color];
+        if (src) {
+            img.src = src;
+        } else {
+            showPlaceholder();
+        }
+    }
+
+    // Инициализация по активной точке
+    const activeDot = card.querySelector('.dot[data-color].active');
+    if (activeDot) setColor(activeDot.dataset.color);
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            dots.forEach(d => d.classList.remove('active'));
+            dot.classList.add('active');
+            setColor(dot.dataset.color);
+        });
+    });
+});
+
+// ─── CONSTRUCTOR: Chip toggle + обновление превью ───
+
+const constructorState = { series: 'UNO', color: 'Белый', frame: 'Пластик' };
+const constructorPreview = document.getElementById('constructorPreview');
+const constructorPlaceholder = document.getElementById('constructorPlaceholder');
+
+const IMG_VERSION = 'v=20260414e';
+const constructorMap = {
+    'UNO|Белый|Пластик':   `img/series/uno-1kl-w.png?${IMG_VERSION}`,
+    'UNO|Чёрный|Пластик':  `img/series/uno-1kl-b.png?${IMG_VERSION}`,
+    'AURA|Белый|Пластик':  `img/series/aura-1kl-w.png?${IMG_VERSION}`,
+    'AURA|Чёрный|Пластик': `img/series/aura-1kl-b.png?${IMG_VERSION}`
+};
+
+function showConstructorPlaceholder() {
+    if (constructorPreview) constructorPreview.style.display = 'none';
+    if (constructorPlaceholder) constructorPlaceholder.style.display = '';
+}
+function showConstructorImage() {
+    if (constructorPreview) constructorPreview.style.display = '';
+    if (constructorPlaceholder) constructorPlaceholder.style.display = 'none';
+}
+if (constructorPreview) {
+    constructorPreview.addEventListener('error', showConstructorPlaceholder);
+    constructorPreview.addEventListener('load', showConstructorImage);
+}
+
+function updateConstructorPreview() {
+    const key = constructorState.series + '|' + constructorState.color + '|' + constructorState.frame;
+    const src = constructorMap[key];
+    if (!constructorPreview || !constructorPlaceholder) return;
+
+    const apply = () => {
+        if (src) {
+            constructorPreview.src = src;
+            showConstructorImage();
+        } else {
+            showConstructorPlaceholder();
+        }
+    };
+
+    // View Transitions API — нативный морфинг между состояниями (Chrome 111+, Safari 18+)
+    if (document.startViewTransition) {
+        constructorPreview.style.viewTransitionName = 'constructor-product';
+        document.startViewTransition(() => apply());
+    } else {
+        // Fallback — fade-out + src swap + fade-in
+        constructorPreview.classList.add('fade-out');
+        setTimeout(() => {
+            apply();
+            constructorPreview.classList.remove('fade-out');
+        }, 250);
+    }
+}
 
 document.querySelectorAll('.constructor__option').forEach(option => {
+    const label = option.querySelector('.constructor__option-label')?.textContent.trim();
     const chips = option.querySelectorAll('.constructor__chip');
     chips.forEach(chip => {
         chip.addEventListener('click', () => {
             chips.forEach(c => c.classList.remove('active'));
             chip.classList.add('active');
+            const value = chip.textContent.trim();
+            if (label === 'Серия') constructorState.series = value;
+            else if (label === 'Цвет') constructorState.color = value;
+            else if (label === 'Рамка') constructorState.frame = value;
+            updateConstructorPreview();
         });
     });
 });
@@ -271,6 +412,23 @@ advantagesSwiper.on('slideChangeTransitionStart', () => {
     if (text) gsap.fromTo(text, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.35, ease: 'power3.out' });
 });
 
+// ─── HERO TAGS → ADVANTAGES SLIDE ───
+
+document.querySelectorAll('.hero-slide__tag[data-adv-slide]').forEach(tag => {
+    tag.addEventListener('click', e => {
+        e.preventDefault();
+        const idx = parseInt(tag.dataset.advSlide, 10) || 0;
+        const section = document.getElementById('advantages');
+        if (!section) return;
+
+        // Переключаем swiper МГНОВЕННО до скролла — пользователь прибудет на готовый слайд
+        if (advantagesSwiper && advantagesSwiper.slideToLoop) {
+            advantagesSwiper.slideToLoop(idx, 0);
+        }
+        lenis.scrollTo(section, { duration: 1.1 });
+    });
+});
+
 // ─── WHERE BUY ───
 
 gsap.from('.where-buy__title', {
@@ -311,11 +469,11 @@ gsap.from('.footer__top', {
     }
 });
 
-// ─── PARALLAX: лёгкий эффект на секциях ───
+// ─── PARALLAX: мягкий drift только на контейнерах (продукт не вылезает) ───
 
 document.querySelectorAll('.series__card-visual, .categories__card-img, .about__image').forEach(el => {
     gsap.to(el, {
-        yPercent: -5,
+        yPercent: -4,
         ease: 'none',
         scrollTrigger: {
             trigger: el,
@@ -325,5 +483,81 @@ document.querySelectorAll('.series__card-visual, .categories__card-img, .about__
         }
     });
 });
+
+// Лёгкий drift самого продукта — внутри безопасной амплитуды 4%, не выскочит за padding
+document.querySelectorAll('.series__photo-img, .categories__card-img img').forEach(el => {
+    gsap.to(el, {
+        yPercent: -4,
+        ease: 'none',
+        scrollTrigger: {
+            trigger: el.closest('.series__card, .categories__card'),
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1.5
+        }
+    });
+});
+
+// ─── SPOTLIGHT HOVER: светлое пятно следует за курсором в карточках ───
+(function initSpotlight() {
+    if (window.matchMedia('(hover: none)').matches) return;
+    document.querySelectorAll('.categories__card, .series__card').forEach(card => {
+        const visual = card.querySelector('.categories__card-img, .series__card-visual');
+        if (!visual) return;
+        visual.addEventListener('mousemove', (e) => {
+            const rect = visual.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            visual.style.setProperty('--spot-x', x + '%');
+            visual.style.setProperty('--spot-y', y + '%');
+        });
+    });
+})();
+
+// ─── 3D TILT: лёгкий наклон карточек серий (1-2°) ───
+(function initTilt() {
+    if (window.matchMedia('(hover: none)').matches) return;
+    const MAX = 2.5;
+    document.querySelectorAll('.series__card').forEach(card => {
+        card.style.transformStyle = 'preserve-3d';
+        card.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s';
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dx = (e.clientX - cx) / (rect.width / 2);
+            const dy = (e.clientY - cy) / (rect.height / 2);
+            card.style.transform = `perspective(1200px) translateY(-6px) rotateX(${-dy * MAX}deg) rotateY(${dx * MAX}deg)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+    });
+})();
+
+// ─── MAGNETIC CTA: кнопки "притягиваются" к курсору ───
+(function initMagneticButtons() {
+    if (window.matchMedia('(hover: none)').matches) return; // пропускаем на тач-устройствах
+    const STRENGTH = 0.35;
+    const RADIUS = 90;
+    document.querySelectorAll('.hero-slide__btn, .about__link').forEach(btn => {
+        btn.style.transition = 'transform 0.25s cubic-bezier(0.23, 1, 0.32, 1)';
+        btn.style.willChange = 'transform';
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dx = e.clientX - cx;
+            const dy = e.clientY - cy;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            if (dist < RADIUS + Math.max(rect.width, rect.height) / 2) {
+                btn.style.transform = `translate(${dx * STRENGTH}px, ${dy * STRENGTH}px)`;
+            }
+        });
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = '';
+        });
+    });
+})();
 
 console.log('AWS Brand Site v6 — По ТЗ Яны loaded');

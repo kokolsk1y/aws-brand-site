@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Products — Электрика нового стандарта</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ========== HEADER ========== -->
+    <header class="header dark" id="header">
+        <div class="header__inner">
+            <div class="header__left">
+                <button class="header__burger" id="menuToggle" aria-label="Меню">
+                    <span></span><span></span><span></span>
+                </button>
+                <span class="header__slogan desktop-only">Качество в каждой детали</span>
+            </div>
+            <div class="header__center">
+                <a href="#" class="header__logo">
+                    <img src="logo/AWS.png" alt="AWS Products" class="header__logo-img">
+                </a>
+            </div>
+            <div class="header__right">
+                <a href="#about" class="header__link desktop-only">О бренде</a>
+                <a href="#buy" class="header__link desktop-only">Где купить</a>
+                <a href="#contacts" class="header__link desktop-only">Контакты</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== БОКОВОЕ МЕНЮ ========== -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu__overlay" id="menuOverlay"></div>
+        <div class="side-menu__panel">
+            <button class="side-menu__close" id="menuClose">&times;</button>
+            <nav class="side-menu__nav">
+                <div class="side-menu__group">
+                    <button class="side-menu__toggle">Ассортимент <span class="side-menu__arrow">&#9662;</span></button>
+                    <div class="side-menu__dropdown">
+                        <a href="#series" class="side-menu__sub">Розетки и выключатели</a>
+                        <a href="/category/extensions-home" class="side-menu__sub">Удлинители бытовые</a>
+                        <a href="/category/extensions-garden" class="side-menu__sub">Удлинители садовые</a>
+                        <a href="/category/power-connectors" class="side-menu__sub">Силовые разъёмы</a>
+                        <a href="/category/clamps" class="side-menu__sub">Клеммы</a>
+                        <a href="/category/patch-cords" class="side-menu__sub">Патч-корды</a>
+                        <a href="/category/cables" class="side-menu__sub">Кабель</a>
+                    </div>
+                </div>
+                <a href="#about" class="side-menu__item">О бренде</a>
+                <a href="#buy" class="side-menu__item">Где купить</a>
+                <a href="#contacts" class="side-menu__item">Контакты</a>
+            </nav>
+            <div class="side-menu__contacts">
+                <a href="mailto:info@awsproducts.ru">info@awsproducts.ru</a>
+                <div class="side-menu__social">
+                    <a href="#">Telegram</a>
+                    <a href="#">WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== HERO СЛАЙДЕР (5 слайдов по ТЗ) ========== -->
+    <section class="hero">
+        <div class="swiper hero-swiper">
+            <div class="swiper-wrapper">
+
+                <!-- Слайд 1: Разбор выключателя -->
+                <div class="swiper-slide" data-swiper-autoplay="9000">
+                    <div class="hero-slide" data-theme="dark">
+                        <div class="hero-slide__bg hero-slide__bg--dark">
+                            <video autoplay muted playsinline class="hero-slide__video">
+                                <source src="hero-decomposition.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="hero-slide__content">
+                            <h2 class="hero-slide__title">Качество<br>в каждой детали</h2>
+                            <p class="hero-slide__subtitle">Контактные группы, механизмы и покрытия,<br>которые рассчитаны на годы работы</p>
+                            <div class="hero-slide__tags">
+                                <a href="#advantages" class="hero-slide__tag" data-adv-slide="0">латунные контакты</a>
+                                <a href="#advantages" class="hero-slide__tag" data-adv-slide="2">устойчивое покрытие</a>
+                                <a href="#advantages" class="hero-slide__tag" data-adv-slide="1">точная механика</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Слайд 2: Интерьер — гостиная -->
+                <div class="swiper-slide" data-swiper-autoplay="11000">
+                    <div class="hero-slide" data-theme="dark">
+                        <div class="hero-slide__bg">
+                            <video autoplay muted playsinline class="hero-slide__video">
+                                <source src="kling_ai_finish/гостинная.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="hero-slide__content">
+                            <h2 class="hero-slide__title">Детали, которые<br>формируют<br>пространство</h2>
+                            <a href="#series" class="hero-slide__btn">Коллекции</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Слайд 3: Интерьер — кухня -->
+                <div class="swiper-slide" data-swiper-autoplay="11000">
+                    <div class="hero-slide" data-theme="dark">
+                        <div class="hero-slide__bg">
+                            <video autoplay muted playsinline class="hero-slide__video">
+                                <source src="kling_ai_finish/кухня.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="hero-slide__content">
+                            <h2 class="hero-slide__title">Детали, которые<br>формируют<br>пространство</h2>
+                            <a href="#series" class="hero-slide__btn">Коллекции</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Слайд 4: Soft-touch -->
+                <div class="swiper-slide">
+                    <div class="hero-slide" data-theme="dark">
+                        <div class="hero-slide__bg hero-slide__bg--warm">
+                            <img src="img/hero/hero-4-softtouch.jpg" alt="Soft-touch макро" class="hero-slide__img" onerror="this.style.display='none'">
+                        </div>
+                        <div class="hero-slide__content">
+                            <p class="hero-slide__label">Серия Uno</p>
+                            <h2 class="hero-slide__title">Soft-touch</h2>
+                            <p class="hero-slide__subtitle">Лёгкое касание — точный отклик</p>
+                            <a href="#uno" class="hero-slide__btn">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Слайд 5: Силовой разъём -->
+                <div class="swiper-slide">
+                    <div class="hero-slide" data-theme="dark">
+                        <div class="hero-slide__bg hero-slide__bg--dark">
+                            <img src="img/hero/hero-5-power.jpg" alt="Силовой разъём" class="hero-slide__img" onerror="this.style.display='none'">
+                        </div>
+                        <div class="hero-slide__content">
+                            <h2 class="hero-slide__title">Надёжность<br>под нагрузкой</h2>
+                            <p class="hero-slide__subtitle">Безопасные соединения<br>для сложных условий</p>
+                            <a href="#categories" class="hero-slide__btn">Каталог</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="hero-pagination"></div>
+        </div>
+    </section>
+
+    <!-- ========== СЕРИИ: РОЗЕТКИ И ВЫКЛЮЧАТЕЛИ ========== -->
+    <section class="series" id="series">
+        <div class="series__inner">
+            <div class="series__header">
+                <p class="label">Розетки и выключатели</p>
+                <h2 class="series__title">Три серии —<br><em>один стандарт</em></h2>
+            </div>
+            <div class="series__grid">
+
+                <!-- UNO -->
+                <div class="series__card" id="uno" data-series="uno">
+                    <div class="series__card-visual">
+                        <div class="series__photo"
+                             data-white="img/series/uno-1kl-w.png?v=20260414e"
+                             data-black="img/series/uno-1kl-b.png?v=20260414e">
+                            <img src="img/series/uno-1kl-w.png?v=20260414e" alt="UNO SoftTouch" class="series__photo-img">
+                            <div class="series__photo-placeholder" style="display:none">Фото скоро</div>
+                        </div>
+                    </div>
+                    <div class="series__card-info">
+                        <span class="series__card-badge">Новинка</span>
+                        <h3 class="series__card-name">UNO SoftTouch</h3>
+                        <p class="series__card-desc">Бархатистое покрытие, тихий ход клавиши, усиленный механизм</p>
+                        <div class="series__card-colors">
+                            <span class="dot dot--white active" data-color="white" title="Белый"></span>
+                            <span class="dot dot--black" data-color="black" title="Чёрный"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DESIGN -->
+                <div class="series__card" id="design" data-series="design">
+                    <div class="series__card-visual">
+                        <div class="series__card-placeholder">Серия в разработке</div>
+                    </div>
+                    <div class="series__card-info">
+                        <h3 class="series__card-name">DESIGN</h3>
+                        <p class="series__card-desc">Дизайнерская серия для выразительных интерьеров</p>
+                        <div class="series__card-colors">
+                            <span class="dot dot--white active"></span>
+                            <span class="dot dot--black"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AURA -->
+                <div class="series__card" id="aura" data-series="aura">
+                    <div class="series__card-visual">
+                        <div class="series__photo"
+                             data-white="img/series/aura-1kl-w.png?v=20260414e"
+                             data-black="img/series/aura-1kl-b.png?v=20260414e">
+                            <img src="img/series/aura-1kl-w.png?v=20260414e" alt="AURA" class="series__photo-img">
+                            <div class="series__photo-placeholder" style="display:none">Фото скоро</div>
+                        </div>
+                    </div>
+                    <div class="series__card-info">
+                        <h3 class="series__card-name">AURA</h3>
+                        <p class="series__card-desc">Строгая классика — чистые линии и выверенные пропорции</p>
+                        <div class="series__card-colors">
+                            <span class="dot dot--white active" data-color="white" title="Белый"></span>
+                            <span class="dot dot--black" data-color="black" title="Чёрный"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Конструктор цветов -->
+            <div class="constructor" id="constructor">
+                <div class="constructor__inner">
+                    <div class="constructor__preview">
+                        <img src="img/series/uno-1kl-w.png?v=20260414e" alt="Превью" class="constructor__preview-img" id="constructorPreview">
+                        <div class="constructor__preview-placeholder" id="constructorPlaceholder" style="display:none">Фото скоро</div>
+                    </div>
+                    <div class="constructor__controls">
+                        <p class="label">Конструктор</p>
+                        <h3 class="constructor__title">Соберите свой выключатель</h3>
+                        <div class="constructor__option">
+                            <span class="constructor__option-label">Серия</span>
+                            <div class="constructor__chips">
+                                <button class="constructor__chip active">UNO</button>
+                                <button class="constructor__chip">DESIGN</button>
+                                <button class="constructor__chip">AURA</button>
+                            </div>
+                        </div>
+                        <div class="constructor__option">
+                            <span class="constructor__option-label">Цвет</span>
+                            <div class="constructor__chips">
+                                <button class="constructor__chip active">Белый</button>
+                                <button class="constructor__chip">Чёрный</button>
+                            </div>
+                        </div>
+                        <div class="constructor__option">
+                            <span class="constructor__option-label">Рамка</span>
+                            <div class="constructor__chips">
+                                <button class="constructor__chip active">Пластик</button>
+                                <button class="constructor__chip">Стекло</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== КАТЕГОРИИ ТОВАРОВ ========== -->
+    <section class="categories" id="categories">
+        <div class="categories__inner">
+            <div class="categories__header">
+                <p class="label">Ассортимент</p>
+                <h2 class="categories__title">Всё для подключения</h2>
+            </div>
+            <div class="categories__grid">
+                <a href="/category/extensions-home" class="categories__card" data-cat="udl_home">
+                    <div class="categories__card-img">
+                        <img src="img/products/AWS-H03-1,5.png?v=20260414e" alt="Удлинители бытовые" loading="lazy">
+                    </div>
+                    <h3 class="categories__card-name">Удлинители бытовые</h3>
+                    <span class="categories__card-sub">1.5 — 5 м · 5 моделей</span>
+                </a>
+                <a href="/category/extensions-garden" class="categories__card" data-cat="udl_garden">
+                    <div class="categories__card-img">
+                        <img src="img/products/AWS-HZ2-01-15.png?v=20260414e" alt="Удлинители садовые" loading="lazy">
+                    </div>
+                    <h3 class="categories__card-name">Удлинители садовые</h3>
+                    <span class="categories__card-sub">10 — 25 м · 3 модели</span>
+                </a>
+                <a href="/category/power-connectors" class="categories__card" data-cat="power">
+                    <div class="categories__card-img">
+                        <img src="img/products/SN-33.png?v=20260414e" alt="Силовые разъёмы" loading="lazy">
+                    </div>
+                    <h3 class="categories__card-name">Силовые разъёмы</h3>
+                    <span class="categories__card-sub">IP68 коннекторы · 2 модели</span>
+                </a>
+                <a href="/category/clamps" class="categories__card" data-cat="clamps">
+                    <div class="categories__card-img">
+                        <img src="img/products/SN-221412.png?v=20260414e" alt="Клеммы" loading="lazy">
+                    </div>
+                    <h3 class="categories__card-name">Клеммы</h3>
+                    <span class="categories__card-sub">0.2 — 4 мм² · 18 моделей</span>
+                </a>
+                <a href="/category/patch-cords" class="categories__card" data-cat="patch">
+                    <div class="categories__card-img">
+                        <img src="img/products/AWS-13010.png?v=20260414e" alt="Патч-корды UTP" loading="lazy">
+                    </div>
+                    <h3 class="categories__card-name">Патч-корды UTP</h3>
+                    <span class="categories__card-sub">Cat.5e / Cat.6e · 0.5—30 м · 25 моделей</span>
+                </a>
+                <a href="/category/cables" class="categories__card" data-cat="cable">
+                    <div class="categories__card-img">
+                        <img src="img/products/AWS-12982.png?v=20260414e" alt="Кабель" loading="lazy">
+                    </div>
+                    <h3 class="categories__card-name">Кабель</h3>
+                    <span class="categories__card-sub">FTP / UTP / SAT · 19 моделей</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== О БРЕНДЕ ========== -->
+    <section class="about" id="about">
+        <div class="about__inner">
+            <div class="about__text">
+                <p class="label">О бренде</p>
+                <h2 class="about__title">AWS Products</h2>
+                <p class="about__desc">Российский бренд электрики с&nbsp;вниманием к&nbsp;деталям, дизайну и&nbsp;честной цене. Мы&nbsp;делаем вещи, которые становятся частью пространства&nbsp;&mdash; работают тихо, выглядят аккуратно и&nbsp;ощущаются комфортно каждый день.</p>
+                <a href="#advantages" class="about__link">Подробнее о преимуществах</a>
+            </div>
+            <div class="about__image">
+                <img src="img/about/about-logo.jpg" alt="AWS Products" class="about__image-img" onerror="this.style.display='none';this.parentElement.querySelector('.about__image-placeholder').style.display=''">
+                <div class="about__image-placeholder" style="display:none">Фото скоро</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ПРЕИМУЩЕСТВА (чередование лево-право) ========== -->
+    <section class="advantages" id="advantages">
+        <div class="swiper advantages-swiper">
+            <div class="swiper-wrapper">
+
+                <!-- 01 — Надёжные материалы (фото СЛЕВА) -->
+                <div class="swiper-slide">
+                    <div class="advantages__slide">
+                        <div class="advantages__media advantages__media--cover">
+                            <img src="img/advantages/01-brass.jpg?v=20260414e" alt="Контактные группы из латуни" class="advantages__cover-img" onerror="this.style.display='none'">
+                        </div>
+                        <div class="advantages__gradient advantages__gradient--right"></div>
+                        <div class="advantages__content advantages__content--right">
+                            <span class="advantages__num">01</span>
+                            <h3 class="advantages__heading">Надёжные материалы</h3>
+                            <p class="advantages__text">Контактные группы из латуни для стабильной работы. Контроль качества на каждом этапе — от сырья до упаковки.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 02 — Точное исполнение (фото СПРАВА) -->
+                <div class="swiper-slide">
+                    <div class="advantages__slide advantages__slide--reverse">
+                        <div class="advantages__media advantages__media--cover">
+                            <img src="img/advantages/02-click.jpg?v=20260414f" alt="Точное исполнение" class="advantages__cover-img" onerror="this.style.display='none'">
+                        </div>
+                        <div class="advantages__gradient advantages__gradient--left"></div>
+                        <div class="advantages__content advantages__content--left">
+                            <span class="advantages__num">02</span>
+                            <h3 class="advantages__heading">Точное исполнение</h3>
+                            <p class="advantages__text">Плотная посадка и чёткий ход механизмов. Клемма защёлкивается с первого раза, кабель не ломается на сгибе.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 03 — Эстетика (фото СЛЕВА) -->
+                <div class="swiper-slide">
+                    <div class="advantages__slide">
+                        <div class="advantages__media advantages__media--color-switch">
+                            <img src="img/series/uno-1kl-w.png?v=20260414e" alt="UNO белый" class="advantages__color-img advantages__color-img--white">
+                            <img src="img/series/uno-1kl-b.png?v=20260414e" alt="UNO чёрный" class="advantages__color-img advantages__color-img--black">
+                        </div>
+                        <div class="advantages__gradient advantages__gradient--right"></div>
+                        <div class="advantages__content advantages__content--right">
+                            <span class="advantages__num">03</span>
+                            <h3 class="advantages__heading">Эстетика</h3>
+                            <p class="advantages__text">Универсальные формы и цвета. Два тона — для любого пространства. Минимум формы, максимум смысла.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 04 — Честное соотношение (фото СПРАВА) -->
+                <div class="swiper-slide">
+                    <div class="advantages__slide advantages__slide--reverse">
+                        <div class="advantages__media advantages__media--cover">
+                            <img src="img/advantages/04-lineup.jpg" alt="Витрина изделий AWS" class="advantages__cover-img" onerror="this.style.display='none'">
+                        </div>
+                        <div class="advantages__gradient advantages__gradient--left"></div>
+                        <div class="advantages__content advantages__content--left">
+                            <span class="advantages__num">04</span>
+                            <h3 class="advantages__heading">Честное соотношение</h3>
+                            <p class="advantages__text">Оптимальный баланс качества и стоимости. Профессиональный уровень по доступной цене.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="advantages-pagination"></div>
+        </div>
+    </section>
+
+    <!-- ========== ГДЕ КУПИТЬ ========== -->
+    <section class="where-buy" id="buy">
+        <div class="where-buy__inner">
+            <p class="label">Наличие</p>
+            <h2 class="where-buy__title">Доступно там,<br>где вам удобно</h2>
+            <div class="where-buy__grid">
+                <a href="https://www.ozon.ru/seller/awsproducts/" target="_blank" rel="noopener" class="where-buy__card">
+                    <div class="where-buy__card-logo where-buy__card-logo--ozon">OZON</div>
+                    <span class="where-buy__card-label">Маркетплейс</span>
+                    <span class="where-buy__card-name">Ozon</span>
+                    <span class="where-buy__card-desc">Быстрая доставка по всей России</span>
+                    <span class="where-buy__card-arrow">&rarr;</span>
+                </a>
+                <a href="https://www.wildberries.ru/seller/awsproducts" target="_blank" rel="noopener" class="where-buy__card">
+                    <div class="where-buy__card-logo where-buy__card-logo--wb">WB</div>
+                    <span class="where-buy__card-label">Маркетплейс</span>
+                    <span class="where-buy__card-name">Wildberries</span>
+                    <span class="where-buy__card-desc">Пункты выдачи по всей стране</span>
+                    <span class="where-buy__card-arrow">&rarr;</span>
+                </a>
+                <a href="https://stv39.ru/help/nashi-partnery/awsproducts/" target="_blank" rel="noopener" class="where-buy__card">
+                    <div class="where-buy__card-logo where-buy__card-logo--ec">ЭЦ</div>
+                    <span class="where-buy__card-label">Партнёр</span>
+                    <span class="where-buy__card-name">Электроцентр</span>
+                    <span class="where-buy__card-desc">Профессиональная консультация</span>
+                    <span class="where-buy__card-arrow">&rarr;</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER v2 ========== -->
+    <footer class="footer-v2" id="contacts">
+        <div class="footer-v2__inner">
+
+            <div class="footer-v2__crown">
+                <div class="footer-v2__crown-left">
+                    <p class="footer-v2__kicker">Есть вопрос или запрос на партнёрство?</p>
+                    <a href="mailto:info@awsproducts.ru" class="footer-v2__email">
+                        info@awsproducts.ru
+                        <span class="footer-v2__email-arrow">→</span>
+                    </a>
+                </div>
+                <div class="footer-v2__newsletter">
+                    <p class="footer-v2__news-label">Новости бренда</p>
+                    <p class="footer-v2__news-text">Узнавайте первыми о выходе серии DESIGN и новых цветах</p>
+                    <form class="footer-v2__news-form" onsubmit="event.preventDefault(); this.classList.add('is-sent'); this.querySelector('.footer-v2__news-msg').textContent = 'Спасибо! Мы напишем вам.';">
+                        <input type="email" placeholder="your@email.ru" required class="footer-v2__news-input">
+                        <button type="submit" class="footer-v2__news-btn">Подписаться</button>
+                        <p class="footer-v2__news-msg"></p>
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer-v2__cols">
+                <div class="footer-v2__col">
+                    <span class="footer-v2__col-title">Коллекции</span>
+                    <a href="/series/uno">UNO SoftTouch</a>
+                    <a href="/series/aura">AURA</a>
+                    <a href="/series/design">DESIGN</a>
+                </div>
+                <div class="footer-v2__col">
+                    <span class="footer-v2__col-title">Ассортимент</span>
+                    <a href="/category/extensions-home">Удлинители бытовые</a>
+                    <a href="/category/extensions-garden">Удлинители садовые</a>
+                    <a href="/category/power-connectors">Силовые разъёмы</a>
+                    <a href="/category/clamps">Клеммы</a>
+                    <a href="/category/patch-cords">Патч-корды</a>
+                    <a href="/category/cables">Кабель</a>
+                </div>
+                <div class="footer-v2__col">
+                    <span class="footer-v2__col-title">Компания</span>
+                    <a href="#about">О бренде</a>
+                    <a href="#advantages">Преимущества</a>
+                    <a href="#buy">Где купить</a>
+                </div>
+                <div class="footer-v2__col">
+                    <span class="footer-v2__col-title">Связь</span>
+                    <a href="mailto:info@awsproducts.ru">info@awsproducts.ru</a>
+                    <a href="https://t.me/awsproducts" target="_blank" rel="noopener">
+                        <span class="footer-v2__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21.5 4.5L2 12l7 2 2 7 3.5-5 6 4.5z"/></svg></span>
+                        Telegram
+                    </a>
+                    <a href="https://wa.me/79000000000" target="_blank" rel="noopener">
+                        <span class="footer-v2__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.5 12a8.5 8.5 0 1 1-4-7.2L21 3l-1.3 5 .8 4z"/><path d="M8 10c1 2 3 4 5 5l2-2c1 0 3 1 3 1v2c0 1-1 2-2 2A10 10 0 0 1 6 8c0-1 1-2 2-2h2s1 2 1 3z"/></svg></span>
+                        WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-v2__markrow">
+                <svg class="footer-v2__mark-svg" viewBox="0 0 1200 180" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                    <text x="50%" y="140" text-anchor="middle"
+                          font-family="Montserrat, sans-serif" font-weight="900" font-size="170"
+                          fill="#0a0908" stroke="rgba(255,255,255,0.22)" stroke-width="2"
+                          paint-order="stroke fill">aws products</text>
+                </svg>
+            </div>
+
+            <div class="footer-v2__bottom">
+                <div class="footer-v2__brand">
+                    <img src="logo/AWS.png" alt="" class="footer-v2__logo">
+                    <span>Awesome Products</span>
+                </div>
+                <div class="footer-v2__legal">
+                    <span>&copy; 2026 AWS Products</span>
+                    <span class="footer-v2__sep">·</span>
+                    <a href="#">Политика конфиденциальности</a>
+                    <span class="footer-v2__sep">·</span>
+                    <a href="#">Оферта</a>
+                </div>
+                <div class="footer-v2__loc">Россия</div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

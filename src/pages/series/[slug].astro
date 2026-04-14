@@ -1,0 +1,551 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import seriesData from '../../data/series.json';
+
+export async function getStaticPaths() {
+  return Object.keys(seriesData).map(slug => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const series = seriesData[slug];
+
+const otherSeries = Object.values(seriesData).filter(s => s.slug !== slug);
+const defaultColor = series.colors[0];
+---
+<BaseLayout title={`${series.name} — серия AWS Products`} description={series.description}>
+
+  <!-- HERO СЕРИИ -->
+  <section class="ser-hero">
+    <div class="ser-hero__inner">
+      <nav class="ser-hero__crumbs">
+        <a href="/">Главная</a>
+        <span>/</span>
+        <a href="/#series">Коллекции</a>
+        <span>/</span>
+        <span class="ser-hero__crumbs-current">{series.name}</span>
+      </nav>
+
+      <div class="ser-hero__grid">
+        <div class="ser-hero__text">
+          <p class="label">Серия</p>
+          {series.badge && <span class="ser-hero__badge">{series.badge}</span>}
+          <h1 class="ser-hero__title">{series.name}</h1>
+          <p class="ser-hero__tagline">{series.tagline}</p>
+          <p class="ser-hero__desc">{series.description}</p>
+
+          {series.colors.length > 0 && (
+            <div class="ser-hero__colors" id="serColors">
+              {series.colors.map((c, i) => (
+                <button
+                  class={`ser-hero__color-btn ${i === 0 ? 'active' : ''}`}
+                  data-img={c.img}
+                  data-color={c.key}
+                >
+                  <span class={`dot dot--${c.key}`}></span>
+                  {c.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div class="ser-hero__media">
+          {defaultColor ? (
+            <img id="serHeroImg" src={defaultColor.img} alt={series.name} />
+          ) : (
+            <div class="ser-hero__placeholder">Скоро</div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ОСОБЕННОСТИ — концепт A: параллакс-номера -->
+  <section class="ser-features">
+    <div class="ser-features__inner">
+      <p class="label">Особенности</p>
+      <h2 class="ser-features__title">Что важно<br>в этой серии</h2>
+      <div class="ser-features__list" data-reveal-list>
+        {series.features.map((f, i) => (
+          <div class="ser-feature" data-reveal-item data-index={i}>
+            <svg class="ser-feature__bignum" viewBox="0 0 200 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <text x="100" y="100" text-anchor="middle"
+                    font-family="Montserrat, sans-serif" font-weight="900" font-size="120"
+                    class="ser-feature__bignum-text"
+                    stroke-width="2" paint-order="stroke fill">{String(i + 1).padStart(2, '0')}</text>
+            </svg>
+            <div class="ser-feature__body">
+              <span class="ser-feature__line"></span>
+              <h3 class="ser-feature__name">{f.title}</h3>
+              <p class="ser-feature__text">{f.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- LINEUP — все 3 группы -->
+  {series.groups && (series.groups.switches.length + series.groups.sockets.length + series.groups.frames.length) > 0 && (
+    <section class="ser-lineup">
+      <div class="ser-lineup__inner">
+        <p class="label">Линейка</p>
+        <h2 class="ser-lineup__title">Что входит в серию</h2>
+        <p class="ser-lineup__subtitle">
+          {series.groups.switches.length} выключателей · {series.groups.sockets.length} розеток · {series.groups.frames.length} рамок
+        </p>
+
+        <div class="ser-lineup__filter" id="serColorFilter">
+          <button class="ser-lineup__chip active" data-color="all">Все ({series.groups.switches.length + series.groups.sockets.length + series.groups.frames.length})</button>
+          <button class="ser-lineup__chip" data-color="white">Белые</button>
+          <button class="ser-lineup__chip" data-color="black">Чёрные</button>
+        </div>
+
+        {[
+          { key: 'switches', title: 'Выключатели', items: series.groups.switches },
+          { key: 'sockets',  title: 'Розетки',     items: series.groups.sockets  },
+          { key: 'frames',   title: 'Рамки',       items: series.groups.frames   }
+        ].filter(g => g.items.length > 0).map(group => (
+          <div class="ser-lineup__group" data-group={group.key}>
+            <div class="ser-lineup__group-head">
+              <h3 class="ser-lineup__group-title">{group.title}</h3>
+              <span class="ser-lineup__group-count">{group.items.length}</span>
+            </div>
+            <div class="ser-lineup__grid">
+              {group.items.map(item => (
+                <a href={`/product/${item.article}`} class="ser-lineup__card" data-color={item.color || 'unknown'} data-tilt data-tilt-max="5">
+                  <div class="ser-lineup__photo">
+                    <img src={`/img/products/${item.article}.webp`} alt={item.name} loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                    <div class="ser-lineup__photo-fallback" style="display:none">
+                      <span class={`dot dot--${item.color || 'white'}`}></span>
+                    </div>
+                  </div>
+                  <div class="ser-lineup__body">
+                    <span class="ser-lineup__article">{item.article}</span>
+                    <h4 class="ser-lineup__name">{item.name}</h4>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        <div class="ser-lineup__cta">
+          <a href="#" class="btn-switch" id="serBuyBtn">Где купить серию</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CROSS-SELL: другие серии -->
+  <section class="ser-related">
+    <div class="ser-related__inner">
+      <p class="label">Другие серии</p>
+      <h2 class="ser-related__title">Посмотреть<br>остальные коллекции</h2>
+      <div class="ser-related__grid">
+        {otherSeries.map(s => (
+          <a href={`/series/${s.slug}`} class="ser-related__card" data-tilt data-tilt-max="5">
+            <div class="ser-related__img">
+              {s.colors[0] ? <img src={s.colors[0].img} alt={s.name} /> : <span class="ser-related__placeholder">Скоро</span>}
+            </div>
+            <h3 class="ser-related__name">{s.name}</h3>
+            <span class="ser-related__sub">{s.tagline}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cat-cta">
+    <div class="cat-cta__inner">
+      <h2 class="cat-cta__title">Не нашли подходящий?</h2>
+      <p class="cat-cta__sub">Напишите нам — расскажем подробнее или подберём аналог</p>
+      <a href="mailto:info@awsproducts.ru" class="btn-switch">Связаться</a>
+    </div>
+  </section>
+
+  <!-- МОДАЛКА «Где купить» -->
+  <div class="buy-modal" id="buyModal" hidden>
+    <div class="buy-modal__overlay" id="buyModalOverlay"></div>
+    <div class="buy-modal__panel">
+      <button class="buy-modal__close" id="buyModalClose" aria-label="Закрыть">&times;</button>
+      <p class="label">Где купить</p>
+      <h3 class="buy-modal__title">Серия {series.name}</h3>
+      <p class="buy-modal__article">Все артикулы доступны на маркетплейсах</p>
+      <div class="buy-modal__links">
+        <a href="https://www.ozon.ru/seller/awsproducts/" target="_blank" rel="noopener" class="buy-modal__link">
+          <span class="buy-modal__link-logo">OZON</span>
+          <span class="buy-modal__link-text">Маркетплейс Ozon</span>
+          <span class="buy-modal__link-arrow">→</span>
+        </a>
+        <a href="https://www.wildberries.ru/seller/awsproducts" target="_blank" rel="noopener" class="buy-modal__link">
+          <span class="buy-modal__link-logo">WB</span>
+          <span class="buy-modal__link-text">Wildberries</span>
+          <span class="buy-modal__link-arrow">→</span>
+        </a>
+        <a href="https://stv39.ru/help/nashi-partnery/awsproducts/" target="_blank" rel="noopener" class="buy-modal__link">
+          <span class="buy-modal__link-logo">ЭЦ</span>
+          <span class="buy-modal__link-text">Электроцентр</span>
+          <span class="buy-modal__link-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    // Переключение цвета в hero
+    const colors = document.getElementById('serColors');
+    const heroImg = document.getElementById('serHeroImg');
+    if (colors && heroImg) {
+      colors.querySelectorAll('.ser-hero__color-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          colors.querySelectorAll('.ser-hero__color-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          heroImg.style.opacity = '0';
+          setTimeout(() => {
+            heroImg.src = btn.dataset.img;
+            heroImg.style.opacity = '1';
+          }, 200);
+        });
+      });
+    }
+
+    // Модалка «Где купить»
+    const modal = document.getElementById('buyModal');
+    const overlay = document.getElementById('buyModalOverlay');
+    const closeBtn = document.getElementById('buyModalClose');
+    const buyBtn = document.getElementById('serBuyBtn');
+
+    function openBuy() { if (modal) { modal.hidden = false; document.body.style.overflow = 'hidden'; } }
+    function closeBuy() { if (modal) { modal.hidden = true; document.body.style.overflow = ''; } }
+
+    if (buyBtn) buyBtn.addEventListener('click', e => { e.preventDefault(); openBuy(); });
+    if (overlay) overlay.addEventListener('click', closeBuy);
+    if (closeBtn) closeBtn.addEventListener('click', closeBuy);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBuy(); });
+
+    // Фильтр lineup по цвету
+    const filter = document.getElementById('serColorFilter');
+    if (filter) {
+      filter.querySelectorAll('.ser-lineup__chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          filter.querySelectorAll('.ser-lineup__chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          const color = chip.dataset.color;
+          document.querySelectorAll('.ser-lineup__card').forEach(card => {
+            const c = card.dataset.color;
+            const show = color === 'all' || c === color || c === 'unknown';
+            card.style.display = show ? '' : 'none';
+          });
+          // Скрыть пустые группы
+          document.querySelectorAll('.ser-lineup__group').forEach(g => {
+            const visible = g.querySelectorAll('.ser-lineup__card:not([style*="none"])').length;
+            g.style.display = visible > 0 ? '' : 'none';
+          });
+        });
+      });
+    }
+  </script>
+
+  <style is:global>
+    /* === SERIES PAGE === */
+    .ser-hero {
+      background: linear-gradient(180deg, var(--warm-100, #f7f4ef) 0%, var(--white, #fff) 100%);
+      padding: 120px 0 80px;
+    }
+    .ser-hero__inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+    .ser-hero__crumbs {
+      display: flex; gap: 12px; align-items: center;
+      font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--gray-400, #999); margin-bottom: 48px;
+    }
+    .ser-hero__crumbs a { color: var(--gray-400, #999); text-decoration: none; transition: color 0.2s; }
+    .ser-hero__crumbs a:hover { color: var(--black, #111); }
+    .ser-hero__crumbs span { opacity: 0.4; }
+    .ser-hero__crumbs-current { color: var(--black, #111) !important; opacity: 1 !important; }
+
+    .ser-hero__grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .ser-hero__text .label { margin-bottom: 16px; }
+    .ser-hero__badge {
+      display: inline-block;
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      background: var(--accent, #c8a165); color: var(--white, #fff);
+      padding: 5px 14px; border-radius: 100px; margin-bottom: 16px;
+    }
+    .ser-hero__title {
+      font-size: clamp(56px, 7vw, 112px);
+      font-weight: 800; line-height: 0.95; letter-spacing: -3px;
+      margin-bottom: 20px; color: var(--black, #111);
+    }
+    .ser-hero__tagline {
+      font-size: 20px; font-weight: 500; color: var(--gray-600, #666);
+      margin-bottom: 24px;
+    }
+    .ser-hero__desc {
+      font-size: 16px; line-height: 1.7; color: var(--gray-600, #666);
+      max-width: 480px; margin-bottom: 36px;
+    }
+    .ser-hero__colors {
+      display: flex; gap: 12px;
+    }
+    .ser-hero__color-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 22px; border: 1px solid var(--gray-200, #ddd);
+      border-radius: 100px; background: transparent;
+      font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--gray-600, #666); cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .ser-hero__color-btn:hover { border-color: var(--black, #111); color: var(--black, #111); }
+    .ser-hero__color-btn.active {
+      background: var(--black, #111); color: var(--white, #fff); border-color: var(--black, #111);
+    }
+    .ser-hero__color-btn .dot { width: 16px; height: 16px; border-radius: 50%; pointer-events: none; }
+
+    .ser-hero__media {
+      aspect-ratio: 4/3; background: var(--warm-200, #ede7de);
+      border-radius: 16px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      padding: 60px;
+    }
+    .ser-hero__media img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      transition: opacity 0.3s ease;
+    }
+    .ser-hero__placeholder {
+      font-size: 14px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(0,0,0,0.2); border: 1.5px dashed rgba(0,0,0,0.15);
+      padding: 28px 40px; border-radius: 6px;
+    }
+
+    /* Особенности — горизонтально 4 колонки с крупным outlined номером */
+    .ser-features { background: var(--white, #fff); padding: 100px 0; }
+    .ser-features__inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+    .ser-features .label { margin-bottom: 16px; }
+    .ser-features__title {
+      font-size: clamp(36px, 4vw, 64px);
+      font-weight: 800; line-height: 1; letter-spacing: -1.5px;
+      margin-bottom: 56px; color: var(--black, #111);
+    }
+    .ser-features__list {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .ser-feature {
+      position: relative;
+      padding: 40px 28px 32px;
+      border-radius: 12px;
+      background: var(--white, #fff);
+      border: 1px solid var(--gray-100, #f0eee9);
+      overflow: hidden;
+      min-height: 260px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      opacity: 0;
+      transform: translateY(40px);
+      transition:
+        opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        background 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+    .ser-feature[data-index="0"] { transition-delay: 0s; }
+    .ser-feature[data-index="1"] { transition-delay: 0.12s; }
+    .ser-feature[data-index="2"] { transition-delay: 0.24s; }
+    .ser-feature[data-index="3"] { transition-delay: 0.36s; }
+
+    .ser-feature.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .ser-feature.is-visible:hover {
+      transform: translateY(-6px);
+      background: var(--warm-100, #f7f4ef);
+      border-color: var(--warm-200, #ede7de);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.06);
+      transition-delay: 0s !important;
+    }
+
+    .ser-feature__bignum {
+      position: absolute;
+      top: 16px; right: 20px;
+      width: clamp(100px, 12vw, 160px);
+      height: auto;
+      pointer-events: none;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 0;
+    }
+    .ser-feature__bignum-text {
+      fill: #ffffff;
+      stroke: rgba(0, 0, 0, 0.14);
+      vector-effect: non-scaling-stroke;
+      transition: fill 0.4s ease, stroke 0.4s ease;
+    }
+    .ser-feature.is-visible:hover .ser-feature__bignum-text {
+      fill: var(--warm-100, #f7f4ef);
+      stroke: var(--accent, #c8a165);
+    }
+    .ser-feature.is-visible:hover .ser-feature__bignum {
+      transform: translateY(-4px) scale(1.04);
+    }
+
+    .ser-feature__body { position: relative; z-index: 1; }
+    .ser-feature__line {
+      display: block; width: 32px; height: 2px;
+      background: var(--black, #111); margin-bottom: 18px;
+      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .ser-feature:hover .ser-feature__line { width: 56px; }
+    .ser-feature__name {
+      font-size: 20px; font-weight: 800; letter-spacing: -0.4px; line-height: 1.15;
+      margin-bottom: 10px; color: var(--black, #111);
+    }
+    .ser-feature__text {
+      font-size: 13.5px; line-height: 1.55; color: var(--gray-600, #666);
+    }
+
+    @media (max-width: 900px) {
+      .ser-features__list { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .ser-features__list { grid-template-columns: 1fr; }
+      .ser-feature { min-height: 180px; }
+    }
+
+    /* Lineup */
+    .ser-lineup { background: var(--warm-100, #f7f4ef); padding: 100px 0; }
+    .ser-lineup__inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+    .ser-lineup .label { margin-bottom: 16px; }
+    .ser-lineup__title {
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 800; letter-spacing: -1.5px; margin-bottom: 12px; color: var(--black, #111);
+    }
+    .ser-lineup__subtitle {
+      font-size: 15px; color: var(--gray-600, #666);
+      margin-bottom: 36px;
+    }
+    .ser-lineup__filter {
+      display: flex; gap: 10px; margin-bottom: 48px; flex-wrap: wrap;
+    }
+    .ser-lineup__chip {
+      font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 10px 22px; border: 1px solid var(--gray-200, #ddd);
+      border-radius: 100px; background: transparent; color: var(--gray-600, #666);
+      cursor: pointer; transition: all 0.2s ease;
+    }
+    .ser-lineup__chip:hover { border-color: var(--black, #111); color: var(--black, #111); }
+    .ser-lineup__chip.active {
+      background: var(--black, #111); color: var(--white, #fff); border-color: var(--black, #111);
+    }
+    .ser-lineup__group {
+      margin-bottom: 56px;
+    }
+    .ser-lineup__group-head {
+      display: flex; align-items: baseline; gap: 16px;
+      margin-bottom: 24px; padding-bottom: 16px;
+      border-bottom: 1px solid var(--gray-200, #ddd);
+    }
+    .ser-lineup__group-title {
+      font-size: 24px; font-weight: 700; color: var(--black, #111);
+    }
+    .ser-lineup__group-count {
+      font-size: 14px; font-weight: 500; color: var(--gray-400, #999);
+    }
+    .ser-lineup__grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .ser-lineup__card {
+      background: var(--white, #fff); border-radius: 12px; overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex; flex-direction: column;
+      text-decoration: none; color: inherit;
+    }
+    .ser-lineup__card:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(0,0,0,0.06); }
+    .ser-lineup__photo {
+      aspect-ratio: 1/1;
+      background: var(--warm-200, #ede7de);
+      display: flex; align-items: center; justify-content: center;
+      padding: 28px; overflow: hidden;
+    }
+    .ser-lineup__photo img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      mix-blend-mode: multiply;
+      transition: transform 0.4s ease;
+    }
+    .ser-lineup__card:hover .ser-lineup__photo img { transform: scale(1.05); }
+    .ser-lineup__photo-fallback {
+      width: 56px; height: 56px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ser-lineup__photo-fallback .dot {
+      width: 56px; height: 56px;
+    }
+    .ser-lineup__body {
+      padding: 18px 22px 22px;
+    }
+    .ser-lineup__article {
+      font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--gray-400, #999); display: block; margin-bottom: 6px;
+    }
+    .ser-lineup__name {
+      font-size: 14px; font-weight: 600; line-height: 1.4; color: var(--black, #111);
+    }
+    .ser-lineup__cta { text-align: center; margin-top: 24px; }
+
+    /* Cross-sell */
+    .ser-related { background: var(--white, #fff); padding: 100px 0; }
+    .ser-related__inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+    .ser-related .label { margin-bottom: 16px; }
+    .ser-related__title {
+      font-size: clamp(36px, 4vw, 64px);
+      font-weight: 800; line-height: 1; letter-spacing: -1.5px;
+      margin-bottom: 56px; color: var(--black, #111);
+    }
+    .ser-related__grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+    }
+    .ser-related__card {
+      text-decoration: none; color: inherit;
+      background: var(--warm-100, #f7f4ef); border-radius: 12px; overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .ser-related__card:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(0,0,0,0.06); }
+    .ser-related__img {
+      aspect-ratio: 16/10; background: var(--warm-200, #ede7de);
+      display: flex; align-items: center; justify-content: center; padding: 40px;
+    }
+    .ser-related__img img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      transition: transform 0.4s ease;
+    }
+    .ser-related__card:hover .ser-related__img img { transform: scale(1.05); }
+    .ser-related__placeholder {
+      font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: rgba(0,0,0,0.25);
+      border: 1.5px dashed rgba(0,0,0,0.12); padding: 20px 28px; border-radius: 4px;
+    }
+    .ser-related__name {
+      padding: 24px 24px 4px;
+      font-size: 22px; font-weight: 700; color: var(--black, #111);
+    }
+    .ser-related__sub {
+      padding: 0 24px 24px; display: block;
+      font-size: 14px; color: var(--gray-600, #666);
+    }
+
+    /* Адаптив */
+    @media (max-width: 900px) {
+      .ser-hero__inner, .ser-features__inner, .ser-lineup__inner, .ser-related__inner { padding: 0 24px; }
+      .ser-hero__grid { grid-template-columns: 1fr; gap: 40px; }
+      .ser-features__grid { grid-template-columns: repeat(2, 1fr); }
+      .ser-lineup__grid { grid-template-columns: repeat(2, 1fr); }
+      .ser-related__grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .ser-features__grid { grid-template-columns: 1fr; }
+      .ser-lineup__grid { grid-template-columns: 1fr; }
+      .ser-hero { padding: 80px 0 40px; }
+    }
+  </style>
+</BaseLayout>

@@ -1,0 +1,86 @@
+name: Deploy Astro to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build Astro
+        run: npm run build
+
+      - name: Patch paths (абсолютные /img, /category и т.д. → /aws-brand-site/...)
+        run: |
+          node -e "
+          const fs = require('fs'), path = require('path');
+          const BASE = '/aws-brand-site';
+          function walk(d) {
+            for (const f of fs.readdirSync(d)) {
+              const p = path.join(d, f);
+              const s = fs.statSync(p);
+              if (s.isDirectory()) walk(p);
+              else if (/\.(html|css|js)$/.test(f)) patch(p);
+            }
+          }
+          function patch(file) {
+            let c = fs.readFileSync(file, 'utf8');
+            const o = c;
+            c = c.replace(/\"\/img\//g, '\"' + BASE + '/img/');
+            c = c.replace(/'\/img\//g, \"'\" + BASE + '/img/');
+            c = c.replace(/\"\/logo\//g, '\"' + BASE + '/logo/');
+            c = c.replace(/'\/logo\//g, \"'\" + BASE + '/logo/');
+            c = c.replace(/\"\/category\//g, '\"' + BASE + '/category/');
+            c = c.replace(/'\/category\//g, \"'\" + BASE + '/category/');
+            c = c.replace(/\"\/series\//g, '\"' + BASE + '/series/');
+            c = c.replace(/'\/series\//g, \"'\" + BASE + '/series/');
+            c = c.replace(/\"\/product\//g, '\"' + BASE + '/product/');
+            c = c.replace(/'\/product\//g, \"'\" + BASE + '/product/');
+            c = c.replace(/src=\"\/script\.js/g, 'src=\"' + BASE + '/script.js');
+            c = c.replace(/href=\"\/style\.css/g, 'href=\"' + BASE + '/style.css');
+            c = c.replace(/href=\"\/#/g, 'href=\"' + BASE + '/#');
+            c = c.replace(/href=\"\/\"/g, 'href=\"' + BASE + '/\"');
+            if (c !== o) fs.writeFileSync(file, c);
+          }
+          walk('dist');
+          console.log('Paths patched');
+          "
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

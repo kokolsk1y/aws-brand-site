@@ -1,0 +1,272 @@
+{
+  "udl_home": {
+    "title": "Удлинители бытовые",
+    "sub": "1.5 — 3 м",
+    "items": [
+      {
+        "article": "AWS-H03-1,5",
+        "name": "Удлинитель бытовой 3гн. 1,5м б/з ПВС 2x0,75mm2 AWS-H03-1,5",
+        "photo": "img/products/AWS-H03-1,5.webp"
+      },
+      {
+        "article": "AWS-H03-3",
+        "name": "Удлинитель бытовой 3гн. 3м б/з ПВС 2x0,75mm2 AWS-H03-3",
+        "photo": "img/products/AWS-H03-3.webp"
+      },
+      {
+        "article": "AWS-G03-5",
+        "name": "Удлинитель бытовой 3гн. 5м с/з ПВС 3x1mm2 AWS-G03-5",
+        "photo": "img/products/AWS-G03-5.webp"
+      },
+      {
+        "article": "AWS-H05-1,5",
+        "name": "Удлинитель бытовой 5гн. 1,5м б/з ПВС 2x0,75mm2 AWS-H05-1,5",
+        "photo": "img/products/AWS-H05-1,5.webp"
+      },
+      {
+        "article": "AWS-H05-3",
+        "name": "Удлинитель бытовой 5гн. 3м б/з ПВС 2x0,75mm2 AWS-H05-3",
+        "photo": "img/products/AWS-H05-3.webp"
+      }
+    ]
+  },
+  "udl_garden": {
+    "title": "Удлинители садовые",
+    "sub": "10 — 15 м",
+    "items": [
+      {
+        "article": "AWS-HZ2-01-10",
+        "name": "Удлинитель садовый 1гн. 10м б/з ПВС 2x1mm2 AWS-HZ2-01-10",
+        "photo": "img/products/AWS-HZ2-01-10.webp"
+      },
+      {
+        "article": "AWS-HZ2-01-15",
+        "name": "Удлинитель садовый 1гн. 15м б/з ПВС 2x1mm2 AWS-HZ2-01-15",
+        "photo": "img/products/AWS-HZ2-01-15.webp"
+      },
+      {
+        "article": "AWS-HZ2-01-25",
+        "name": "Удлинитель садовый 1гн. 25м б/з ПВС 2x1mm2 AWS-HZ2-01-25",
+        "photo": "img/products/AWS-HZ2-01-25.webp"
+      }
+    ]
+  },
+  "power": {
+    "title": "Силовые разъёмы",
+    "sub": "IP44 / IP67, 16—32A",
+    "items": [
+      {
+        "article": "SN-33",
+        "name": "Коннектор кабельный SN-33 герметичный IP68 (0,5-2,5; 24А)",
+        "photo": "img/products/SN-33.webp"
+      },
+      {
+        "article": "SN-53",
+        "name": "Коннектор кабельный SN-53 герметичный IP68 (0,5-2,5; 24А)",
+        "photo": "img/products/SN-53.webp"
+      }
+    ]
+  },
+  "clamps": {
+    "title": "Клеммы",
+    "sub": "0.5 — 2.5 мм²",
+    "items": [
+      {
+        "article": "SN-222415D",
+        "name": "Клемма рычажковая 10 отверстий (2х5) 0,2-4,0 32А SN-222415D (50шт) (штуками), уп",
+        "photo": "img/products/SN-222415D.webp"
+      },
+      {
+        "article": "SN-221412",
+        "name": "Клемма рычажковая 2 отверстия 0,2-4,0 32А SN-221412 (100шт), уп",
+        "photo": "img/products/SN-221412.webp"
+      },
+      {
+        "article": "SN-221412N",
+        "name": "Клемма рычажковая 2 отверстия 0,2-4,0 32А SN-221412N (100шт), уп",
+        "photo": "img/products/SN-221412N.webp"
+      },
+      {
+        "article": "SN-222412",
+        "name": "Клемма рычажковая 2 отверстия 0,2-4,0 32А SN-222412 (100шт), уп",
+        "photo": "img/products/SN-222412.webp"
+      },
+      {
+        "article": "SN-222414",
+        "name": "Клемма рычажковая 4 отверстия 0,2-4,0 32А SN-222414 (100шт), уп",
+        "photo": "img/products/SN-222414.webp"
+      },
+      {
+        "article": "SN-221415",
+        "name": "Клемма рычажковая 5 отверстий 0,2-4,0 32А SN-221415 (50шт), уп",
+        "photo": "img/products/SN-221415.webp"
+      },
+      {
+        "article": "SN-221415N",
+        "name": "Клемма рычажковая 5 отверстий 0,2-4,0 32А SN-221415N (50шт), уп",
+        "photo": "img/products/SN-221415N.webp"
+      },
+      {
+        "article": "SN-222415",
+        "name": "Клемма рычажковая 5 отверстий 0,2-4,0 32А SN-222415 (50шт), уп",
+        "photo": "img/products/SN-222415.webp"
+      },
+      {
+        "article": "SN-222413D",
+        "name": "Клемма рычажковая 6 отверстий (2х3) 0,2-4,0 32А SN-222413D (50шт) (штуками), уп",
+        "photo": "img/products/SN-222413D.webp"
+      },
+      {
+        "article": "SN-222414D",
+        "name": "Клемма рычажковая 8 отверстий (2х4) 0,2-4,0 32А SN-222414D (50шт) (штуками), уп",
+        "photo": "img/products/SN-222414D.webp"
+      },
+      {
+        "article": "SN-224101",
+        "name": "Клемма 0,5-2,5 6А SN-224101 (100шт), уп",
+        "photo": "img/products/SN-224101.webp"
+      },
+      {
+        "article": "SN-224103",
+        "name": "Клемма 0,5-2,5 6А SN-224103 (100шт), уп",
+        "photo": "img/products/SN-224103.webp"
+      },
+      {
+        "article": "SN-202",
+        "name": "Клемма 2 отверстия 0,5-2,5 24А SN-202 (100шт), уп",
+        "photo": "img/products/SN-202.webp"
+      },
+      {
+        "article": "SN-203",
+        "name": "Клемма 3 отверстия 0,5-2,5 24А SN-203 (100шт), уп",
+        "photo": "img/products/SN-203.webp"
+      },
+      {
+        "article": "SN-204",
+        "name": "Клемма 4 отверстия 0,5-2,5 24А SN-204 (100шт), уп",
+        "photo": "img/products/SN-204.webp"
+      },
+      {
+        "article": "SN-205",
+        "name": "Клемма 5 отверстий 0,5-2,5 24А SN-205 (100шт), уп",
+        "photo": "img/products/SN-205.webp"
+      },
+      {
+        "article": "SN-206",
+        "name": "Клемма 6 отверстий 0,5-2,5 24А SN-206 (100шт), уп",
+        "photo": "img/products/SN-206.webp"
+      },
+      {
+        "article": "SN-208",
+        "name": "Клемма 8 отверстий 0,5-2,5 24А SN-208 (100шт), уп",
+        "photo": "img/products/SN-208.webp"
+      }
+    ]
+  },
+  "patch": {
+    "title": "Патч-корды UTP",
+    "sub": "Cat.5e, 0.5—15 м",
+    "items": []
+  },
+  "cable": {
+    "title": "Кабель",
+    "sub": "ТВ и сетевой",
+    "items": [
+      {
+        "article": "AWS-12982",
+        "name": "Кабель FTP4 CAT5E 046 INDOOR CU (медь)",
+        "photo": "img/products/AWS-12982.webp"
+      },
+      {
+        "article": "AWS-12997",
+        "name": "Кабель UTP4 CAT5E 046 INDOOR CU (медь)",
+        "photo": "img/products/AWS-12997.webp"
+      },
+      {
+        "article": "AWS-13001",
+        "name": "Кабель AWS SAT-703 DIGITAL CU 1мм, 64% (медь) (отмотка)",
+        "photo": "img/products/AWS-13001.webp"
+      },
+      {
+        "article": "AWS-12983",
+        "name": "Кабель FTP4 CAT5E 046 OUTDOOR CU (медь)",
+        "photo": "img/products/AWS-12983.webp"
+      },
+      {
+        "article": "AWS-12989",
+        "name": "Кабель FTP4 CAT5E 051 INDOOR CU (медь) premium",
+        "photo": "img/products/AWS-12989.webp"
+      },
+      {
+        "article": "AWS-12988",
+        "name": "Кабель FTP4 CAT5E 051 OUTDOOR CU (медь) premium",
+        "photo": "img/products/AWS-12988.webp"
+      },
+      {
+        "article": "AWS-12985",
+        "name": "Кабель FTP4 CAT6 056 INDOOR CU (медь) синий",
+        "photo": "img/products/AWS-12985.webp"
+      },
+      {
+        "article": "AWS-12998",
+        "name": "Кабель UTP4 CAT5E 046 OUTDOOR CU (медь)",
+        "photo": "img/products/AWS-12998.webp"
+      },
+      {
+        "article": "AWS-12991",
+        "name": "Кабель UTP4 CAT5E 051 INDOOR CU (медь) premium",
+        "photo": "img/products/AWS-12991.webp"
+      },
+      {
+        "article": "AWS-12992",
+        "name": "Кабель UTP4 CAT5E 051 OUTDOOR CU (медь) premium",
+        "photo": "img/products/AWS-12992.webp"
+      },
+      {
+        "article": "AWS-13000",
+        "name": "Кабель UTP4 CAT6 056 INDOOR CU (медь) синий",
+        "photo": "img/products/AWS-13000.webp"
+      },
+      {
+        "article": "AWS-12982-100",
+        "name": "Кабель FTP4 CAT5E 046 INDOOR CU (медь) по 100м",
+        "photo": "img/products/AWS-12982-100.webp"
+      },
+      {
+        "article": "AWS-12982-50",
+        "name": "Кабель FTP4 CAT5E 046 INDOOR CU (медь) по 50м",
+        "photo": "img/products/AWS-12982-50.webp"
+      },
+      {
+        "article": "AWS-13030",
+        "name": "Кабель FTP4 CAT6 056 OUTDOOR CU (медь) GEL premium",
+        "photo": "img/products/AWS-13030.webp"
+      },
+      {
+        "article": "AWS-12980",
+        "name": "Кабель FTP4 CAT6 058 INDOOR CU (медь) premium",
+        "photo": "img/products/AWS-12980.webp"
+      },
+      {
+        "article": "AWS-13001-50",
+        "name": "Кабель AWS SAT-703 DIGITAL CU 1мм, 64% (медь) по 50м",
+        "photo": "img/products/AWS-13001-50.webp"
+      },
+      {
+        "article": "AWS-12997-100",
+        "name": "Кабель UTP4 CAT5E 046 INDOOR CU (медь) по 100м",
+        "photo": "img/products/AWS-12997-100.webp"
+      },
+      {
+        "article": "AWS-12997-50",
+        "name": "Кабель UTP4 CAT5E 046 INDOOR CU (медь) по 50м",
+        "photo": "img/products/AWS-12997-50.webp"
+      },
+      {
+        "article": "AWS-13029",
+        "name": "Кабель UTP4 CAT6 056 OUTDOOR CU (медь) GEL premium",
+        "photo": "img/products/AWS-13029.webp"
+      }
+    ]
+  }
+}

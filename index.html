@@ -43,11 +43,11 @@
                     <button class="side-menu__toggle">Категории <span class="side-menu__arrow">&#9662;</span></button>
                     <div class="side-menu__dropdown">
                         <a href="#series" class="side-menu__sub">Розетки и выключатели</a>
-                        <a href="#" class="side-menu__sub">Удлинители</a>
-                        <a href="#" class="side-menu__sub">Силовые разъёмы</a>
-                        <a href="#" class="side-menu__sub">Клеммы</a>
-                        <a href="#" class="side-menu__sub">Патч-корды</a>
-                        <a href="#" class="side-menu__sub">Кабель</a>
+                        <a href="#categories" class="side-menu__sub">Удлинители</a>
+                        <a href="#categories" class="side-menu__sub">Силовые разъёмы</a>
+                        <a href="#categories" class="side-menu__sub">Клеммы</a>
+                        <a href="#categories" class="side-menu__sub">Патч-корды</a>
+                        <a href="#categories" class="side-menu__sub">Кабель</a>
                     </div>
                 </div>
                 <a href="#about" class="side-menu__item">О бренде</a>
@@ -81,9 +81,9 @@
                             <h2 class="hero-slide__title">Качество<br>в каждой детали</h2>
                             <p class="hero-slide__subtitle">Контактные группы, механизмы и покрытия,<br>которые рассчитаны на годы работы</p>
                             <div class="hero-slide__tags">
-                                <span class="hero-slide__tag">латунные контакты</span>
-                                <span class="hero-slide__tag">устойчивое покрытие</span>
-                                <span class="hero-slide__tag">точная механика</span>
+                                <a href="#advantages" class="hero-slide__tag" data-adv-slide="0">латунные контакты</a>
+                                <a href="#advantages" class="hero-slide__tag" data-adv-slide="2">устойчивое покрытие</a>
+                                <a href="#advantages" class="hero-slide__tag" data-adv-slide="1">точная механика</a>
                             </div>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                 <div class="swiper-slide">
                     <div class="hero-slide" data-theme="dark">
                         <div class="hero-slide__bg hero-slide__bg--warm">
-                            <div class="hero-slide__placeholder">Макро текстура Soft-touch → рука нажимает выключатель</div>
+                            <img src="img/hero/hero-4-softtouch.jpg" alt="Soft-touch макро" class="hero-slide__img" onerror="this.style.display='none'">
                         </div>
                         <div class="hero-slide__content">
                             <p class="hero-slide__label">Серия Uno</p>
@@ -138,7 +138,7 @@
                 <div class="swiper-slide">
                     <div class="hero-slide" data-theme="dark">
                         <div class="hero-slide__bg hero-slide__bg--dark">
-                            <div class="hero-slide__placeholder">Силовой разъём: кабель входит, искра, фиксация</div>
+                            <img src="img/hero/hero-5-power.jpg" alt="Силовой разъём" class="hero-slide__img" onerror="this.style.display='none'">
                         </div>
                         <div class="hero-slide__content">
                             <h2 class="hero-slide__title">Надёжность<br>под нагрузкой</h2>
@@ -158,63 +158,74 @@
         <div class="series__inner">
             <div class="series__header">
                 <p class="label">Розетки и выключатели</p>
-                <h2 class="series__title">Три серии —<br>один стандарт</h2>
+                <h2 class="series__title">Три серии —<br><em>один стандарт</em></h2>
             </div>
             <div class="series__grid">
 
                 <!-- UNO -->
-                <div class="series__card" id="uno">
+                <div class="series__card" id="uno" data-series="uno">
                     <div class="series__card-visual">
-                        <div class="series__card-placeholder">Слайд-шоу изделий UNO</div>
+                        <div class="series__photo"
+                             data-white="img/series/uno-1kl-w.png?v=20260414e"
+                             data-black="img/series/uno-1kl-b.png?v=20260414e">
+                            <img src="img/series/uno-1kl-w.png?v=20260414e" alt="UNO SoftTouch" class="series__photo-img">
+                            <div class="series__photo-placeholder" style="display:none">Фото скоро</div>
+                        </div>
                     </div>
                     <div class="series__card-info">
                         <span class="series__card-badge">Новинка</span>
                         <h3 class="series__card-name">UNO SoftTouch</h3>
                         <p class="series__card-desc">Бархатистое покрытие, тихий ход клавиши, усиленный механизм</p>
                         <div class="series__card-colors">
-                            <span class="dot dot--white"></span>
-                            <span class="dot dot--black"></span>
+                            <span class="dot dot--white active" data-color="white" title="Белый"></span>
+                            <span class="dot dot--black" data-color="black" title="Чёрный"></span>
                         </div>
                     </div>
                 </div>
 
                 <!-- DESIGN -->
-                <div class="series__card" id="design">
+                <div class="series__card" id="design" data-series="design">
                     <div class="series__card-visual">
-                        <div class="series__card-placeholder">Слайд-шоу изделий DESIGN</div>
+                        <div class="series__card-placeholder">Серия в разработке</div>
                     </div>
                     <div class="series__card-info">
                         <h3 class="series__card-name">DESIGN</h3>
                         <p class="series__card-desc">Дизайнерская серия для выразительных интерьеров</p>
                         <div class="series__card-colors">
-                            <span class="dot dot--white"></span>
+                            <span class="dot dot--white active"></span>
                             <span class="dot dot--black"></span>
                         </div>
                     </div>
                 </div>
 
                 <!-- AURA -->
-                <div class="series__card" id="aura">
+                <div class="series__card" id="aura" data-series="aura">
                     <div class="series__card-visual">
-                        <div class="series__card-placeholder">Слайд-шоу изделий AURA</div>
+                        <div class="series__photo"
+                             data-white="img/series/aura-1kl-w.png?v=20260414e"
+                             data-black="img/series/aura-1kl-b.png?v=20260414e">
+                            <img src="img/series/aura-1kl-w.png?v=20260414e" alt="AURA" class="series__photo-img">
+                            <div class="series__photo-placeholder" style="display:none">Фото скоро</div>
+                        </div>
                     </div>
                     <div class="series__card-info">
                         <h3 class="series__card-name">AURA</h3>
                         <p class="series__card-desc">Строгая классика — чистые линии и выверенные пропорции</p>
                         <div class="series__card-colors">
-                            <span class="dot dot--white"></span>
-                            <span class="dot dot--black"></span>
+                            <span class="dot dot--white active" data-color="white" title="Белый"></span>
+                            <span class="dot dot--black" data-color="black" title="Чёрный"></span>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <!-- Конструктор цветов (заготовка) -->
+            <!-- Конструктор цветов -->
             <div class="constructor" id="constructor">
                 <div class="constructor__inner">
                     <div class="constructor__preview">
-                        <div class="constructor__preview-placeholder">Превью собранного изделия</div>
+                        <img src="img/series/uno-1kl-w.png?v=20260414e" alt="Превью" class="constructor__preview-img" id="constructorPreview">
+                        <div class="constructor__preview-placeholder" id="constructorPlaceholder" style="display:none">Фото скоро</div>
                     </div>
                     <div class="constructor__controls">
                         <p class="label">Конструктор</p>
@@ -255,47 +266,47 @@
                 <h2 class="categories__title">Всё для подключения</h2>
             </div>
             <div class="categories__grid">
-                <a href="#" class="categories__card">
+                <a href="#buy" class="categories__card" data-cat="udl_home">
                     <div class="categories__card-img">
-                        <div class="categories__card-placeholder">Фото удлинителей бытовых</div>
+                        <img src="img/products/AWS-H03-1,5.png?v=20260414e" alt="Удлинители бытовые" loading="lazy">
                     </div>
                     <h3 class="categories__card-name">Удлинители бытовые</h3>
-                    <span class="categories__card-sub">1.5 — 3 м</span>
+                    <span class="categories__card-sub">1.5 — 5 м · 5 моделей</span>
                 </a>
-                <a href="#" class="categories__card">
+                <a href="#buy" class="categories__card" data-cat="udl_garden">
                     <div class="categories__card-img">
-                        <div class="categories__card-placeholder">Фото удлинителей садовых</div>
+                        <img src="img/products/AWS-HZ2-01-15.png?v=20260414e" alt="Удлинители садовые" loading="lazy">
                     </div>
                     <h3 class="categories__card-name">Удлинители садовые</h3>
-                    <span class="categories__card-sub">10 — 15 м</span>
+                    <span class="categories__card-sub">10 — 25 м · 3 модели</span>
                 </a>
-                <a href="#" class="categories__card">
+                <a href="#buy" class="categories__card" data-cat="power">
                     <div class="categories__card-img">
-                        <div class="categories__card-placeholder">Фото силовых разъёмов</div>
+                        <img src="img/products/SN-33.png?v=20260414e" alt="Силовые разъёмы" loading="lazy">
                     </div>
                     <h3 class="categories__card-name">Силовые разъёмы</h3>
-                    <span class="categories__card-sub">IP44 / IP67, 16—32A</span>
+                    <span class="categories__card-sub">IP68 коннекторы · 2 модели</span>
                 </a>
-                <a href="#" class="categories__card">
+                <a href="#buy" class="categories__card" data-cat="clamps">
                     <div class="categories__card-img">
-                        <div class="categories__card-placeholder">Фото клемм</div>
+                        <img src="img/products/SN-221412.png?v=20260414e" alt="Клеммы" loading="lazy">
                     </div>
                     <h3 class="categories__card-name">Клеммы</h3>
-                    <span class="categories__card-sub">0.5 — 2.5 мм²</span>
+                    <span class="categories__card-sub">0.2 — 4 мм² · 18 моделей</span>
                 </a>
-                <a href="#" class="categories__card">
+                <a href="#buy" class="categories__card" data-cat="patch">
                     <div class="categories__card-img">
-                        <div class="categories__card-placeholder">Фото патч-кордов</div>
+                        <img src="img/products/AWS-13010.png?v=20260414e" alt="Патч-корды UTP" loading="lazy">
                     </div>
                     <h3 class="categories__card-name">Патч-корды UTP</h3>
-                    <span class="categories__card-sub">Cat.5e, 0.5—15 м</span>
+                    <span class="categories__card-sub">Cat.5e / Cat.6e · 0.5—30 м · 25 моделей</span>
                 </a>
-                <a href="#" class="categories__card">
+                <a href="#buy" class="categories__card" data-cat="cable">
                     <div class="categories__card-img">
-                        <div class="categories__card-placeholder">Фото кабелей</div>
+                        <img src="img/products/AWS-12982.png?v=20260414e" alt="Кабель" loading="lazy">
                     </div>
                     <h3 class="categories__card-name">Кабель</h3>
-                    <span class="categories__card-sub">ТВ и сетевой</span>
+                    <span class="categories__card-sub">FTP / UTP / SAT · 19 моделей</span>
                 </a>
             </div>
         </div>
@@ -311,7 +322,8 @@
                 <a href="#advantages" class="about__link">Подробнее о преимуществах</a>
             </div>
             <div class="about__image">
-                <div class="about__image-placeholder">Изделие с фокусом на лого AWS</div>
+                <img src="img/about/about-logo.jpg" alt="AWS Products" class="about__image-img" onerror="this.style.display='none';this.parentElement.querySelector('.about__image-placeholder').style.display=''">
+                <div class="about__image-placeholder" style="display:none">Фото скоро</div>
             </div>
         </div>
     </section>
@@ -324,8 +336,8 @@
                 <!-- 01 — Надёжные материалы (фото СЛЕВА) -->
                 <div class="swiper-slide">
                     <div class="advantages__slide">
-                        <div class="advantages__media">
-                            <div class="advantages__media-placeholder">Контактные группы из латуни крупным планом</div>
+                        <div class="advantages__media advantages__media--cover">
+                            <img src="img/advantages/01-brass.jpg?v=20260414e" alt="Контактные группы из латуни" class="advantages__cover-img" onerror="this.style.display='none'">
                         </div>
                         <div class="advantages__gradient advantages__gradient--right"></div>
                         <div class="advantages__content advantages__content--right">
@@ -339,8 +351,8 @@
                 <!-- 02 — Точное исполнение (фото СПРАВА) -->
                 <div class="swiper-slide">
                     <div class="advantages__slide advantages__slide--reverse">
-                        <div class="advantages__media">
-                            <div class="advantages__media-placeholder">Защёлкивание клеммы, вставка патч-корда</div>
+                        <div class="advantages__media advantages__media--cover">
+                            <img src="img/advantages/02-click.jpg?v=20260414f" alt="Точное исполнение" class="advantages__cover-img" onerror="this.style.display='none'">
                         </div>
                         <div class="advantages__gradient advantages__gradient--left"></div>
                         <div class="advantages__content advantages__content--left">
@@ -354,8 +366,9 @@
                 <!-- 03 — Эстетика (фото СЛЕВА) -->
                 <div class="swiper-slide">
                     <div class="advantages__slide">
-                        <div class="advantages__media">
-                            <div class="advantages__media-placeholder">Один ракурс — меняются цвета розетки</div>
+                        <div class="advantages__media advantages__media--color-switch">
+                            <img src="img/series/uno-1kl-w.png?v=20260414e" alt="UNO белый" class="advantages__color-img advantages__color-img--white">
+                            <img src="img/series/uno-1kl-b.png?v=20260414e" alt="UNO чёрный" class="advantages__color-img advantages__color-img--black">
                         </div>
                         <div class="advantages__gradient advantages__gradient--right"></div>
                         <div class="advantages__content advantages__content--right">
@@ -369,8 +382,8 @@
                 <!-- 04 — Честное соотношение (фото СПРАВА) -->
                 <div class="swiper-slide">
                     <div class="advantages__slide advantages__slide--reverse">
-                        <div class="advantages__media">
-                            <div class="advantages__media-placeholder">Витрина с изделиями AWS</div>
+                        <div class="advantages__media advantages__media--cover">
+                            <img src="img/advantages/04-lineup.jpg" alt="Витрина изделий AWS" class="advantages__cover-img" onerror="this.style.display='none'">
                         </div>
                         <div class="advantages__gradient advantages__gradient--left"></div>
                         <div class="advantages__content advantages__content--left">
@@ -392,21 +405,21 @@
             <p class="label">Наличие</p>
             <h2 class="where-buy__title">Доступно там,<br>где вам удобно</h2>
             <div class="where-buy__grid">
-                <a href="#" class="where-buy__card">
+                <a href="https://www.ozon.ru/seller/awsproducts/" target="_blank" rel="noopener" class="where-buy__card">
                     <div class="where-buy__card-logo where-buy__card-logo--ozon">OZON</div>
                     <span class="where-buy__card-label">Маркетплейс</span>
                     <span class="where-buy__card-name">Ozon</span>
                     <span class="where-buy__card-desc">Быстрая доставка по всей России</span>
                     <span class="where-buy__card-arrow">&rarr;</span>
                 </a>
-                <a href="#" class="where-buy__card">
+                <a href="https://www.wildberries.ru/seller/awsproducts" target="_blank" rel="noopener" class="where-buy__card">
                     <div class="where-buy__card-logo where-buy__card-logo--wb">WB</div>
                     <span class="where-buy__card-label">Маркетплейс</span>
                     <span class="where-buy__card-name">Wildberries</span>
                     <span class="where-buy__card-desc">Пункты выдачи по всей стране</span>
                     <span class="where-buy__card-arrow">&rarr;</span>
                 </a>
-                <a href="#" class="where-buy__card">
+                <a href="https://stv39.ru/help/nashi-partnery/awsproducts/" target="_blank" rel="noopener" class="where-buy__card">
                     <div class="where-buy__card-logo where-buy__card-logo--ec">ЭЦ</div>
                     <span class="where-buy__card-label">Партнёр</span>
                     <span class="where-buy__card-name">Электроцентр</span>

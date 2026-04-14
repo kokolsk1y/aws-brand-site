@@ -1678,9 +1678,8 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ============================
-   KEN BURNS — hero видео слегка "дышат"
+   KEN BURNS — только на статичных фото (у видео своя камера)
    ============================ */
-.hero-slide__video,
 .hero-slide__img {
     animation: kenBurns 22s ease-in-out infinite alternate;
     will-change: transform;

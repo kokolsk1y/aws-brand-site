@@ -207,26 +207,26 @@ import { ClientRouter } from 'astro:transitions';
         a.addEventListener('click', closeMenu);
       });
 
-      // Splash screen — показываем только при первом заходе (не при view-transition)
-      const splash = document.getElementById('splash');
-      if (splash) {
-        const isFirstVisit = !sessionStorage.getItem('aws-splash-seen');
-        if (isFirstVisit) {
-          sessionStorage.setItem('aws-splash-seen', '1');
-          // Прячем splash после загрузки + минимальной задержки
-          const hideSplash = () => {
-            splash.classList.add('is-hiding');
-            setTimeout(() => splash.remove(), 700);
-          };
-          if (document.readyState === 'complete') {
-            setTimeout(hideSplash, 1200);
-          } else {
-            window.addEventListener('load', () => setTimeout(hideSplash, 1200));
-          }
-        } else {
-          splash.remove();
-        }
-      }
+      // Splash screen — ТОЛЬКО на первом "холодном" заходе. НЕ при SPA-переходах.
+      (function () {
+        const splash = document.getElementById('splash');
+        if (!splash) return;
+        const seen = sessionStorage.getItem('aws-splash-seen');
+        if (seen) { splash.remove(); return; }
+        sessionStorage.setItem('aws-splash-seen', '1');
+        const hide = () => {
+          splash.classList.add('is-hiding');
+          setTimeout(() => splash.remove(), 500);
+        };
+        if (document.readyState === 'complete') setTimeout(hide, 900);
+        else window.addEventListener('load', () => setTimeout(hide, 900));
+      })();
+
+      // Убираем splash из нового документа ДО SPA-swap — чтобы он не мигал при переходах
+      document.addEventListener('astro:before-swap', e => {
+        const s = e.newDocument.getElementById('splash');
+        if (s) s.remove();
+      });
 
       // Menu preview on hover (desktop)
       const previewBox = document.getElementById('sideMenuPreview');

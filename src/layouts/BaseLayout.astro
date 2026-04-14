@@ -214,12 +214,20 @@ import { ClientRouter } from 'astro:transitions';
         const seen = sessionStorage.getItem('aws-splash-seen');
         if (seen) { splash.remove(); return; }
         sessionStorage.setItem('aws-splash-seen', '1');
+
+        let hidden = false;
         const hide = () => {
+          if (hidden) return;
+          hidden = true;
           splash.classList.add('is-hiding');
-          setTimeout(() => splash.remove(), 500);
+          setTimeout(() => splash.remove(), 400);
         };
-        if (document.readyState === 'complete') setTimeout(hide, 900);
-        else window.addEventListener('load', () => setTimeout(hide, 900));
+        // Быстро прячем как только DOM готов (через 600мс после парсинга) —
+        // не ждём все картинки/видео
+        if (document.readyState !== 'loading') setTimeout(hide, 600);
+        else document.addEventListener('DOMContentLoaded', () => setTimeout(hide, 600));
+        // Hard fallback: что бы ни случилось, через 2 секунды splash уйдёт
+        setTimeout(hide, 2000);
       })();
 
       // Убираем splash из нового документа ДО SPA-swap — чтобы он не мигал при переходах

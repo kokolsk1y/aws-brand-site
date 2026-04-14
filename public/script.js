@@ -21,12 +21,18 @@ gsap.registerPlugin(ScrollTrigger);
     const firstVisit = !sessionStorage.getItem('aws-splash-seen');
     if (!firstVisit) { splash.remove(); return; }
     sessionStorage.setItem('aws-splash-seen', '1');
+    let hidden = false;
     const hide = () => {
+        if (hidden) return;
+        hidden = true;
         splash.classList.add('is-hiding');
-        setTimeout(() => splash.remove(), 700);
+        setTimeout(() => splash.remove(), 400);
     };
-    if (document.readyState === 'complete') setTimeout(hide, 1200);
-    else window.addEventListener('load', () => setTimeout(hide, 1200));
+    // Прячем как только DOM готов (не ждём все картинки/видео)
+    if (document.readyState !== 'loading') setTimeout(hide, 600);
+    else document.addEventListener('DOMContentLoaded', () => setTimeout(hide, 600));
+    // Hard fallback: через 2 секунды splash уйдёт в любом случае
+    setTimeout(hide, 2000);
 })();
 
 // ─── HERO CURSOR SPOTLIGHT ───

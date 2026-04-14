@@ -100,9 +100,21 @@ document.querySelectorAll('a[href^="/#"], a[href^="#"]').forEach(a => {
         const hash = href.startsWith('/#') ? href.slice(1) : href;
         if (hash === '#' || !hash) return;
         const target = document.querySelector(hash);
-        if (target) {
-            e.preventDefault();
-            history.pushState(null, '', hash);
+        if (!target) return;
+
+        e.preventDefault();
+        history.pushState(null, '', hash);
+
+        // Если ссылка внутри side-menu — сначала закрыть меню, потом скроллить
+        const isInSideMenu = a.closest('.side-menu');
+        if (isInSideMenu) {
+            // closeMenu триггерим вручную с микро-задержкой до scroll
+            if (typeof closeMenu === 'function') closeMenu();
+            // Ждём 320мс (CSS transition меню) чтобы lenis.start() успел отработать
+            setTimeout(() => {
+                lenis.scrollTo(target, { duration: 1.1 });
+            }, 320);
+        } else {
             lenis.scrollTo(target, { duration: 1.1 });
         }
     });
@@ -129,9 +141,14 @@ menuToggle.addEventListener('click', openMenu);
 menuClose.addEventListener('click', closeMenu);
 menuOverlay.addEventListener('click', closeMenu);
 
-// Закрытие при клике на ссылку
+// Закрытие при клике на ссылку (только для внешних ссылок — hash-якоря закрывают меню через anchor-handler ниже)
 sideMenu.querySelectorAll('.side-menu__item, .side-menu__sub').forEach(link => {
-    link.addEventListener('click', closeMenu);
+    link.addEventListener('click', e => {
+        const href = link.getAttribute('href') || '';
+        // Hash-якоря закроют меню сами (с задержкой перед scroll)
+        if (href.startsWith('#') || href.startsWith('/#')) return;
+        closeMenu();
+    });
 });
 
 // Dropdown категорий

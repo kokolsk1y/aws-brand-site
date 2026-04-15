@@ -317,6 +317,14 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
         });
 
         // ---- Reveal on scroll ----
+        // Авто-добавление data-reveal-section на ВСЕ <section> внутри <main>
+        // (на главной index.html этот скрипт не запускается — там свои GSAP)
+        document.querySelectorAll('main > section, main > div > section').forEach(el => {
+          if (!el.hasAttribute('data-reveal-item') && !el.hasAttribute('data-reveal-section')) {
+            el.setAttribute('data-reveal-section', '');
+          }
+        });
+
         if ('IntersectionObserver' in window) {
           const obs = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -325,10 +333,10 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
                 obs.unobserve(entry.target);
               }
             });
-          }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
-          document.querySelectorAll('[data-reveal-item]:not(.is-visible)').forEach(el => obs.observe(el));
+          }, { threshold: 0.08, rootMargin: '0px 0px -10% 0px' });
+          document.querySelectorAll('[data-reveal-item]:not(.is-visible), [data-reveal-section]:not(.is-visible)').forEach(el => obs.observe(el));
         } else {
-          document.querySelectorAll('[data-reveal-item]').forEach(el => el.classList.add('is-visible'));
+          document.querySelectorAll('[data-reveal-item], [data-reveal-section]').forEach(el => el.classList.add('is-visible'));
         }
 
         // ---- Hash scroll (после View Transitions) ----

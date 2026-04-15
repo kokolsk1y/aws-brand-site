@@ -1920,3 +1920,31 @@ a { text-decoration: none; color: inherit; }
     .footer-v2__crown { grid-template-columns: 1fr; gap: 40px; }
     .footer-v2__newsletter { max-width: 100%; }
 }
+
+/* ============================
+   GLOBAL REVEAL ON SCROLL
+   универсальная анимация появления для всех Astro-страниц
+   ============================ */
+[data-reveal-section],
+[data-reveal-item] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+        opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+[data-reveal-section].is-visible,
+[data-reveal-item].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Поддержка для пользователей, отключивших анимации */
+@media (prefers-reduced-motion: reduce) {
+    [data-reveal-section],
+    [data-reveal-item] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}

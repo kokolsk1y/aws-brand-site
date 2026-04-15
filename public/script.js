@@ -229,10 +229,8 @@ function animateSlideContent() {
 heroSwiper.on('slideChangeTransitionStart', animateSlideContent);
 
 // Синхронизация видео и слайдера hero.
-// Общая схема: crossfade (SWIPER_SPEED) стартует за 1с до конца видео,
-// чтобы стоп-кадр не показывался.
-//
-// Особенность hero-1: перед воспроизведением — freeze первого кадра на HOLD_START_MS.
+// Схема: crossfade (SWIPER_SPEED) стартует за 1с до конца видео → стоп-кадр не показывается.
+// Особенность hero-1: перед play — freeze первого кадра на HOLD_START_MS (видео заморожено).
 const SWIPER_SPEED = 1000;
 const HOLD_START_MS = 2000;
 const SLIDE_MODES = {
@@ -242,6 +240,8 @@ const SLIDE_MODES = {
 };
 let currentTimeHandler = null;
 let holdStartTimer = null;
+let holdGuardInterval = null;  // watchdog — давит любые попытки play() во время freeze
+let pendingHoldVideo = null;   // видео в состоянии freeze (для 'play' listener)
 
 function clearSyncHandlers() {
     if (currentTimeHandler) {
@@ -249,21 +249,55 @@ function clearSyncHandlers() {
         currentTimeHandler = null;
     }
     if (holdStartTimer) { clearTimeout(holdStartTimer); holdStartTimer = null; }
+    if (holdGuardInterval) { clearInterval(holdGuardInterval); holdGuardInterval = null; }
+    if (pendingHoldVideo) {
+        pendingHoldVideo.removeEventListener('play', freezeGuard);
+        pendingHoldVideo = null;
+    }
+}
+
+function freezeGuard(e) {
+    // любое play() во время freeze — откатываем обратно на паузу + кадр 0
+    const v = e.target;
+    v.pause();
+    try { v.currentTime = 0; } catch (err) {}
+}
+
+function getActiveVideo() {
+    const slide = heroSwiper.slides && heroSwiper.slides[heroSwiper.activeIndex];
+    return slide ? slide.querySelector('.hero-slide__video') : null;
+}
+
+function freezeFirstFrame(video) {
+    video.pause();
+    try { video.currentTime = 0; } catch (e) {}
+    video.addEventListener('play', freezeGuard);
+    pendingHoldVideo = video;
+    // на случай если браузер запустит воспроизведение позже (iOS, preload) —
+    // watchdog каждые 100мс возвращает на кадр 0 и ставит паузу.
+    holdGuardInterval = setInterval(() => {
+        if (!video.paused) video.pause();
+        if (video.currentTime > 0.05) { try { video.currentTime = 0; } catch (e) {} }
+    }, 100);
+}
+
+function releaseFreeze(video) {
+    if (holdGuardInterval) { clearInterval(holdGuardInterval); holdGuardInterval = null; }
+    video.removeEventListener('play', freezeGuard);
+    pendingHoldVideo = null;
 }
 
 // При старте crossfade: сбрасываем видео нового слайда на 0 кадр.
-// Для слайдов с holdStart (hero-1) — оставляем на паузе (play запустит bindVideoEndSync).
-// Для остальных — запускаем play сразу, чтобы видео играло во время crossfade
-// (это скрывает шов перехода).
+// Для слайдов с holdStart — freeze. Для остальных — play сразу.
 heroSwiper.on('slideChangeTransitionStart', () => {
     clearSyncHandlers();
-    const active = document.querySelector('.swiper-slide-active .hero-slide__video');
+    const active = getActiveVideo();
     if (!active) return;
     const cfg = SLIDE_MODES[heroSwiper.realIndex];
-    try { active.currentTime = 0; } catch (e) {}
     if (cfg && cfg.holdStart) {
-        active.pause();
+        freezeFirstFrame(active);
     } else {
+        try { active.currentTime = 0; } catch (e) {}
         active.play();
     }
 });
@@ -274,7 +308,7 @@ function bindVideoEndSync() {
 
     if (!cfg) { heroSwiper.autoplay && heroSwiper.autoplay.start(); return; }
 
-    const activeVideo = document.querySelector('.swiper-slide-active .hero-slide__video');
+    const activeVideo = getActiveVideo();
     if (!activeVideo) return;
 
     if (heroSwiper.autoplay) heroSwiper.autoplay.stop();
@@ -295,24 +329,35 @@ function bindVideoEndSync() {
     };
 
     if (cfg.holdStart) {
-        // Видео стоит на паузе с TransitionStart. Ждём holdStart → play + sync.
-        // На холодном заходе (первый вызов через setTimeout 500) явно ставим на 1 кадр.
-        if (activeVideo.currentTime > 0.1) {
-            try { activeVideo.currentTime = 0; } catch (e) {}
-        }
-        activeVideo.pause();
+        freezeFirstFrame(activeVideo);
         holdStartTimer = setTimeout(() => {
+            releaseFreeze(activeVideo);
             activeVideo.play();
             attachCrossfadeSync();
         }, cfg.holdStart);
     } else {
-        // Видео уже играет с TransitionStart. Просто вешаем sync.
         attachCrossfadeSync();
     }
 }
 
 heroSwiper.on('slideChangeTransitionEnd', bindVideoEndSync);
-setTimeout(bindVideoEndSync, 500);
+
+// На холодном заходе: сразу замораживаем ВСЕ hero-видео, запускаем логику.
+(function initHeroVideos() {
+    document.querySelectorAll('.hero-slide__video').forEach(v => {
+        v.pause();
+        try { v.currentTime = 0; } catch (e) {}
+    });
+    // дождёмся готовности метаданных первого видео чтобы currentTime=0 точно применился
+    const firstVideo = getActiveVideo();
+    const start = () => bindVideoEndSync();
+    if (!firstVideo || firstVideo.readyState >= 1) {
+        setTimeout(start, 100);
+    } else {
+        firstVideo.addEventListener('loadedmetadata', start, { once: true });
+        setTimeout(start, 1500); // fallback
+    }
+})();
 
 // Начальная анимация
 setTimeout(animateSlideContent, 300);

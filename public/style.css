@@ -1948,3 +1948,54 @@ a { text-decoration: none; color: inherit; }
         transition: none !important;
     }
 }
+
+/* ============================
+   HERO: вариант с текстом справа (слайды 2-3)
+   ============================ */
+.hero-slide__content--right {
+    left: auto !important;
+    right: 60px;
+    text-align: right;
+    align-items: flex-end !important;
+    max-width: 640px;
+}
+.hero-slide__content--right .hero-slide__title {
+    text-align: right;
+}
+.hero-slide__content--right .hero-slide__btn {
+    align-self: flex-end;
+}
+
+/* Лёгкое затемнение правой части кадра — чтобы белый текст читался */
+.hero-slide__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+.hero-slide__overlay--right {
+    background: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0.55) 0%,
+        rgba(0, 0, 0, 0.25) 35%,
+        rgba(0, 0, 0, 0) 70%
+    );
+}
+
+@media (max-width: 720px) {
+    .hero-slide__content--right {
+        right: 24px;
+        left: 24px !important;
+        text-align: left;
+        align-items: flex-start !important;
+    }
+    .hero-slide__content--right .hero-slide__title {
+        text-align: left;
+    }
+    .hero-slide__content--right .hero-slide__btn {
+        align-self: flex-start;
+    }
+    .hero-slide__overlay--right {
+        background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 50%, transparent 100%);
+    }
+}

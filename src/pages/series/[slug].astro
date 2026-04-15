@@ -265,6 +265,13 @@ const defaultColor = series.colors[0];
           document.querySelectorAll('.ser-lineup__group').forEach(g => {
             const visible = g.querySelectorAll('.ser-lineup__card:not([style*="none"])').length;
             g.style.display = visible > 0 ? '' : 'none';
+            // Если группа видима и свёрнута — разворачиваем, чтобы пользователь увидел результат
+            if (visible > 0) {
+              const trigger = g.querySelector('.ser-lineup__group-head');
+              if (trigger && trigger.getAttribute('aria-expanded') === 'false') {
+                setGroupState(trigger, true);
+              }
+            }
           });
         });
       });

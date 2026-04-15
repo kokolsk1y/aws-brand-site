@@ -92,13 +92,23 @@ const defaultColor = series.colors[0];
         <p class="label">Линейка</p>
         <h2 class="ser-lineup__title">Что входит в серию</h2>
         <p class="ser-lineup__subtitle">
-          {series.groups.switches.length} выключателей · {series.groups.sockets.length} розеток · {series.groups.frames.length} рамок
+          <a href="#ser-group-switches" class="ser-lineup__count-link" data-jump="ser-group-switches">{series.groups.switches.length} выключателей</a>
+          <span class="ser-lineup__dot">·</span>
+          <a href="#ser-group-sockets" class="ser-lineup__count-link" data-jump="ser-group-sockets">{series.groups.sockets.length} розеток</a>
+          <span class="ser-lineup__dot">·</span>
+          <a href="#ser-group-frames" class="ser-lineup__count-link" data-jump="ser-group-frames">{series.groups.frames.length} рамок</a>
         </p>
 
-        <div class="ser-lineup__filter" id="serColorFilter">
-          <button class="ser-lineup__chip active" data-color="all">Все ({series.groups.switches.length + series.groups.sockets.length + series.groups.frames.length})</button>
-          <button class="ser-lineup__chip" data-color="white">Белые</button>
-          <button class="ser-lineup__chip" data-color="black">Чёрные</button>
+        <div class="ser-lineup__controls">
+          <div class="ser-lineup__filter" id="serColorFilter">
+            <button class="ser-lineup__chip active" data-color="all">Все ({series.groups.switches.length + series.groups.sockets.length + series.groups.frames.length})</button>
+            <button class="ser-lineup__chip" data-color="white">Белые</button>
+            <button class="ser-lineup__chip" data-color="black">Чёрные</button>
+          </div>
+          <button class="ser-lineup__toggle-all" id="serToggleAll" type="button" aria-label="Свернуть все группы">
+            <span class="ser-lineup__toggle-all-text">Свернуть все</span>
+            <svg viewBox="0 0 12 12" class="ser-lineup__toggle-all-icon" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
 
         {[
@@ -106,26 +116,40 @@ const defaultColor = series.colors[0];
           { key: 'sockets',  title: 'Розетки',     items: series.groups.sockets  },
           { key: 'frames',   title: 'Рамки',       items: series.groups.frames   }
         ].filter(g => g.items.length > 0).map(group => (
-          <div class="ser-lineup__group" data-group={group.key}>
-            <div class="ser-lineup__group-head">
+          <div class="ser-lineup__group" data-group={group.key} id={`ser-group-${group.key}`}>
+            <button class="ser-lineup__group-head" type="button"
+                    aria-expanded="true"
+                    aria-controls={`ser-group-content-${group.key}`}
+                    id={`ser-group-trigger-${group.key}`}>
               <h3 class="ser-lineup__group-title">{group.title}</h3>
               <span class="ser-lineup__group-count">{group.items.length}</span>
-            </div>
-            <div class="ser-lineup__grid">
-              {group.items.map(item => (
-                <a href={`/product/${item.article}`} class="ser-lineup__card" data-color={item.color || 'unknown'} data-tilt data-tilt-max="5">
-                  <div class="ser-lineup__photo">
-                    <img src={`/img/products/${item.article}.webp`} alt={item.name} loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-                    <div class="ser-lineup__photo-fallback" style="display:none">
-                      <span class={`dot dot--${item.color || 'white'}`}></span>
-                    </div>
-                  </div>
-                  <div class="ser-lineup__body">
-                    <span class="ser-lineup__article">{item.article}</span>
-                    <h4 class="ser-lineup__name">{item.name}</h4>
-                  </div>
-                </a>
-              ))}
+              <svg viewBox="0 0 14 14" class="ser-lineup__group-chevron" aria-hidden="true">
+                <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="ser-lineup__group-content"
+                 id={`ser-group-content-${group.key}`}
+                 role="region"
+                 aria-labelledby={`ser-group-trigger-${group.key}`}
+                 data-open="true">
+              <div class="ser-lineup__group-inner">
+                <div class="ser-lineup__grid">
+                  {group.items.map(item => (
+                    <a href={`/product/${item.article}`} class="ser-lineup__card" data-color={item.color || 'unknown'} data-tilt data-tilt-max="5">
+                      <div class="ser-lineup__photo">
+                        <img src={`/img/products/${item.article}.webp`} alt={item.name} loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                        <div class="ser-lineup__photo-fallback" style="display:none">
+                          <span class={`dot dot--${item.color || 'white'}`}></span>
+                        </div>
+                      </div>
+                      <div class="ser-lineup__body">
+                        <span class="ser-lineup__article">{item.article}</span>
+                        <h4 class="ser-lineup__name">{item.name}</h4>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         ))}
@@ -238,7 +262,6 @@ const defaultColor = series.colors[0];
             const show = color === 'all' || c === color || c === 'unknown';
             card.style.display = show ? '' : 'none';
           });
-          // Скрыть пустые группы
           document.querySelectorAll('.ser-lineup__group').forEach(g => {
             const visible = g.querySelectorAll('.ser-lineup__card:not([style*="none"])').length;
             g.style.display = visible > 0 ? '' : 'none';
@@ -246,6 +269,72 @@ const defaultColor = series.colors[0];
         });
       });
     }
+
+    // Collapsible групп
+    function setGroupState(trigger, open) {
+      const panelId = trigger.getAttribute('aria-controls');
+      const panel = document.getElementById(panelId);
+      if (!panel) return;
+      trigger.setAttribute('aria-expanded', String(open));
+      panel.dataset.open = String(open);
+    }
+
+    function toggleGroup(trigger) {
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+      setGroupState(trigger, !isOpen);
+    }
+
+    document.querySelectorAll('.ser-lineup__group-head').forEach(head => {
+      head.addEventListener('click', () => toggleGroup(head));
+    });
+
+    // Toggle all
+    const toggleAllBtn = document.getElementById('serToggleAll');
+    if (toggleAllBtn) {
+      toggleAllBtn.addEventListener('click', () => {
+        const heads = Array.from(document.querySelectorAll('.ser-lineup__group-head'));
+        const anyOpen = heads.some(h => h.getAttribute('aria-expanded') === 'true');
+        const targetState = !anyOpen;
+        heads.forEach(h => setGroupState(h, targetState));
+        toggleAllBtn.dataset.state = targetState ? 'expanded' : 'collapsed';
+        toggleAllBtn.querySelector('.ser-lineup__toggle-all-text').textContent = targetState ? 'Свернуть все' : 'Развернуть все';
+        toggleAllBtn.setAttribute('aria-label', targetState ? 'Свернуть все группы' : 'Развернуть все группы');
+      });
+    }
+
+    // Click на счётчик "15 выключателей" → раскрыть группу + скролл
+    document.querySelectorAll('.ser-lineup__count-link[data-jump]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const groupId = link.dataset.jump;
+        const group = document.getElementById(groupId);
+        if (!group) return;
+        const trigger = group.querySelector('.ser-lineup__group-head');
+        const isOpen = trigger?.getAttribute('aria-expanded') === 'true';
+
+        const doScroll = () => {
+          const rect = group.getBoundingClientRect();
+          const y = rect.top + window.pageYOffset - 100;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        };
+
+        if (!isOpen && trigger) {
+          setGroupState(trigger, true);
+          const panel = group.querySelector('.ser-lineup__group-content');
+          // Дожидаемся окончания анимации раскрытия, потом скроллим
+          const onEnd = (ev) => {
+            if (ev.propertyName !== 'grid-template-rows') return;
+            panel.removeEventListener('transitionend', onEnd);
+            doScroll();
+          };
+          panel.addEventListener('transitionend', onEnd);
+          // Fallback если transitionend не сработает
+          setTimeout(doScroll, 400);
+        } else {
+          doScroll();
+        }
+      });
+    });
   </script>
 
   <style is:global>
@@ -425,9 +514,49 @@ const defaultColor = series.colors[0];
     .ser-lineup__subtitle {
       font-size: 15px; color: var(--gray-600, #666);
       margin-bottom: 36px;
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    }
+    .ser-lineup__count-link {
+      color: var(--gray-600, #666);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--gray-200, #ddd);
+      padding-bottom: 1px;
+      cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .ser-lineup__count-link:hover {
+      color: var(--black, #111);
+      border-color: var(--black, #111);
+    }
+    .ser-lineup__dot { opacity: 0.4; }
+
+    .ser-lineup__controls {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 16px; flex-wrap: wrap;
+      margin-bottom: 48px;
     }
     .ser-lineup__filter {
-      display: flex; gap: 10px; margin-bottom: 48px; flex-wrap: wrap;
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+    .ser-lineup__toggle-all {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase;
+      padding: 10px 16px;
+      background: transparent; border: 1px solid var(--gray-200, #ddd);
+      border-radius: 100px;
+      color: var(--gray-600, #666); cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .ser-lineup__toggle-all:hover {
+      border-color: var(--black, #111);
+      color: var(--black, #111);
+    }
+    .ser-lineup__toggle-all-icon {
+      width: 12px; height: 12px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .ser-lineup__toggle-all[data-state="collapsed"] .ser-lineup__toggle-all-icon {
+      transform: rotate(-180deg);
     }
     .ser-lineup__chip {
       font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
@@ -440,18 +569,57 @@ const defaultColor = series.colors[0];
       background: var(--black, #111); color: var(--white, #fff); border-color: var(--black, #111);
     }
     .ser-lineup__group {
-      margin-bottom: 56px;
+      margin-bottom: 48px;
+      scroll-margin-top: 100px;
     }
     .ser-lineup__group-head {
       display: flex; align-items: baseline; gap: 16px;
-      margin-bottom: 24px; padding-bottom: 16px;
-      border-bottom: 1px solid var(--gray-200, #ddd);
+      width: 100%;
+      margin: 0 0 24px; padding: 0 0 16px;
+      background: transparent; border: none; border-bottom: 1px solid var(--gray-200, #ddd);
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      transition: border-color 0.25s ease;
     }
+    .ser-lineup__group-head:hover { border-bottom-color: var(--black, #111); }
     .ser-lineup__group-title {
       font-size: 24px; font-weight: 700; color: var(--black, #111);
     }
     .ser-lineup__group-count {
       font-size: 14px; font-weight: 500; color: var(--gray-400, #999);
+      flex-grow: 1;
+    }
+    .ser-lineup__group-chevron {
+      width: 14px; height: 14px; color: var(--gray-400, #999);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s ease;
+      flex-shrink: 0;
+    }
+    .ser-lineup__group-head:hover .ser-lineup__group-chevron { color: var(--black, #111); }
+    .ser-lineup__group-head[aria-expanded="false"] .ser-lineup__group-chevron {
+      transform: rotate(-90deg);
+    }
+
+    /* Collapsible content через grid-template-rows */
+    .ser-lineup__group-content {
+      display: grid;
+      grid-template-rows: 1fr;
+      transition: grid-template-rows 320ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .ser-lineup__group-content[data-open="false"] {
+      grid-template-rows: 0fr;
+    }
+    .ser-lineup__group-inner {
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ser-lineup__group-content,
+      .ser-lineup__group-chevron,
+      .ser-lineup__toggle-all-icon {
+        transition: none !important;
+      }
     }
     .ser-lineup__grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;

@@ -317,9 +317,12 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
         });
 
         // ---- Reveal on scroll ----
-        // Авто-добавление data-reveal-section на ВСЕ <section> внутри <main>
-        // (на главной index.html этот скрипт не запускается — там свои GSAP)
+        // Авто-добавление data-reveal-section на средне-размерные <section>.
+        // ИСКЛЮЧЕНИЯ: длинные секции с каталогом (.ser-lineup, .cat-products, .prod-related)
+        // — у них высота > viewport, observer не успевает триггернуть.
+        const skipRevealClasses = ['ser-lineup', 'cat-products', 'prod-related', 'cat-grid', 'ser-related'];
         document.querySelectorAll('main > section, main > div > section').forEach(el => {
+          if (skipRevealClasses.some(c => el.classList.contains(c))) return;
           if (!el.hasAttribute('data-reveal-item') && !el.hasAttribute('data-reveal-section')) {
             el.setAttribute('data-reveal-section', '');
           }
@@ -333,7 +336,7 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
                 obs.unobserve(entry.target);
               }
             });
-          }, { threshold: 0.08, rootMargin: '0px 0px -10% 0px' });
+          }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
           document.querySelectorAll('[data-reveal-item]:not(.is-visible), [data-reveal-section]:not(.is-visible)').forEach(el => obs.observe(el));
         } else {
           document.querySelectorAll('[data-reveal-item], [data-reveal-section]').forEach(el => el.classList.add('is-visible'));

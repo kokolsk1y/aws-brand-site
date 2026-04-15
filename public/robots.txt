@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kokolsk1y.github.io/aws-brand-site/sitemap.xml

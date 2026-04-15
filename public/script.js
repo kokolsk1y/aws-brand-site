@@ -6,6 +6,13 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Refresh ScrollTrigger при resize (debounced)
+let _stRefreshTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(_stRefreshTimer);
+    _stRefreshTimer = setTimeout(() => ScrollTrigger.refresh(), 250);
+});
+
 // ─── SPLASH SCREEN (первый заход) ───
 (function () {
     // Создаём splash если его нет в HTML
@@ -134,21 +141,25 @@ const menuOverlay = document.getElementById('menuOverlay');
 const sideMenu = document.getElementById('sideMenu');
 
 function openMenu() {
+    if (!sideMenu) return;
     sideMenu.classList.add('open');
-    lenis.stop();
+    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'true');
+    if (lenis) lenis.stop();
 }
 
 function closeMenu() {
+    if (!sideMenu) return;
     sideMenu.classList.remove('open');
-    lenis.start();
+    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+    if (lenis) lenis.start();
 }
 
-menuToggle.addEventListener('click', openMenu);
-menuClose.addEventListener('click', closeMenu);
-menuOverlay.addEventListener('click', closeMenu);
+if (menuToggle) menuToggle.addEventListener('click', openMenu);
+if (menuClose) menuClose.addEventListener('click', closeMenu);
+if (menuOverlay) menuOverlay.addEventListener('click', closeMenu);
 
 // Закрытие при клике на ссылку (только для внешних ссылок — hash-якоря закрывают меню через anchor-handler ниже)
-sideMenu.querySelectorAll('.side-menu__item, .side-menu__sub').forEach(link => {
+if (sideMenu) sideMenu.querySelectorAll('.side-menu__item, .side-menu__sub').forEach(link => {
     link.addEventListener('click', e => {
         const href = link.getAttribute('href') || '';
         // Hash-якоря закроют меню сами (с задержкой перед scroll)

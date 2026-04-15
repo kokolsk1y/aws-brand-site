@@ -49,20 +49,24 @@ jobs:
           function patch(file) {
             let c = fs.readFileSync(file, 'utf8');
             const o = c;
-            c = c.replace(/\"\/img\//g, '\"' + BASE + '/img/');
-            c = c.replace(/'\/img\//g, \"'\" + BASE + '/img/');
-            c = c.replace(/\"\/logo\//g, '\"' + BASE + '/logo/');
-            c = c.replace(/'\/logo\//g, \"'\" + BASE + '/logo/');
-            c = c.replace(/\"\/category\//g, '\"' + BASE + '/category/');
-            c = c.replace(/'\/category\//g, \"'\" + BASE + '/category/');
-            c = c.replace(/\"\/series\//g, '\"' + BASE + '/series/');
-            c = c.replace(/'\/series\//g, \"'\" + BASE + '/series/');
-            c = c.replace(/\"\/product\//g, '\"' + BASE + '/product/');
-            c = c.replace(/'\/product\//g, \"'\" + BASE + '/product/');
+            // Базовые префиксы: \"/path → \"/aws-brand-site/path; '/path → '/aws-brand-site/path
+            const dirs = ['img','logo','category','series','product','hero','kling_ai_finish'];
+            for (const d of dirs) {
+              c = c.replace(new RegExp('\"\/' + d + '\/', 'g'), '\"' + BASE + '/' + d + '/');
+              c = c.replace(new RegExp(\"'\/\" + d + '\/', 'g'), \"'\" + BASE + '/' + d + '/');
+              // CSS url(/path/...) — без кавычек или с одиночными
+              c = c.replace(new RegExp('url\\\\(/' + d + '/', 'g'), 'url(' + BASE + '/' + d + '/');
+            }
+            // Корневые ассеты
             c = c.replace(/src=\"\/script\.js/g, 'src=\"' + BASE + '/script.js');
             c = c.replace(/href=\"\/style\.css/g, 'href=\"' + BASE + '/style.css');
+            c = c.replace(/href=\"\/AWS\.png/g, 'href=\"' + BASE + '/AWS.png');
+            // Hash и корень
             c = c.replace(/href=\"\/#/g, 'href=\"' + BASE + '/#');
             c = c.replace(/href=\"\/\"/g, 'href=\"' + BASE + '/\"');
+            c = c.replace(/href='\/'/g, \"href='\" + BASE + \"/'\");
+            // Hero видео в корне (hero-decomposition.mp4 и т.д.) — только если в кавычках с /
+            c = c.replace(/src=\"\/hero-/g, 'src=\"' + BASE + '/hero-');
             if (c !== o) fs.writeFileSync(file, c);
           }
           walk('dist');

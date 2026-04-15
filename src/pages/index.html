@@ -4,10 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AWS Products — Электрика нового стандарта</title>
+    <meta name="description" content="Российский бренд электрики с вниманием к деталям, дизайну и честной цене. Выключатели, розетки, удлинители, клеммы, патч-корды.">
+    <meta name="theme-color" content="#0a0908">
+    <meta property="og:title" content="AWS Products — Электрика нового стандарта">
+    <meta property="og:description" content="Российский бренд электрики. Качество в каждой детали.">
+    <meta property="og:image" content="https://kokolsk1y.github.io/aws-brand-site/logo/AWS.png">
+    <meta property="og:url" content="https://kokolsk1y.github.io/aws-brand-site/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://kokolsk1y.github.io/aws-brand-site/">
+    <link rel="icon" type="image/png" href="logo/AWS.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -15,7 +28,7 @@
     <header class="header dark" id="header">
         <div class="header__inner">
             <div class="header__left">
-                <button class="header__burger" id="menuToggle" aria-label="Меню">
+                <button class="header__burger" id="menuToggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="sideMenu">
                     <span></span><span></span><span></span>
                 </button>
                 <span class="header__slogan desktop-only">Качество в каждой детали</span>
@@ -74,12 +87,12 @@
                 <div class="swiper-slide" data-swiper-autoplay="9000">
                     <div class="hero-slide" data-theme="dark">
                         <div class="hero-slide__bg hero-slide__bg--dark">
-                            <video autoplay muted playsinline class="hero-slide__video">
+                            <video autoplay muted loop playsinline preload="metadata" class="hero-slide__video">
                                 <source src="hero-decomposition.mp4" type="video/mp4">
                             </video>
                         </div>
                         <div class="hero-slide__content">
-                            <h2 class="hero-slide__title">Качество<br>в каждой детали</h2>
+                            <h1 class="hero-slide__title">Качество<br>в каждой детали</h1>
                             <p class="hero-slide__subtitle">Контактные группы, механизмы и покрытия,<br>которые рассчитаны на годы работы</p>
                             <div class="hero-slide__tags">
                                 <a href="#advantages" class="hero-slide__tag" data-adv-slide="0">латунные контакты</a>
@@ -94,7 +107,7 @@
                 <div class="swiper-slide" data-swiper-autoplay="11000">
                     <div class="hero-slide" data-theme="dark">
                         <div class="hero-slide__bg">
-                            <video autoplay muted playsinline class="hero-slide__video">
+                            <video autoplay muted loop playsinline preload="metadata" class="hero-slide__video">
                                 <source src="kling_ai_finish/гостинная.mp4" type="video/mp4">
                             </video>
                         </div>
@@ -109,7 +122,7 @@
                 <div class="swiper-slide" data-swiper-autoplay="11000">
                     <div class="hero-slide" data-theme="dark">
                         <div class="hero-slide__bg">
-                            <video autoplay muted playsinline class="hero-slide__video">
+                            <video autoplay muted loop playsinline preload="metadata" class="hero-slide__video">
                                 <source src="kling_ai_finish/кухня.mp4" type="video/mp4">
                             </video>
                         </div>
@@ -518,10 +531,10 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
-    <script src="script.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script defer src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
+    <script defer src="script.js"></script>
 </body>
 </html>

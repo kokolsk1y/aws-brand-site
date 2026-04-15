@@ -1479,6 +1479,19 @@ a { text-decoration: none; color: inherit; }
     .hero-slide__tags { gap: 6px; }
     .hero-slide__tag { font-size: 9px; padding: 6px 12px; }
 }
+
+/* === GLOBAL CTA section override (для всех Astro страниц) === */
+.cat-cta {
+    background: var(--dark, #1a1612) !important;
+    padding: 120px 0 !important;
+    text-align: center !important;
+}
+.cat-cta__inner { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+.cat-cta__title {
+    font-size: clamp(32px, 4vw, 56px) !important;
+    font-weight: 800 !important;
+    line-height: 1.05 !important;
+    letter-spacing: -1px !important;
     margin-bottom: 16px !important;
     color: #ffffff !important;
 }
@@ -1601,20 +1614,20 @@ a { text-decoration: none; color: inherit; }
 .footer-v2__icon svg { width: 100%; height: 100%; }
 .footer-v2__col a:hover .footer-v2__icon { color: #c8a165; }
 
-/* Gigantic word mark */
+/* Gigantic word mark — выходит за края контейнера */
 .footer-v2__markrow {
-    margin: 0 -60px;
-    padding: 0 60px;
-    overflow: hidden;
-    margin-bottom: 60px;
+    position: relative;
+    margin: 0 0 60px;
+    overflow: visible;
 }
 .footer-v2__mark-svg {
     display: block;
-    width: 100%;
+    width: 115%;
+    margin-left: -7.5%;
     height: auto;
-    color: rgba(255,255,255,0.18);
     pointer-events: none;
     user-select: none;
+    overflow: visible;
 }
 .footer-v2__mark-svg text {
     vector-effect: non-scaling-stroke;
@@ -1678,45 +1691,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ============================
-   KEN BURNS — только на статичных фото (у видео своя камера)
-   ============================ */
-.hero-slide__img {
-    animation: kenBurns 22s ease-in-out infinite alternate;
-    will-change: transform;
-}
-@keyframes kenBurns {
-    0%   { transform: scale(1.02) translate3d(0, 0, 0); }
-    50%  { transform: scale(1.08) translate3d(-1.5%, -1%, 0); }
-    100% { transform: scale(1.05) translate3d(1%, 1%, 0); }
-}
-
-/* ============================
-   HERO CURSOR SPOTLIGHT
-   тёплый круг света следует за курсором
-   ============================ */
-.hero {
-    position: relative;
-}
-.hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 5;
-    background: radial-gradient(
-        circle 320px at var(--mx, 50%) var(--my, 50%),
-        rgba(200, 161, 101, 0.15) 0%,
-        rgba(200, 161, 101, 0.05) 30%,
-        transparent 70%
-    );
-    mix-blend-mode: screen;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-.hero:hover::before { opacity: 1; }
-
-/* ============================
-   SPLASH (sync с public/style.css)
+   LOADING SPLASH
    ============================ */
 .splash {
     position: fixed; inset: 0;
@@ -1728,6 +1703,7 @@ a { text-decoration: none; color: inherit; }
     pointer-events: none;
 }
 .splash.is-hiding { opacity: 0; }
+
 .splash__logo-wrap {
     position: relative;
     display: flex; flex-direction: column; align-items: center; gap: 32px;
@@ -1754,11 +1730,50 @@ a { text-decoration: none; color: inherit; }
     background: linear-gradient(90deg, transparent, #c8a165, transparent);
     animation: splashShimmer 1.6s infinite cubic-bezier(0.4, 0, 0.2, 1);
 }
-@keyframes splashIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes splashShimmer { 0% { transform: translateX(-120%); } 100% { transform: translateX(320%); } }
+
+@keyframes splashIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes splashShimmer {
+    0%   { transform: translateX(-120%); }
+    100% { transform: translateX(320%); }
+}
 
 /* ============================
-   SCROLL PROGRESS BAR (sync)
+   VIEW TRANSITIONS (Astro built-in)
+   ============================ */
+@keyframes vt-fade-in  { from { opacity: 0; }                      to { opacity: 1; } }
+@keyframes vt-fade-out { from { opacity: 1; }                      to { opacity: 0; } }
+@keyframes vt-slide-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes vt-slide-out { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-6px); } }
+
+::view-transition-old(root) {
+    animation: vt-fade-out 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+::view-transition-new(root) {
+    animation: vt-slide-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ============================
+   3D TILT (универсальный)
+   элементы с [data-tilt] наклоняются за курсором
+   ============================ */
+[data-tilt] {
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+}
+[data-tilt]:hover {
+    transition: transform 0.15s ease-out;
+}
+[data-tilt-inner] {
+    transform: translateZ(30px);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============================
+   SCROLL PROGRESS BAR
    ============================ */
 .scroll-progress {
     position: fixed; top: 0; left: 0; right: 0;
@@ -1774,17 +1789,134 @@ a { text-decoration: none; color: inherit; }
     transition: transform 0.1s ease-out;
 }
 
-/* Newsletter (sync) */
-.footer-v2__crown { display: grid !important; grid-template-columns: 1fr auto; gap: 64px; align-items: end; }
-.footer-v2__newsletter { max-width: 360px; padding-bottom: 8px; }
-.footer-v2__news-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #c8a165; margin-bottom: 12px; }
-.footer-v2__news-text { font-size: 14px; line-height: 1.5; color: rgba(255,255,255,0.6); margin-bottom: 20px; }
-.footer-v2__news-form { display: flex; gap: 10px; flex-wrap: wrap; }
-.footer-v2__news-input { flex: 1; min-width: 180px; padding: 14px 18px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #fff; font-family: inherit; font-size: 14px; transition: border-color 0.2s ease, background 0.2s ease; }
-.footer-v2__news-input:focus { outline: none; border-color: #c8a165; background: rgba(255,255,255,0.08); }
+/* ============================
+   STICKY SECTION HEADER
+   первые 120px секции "прилипают" при скролле
+   ============================ */
+.sticky-head {
+    position: sticky;
+    top: 72px;
+    z-index: 4;
+    background: inherit;
+    padding-block: 32px;
+    backdrop-filter: blur(10px);
+}
+
+/* ============================
+   MENU PREVIEW (desktop only)
+   ============================ */
+.side-menu__preview {
+    position: absolute;
+    top: 0; left: 100%;
+    width: 340px; height: 100%;
+    background: #faf8f4;
+    border-left: 1px solid rgba(0,0,0,0.05);
+    padding: 60px 32px;
+    display: flex; flex-direction: column; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transform: translateX(-20px);
+    transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.side-menu__preview.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+.side-menu__preview-img-wrap {
+    aspect-ratio: 1/1;
+    background: var(--warm-200, #ede7de);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 32px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+.side-menu__preview-img {
+    max-width: 100%; max-height: 100%; object-fit: contain;
+    mix-blend-mode: multiply;
+    transition: opacity 0.3s ease;
+}
+.side-menu__preview-placeholder {
+    font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(0,0,0,0.3);
+    border: 1.5px dashed rgba(0,0,0,0.1);
+    padding: 14px 22px; border-radius: 4px;
+}
+.side-menu__preview-title {
+    font-size: 18px; font-weight: 700; color: var(--black, #111);
+    letter-spacing: -0.3px;
+}
+
+@media (max-width: 900px) {
+    .side-menu__preview { display: none; }
+}
+
+/* ============================
+   FOOTER NEWSLETTER
+   ============================ */
+.footer-v2__crown {
+    display: grid !important;
+    grid-template-columns: 1fr auto;
+    gap: 64px;
+    align-items: end;
+}
+.footer-v2__newsletter {
+    max-width: 360px;
+    padding-bottom: 8px;
+}
+.footer-v2__news-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: #c8a165; margin-bottom: 12px;
+}
+.footer-v2__news-text {
+    font-size: 14px; line-height: 1.5;
+    color: rgba(255,255,255,0.6); margin-bottom: 20px;
+}
+.footer-v2__news-form {
+    display: flex; gap: 10px;
+    flex-wrap: wrap;
+}
+.footer-v2__news-input {
+    flex: 1; min-width: 180px;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    color: #fff; font-family: inherit; font-size: 14px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+.footer-v2__news-input:focus {
+    outline: none;
+    border-color: #c8a165;
+    background: rgba(255,255,255,0.08);
+}
 .footer-v2__news-input::placeholder { color: rgba(255,255,255,0.3); }
-.footer-v2__news-btn { padding: 14px 22px; background: #fff; color: #0a0908; border: none; border-radius: 8px; font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: all 0.2s ease; }
-.footer-v2__news-btn:hover { background: #c8a165; transform: translateY(-1px); }
-.footer-v2__news-msg { flex-basis: 100%; font-size: 13px; color: #8CB86B; margin-top: 8px; min-height: 16px; }
-.footer-v2__news-form.is-sent .footer-v2__news-input, .footer-v2__news-form.is-sent .footer-v2__news-btn { opacity: 0.5; pointer-events: none; }
-@media (max-width: 1024px) { .footer-v2__crown { grid-template-columns: 1fr; gap: 40px; } .footer-v2__newsletter { max-width: 100%; } }
+.footer-v2__news-btn {
+    padding: 14px 22px;
+    background: #fff;
+    color: #0a0908;
+    border: none; border-radius: 8px;
+    font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.footer-v2__news-btn:hover {
+    background: #c8a165;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(200,161,101,0.25);
+}
+.footer-v2__news-msg {
+    flex-basis: 100%;
+    font-size: 13px; color: #8CB86B;
+    margin-top: 8px;
+    min-height: 16px;
+}
+.footer-v2__news-form.is-sent .footer-v2__news-input,
+.footer-v2__news-form.is-sent .footer-v2__news-btn {
+    opacity: 0.5; pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+    .footer-v2__crown { grid-template-columns: 1fr; gap: 40px; }
+    .footer-v2__newsletter { max-width: 100%; }
+}

@@ -237,37 +237,76 @@ heroSwiper.on('slideChangeTransitionStart', () => {
     }
 });
 
-// Автопереход слайдов 2 и 3 — запускаем crossfade ЗА `SWIPER_SPEED` до окончания видео,
-// чтобы переход закончился ровно к концу видео и стоп-кадр не был виден.
-const SYNC_ON_ENDED = new Set([1, 2]);
-const SWIPER_SPEED = 1000; // мс crossfade (должно совпадать с конфигом выше)
+// Синхронизация перехода слайдов с окончанием видео.
+// SWIPER_SPEED = длительность crossfade'а Swiper'а.
+//
+// Режимы по слайдам (realIndex):
+//  0 (hero-1 бумеранг): видео играет один раз, на последнем кадре замирает HOLD_MS,
+//                       затем запускается crossfade → к концу следующий слайд уже виден.
+//  1, 2 (hero-2, hero-3): crossfade стартует за SWIPER_SPEED до конца видео,
+//                         чтобы стоп-кадр не успел показаться.
+const SWIPER_SPEED = 1000;
+const HOLD_MS = 2000; // freeze на последнем кадре для hero-1
+const SLIDE_MODES = {
+    0: { mode: 'hold' },
+    1: { mode: 'crossfade' },
+    2: { mode: 'crossfade' }
+};
 let currentTimeHandler = null;
+let holdTimer = null;
 
-function bindVideoEndSync() {
+function clearSyncHandlers() {
     if (currentTimeHandler) {
         currentTimeHandler.video.removeEventListener('timeupdate', currentTimeHandler.fn);
+        currentTimeHandler.video.removeEventListener('ended', currentTimeHandler.fn);
         currentTimeHandler = null;
     }
-    if (!SYNC_ON_ENDED.has(heroSwiper.realIndex)) return;
+    if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
+}
+
+function bindVideoEndSync() {
+    clearSyncHandlers();
+    const cfg = SLIDE_MODES[heroSwiper.realIndex];
+    if (!cfg) { heroSwiper.autoplay && heroSwiper.autoplay.start(); return; }
 
     const activeVideo = document.querySelector('.swiper-slide-active .hero-slide__video');
     if (!activeVideo) return;
 
+    // Пауза swiper-autoplay — переходим сами по событию видео
+    if (heroSwiper.autoplay) heroSwiper.autoplay.stop();
+
     let triggered = false;
-    const fn = () => {
-        if (triggered) return;
-        if (!activeVideo.duration || isNaN(activeVideo.duration)) return;
-        const remaining = activeVideo.duration - activeVideo.currentTime;
-        if (remaining <= SWIPER_SPEED / 1000) {
+
+    if (cfg.mode === 'hold') {
+        // hero-1: на 'ended' фризим последний кадр и ждём HOLD_MS
+        const fn = () => {
+            if (triggered) return;
             triggered = true;
-            heroSwiper.slideNext();
-        }
-    };
-    activeVideo.addEventListener('timeupdate', fn);
-    currentTimeHandler = { video: activeVideo, fn };
+            activeVideo.pause();
+            // гарантируем что кадр = последний (на всякий случай)
+            if (activeVideo.duration) activeVideo.currentTime = activeVideo.duration;
+            holdTimer = setTimeout(() => heroSwiper.slideNext(), HOLD_MS);
+        };
+        activeVideo.addEventListener('ended', fn);
+        currentTimeHandler = { video: activeVideo, fn };
+    } else {
+        // hero-2, hero-3: crossfade за SWIPER_SPEED до конца видео
+        const fn = () => {
+            if (triggered) return;
+            if (!activeVideo.duration || isNaN(activeVideo.duration)) return;
+            const remaining = activeVideo.duration - activeVideo.currentTime;
+            if (remaining <= SWIPER_SPEED / 1000) {
+                triggered = true;
+                heroSwiper.slideNext();
+            }
+        };
+        activeVideo.addEventListener('timeupdate', fn);
+        currentTimeHandler = { video: activeVideo, fn };
+    }
 }
 
 heroSwiper.on('slideChangeTransitionEnd', bindVideoEndSync);
+heroSwiper.on('slideChangeTransitionStart', clearSyncHandlers);
 setTimeout(bindVideoEndSync, 500);
 
 // Начальная анимация

@@ -1567,9 +1567,9 @@ a { text-decoration: none; color: inherit; }
     color: rgba(255,255,255,0.5); margin-bottom: 28px;
 }
 .footer-v2__email {
-    display: inline-flex; align-items: center; gap: 24px;
-    font-size: clamp(36px, 5vw, 72px);
-    font-weight: 800; letter-spacing: -1.5px; line-height: 1;
+    display: inline-flex; align-items: center; gap: 14px;
+    font-size: clamp(18px, 2vw, 28px);
+    font-weight: 700; letter-spacing: -0.5px; line-height: 1.1;
     color: #fff; text-decoration: none;
     transition: color 0.3s ease;
 }

@@ -338,16 +338,41 @@ const description = buildDescription();
   </div>
 
   <script is:inline>
-    const modal = document.getElementById('buyModal');
-    const overlay = document.getElementById('buyModalOverlay');
-    const closeBtn = document.getElementById('buyModalClose');
-    const buyBtn = document.getElementById('buyBtn');
-    function openBuy() { if (modal) { modal.hidden = false; document.body.style.overflow = 'hidden'; } }
-    function closeBuy() { if (modal) { modal.hidden = true; document.body.style.overflow = ''; } }
-    if (buyBtn) buyBtn.addEventListener('click', openBuy);
-    if (overlay) overlay.addEventListener('click', closeBuy);
-    if (closeBtn) closeBtn.addEventListener('click', closeBuy);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBuy(); });
+    (function () {
+      const modal = document.getElementById('buyModal');
+      const overlay = document.getElementById('buyModalOverlay');
+      const closeBtn = document.getElementById('buyModalClose');
+      const buyBtn = document.getElementById('buyBtn');
+      if (!modal) return;
+      let lastFocus = null;
+      const focusablesSel = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+      function openBuy() {
+        lastFocus = document.activeElement;
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        const first = modal.querySelector(focusablesSel);
+        if (first) first.focus();
+      }
+      function closeBuy() {
+        modal.hidden = true;
+        document.body.style.overflow = '';
+        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+      }
+      if (buyBtn) buyBtn.addEventListener('click', openBuy);
+      if (overlay) overlay.addEventListener('click', closeBuy);
+      if (closeBtn) closeBtn.addEventListener('click', closeBuy);
+      document.addEventListener('keydown', e => {
+        if (modal.hidden) return;
+        if (e.key === 'Escape') { closeBuy(); return; }
+        if (e.key === 'Tab') {
+          const f = Array.from(modal.querySelectorAll(focusablesSel)).filter(el => !el.hasAttribute('disabled') && el.offsetParent !== null);
+          if (!f.length) return;
+          const first = f[0], last = f[f.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      });
+    })();
   </script>
 
   <style is:global>

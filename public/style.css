@@ -9,7 +9,7 @@
     --dark: #1a1a1a;
     --gray-800: #333333;
     --gray-600: #666666;
-    --gray-400: #999999;
+    --gray-400: #6b6b6b;
     --gray-200: #d4d4d4;
     --gray-100: #f5f5f3;
     --warm-100: #f7f4ef;    /* тёплый беж */
@@ -1914,6 +1914,36 @@ a { text-decoration: none; color: inherit; }
 .footer-v2__news-form.is-sent .footer-v2__news-input,
 .footer-v2__news-form.is-sent .footer-v2__news-btn {
     opacity: 0.5; pointer-events: none;
+}
+.footer-v2__news-note {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 10px;
+    letter-spacing: 0.3px;
+}
+
+/* "Скоро" — неактивные ссылки (соцсети без аккаунтов, DESIGN серия) */
+.footer-v2__soon {
+    cursor: default;
+    opacity: 0.55;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+.footer-v2__soon:hover { color: inherit !important; }
+.footer-v2__soon:hover .footer-v2__icon { color: inherit !important; }
+.footer-v2__soon-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    background: rgba(255,255,255,0.08);
+    padding: 2px 7px;
+    border-radius: 999px;
+    margin-left: 6px;
+    vertical-align: middle;
 }
 
 @media (max-width: 1024px) {

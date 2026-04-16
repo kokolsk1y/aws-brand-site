@@ -60,31 +60,6 @@ const defaultColor = series.colors[0];
     </div>
   </section>
 
-  <!-- ОСОБЕННОСТИ — концепт A: параллакс-номера -->
-  <section class="ser-features">
-    <div class="ser-features__inner">
-      <p class="label">Особенности</p>
-      <h2 class="ser-features__title">Что важно<br>в этой серии</h2>
-      <div class="ser-features__list" data-reveal-list>
-        {series.features.map((f, i) => (
-          <div class="ser-feature" data-reveal-item data-index={i}>
-            <svg class="ser-feature__bignum" viewBox="0 0 200 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-              <text x="100" y="100" text-anchor="middle"
-                    font-family="Montserrat, sans-serif" font-weight="900" font-size="120"
-                    class="ser-feature__bignum-text"
-                    stroke-width="2" paint-order="stroke fill">{String(i + 1).padStart(2, '0')}</text>
-            </svg>
-            <div class="ser-feature__body">
-              <span class="ser-feature__line"></span>
-              <h3 class="ser-feature__name">{f.title}</h3>
-              <p class="ser-feature__text">{f.text}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
   <!-- LINEUP — все 3 группы -->
   {series.groups && (series.groups.switches.length + series.groups.sockets.length + series.groups.frames.length) > 0 && (
     <section class="ser-lineup">

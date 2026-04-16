@@ -378,32 +378,43 @@ a { text-decoration: none; color: inherit; }
     border-color: rgba(0,0,0,0.06);
 }
 
-/* Hero slide 4: продуктовое фото с эффектом парения */
-.hero-slide--product .hero-slide__product-showcase {
+/* Hero slide 4: два выключателя с тёплым свечением */
+.hero-product__glow {
     position: absolute;
-    right: 10%;
-    top: 50%;
+    top: 50%; left: 55%;
+    width: 500px; height: 500px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(200,169,110,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+.hero-product__pair {
+    position: absolute;
+    right: 8%; top: 50%;
     transform: translateY(-50%);
     z-index: 1;
-    width: 420px;
-    height: 420px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 30px;
     animation: heroFloat 4s ease-in-out infinite;
 }
-.hero-slide__product-img {
-    max-width: 100%;
-    max-height: 100%;
+.hero-product__img {
     object-fit: contain;
-    filter: drop-shadow(0 30px 60px rgba(0,0,0,0.5)) drop-shadow(0 0 80px rgba(200,169,110,0.15));
+    filter: drop-shadow(0 20px 50px rgba(0,0,0,0.6));
+}
+.hero-product__img--main {
+    width: 320px; height: 320px;
+}
+.hero-product__img--second {
+    width: 260px; height: 260px;
+    opacity: 0.7;
 }
 @keyframes heroFloat {
     0%, 100% { transform: translateY(-50%); }
     50% { transform: translateY(calc(-50% - 14px)); }
 }
 
-/* Hero slide 5: бегущая лента товаров */
+/* Hero slide 5: 6-рядная стена товаров */
 .hero-slide--marquee { overflow: hidden; }
 .hero-marquee {
     position: absolute;
@@ -411,9 +422,10 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 20px;
-    opacity: 0.2;
+    gap: 14px;
+    opacity: 0.35;
     z-index: 0;
+    padding: 40px 0;
 }
 .hero-marquee__row {
     overflow: hidden;
@@ -421,22 +433,22 @@ a { text-decoration: none; color: inherit; }
 }
 .hero-marquee__track {
     display: flex;
-    gap: 20px;
+    gap: 14px;
     width: max-content;
 }
 .hero-marquee__row--left .hero-marquee__track {
-    animation: marqueeLeft 40s linear infinite;
+    animation: marqueeLeft 50s linear infinite;
 }
 .hero-marquee__row--right .hero-marquee__track {
-    animation: marqueeRight 40s linear infinite;
+    animation: marqueeRight 50s linear infinite;
 }
 .hero-marquee__track img {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     object-fit: contain;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.06);
-    padding: 16px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.05);
+    padding: 12px;
     flex-shrink: 0;
 }
 @keyframes marqueeLeft {
@@ -459,30 +471,62 @@ a { text-decoration: none; color: inherit; }
     max-width: 640px;
 }
 .hero-slide__content--center .hero-slide__title {
-    text-shadow: 0 4px 40px rgba(0,0,0,0.8);
+    text-shadow: 0 4px 40px rgba(0,0,0,0.9);
+}
+.hero-slide__content--center .hero-slide__subtitle {
+    text-shadow: 0 2px 20px rgba(0,0,0,0.8);
 }
 .hero-slide__content--center .hero-slide__btn {
     margin: 0 auto;
 }
 
+/* Advantages 04: витрина продуктов */
+.advantages__media--lineup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark);
+    padding: 40px;
+}
+.advantages__lineup-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 500px;
+}
+.advantages__lineup-grid img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 16px;
+}
+
 @media (max-width: 768px) {
-    .hero-slide--product .hero-slide__product-showcase {
-        position: absolute;
+    .hero-product__pair {
         right: 5%;
-        top: 15%;
-        transform: none;
-        width: 200px;
-        height: 200px;
-        animation-name: heroFloatMobile;
+        gap: 16px;
     }
-    @keyframes heroFloatMobile {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
+    .hero-product__img--main {
+        width: 180px; height: 180px;
+    }
+    .hero-product__img--second {
+        width: 140px; height: 140px;
+    }
+    .hero-product__glow {
+        width: 300px; height: 300px;
+        left: 60%;
     }
     .hero-marquee__track img {
-        width: 80px;
-        height: 80px;
-        padding: 10px;
+        width: 70px;
+        height: 70px;
+        padding: 8px;
+    }
+    .hero-marquee { gap: 10px; }
+    .advantages__lineup-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
     }
 }
 

@@ -378,42 +378,6 @@ a { text-decoration: none; color: inherit; }
     border-color: rgba(0,0,0,0.06);
 }
 
-/* Hero slide 4: два выключателя с тёплым свечением */
-.hero-product__glow {
-    position: absolute;
-    top: 50%; left: 55%;
-    width: 500px; height: 500px;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(200,169,110,0.18) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-}
-.hero-product__pair {
-    position: absolute;
-    right: 8%; top: 50%;
-    transform: translateY(-50%);
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    animation: heroFloat 4s ease-in-out infinite;
-}
-.hero-product__img {
-    object-fit: contain;
-    filter: drop-shadow(0 20px 50px rgba(0,0,0,0.6));
-}
-.hero-product__img--main {
-    width: 320px; height: 320px;
-}
-.hero-product__img--second {
-    width: 260px; height: 260px;
-    opacity: 0.7;
-}
-@keyframes heroFloat {
-    0%, 100% { transform: translateY(-50%); }
-    50% { transform: translateY(calc(-50% - 14px)); }
-}
-
 /* Hero slide 5: 6-рядная стена товаров */
 .hero-slide--marquee { overflow: hidden; }
 .hero-marquee {
@@ -423,9 +387,18 @@ a { text-decoration: none; color: inherit; }
     flex-direction: column;
     justify-content: center;
     gap: 14px;
-    opacity: 0.35;
+    opacity: 0.25;
     z-index: 0;
     padding: 40px 0;
+}
+/* Виньетка по центру — товары приглушены, текст читается */
+.hero-slide--marquee::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(ellipse 60% 50% at center, rgba(26,26,26,0.85) 0%, transparent 100%);
+    pointer-events: none;
 }
 .hero-marquee__row {
     overflow: hidden;
@@ -464,11 +437,14 @@ a { text-decoration: none; color: inherit; }
     position: absolute;
     top: 50%;
     left: 50%;
+    bottom: auto;
+    right: auto;
     transform: translate(-50%, -50%);
     z-index: 2;
     color: var(--white);
     text-align: center;
     max-width: 640px;
+    width: 90%;
 }
 .hero-slide__content--center .hero-slide__title {
     text-shadow: 0 4px 40px rgba(0,0,0,0.9);
@@ -504,20 +480,6 @@ a { text-decoration: none; color: inherit; }
 }
 
 @media (max-width: 768px) {
-    .hero-product__pair {
-        right: 5%;
-        gap: 16px;
-    }
-    .hero-product__img--main {
-        width: 180px; height: 180px;
-    }
-    .hero-product__img--second {
-        width: 140px; height: 140px;
-    }
-    .hero-product__glow {
-        width: 300px; height: 300px;
-        left: 60%;
-    }
     .hero-marquee__track img {
         width: 70px;
         height: 70px;

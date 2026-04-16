@@ -467,6 +467,7 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     gap: 12px;
     padding: 0 16px;
+    max-height: 80vh;
 }
 .advantages__media--prices::before,
 .advantages__media--prices::after {

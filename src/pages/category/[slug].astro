@@ -110,7 +110,7 @@ function shortName(name) {
       {category.filters && (
         <div class="cat-filters" id="catFilters">
           {category.filters.map(f => (
-            <button class={`cat-filters__chip ${f.key === 'all' ? 'active' : ''}`} data-filter={f.key}>{f.label}</button>
+            <button class={`cat-filters__chip ${f.key === 'all' ? 'active' : ''}`} data-filter={f.key} data-test={f.test}>{f.label}</button>
           ))}
         </div>
       )}
@@ -208,15 +208,12 @@ function shortName(name) {
         chip.addEventListener('click', () => {
           filtersEl.querySelectorAll('.cat-filters__chip').forEach(c => c.classList.remove('active'));
           chip.classList.add('active');
-          const key = chip.dataset.filter;
+          const testExpr = chip.dataset.test || 'true';
           const cards = grid.querySelectorAll('.prod-card');
           cards.forEach(card => {
-            const name = card.dataset.name || '';
+            const i = { name: card.dataset.name || '' };
             let show = true;
-            if (key === '1.5m') show = name.includes('1,5м');
-            else if (key === '3m') show = /(?<!\d,)3м/.test(name);
-            else if (key === '5m') show = /(?<!\d,)5м/.test(name);
-            else if (key === 'earth') show = name.includes('с/з');
+            try { show = new Function('i', 'return ' + testExpr)(i); } catch (e) { show = true; }
             card.style.display = show ? '' : 'none';
           });
         });

@@ -39,7 +39,12 @@
     "title": "Патч-корды UTP",
     "subtitle": "Cat.5e / Cat.6e · 0.5 — 30 м · 25 моделей",
     "description": "Патч-корды для сетевого оборудования. Литые коннекторы RJ45, разные длины и цвета для удобной маркировки.",
-    "cover": "/img/products/AWS-13010.webp"
+    "cover": "/img/products/AWS-13010.webp",
+    "filters": [
+      { "key": "all", "label": "Все", "test": "true" },
+      { "key": "cat5e", "label": "Cat.5e", "test": "i.name.includes('Cat.5e')" },
+      { "key": "cat6e", "label": "Cat.6e", "test": "i.name.includes('Cat.6e')" }
+    ]
   },
   "cables": {
     "slug": "cables",

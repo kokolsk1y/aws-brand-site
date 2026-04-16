@@ -165,8 +165,34 @@
   },
   "patch": {
     "title": "Патч-корды UTP",
-    "sub": "Cat.5e, 0.5—15 м",
-    "items": []
+    "sub": "Cat.5e / Cat.6e, 0.5—30 м",
+    "items": [
+      { "article": "AWS-13003", "name": "Патч-корд 0,5м UTP Cat.5e RJ45 желтый (AWSPRODUCTS)", "photo": "img/products/AWS-13003.webp" },
+      { "article": "AWS-13004", "name": "Патч-корд 0,5м UTP Cat.5e RJ45 зеленый (AWSPRODUCTS)", "photo": "img/products/AWS-13004.webp" },
+      { "article": "AWS-13005", "name": "Патч-корд 0,5м UTP Cat.5e RJ45 красный (AWSPRODUCTS)", "photo": "img/products/AWS-13005.webp" },
+      { "article": "AWS-13006", "name": "Патч-корд 0,5м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13006.webp" },
+      { "article": "AWS-13023", "name": "Патч-корд 0,5м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)", "photo": "img/products/AWS-13023.webp" },
+      { "article": "AWS-13007", "name": "Патч-корд 1,0м UTP Cat.5e RJ45 желтый (AWSPRODUCTS)", "photo": "img/products/AWS-13007.webp" },
+      { "article": "AWS-13008", "name": "Патч-корд 1,0м UTP Cat.5e RJ45 зеленый (AWSPRODUCTS)", "photo": "img/products/AWS-13008.webp" },
+      { "article": "AWS-13009", "name": "Патч-корд 1,0м UTP Cat.5e RJ45 красный (AWSPRODUCTS)", "photo": "img/products/AWS-13009.webp" },
+      { "article": "AWS-13010", "name": "Патч-корд 1,0м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13010.webp" },
+      { "article": "AWS-13024", "name": "Патч-корд 1,0м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)", "photo": "img/products/AWS-13024.webp" },
+      { "article": "AWS-13011", "name": "Патч-корд 1,5м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13011.webp" },
+      { "article": "AWS-13025", "name": "Патч-корд 1,5м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)", "photo": "img/products/AWS-13025.webp" },
+      { "article": "AWS-13012", "name": "Патч-корд 2м UTP Cat.5e RJ45 желтый (AWSPRODUCTS)", "photo": "img/products/AWS-13012.webp" },
+      { "article": "AWS-13014", "name": "Патч-корд 2м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13014.webp" },
+      { "article": "AWS-13026", "name": "Патч-корд 2м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)", "photo": "img/products/AWS-13026.webp" },
+      { "article": "AWS-13015", "name": "Патч-корд 3м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13015.webp" },
+      { "article": "AWS-13027", "name": "Патч-корд 3м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)", "photo": "img/products/AWS-13027.webp" },
+      { "article": "AWS-13016", "name": "Патч-корд 5м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13016.webp" },
+      { "article": "AWS-13028", "name": "Патч-корд 5м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)", "photo": "img/products/AWS-13028.webp" },
+      { "article": "AWS-13017", "name": "Патч-корд 7м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13017.webp" },
+      { "article": "AWS-13018", "name": "Патч-корд 10м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13018.webp" },
+      { "article": "AWS-13019", "name": "Патч-корд 15м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13019.webp" },
+      { "article": "AWS-13020", "name": "Патч-корд 20м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13020.webp" },
+      { "article": "AWS-13021", "name": "Патч-корд 25м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13021.webp" },
+      { "article": "AWS-13022", "name": "Патч-корд 30м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13022.webp" }
+    ]
   },
   "cable": {
     "title": "Кабель",

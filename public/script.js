@@ -195,10 +195,11 @@ const heroSwiper = new Swiper('.hero-swiper', {
 // Смена темы хедера
 const header = document.getElementById('header');
 
+// Темы хедера по realIndex слайдов (loop:true создаёт клоны —
+// querySelector ненадёжен, используем массив напрямую)
+const HERO_THEMES = ['dark', 'dark', 'dark', 'dark', 'light'];
 function updateHeaderTheme() {
-    const activeSlide = document.querySelector('.swiper-slide-active .hero-slide');
-    if (!activeSlide) return;
-    const theme = activeSlide.dataset.theme || 'dark';
+    const theme = HERO_THEMES[heroSwiper.realIndex] || 'dark';
     if (!header.classList.contains('scrolled')) {
         header.classList.remove('dark', 'light');
         header.classList.add(theme);

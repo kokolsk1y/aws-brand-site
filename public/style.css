@@ -433,28 +433,6 @@ a { text-decoration: none; color: inherit; }
     to { transform: translateX(0); }
 }
 
-.hero-slide__content--center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    bottom: auto;
-    right: auto;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    color: var(--white);
-    text-align: center;
-    max-width: 640px;
-    width: 90%;
-}
-.hero-slide__content--center .hero-slide__title {
-    text-shadow: 0 4px 40px rgba(0,0,0,0.9);
-}
-.hero-slide__content--center .hero-slide__subtitle {
-    text-shadow: 0 2px 20px rgba(0,0,0,0.8);
-}
-.hero-slide__content--center .hero-slide__btn {
-    margin: 0 auto;
-}
 
 /* Advantages 04: витрина продуктов */
 .advantages__media--lineup {
@@ -502,6 +480,26 @@ a { text-decoration: none; color: inherit; }
 }
 
 .hero-slide__content--dark { color: var(--black); }
+
+.hero-slide__content.hero-slide__content--center {
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    right: auto;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    max-width: 640px;
+    width: 90%;
+}
+.hero-slide__content--center .hero-slide__title {
+    text-shadow: 0 4px 40px rgba(0,0,0,0.9);
+}
+.hero-slide__content--center .hero-slide__subtitle {
+    text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+}
+.hero-slide__content--center .hero-slide__btn {
+    margin: 0 auto;
+}
 
 .hero-slide__label {
     font-size: 11px;

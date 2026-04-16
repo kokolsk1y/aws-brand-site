@@ -140,15 +140,17 @@ a { text-decoration: none; color: inherit; }
     border-color: rgba(0,0,0,0.08);
     box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
-/* На светлом hero-слайде хедер получает полупрозрачный фон для читаемости */
+/* На светлом hero-слайде хедер получает плотный фон */
 .header.light:not(.scrolled) {
-    background: rgba(247,244,239,0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    background: rgba(255,255,255,0.93);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    color: var(--black);
 }
-.header.light .header__link { opacity: 0.85; }
-.header.light .header__slogan { opacity: 0.65; }
+.header.light .header__link { opacity: 1; }
+.header.light .header__slogan { opacity: 0.7; }
+.header.light .header__burger span { background: var(--black); }
 
 /* Burger */
 .header__burger {
@@ -458,19 +460,21 @@ a { text-decoration: none; color: inherit; }
 }
 
 
-/* Advantages 04: вертикальный тикер цен */
+/* Advantages 04: двойной вертикальный тикер */
 .advantages__media--prices {
     position: relative;
     overflow: hidden;
     background: linear-gradient(135deg, #1a1a1a 0%, #252118 100%);
+    display: flex;
+    gap: 12px;
+    padding: 0 16px;
 }
-/* Верхний и нижний фейд для бесшовности */
 .advantages__media--prices::before,
 .advantages__media--prices::after {
     content: '';
     position: absolute;
     left: 0; right: 0;
-    height: 80px;
+    height: 70px;
     z-index: 2;
     pointer-events: none;
 }
@@ -483,37 +487,46 @@ a { text-decoration: none; color: inherit; }
     background: linear-gradient(0deg, #1f1c16 0%, transparent 100%);
 }
 .adv-ticker {
-    height: 100%;
+    flex: 1;
     overflow: hidden;
 }
 .adv-ticker__track {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 20px 32px;
-    animation: tickerUp 20s linear infinite;
+    gap: 12px;
+    padding: 12px 0;
+}
+.adv-ticker--up .adv-ticker__track {
+    animation: tickerUp 18s linear infinite;
+}
+.adv-ticker--down .adv-ticker__track {
+    animation: tickerDown 22s linear infinite;
 }
 @keyframes tickerUp {
     0% { transform: translateY(0); }
     100% { transform: translateY(-50%); }
 }
+@keyframes tickerDown {
+    0% { transform: translateY(-50%); }
+    100% { transform: translateY(0); }
+}
 .adv-price-card {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 14px;
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 18px;
-    padding: 18px 24px;
+    border-radius: 14px;
+    padding: 14px 16px;
     flex-shrink: 0;
 }
 .adv-price-card__img {
-    width: 80px;
-    height: 80px;
+    width: 64px;
+    height: 64px;
     object-fit: contain;
     background: #fff;
-    border-radius: 14px;
-    padding: 8px;
+    border-radius: 12px;
+    padding: 6px;
     flex-shrink: 0;
 }
 .adv-price-card__info {
@@ -523,18 +536,18 @@ a { text-decoration: none; color: inherit; }
     flex: 1;
 }
 .adv-price-card__name {
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 700;
     color: #fff;
 }
 .adv-price-card__series {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 500;
-    color: rgba(255,255,255,0.45);
+    color: rgba(255,255,255,0.4);
     letter-spacing: 0.5px;
 }
 .adv-price-card__price {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 800;
     color: var(--warm-gold, #c9a96e);
     white-space: nowrap;

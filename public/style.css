@@ -140,17 +140,16 @@ a { text-decoration: none; color: inherit; }
     border-color: rgba(0,0,0,0.08);
     box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
-/* На светлом hero-слайде хедер получает плотный фон */
+/* На светлом hero-слайде хедер получает плотный фон (ТОЛЬКО light без scrolled) */
 .header.light:not(.scrolled) {
     background: rgba(255,255,255,0.93);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(0,0,0,0.06);
-    color: var(--black);
 }
-.header.light .header__link { opacity: 1; }
-.header.light .header__slogan { opacity: 0.7; }
-.header.light .header__burger span { background: var(--black); }
+.header.light:not(.scrolled) .header__link { opacity: 1; }
+.header.light:not(.scrolled) .header__slogan { opacity: 0.7; }
+.header.light:not(.scrolled) .header__burger span { background: var(--black); }
 
 /* Burger */
 .header__burger {

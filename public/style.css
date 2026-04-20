@@ -2378,21 +2378,21 @@ a { text-decoration: none; color: inherit; }
     text-transform: uppercase;
 }
 .compare__feature {
-    padding: 20px 24px;
-    font-size: 14px;
+    padding: 22px 24px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--gray-800);
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 .compare__cell {
-    padding: 20px;
+    padding: 22px;
     text-align: center;
-    font-size: 14px;
-    color: var(--gray-600);
+    font-size: 16px;
+    color: var(--gray-800);
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 .compare__cell--us {
-    background: rgba(201,169,110,0.06);
+    background: rgba(201,169,110,0.08);
     color: var(--black);
 }
 .compare__cell--us strong {
@@ -2403,16 +2403,53 @@ a { text-decoration: none; color: inherit; }
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 24px; height: 24px;
+    width: 32px; height: 32px;
     border-radius: 50%;
-    background: rgba(140,184,107,0.15);
-    color: var(--accent);
-    font-weight: 700;
-    font-size: 14px;
+    background: #8CB86B;
+    color: #fff;
+    font-weight: 800;
+    font-size: 18px;
+    box-shadow: 0 2px 8px rgba(140,184,107,0.3);
 }
 .compare__cell--us .compare__yes {
-    background: rgba(201,169,110,0.2);
+    background: var(--warm-gold);
+    box-shadow: 0 2px 8px rgba(201,169,110,0.4);
+}
+
+/* Строка с ценой — выделена и подчёркивает главный аргумент */
+.compare__row--price .compare__feature {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--black);
+    background: rgba(201,169,110,0.04);
+}
+.compare__cell--price {
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    padding: 28px 20px !important;
+    background: rgba(201,169,110,0.04);
+}
+.compare__cell--us.compare__cell--price {
+    background: rgba(201,169,110,0.18);
+    position: relative;
+}
+.compare__cell--us.compare__cell--price strong {
     color: var(--warm-gold);
+    font-size: 26px;
+    display: block;
+    line-height: 1.1;
+}
+.compare__price-tag {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+    background: #8CB86B;
+    padding: 4px 10px;
+    border-radius: 99px;
 }
 .compare__no {
     color: rgba(0,0,0,0.25);
@@ -2705,24 +2742,30 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ============================
-   WHERE-BUY — лого (SVG/img)
+   WHERE-BUY — бренд-марки (видимые)
    ============================ */
-.where-buy__card-logo {
+.where-buy__brand-mark {
+    height: 48px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    overflow: hidden;
+    margin-bottom: 28px;
+    transition: filter 0.4s, opacity 0.4s;
 }
-.where-buy__card-logo svg {
-    width: 100%;
-    height: 100%;
+.where-buy__brand-mark svg {
+    height: 40px;
+    width: auto;
 }
-.where-buy__card-logo-img {
-    max-width: 80%;
-    max-height: 80%;
+.where-buy__brand-mark--ozon { color: #005BFF; }
+.where-buy__brand-mark--wb { color: #CB11AB; }
+.where-buy__brand-mark--ec img {
+    max-height: 48px;
+    max-width: 160px;
     object-fit: contain;
 }
-.where-buy__card:hover .where-buy__card-logo-img {
+/* При hover карточка чернеет — лого должно остаться читаемым */
+.where-buy__card:hover .where-buy__brand-mark--ozon { color: #4A8FFF; }
+.where-buy__card:hover .where-buy__brand-mark--wb { color: #E852C8; }
+.where-buy__card:hover .where-buy__brand-mark--ec img {
     filter: brightness(0) invert(1);
 }
 
@@ -2746,4 +2789,122 @@ a { text-decoration: none; color: inherit; }
         font-size: 12px;
     }
     .compare__brand-name { font-size: 13px; }
+}
+
+/* ============================
+   DOCS — компактный вариант
+   ============================ */
+.docs--compact {
+    padding: 100px 0;
+}
+.docs--compact .docs__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+.docs--compact .docs__title {
+    font-size: clamp(28px, 3vw, 40px);
+    letter-spacing: -1px;
+    margin-bottom: 0;
+    line-height: 1.1;
+}
+.docs--compact .docs__subtitle {
+    font-size: 14px;
+    margin-bottom: 0;
+    text-align: right;
+    max-width: 280px;
+    color: var(--gray-600);
+}
+.docs--compact .docs__subtitle a {
+    color: var(--black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--black);
+}
+.docs--compact .docs__grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+.docs--compact .doc-card {
+    padding: 20px 22px;
+    gap: 8px;
+}
+.docs--compact .doc-card__icon {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 4px;
+}
+.docs--compact .doc-card__icon svg {
+    width: 18px;
+    height: 18px;
+}
+.docs--compact .doc-card__title {
+    font-size: 14px;
+}
+.docs--compact .doc-card__badge {
+    top: 14px;
+    right: 14px;
+    font-size: 9px;
+    padding: 3px 7px;
+}
+
+/* ============================
+   FAQ — компактный 2 колонки
+   ============================ */
+.faq--compact {
+    padding: 100px 0;
+    background: var(--warm-100);
+}
+.faq--compact .faq__inner {
+    max-width: var(--container);
+}
+.faq--compact .faq__head {
+    margin-bottom: 40px;
+}
+.faq--compact .faq__title {
+    font-size: clamp(28px, 3vw, 40px);
+    letter-spacing: -1px;
+    margin-bottom: 0;
+    line-height: 1.1;
+}
+.faq__list--cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    align-content: start;
+}
+.faq--compact .faq-item {
+    background: #fff;
+    border-radius: 12px;
+    height: fit-content;
+    align-self: start;
+}
+.faq--compact .faq-item[open] {
+    border: 1px solid rgba(0,0,0,0.06);
+}
+.faq--compact .faq-item__q {
+    padding: 18px 22px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.faq--compact .faq-item__q::after {
+    font-size: 22px;
+}
+.faq--compact .faq-item__a {
+    padding: 0 22px 18px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+    .docs--compact .docs__head { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .docs--compact .docs__subtitle { text-align: left; }
+    .docs--compact .docs__grid { grid-template-columns: 1fr 1fr; }
+    .faq__list--cols { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+    .docs--compact .docs__grid { grid-template-columns: 1fr; }
+    .where-buy__brand-mark { height: 36px; margin-bottom: 20px; }
+    .where-buy__brand-mark svg { height: 30px; }
 }

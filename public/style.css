@@ -2755,36 +2755,37 @@ a { text-decoration: none; color: inherit; }
    ============================ */
 .where-buy__watermark {
     position: absolute;
-    inset: 0;
+    top: -10%;
+    right: -8%;
+    width: 55%;
+    height: 70%;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-end;
-    opacity: 0.1;
-    transform-origin: right center;
+    opacity: 0.35;
+    transform-origin: top right;
     transform: scale(1);
     transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
     pointer-events: none;
-    overflow: hidden;
 }
 .where-buy__watermark img {
-    width: 85%;
-    max-width: 440px;
-    height: auto;
-    transform: translateX(15%);
+    width: 100%;
+    height: 100%;
     object-fit: contain;
+    object-position: top right;
     mix-blend-mode: multiply; /* убирает белый фон PNG/JPG на светлой карточке */
 }
 
-/* На hover — лого увеличивается и становится ярче */
+/* На hover — лого увеличивается ещё сильнее, становится монохромным белым */
 .where-buy__card:hover .where-buy__watermark {
-    opacity: 0.2;
-    transform: scale(1.2);
+    opacity: 0.55;
+    transform: scale(1.35);
 }
 .where-buy__card:hover .where-buy__watermark img {
-    /* На чёрном фоне: screen + invert делают тёмный лого светлым */
-    mix-blend-mode: screen;
-    filter: invert(1);
-    opacity: 0.5;
+    /* Превращаем лого в чистый белый силуэт — никаких цветовых сдвигов */
+    mix-blend-mode: normal;
+    filter: brightness(0) invert(1);
+    opacity: 0.45;
 }
 
 /* Контент поверх watermark'а */

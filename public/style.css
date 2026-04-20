@@ -2305,7 +2305,7 @@ a { text-decoration: none; color: inherit; }
    СРАВНЕНИЕ
    ============================ */
 .compare {
-    padding: 120px 0;
+    padding: 70px 0;
     background: var(--white);
 }
 .compare__inner {
@@ -2313,18 +2313,27 @@ a { text-decoration: none; color: inherit; }
     margin: 0 auto;
     padding: 0 32px;
 }
+.compare__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+    margin-bottom: 28px;
+}
 .compare__title {
-    font-size: clamp(36px, 4.5vw, 64px);
+    font-size: clamp(28px, 3.2vw, 44px);
     font-weight: 800;
     line-height: 1.05;
-    letter-spacing: -1.5px;
-    margin-bottom: 16px;
+    letter-spacing: -1px;
+    margin-bottom: 0;
     color: var(--black);
 }
 .compare__subtitle {
-    font-size: 17px;
+    font-size: 15px;
     color: var(--gray-600);
-    margin-bottom: 56px;
+    margin: 0;
+    max-width: 360px;
+    text-align: right;
 }
 .compare__table-wrap {
     overflow-x: auto;
@@ -2381,16 +2390,16 @@ a { text-decoration: none; color: inherit; }
     text-transform: uppercase;
 }
 .compare__feature {
-    padding: 22px 24px;
-    font-size: 16px;
+    padding: 14px 20px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--gray-800);
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 .compare__cell {
-    padding: 22px 18px;
+    padding: 14px 14px;
     text-align: center;
-    font-size: 16px;
+    font-size: 15px;
     color: var(--gray-800);
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
@@ -2406,13 +2415,13 @@ a { text-decoration: none; color: inherit; }
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px; height: 32px;
+    width: 26px; height: 26px;
     border-radius: 50%;
     background: #8CB86B;
     color: #fff;
     font-weight: 800;
-    font-size: 18px;
-    box-shadow: 0 2px 8px rgba(140,184,107,0.3);
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(140,184,107,0.3);
 }
 .compare__cell--us .compare__yes {
     background: var(--warm-gold);
@@ -2421,15 +2430,15 @@ a { text-decoration: none; color: inherit; }
 
 /* Строка с ценой — выделена и подчёркивает главный аргумент */
 .compare__row--price .compare__feature {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--black);
     background: rgba(201,169,110,0.04);
 }
 .compare__cell--price {
-    font-size: 20px !important;
+    font-size: 17px !important;
     font-weight: 800 !important;
-    padding: 28px 18px !important;
+    padding: 18px 14px !important;
     background: rgba(201,169,110,0.04);
 }
 .compare__cell--us.compare__cell--price {
@@ -2438,7 +2447,7 @@ a { text-decoration: none; color: inherit; }
 }
 .compare__cell--us.compare__cell--price strong {
     color: var(--warm-gold);
-    font-size: 26px;
+    font-size: 22px;
     display: block;
     line-height: 1.1;
     white-space: nowrap;
@@ -2755,15 +2764,15 @@ a { text-decoration: none; color: inherit; }
    ============================ */
 .where-buy__watermark {
     position: absolute;
-    top: -10%;
+    bottom: -10%;
     right: -8%;
     width: 55%;
     height: 70%;
     display: flex;
-    align-items: flex-start;
+    align-items: flex-end;
     justify-content: flex-end;
     opacity: 0.35;
-    transform-origin: top right;
+    transform-origin: bottom right;
     transform: scale(1);
     transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
     pointer-events: none;
@@ -2772,7 +2781,7 @@ a { text-decoration: none; color: inherit; }
     width: 100%;
     height: 100%;
     object-fit: contain;
-    object-position: top right;
+    object-position: bottom right;
     mix-blend-mode: multiply; /* убирает белый фон PNG/JPG на светлой карточке */
 }
 

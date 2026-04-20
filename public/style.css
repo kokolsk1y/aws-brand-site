@@ -2742,31 +2742,49 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ============================
-   WHERE-BUY — бренд-марки (видимые)
+   WHERE-BUY — watermark лого на фоне (scale on hover)
    ============================ */
-.where-buy__brand-mark {
-    height: 48px;
+.where-buy__watermark {
+    position: absolute;
+    inset: 0;
     display: flex;
     align-items: center;
-    margin-bottom: 28px;
-    transition: filter 0.4s, opacity 0.4s;
+    justify-content: flex-end;
+    opacity: 0.1;
+    transform-origin: right center;
+    transform: scale(1);
+    transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    pointer-events: none;
+    overflow: hidden;
 }
-.where-buy__brand-mark svg {
-    height: 40px;
-    width: auto;
-}
-.where-buy__brand-mark--ozon { color: #005BFF; }
-.where-buy__brand-mark--wb { color: #CB11AB; }
-.where-buy__brand-mark--ec img {
-    max-height: 48px;
-    max-width: 160px;
+.where-buy__watermark img {
+    width: 85%;
+    max-width: 440px;
+    height: auto;
+    transform: translateX(15%);
     object-fit: contain;
+    mix-blend-mode: multiply; /* убирает белый фон PNG/JPG на светлой карточке */
 }
-/* При hover карточка чернеет — лого должно остаться читаемым */
-.where-buy__card:hover .where-buy__brand-mark--ozon { color: #4A8FFF; }
-.where-buy__card:hover .where-buy__brand-mark--wb { color: #E852C8; }
-.where-buy__card:hover .where-buy__brand-mark--ec img {
-    filter: brightness(0) invert(1);
+
+/* На hover — лого увеличивается и становится ярче */
+.where-buy__card:hover .where-buy__watermark {
+    opacity: 0.2;
+    transform: scale(1.2);
+}
+.where-buy__card:hover .where-buy__watermark img {
+    /* На чёрном фоне: screen + invert делают тёмный лого светлым */
+    mix-blend-mode: screen;
+    filter: invert(1);
+    opacity: 0.5;
+}
+
+/* Контент поверх watermark'а */
+.where-buy__card-label,
+.where-buy__card-name,
+.where-buy__card-desc,
+.where-buy__card-arrow {
+    position: relative;
+    z-index: 2;
 }
 
 /* ============================
@@ -2905,6 +2923,5 @@ a { text-decoration: none; color: inherit; }
 }
 @media (max-width: 560px) {
     .docs--compact .docs__grid { grid-template-columns: 1fr; }
-    .where-buy__brand-mark { height: 36px; margin-bottom: 20px; }
-    .where-buy__brand-mark svg { height: 30px; }
+    .where-buy__watermark img { transform: translateX(20%); }
 }

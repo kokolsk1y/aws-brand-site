@@ -150,7 +150,7 @@ function shortName(name) {
       <h2 class="cat-related__title">Возможно вас<br>заинтересует</h2>
       <div class="cat-related__grid">
         {otherCats.map(c => (
-          <a href={`/category/${c.slug}`} class="cat-related__card" data-tilt data-tilt-max="5">
+          <a href={`/category/${c.slug}`} class="cat-related__card" data-astro-reload data-tilt data-tilt-max="5">
             <div class="cat-related__img">
               <img src={c.cover} alt={c.title} loading="lazy" />
             </div>

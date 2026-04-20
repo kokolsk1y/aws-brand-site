@@ -143,7 +143,7 @@ const defaultColor = series.colors[0];
       <h2 class="ser-related__title">Посмотреть<br>остальные коллекции</h2>
       <div class="ser-related__grid">
         {otherSeries.map(s => (
-          <a href={`/series/${s.slug}`} class="ser-related__card" data-tilt data-tilt-max="5">
+          <a href={`/series/${s.slug}`} class="ser-related__card" data-astro-reload data-tilt data-tilt-max="5">
             <div class="ser-related__img">
               {s.colors[0] ? <img src={s.colors[0].img} alt={s.name} /> : <span class="ser-related__placeholder">Скоро</span>}
             </div>

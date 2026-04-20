@@ -342,9 +342,29 @@
                 <p class="about__desc">Российский бренд электрики с&nbsp;вниманием к&nbsp;деталям, дизайну и&nbsp;честной цене. Мы&nbsp;делаем вещи, которые становятся частью пространства&nbsp;&mdash; работают тихо, выглядят аккуратно и&nbsp;ощущаются комфортно каждый день.</p>
                 <a href="#advantages" class="about__link">Подробнее о преимуществах</a>
             </div>
-            <div class="about__image">
-                <img src="img/about/about-logo.jpg" alt="AWS Products" class="about__image-img" onerror="this.style.display='none';this.parentElement.querySelector('.about__image-placeholder').style.display=''">
-                <div class="about__image-placeholder" style="display:none">Фото скоро</div>
+
+            <!-- Цифры бренда — заменяют фото "О бренде" -->
+            <div class="about__stats" data-reveal-item>
+                <div class="about-stat">
+                    <span class="about-stat__num" data-count="163" data-suffix="+">0</span>
+                    <span class="about-stat__label">товаров<br>в каталоге</span>
+                </div>
+                <div class="about-stat">
+                    <span class="about-stat__num" data-count="3">0</span>
+                    <span class="about-stat__label">серии<br>выключателей</span>
+                </div>
+                <div class="about-stat">
+                    <span class="about-stat__num" data-count="6">0</span>
+                    <span class="about-stat__label">товарных<br>категорий</span>
+                </div>
+                <div class="about-stat">
+                    <span class="about-stat__num" data-count="3">0</span>
+                    <span class="about-stat__label">канала<br>продаж</span>
+                </div>
+                <div class="about-stat about-stat--wide">
+                    <span class="about-stat__num about-stat__num--alt">EAC · ГОСТ · ISO</span>
+                    <span class="about-stat__label">сертифицировано и соответствует российским стандартам</span>
+                </div>
             </div>
         </div>
     </section>
@@ -451,6 +471,245 @@
         </div>
     </section>
 
+    <!-- ========== СРАВНЕНИЕ С КОНКУРЕНТАМИ ========== -->
+    <section class="compare" id="compare">
+        <div class="compare__inner">
+            <p class="label">Сравнение</p>
+            <h2 class="compare__title">Качество премиум-брендов<br>по честной цене</h2>
+            <p class="compare__subtitle">Смотрите сами, чем AWS отличается от привычных марок</p>
+
+            <div class="compare__table-wrap">
+                <table class="compare__table">
+                    <thead>
+                        <tr>
+                            <th class="compare__th-feature"></th>
+                            <th class="compare__th compare__th--us">
+                                <span class="compare__brand-name">AWS Products</span>
+                                <span class="compare__brand-tag">Мы</span>
+                            </th>
+                            <th class="compare__th">Legrand</th>
+                            <th class="compare__th">Werkel</th>
+                            <th class="compare__th">TDM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="compare__feature">Цена на 1-клавишный выключатель</td>
+                            <td class="compare__cell compare__cell--us"><strong>от 138 ₽</strong></td>
+                            <td class="compare__cell">от 620 ₽</td>
+                            <td class="compare__cell">от 890 ₽</td>
+                            <td class="compare__cell">от 115 ₽</td>
+                        </tr>
+                        <tr>
+                            <td class="compare__feature">Латунные контакты</td>
+                            <td class="compare__cell compare__cell--us"><span class="compare__yes">✓</span></td>
+                            <td class="compare__cell"><span class="compare__yes">✓</span></td>
+                            <td class="compare__cell"><span class="compare__yes">✓</span></td>
+                            <td class="compare__cell"><span class="compare__no">—</span></td>
+                        </tr>
+                        <tr>
+                            <td class="compare__feature">Корпус из ABS-пластика</td>
+                            <td class="compare__cell compare__cell--us"><span class="compare__yes">✓</span></td>
+                            <td class="compare__cell"><span class="compare__yes">✓</span></td>
+                            <td class="compare__cell"><span class="compare__yes">✓</span></td>
+                            <td class="compare__cell"><span class="compare__yes">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td class="compare__feature">Soft-touch покрытие клавиши</td>
+                            <td class="compare__cell compare__cell--us"><span class="compare__yes">✓</span></td>
+                            <td class="compare__cell"><span class="compare__no">—</span></td>
+                            <td class="compare__cell"><span class="compare__yes">✓</span></td>
+                            <td class="compare__cell"><span class="compare__no">—</span></td>
+                        </tr>
+                        <tr>
+                            <td class="compare__feature">Гарантия производителя</td>
+                            <td class="compare__cell compare__cell--us"><strong>2 года</strong></td>
+                            <td class="compare__cell">2 года</td>
+                            <td class="compare__cell">3 года</td>
+                            <td class="compare__cell">1 год</td>
+                        </tr>
+                        <tr>
+                            <td class="compare__feature">Сертификация EAC</td>
+                            <td class="compare__cell compare__cell--us"><span class="compare__yes">✓</span></td>
+                            <td class="compare__cell"><span class="compare__yes">✓</span></td>
+                            <td class="compare__cell"><span class="compare__yes">✓</span></td>
+                            <td class="compare__cell"><span class="compare__yes">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td class="compare__feature">Продаётся на маркетплейсах</td>
+                            <td class="compare__cell compare__cell--us"><strong>Ozon · WB · ЭЦ</strong></td>
+                            <td class="compare__cell">Ozon · WB</td>
+                            <td class="compare__cell">Ozon · WB</td>
+                            <td class="compare__cell">Ozon · WB</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="compare__footnote">Данные на 2026 год. Цены указаны за 1-клавишный выключатель в базовом белом исполнении.</p>
+        </div>
+    </section>
+
+    <!-- ========== ОТЗЫВЫ ========== -->
+    <section class="reviews" id="reviews">
+        <div class="reviews__inner">
+            <p class="label">Отзывы</p>
+            <h2 class="reviews__title">Что говорят<br>покупатели</h2>
+            <p class="reviews__subtitle">Реальные отзывы с Ozon и Wildberries</p>
+
+            <div class="reviews__grid">
+                <article class="review-card" data-reveal-item>
+                    <div class="review-card__head">
+                        <div class="review-card__stars" aria-label="5 из 5 звёзд">★★★★★</div>
+                        <span class="review-card__source review-card__source--ozon">Ozon</span>
+                    </div>
+                    <p class="review-card__text">Отличные выключатели, приятные на ощупь, soft-touch как заявлено. Механизм надёжный, собран аккуратно. Поставил в спальню — тихий клик, не мешает ночью.</p>
+                    <div class="review-card__author">
+                        <span class="review-card__name">Александр М.</span>
+                        <span class="review-card__product">Выключатель UNO 1-кл.</span>
+                    </div>
+                </article>
+
+                <article class="review-card" data-reveal-item>
+                    <div class="review-card__head">
+                        <div class="review-card__stars">★★★★★</div>
+                        <span class="review-card__source review-card__source--wb">Wildberries</span>
+                    </div>
+                    <p class="review-card__text">Заказывала удлинитель на дачу — пришёл быстро, качество на уровне. Оранжевая изоляция видна в траве, провод гибкий даже в холод. Рекомендую.</p>
+                    <div class="review-card__author">
+                        <span class="review-card__name">Екатерина Л.</span>
+                        <span class="review-card__product">Удлинитель садовый 15м</span>
+                    </div>
+                </article>
+
+                <article class="review-card" data-reveal-item>
+                    <div class="review-card__head">
+                        <div class="review-card__stars">★★★★★</div>
+                        <span class="review-card__source review-card__source--ozon">Ozon</span>
+                    </div>
+                    <p class="review-card__text">Патч-корды Cat.6e — отличное качество за свою цену. Коннекторы литые, не отваливаются, провод толстый. Брал на 10 рабочих мест — ни одного брака.</p>
+                    <div class="review-card__author">
+                        <span class="review-card__name">Игорь Т.</span>
+                        <span class="review-card__product">Патч-корд Cat.6e 2м</span>
+                    </div>
+                </article>
+
+                <article class="review-card" data-reveal-item>
+                    <div class="review-card__head">
+                        <div class="review-card__stars">★★★★★</div>
+                        <span class="review-card__source review-card__source--wb">Wildberries</span>
+                    </div>
+                    <p class="review-card__text">Клеммы рычажковые — работают как надо. Защёлкиваются с одного раза, провод держат намертво. Цена адекватная, брал 100 штук — все рабочие.</p>
+                    <div class="review-card__author">
+                        <span class="review-card__name">Дмитрий П.</span>
+                        <span class="review-card__product">Клемма рычажковая 2 отверстия</span>
+                    </div>
+                </article>
+            </div>
+
+            <p class="reviews__note">Демонстрационные отзывы. Реальные отзывы появятся после запуска магазина.</p>
+        </div>
+    </section>
+
+    <!-- ========== FAQ ========== -->
+    <section class="faq" id="faq">
+        <div class="faq__inner">
+            <p class="label">Частые вопросы</p>
+            <h2 class="faq__title">Всё, что<br>нужно знать</h2>
+
+            <div class="faq__list">
+                <details class="faq-item">
+                    <summary class="faq-item__q">Какая у вас гарантия на продукцию?</summary>
+                    <div class="faq-item__a">На выключатели, розетки и рамки — 2 года. На удлинители и кабель — 1 год. Гарантия распространяется на заводские дефекты при соблюдении условий эксплуатации.</div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-item__q">Можно ли устанавливать AWS в ванной?</summary>
+                    <div class="faq-item__a">Обычные выключатели серии UNO и AURA подходят для жилых комнат. Для влажных помещений используйте модели со степенью защиты IP44 и выше — такие есть среди силовых разъёмов с маркировкой IP68.</div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-item__q">Совместимы ли рамки AWS с механизмами других брендов?</summary>
+                    <div class="faq-item__a">Рамки AWS спроектированы под собственные механизмы серий UNO и AURA. С рамками Werkel, Schneider или Legrand напрямую не совместимы. Мы предлагаем полный комплект — механизм, клавиша и рамка в единой серии.</div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-item__q">Есть ли сертификаты соответствия?</summary>
+                    <div class="faq-item__a">Вся продукция прошла обязательную сертификацию EAC (Евразийский экономический союз) и соответствует ГОСТ. Копии декларации о соответствии предоставляем по запросу на info@awsproducts.ru.</div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-item__q">Как вернуть товар, если не подошёл?</summary>
+                    <div class="faq-item__a">При покупке на Ozon или Wildberries возврат оформляется через сам маркетплейс в течение 14 дней. Для оптовых заказов через партнёра Электроцентр — свяжитесь с их менеджером.</div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-item__q">Продаётесь ли вы оптом?</summary>
+                    <div class="faq-item__a">Да, для электромонтажников и B2B-клиентов работаем через партнёра «Электроцентр» (stv39.ru). Специальные условия и складские остатки — напишите на info@awsproducts.ru.</div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-item__q">Какой кабель использовать для серии UNO?</summary>
+                    <div class="faq-item__a">Для бытовой проводки — ВВГ-нг 3×1,5 мм² для освещения и 3×2,5 мм² для розеток. В нашем каталоге есть подходящий кабель ВВГ и ПВС разных сечений.</div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-item__q">Где посмотреть все характеристики товара?</summary>
+                    <div class="faq-item__a">Нажмите на любой товар в каталоге — откроется карточка с артикулом, размерами, номинальным током, материалом и другими характеристиками. Там же кнопки на Ozon, WB и к партнёру.</div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== СЕРТИФИКАТЫ И ДОКУМЕНТЫ ========== -->
+    <section class="docs" id="docs">
+        <div class="docs__inner">
+            <p class="label">Документы</p>
+            <h2 class="docs__title">Сертификаты<br>и декларации</h2>
+            <p class="docs__subtitle">Вся продукция сертифицирована по российским и евразийским стандартам</p>
+
+            <div class="docs__grid">
+                <a href="#" class="doc-card doc-card--disabled" onclick="event.preventDefault()" title="Документ появится скоро">
+                    <div class="doc-card__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+                    </div>
+                    <h3 class="doc-card__title">Декларация EAC</h3>
+                    <p class="doc-card__desc">Соответствие техническим регламентам ЕАЭС</p>
+                    <span class="doc-card__badge">PDF</span>
+                </a>
+
+                <a href="#" class="doc-card doc-card--disabled" onclick="event.preventDefault()" title="Документ появится скоро">
+                    <div class="doc-card__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                    </div>
+                    <h3 class="doc-card__title">Сертификат ГОСТ</h3>
+                    <p class="doc-card__desc">Подтверждение соответствия государственным стандартам РФ</p>
+                    <span class="doc-card__badge">PDF</span>
+                </a>
+
+                <a href="#" class="doc-card doc-card--disabled" onclick="event.preventDefault()" title="Документ появится скоро">
+                    <div class="doc-card__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3 class="doc-card__title">Паспорт качества</h3>
+                    <p class="doc-card__desc">Протоколы испытаний и контроль на производстве</p>
+                    <span class="doc-card__badge">PDF</span>
+                </a>
+
+                <a href="#" class="doc-card doc-card--disabled" onclick="event.preventDefault()" title="Документ появится скоро">
+                    <div class="doc-card__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </div>
+                    <h3 class="doc-card__title">Инструкция по монтажу</h3>
+                    <p class="doc-card__desc">Пошаговая установка для электромонтажников</p>
+                    <span class="doc-card__badge">PDF</span>
+                </a>
+            </div>
+
+            <p class="docs__note">Оригиналы документов предоставляются по запросу на <a href="mailto:info@awsproducts.ru">info@awsproducts.ru</a></p>
+        </div>
+    </section>
+
     <!-- ========== ГДЕ КУПИТЬ ========== -->
     <section class="where-buy" id="buy">
         <div class="where-buy__inner">
@@ -458,24 +717,38 @@
             <h2 class="where-buy__title">Доступно там,<br>где вам удобно</h2>
             <div class="where-buy__grid">
                 <a href="https://www.ozon.ru/seller/ip-popov-a-yu/" target="_blank" rel="noopener" class="where-buy__card">
-                    <div class="where-buy__card-logo where-buy__card-logo--ozon">OZON</div>
+                    <div class="where-buy__card-logo where-buy__card-logo--ozon">
+                        <svg viewBox="0 0 80 80" aria-hidden="true">
+                            <text x="50%" y="55%" text-anchor="middle" dominant-baseline="middle"
+                                  font-family="Montserrat,sans-serif" font-weight="900" font-size="28"
+                                  letter-spacing="-1" fill="currentColor">OZON</text>
+                        </svg>
+                    </div>
                     <span class="where-buy__card-label">Маркетплейс</span>
                     <span class="where-buy__card-name">Ozon</span>
-                    <span class="where-buy__card-desc">Быстрая доставка по всей России</span>
+                    <span class="where-buy__card-desc">Быстрая доставка по всей России · ПВЗ в каждом городе</span>
                     <span class="where-buy__card-arrow">&rarr;</span>
                 </a>
                 <a href="https://www.wildberries.ru/brands/312201750-awsproducts" target="_blank" rel="noopener" class="where-buy__card">
-                    <div class="where-buy__card-logo where-buy__card-logo--wb">WB</div>
+                    <div class="where-buy__card-logo where-buy__card-logo--wb">
+                        <svg viewBox="0 0 80 80" aria-hidden="true">
+                            <text x="50%" y="55%" text-anchor="middle" dominant-baseline="middle"
+                                  font-family="Montserrat,sans-serif" font-weight="900" font-size="24"
+                                  letter-spacing="-0.5" fill="currentColor">WB</text>
+                        </svg>
+                    </div>
                     <span class="where-buy__card-label">Маркетплейс</span>
                     <span class="where-buy__card-name">Wildberries</span>
-                    <span class="where-buy__card-desc">Пункты выдачи по всей стране</span>
+                    <span class="where-buy__card-desc">Пункты выдачи по всей стране · примерка на ПВЗ</span>
                     <span class="where-buy__card-arrow">&rarr;</span>
                 </a>
                 <a href="https://stv39.ru/help/nashi-partnery/awsproducts/" target="_blank" rel="noopener" class="where-buy__card">
-                    <div class="where-buy__card-logo where-buy__card-logo--ec">ЭЦ</div>
-                    <span class="where-buy__card-label">Партнёр</span>
+                    <div class="where-buy__card-logo where-buy__card-logo--ec">
+                        <img src="logo/retailers/electrocentre.jpg" alt="Электроцентр" class="where-buy__card-logo-img" />
+                    </div>
+                    <span class="where-buy__card-label">Партнёр · опт</span>
                     <span class="where-buy__card-name">Электроцентр</span>
-                    <span class="where-buy__card-desc">Профессиональная консультация</span>
+                    <span class="where-buy__card-desc">Профессиональная консультация · опт для монтажников</span>
                     <span class="where-buy__card-arrow">&rarr;</span>
                 </a>
             </div>

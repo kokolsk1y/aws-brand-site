@@ -2248,3 +2248,502 @@ a { text-decoration: none; color: inherit; }
         background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 50%, transparent 100%);
     }
 }
+
+/* ============================
+   ABOUT STATS — цифры бренда
+   ============================ */
+.about__stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+.about-stat {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid rgba(0,0,0,0.04);
+}
+.about-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+}
+.about-stat--wide {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #1a1a1a 0%, #252118 100%);
+    color: #fff;
+}
+.about-stat__num {
+    font-size: clamp(44px, 4vw, 64px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -2px;
+    color: var(--warm-gold);
+    font-variant-numeric: tabular-nums;
+}
+.about-stat__num--alt {
+    font-size: clamp(18px, 1.6vw, 22px);
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--warm-gold);
+}
+.about-stat__label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-600);
+    line-height: 1.4;
+    letter-spacing: 0.3px;
+}
+.about-stat--wide .about-stat__label {
+    color: rgba(255,255,255,0.7);
+}
+
+/* ============================
+   СРАВНЕНИЕ
+   ============================ */
+.compare {
+    padding: 160px 0;
+    background: var(--white);
+}
+.compare__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 60px;
+}
+.compare__title {
+    font-size: clamp(36px, 4.5vw, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+    color: var(--black);
+}
+.compare__subtitle {
+    font-size: 17px;
+    color: var(--gray-600);
+    margin-bottom: 56px;
+}
+.compare__table-wrap {
+    overflow-x: auto;
+    border-radius: 20px;
+    border: 1px solid rgba(0,0,0,0.06);
+    background: var(--white);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.03);
+}
+.compare__table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 720px;
+}
+.compare__th,
+.compare__th-feature {
+    padding: 22px 20px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    background: var(--warm-100);
+    border-bottom: 2px solid rgba(0,0,0,0.06);
+    color: var(--gray-800);
+    vertical-align: middle;
+}
+.compare__th {
+    text-align: center;
+}
+.compare__th--us {
+    background: linear-gradient(135deg, #1a1a1a 0%, #252118 100%);
+    color: var(--warm-gold);
+    position: relative;
+}
+.compare__brand-name {
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    color: #fff;
+    margin-bottom: 4px;
+}
+.compare__brand-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--warm-gold);
+    background: rgba(201,169,110,0.15);
+    padding: 3px 10px;
+    border-radius: 99px;
+    text-transform: uppercase;
+}
+.compare__feature {
+    padding: 20px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-800);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.compare__cell {
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--gray-600);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.compare__cell--us {
+    background: rgba(201,169,110,0.06);
+    color: var(--black);
+}
+.compare__cell--us strong {
+    font-weight: 800;
+    color: var(--black);
+}
+.compare__yes {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: rgba(140,184,107,0.15);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 14px;
+}
+.compare__cell--us .compare__yes {
+    background: rgba(201,169,110,0.2);
+    color: var(--warm-gold);
+}
+.compare__no {
+    color: rgba(0,0,0,0.25);
+    font-size: 18px;
+    font-weight: 300;
+}
+.compare__table tbody tr:last-child td {
+    border-bottom: none;
+}
+.compare__footnote {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: 20px;
+    font-style: italic;
+}
+
+/* ============================
+   ОТЗЫВЫ
+   ============================ */
+.reviews {
+    padding: 160px 0;
+    background: var(--warm-100);
+}
+.reviews__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 60px;
+}
+.reviews__title {
+    font-size: clamp(36px, 4.5vw, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+    color: var(--black);
+}
+.reviews__subtitle {
+    font-size: 17px;
+    color: var(--gray-600);
+    margin-bottom: 56px;
+}
+.reviews__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+.review-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid rgba(0,0,0,0.04);
+}
+.review-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+}
+.review-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.review-card__stars {
+    font-size: 18px;
+    color: #FFB800;
+    letter-spacing: 2px;
+}
+.review-card__source {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 99px;
+    color: #fff;
+}
+.review-card__source--ozon { background: #005BFF; }
+.review-card__source--wb { background: #CB11AB; }
+.review-card__text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--gray-800);
+    flex: 1;
+}
+.review-card__author {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+}
+.review-card__name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--black);
+}
+.review-card__product {
+    font-size: 12px;
+    color: var(--gray-400);
+    letter-spacing: 0.3px;
+}
+.reviews__note {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: 40px;
+    font-style: italic;
+    text-align: center;
+}
+
+/* ============================
+   FAQ
+   ============================ */
+.faq {
+    padding: 160px 0;
+    background: var(--white);
+}
+.faq__inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+.faq__title {
+    font-size: clamp(36px, 4.5vw, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 56px;
+    color: var(--black);
+}
+.faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.faq-item {
+    background: var(--warm-100);
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    transition: background 0.2s;
+}
+.faq-item[open] {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+.faq-item__q {
+    padding: 24px 28px;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--black);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    list-style: none;
+    user-select: none;
+    transition: color 0.2s;
+}
+.faq-item__q::-webkit-details-marker { display: none; }
+.faq-item__q::after {
+    content: '+';
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--gray-400);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+}
+.faq-item[open] .faq-item__q::after {
+    transform: rotate(45deg);
+    color: var(--warm-gold);
+}
+.faq-item__q:hover {
+    color: var(--warm-gold);
+}
+.faq-item__a {
+    padding: 0 28px 24px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--gray-600);
+}
+
+/* ============================
+   ДОКУМЕНТЫ
+   ============================ */
+.docs {
+    padding: 160px 0;
+    background: var(--warm-100);
+}
+.docs__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 60px;
+}
+.docs__title {
+    font-size: clamp(36px, 4.5vw, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+    color: var(--black);
+}
+.docs__subtitle {
+    font-size: 17px;
+    color: var(--gray-600);
+    margin-bottom: 56px;
+}
+.docs__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+.doc-card {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 16px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.doc-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+    border-color: var(--warm-gold);
+}
+.doc-card--disabled {
+    cursor: default;
+    opacity: 0.75;
+}
+.doc-card--disabled:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0,0,0,0.12);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+}
+.doc-card__icon {
+    width: 44px; height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(201,169,110,0.12);
+    color: var(--warm-gold);
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+.doc-card__icon svg {
+    width: 22px; height: 22px;
+}
+.doc-card__title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--black);
+    letter-spacing: -0.2px;
+}
+.doc-card__desc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--gray-600);
+    flex: 1;
+}
+.doc-card__badge {
+    position: absolute;
+    top: 20px; right: 20px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: var(--gray-400);
+    background: rgba(0,0,0,0.04);
+    padding: 4px 9px;
+    border-radius: 99px;
+}
+.docs__note {
+    font-size: 13px;
+    color: var(--gray-600);
+    margin-top: 32px;
+    text-align: center;
+}
+.docs__note a {
+    color: var(--black);
+    border-bottom: 1px solid var(--black);
+    text-decoration: none;
+}
+
+/* ============================
+   WHERE-BUY — лого (SVG/img)
+   ============================ */
+.where-buy__card-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.where-buy__card-logo svg {
+    width: 100%;
+    height: 100%;
+}
+.where-buy__card-logo-img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+}
+.where-buy__card:hover .where-buy__card-logo-img {
+    filter: brightness(0) invert(1);
+}
+
+/* ============================
+   АДАПТИВ новых блоков
+   ============================ */
+@media (max-width: 900px) {
+    .about__stats { grid-template-columns: 1fr 1fr; }
+    .reviews__grid { grid-template-columns: 1fr; }
+    .docs__grid { grid-template-columns: 1fr 1fr; }
+    .compare { padding: 100px 0; }
+    .compare__inner, .reviews__inner, .faq__inner, .docs__inner { padding: 0 24px; }
+    .faq-item__q { padding: 20px 22px; font-size: 15px; }
+    .faq-item__a { padding: 0 22px 20px; font-size: 14px; }
+}
+@media (max-width: 560px) {
+    .about__stats { grid-template-columns: 1fr; }
+    .docs__grid { grid-template-columns: 1fr; }
+    .compare__feature, .compare__cell, .compare__th, .compare__th-feature {
+        padding: 14px 10px;
+        font-size: 12px;
+    }
+    .compare__brand-name { font-size: 13px; }
+}

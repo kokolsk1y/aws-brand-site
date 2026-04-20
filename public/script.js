@@ -786,3 +786,29 @@ document.querySelectorAll('.series__photo-img, .categories__card-img img').forEa
 })();
 
 console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
+
+// ─── Анимированные счётчики в секции "О бренде" ───
+(function initCounters() {
+    const counters = document.querySelectorAll('[data-count]');
+    if (!counters.length) return;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            observer.unobserve(el);
+            const target = parseInt(el.dataset.count, 10);
+            const suffix = el.dataset.suffix || '';
+            const duration = 1400;
+            const start = performance.now();
+            const step = (now) => {
+                const p = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                const value = Math.floor(target * eased);
+                el.textContent = value + (p === 1 ? suffix : '');
+                if (p < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+        });
+    }, { threshold: 0.4 });
+    counters.forEach(c => observer.observe(c));
+})();

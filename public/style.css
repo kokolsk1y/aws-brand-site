@@ -2305,13 +2305,13 @@ a { text-decoration: none; color: inherit; }
    СРАВНЕНИЕ
    ============================ */
 .compare {
-    padding: 160px 0;
+    padding: 120px 0;
     background: var(--white);
 }
 .compare__inner {
-    max-width: var(--container);
+    max-width: 1600px;
     margin: 0 auto;
-    padding: 0 60px;
+    padding: 0 32px;
 }
 .compare__title {
     font-size: clamp(36px, 4.5vw, 64px);
@@ -2336,15 +2336,18 @@ a { text-decoration: none; color: inherit; }
 .compare__table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 720px;
+    min-width: 0;
+    table-layout: fixed;
 }
+.compare__th-feature { width: 32%; }
+.compare__th { width: 17%; }
 .compare__th,
 .compare__th-feature {
-    padding: 22px 20px;
+    padding: 18px 12px;
     text-align: left;
     font-size: 13px;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
     background: var(--warm-100);
     border-bottom: 2px solid rgba(0,0,0,0.06);
     color: var(--gray-800);
@@ -2385,7 +2388,7 @@ a { text-decoration: none; color: inherit; }
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 .compare__cell {
-    padding: 22px;
+    padding: 22px 18px;
     text-align: center;
     font-size: 16px;
     color: var(--gray-800);
@@ -2424,9 +2427,9 @@ a { text-decoration: none; color: inherit; }
     background: rgba(201,169,110,0.04);
 }
 .compare__cell--price {
-    font-size: 22px !important;
+    font-size: 20px !important;
     font-weight: 800 !important;
-    padding: 28px 20px !important;
+    padding: 28px 18px !important;
     background: rgba(201,169,110,0.04);
 }
 .compare__cell--us.compare__cell--price {
@@ -2438,6 +2441,7 @@ a { text-decoration: none; color: inherit; }
     font-size: 26px;
     display: block;
     line-height: 1.1;
+    white-space: nowrap;
 }
 .compare__price-tag {
     display: inline-block;
@@ -2521,16 +2525,21 @@ a { text-decoration: none; color: inherit; }
     letter-spacing: 2px;
 }
 .review-card__source {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 6px 12px;
-    border-radius: 99px;
-    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 26px;
+    padding: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    background: transparent;
 }
-.review-card__source--ozon { background: #005BFF; }
-.review-card__source--wb { background: #CB11AB; }
+.review-card__source img {
+    height: 26px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
 .review-card__text {
     font-size: 15px;
     line-height: 1.6;
@@ -2813,23 +2822,23 @@ a { text-decoration: none; color: inherit; }
    DOCS — компактный вариант
    ============================ */
 .docs--compact {
-    padding: 100px 0;
+    padding: 80px 0 40px;
 }
 .docs--compact .docs__head {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     gap: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 28px;
 }
 .docs--compact .docs__title {
-    font-size: clamp(28px, 3vw, 40px);
-    letter-spacing: -1px;
+    font-size: clamp(24px, 2.4vw, 32px);
+    letter-spacing: -0.5px;
     margin-bottom: 0;
     line-height: 1.1;
 }
 .docs--compact .docs__subtitle {
-    font-size: 14px;
+    font-size: 13px;
     margin-bottom: 0;
     text-align: right;
     max-width: 280px;
@@ -2842,36 +2851,41 @@ a { text-decoration: none; color: inherit; }
 }
 .docs--compact .docs__grid {
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+    gap: 12px;
 }
 .docs--compact .doc-card {
-    padding: 20px 22px;
-    gap: 8px;
+    padding: 16px 18px;
+    gap: 6px;
+    flex-direction: row;
+    align-items: center;
 }
 .docs--compact .doc-card__icon {
     width: 36px;
     height: 36px;
-    margin-bottom: 4px;
+    margin-bottom: 0;
+    flex-shrink: 0;
 }
 .docs--compact .doc-card__icon svg {
     width: 18px;
     height: 18px;
 }
 .docs--compact .doc-card__title {
-    font-size: 14px;
+    font-size: 13px;
+    flex: 1;
+    line-height: 1.25;
 }
 .docs--compact .doc-card__badge {
-    top: 14px;
-    right: 14px;
+    position: static;
     font-size: 9px;
     padding: 3px 7px;
+    flex-shrink: 0;
 }
 
 /* ============================
    FAQ — компактный 2 колонки
    ============================ */
 .faq--compact {
-    padding: 100px 0;
+    padding: 40px 0 80px;
     background: var(--warm-100);
 }
 .faq--compact .faq__inner {
@@ -2924,4 +2938,24 @@ a { text-decoration: none; color: inherit; }
 @media (max-width: 560px) {
     .docs--compact .docs__grid { grid-template-columns: 1fr; }
     .where-buy__watermark img { transform: translateX(20%); }
+}
+
+/* ============================
+   JS-REVEAL — анимация появления новых блоков
+   (class добавляется в script.js, is-visible через IntersectionObserver)
+   ============================ */
+.js-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+        opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+.js-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+    .js-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }

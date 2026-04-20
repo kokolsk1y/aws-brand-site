@@ -787,6 +787,42 @@ document.querySelectorAll('.series__photo-img, .categories__card-img img').forEa
 
 console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
 
+// ─── Reveal on scroll для новых секций главной (compare/reviews/docs/faq) ───
+(function initReveal() {
+    // На главной (index.html) помечаем заголовки и карточки новых секций
+    const autoTargets = [
+        '.compare .label', '.compare__title', '.compare__subtitle', '.compare__table-wrap',
+        '.reviews .label', '.reviews__title', '.reviews__subtitle',
+        '.reviews .review-card',
+        '.docs .label', '.docs__title', '.docs__subtitle',
+        '.docs .doc-card',
+        '.faq .label', '.faq__title',
+        '.faq .faq-item'
+    ];
+    const els = document.querySelectorAll(autoTargets.join(','));
+    if (!els.length) return;
+    els.forEach((el, i) => {
+        el.classList.add('js-reveal');
+        // staggered delay для списков карточек
+        if (el.matches('.review-card, .doc-card, .faq-item')) {
+            el.style.transitionDelay = (i % 8) * 50 + 'ms';
+        }
+    });
+    if (!('IntersectionObserver' in window)) {
+        els.forEach(el => el.classList.add('is-visible'));
+        return;
+    }
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                obs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+    els.forEach(el => obs.observe(el));
+})();
+
 // ─── Анимированные счётчики в секции "О бренде" ───
 (function initCounters() {
     const counters = document.querySelectorAll('[data-count]');

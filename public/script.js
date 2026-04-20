@@ -793,7 +793,7 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
     const autoTargets = [
         '.compare .label', '.compare__title', '.compare__subtitle', '.compare__table-wrap',
         '.reviews .label', '.reviews__title', '.reviews__subtitle',
-        '.reviews .review-card',
+        '.reviews__marquee',
         '.docs .label', '.docs__title', '.docs__subtitle',
         '.docs .doc-card',
         '.faq .label', '.faq__title',

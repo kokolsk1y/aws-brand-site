@@ -18,7 +18,13 @@
     "title": "Удлинители садовые",
     "subtitle": "10 — 25 м · 3 модели",
     "description": "Садовые удлинители для работы вне помещения. Морозостойкая оранжевая изоляция, повышенная заметность, прочный кабель ПВС.",
-    "cover": "/img/products/AWS-HZ2-01-15.webp"
+    "cover": "/img/products/AWS-HZ2-01-15.webp",
+    "filters": [
+      { "key": "all", "label": "Все", "test": "true" },
+      { "key": "10m", "label": "10 м", "test": "i.name.includes('10м')" },
+      { "key": "15m", "label": "15 м", "test": "i.name.includes('15м')" },
+      { "key": "25m", "label": "25 м", "test": "i.name.includes('25м')" }
+    ]
   },
   "power-connectors": {
     "slug": "power-connectors",
@@ -32,7 +38,14 @@
     "title": "Клеммы",
     "subtitle": "0.2 — 4 мм² · 18 моделей",
     "description": "Соединительные клеммы Wago-style: рычажковые и классические. Защёлкивание с первого раза, надёжный контакт без пайки.",
-    "cover": "/img/products/SN-221412.webp"
+    "cover": "/img/products/SN-221412.webp",
+    "filters": [
+      { "key": "all", "label": "Все", "test": "true" },
+      { "key": "lever", "label": "Рычажковые", "test": "/рычажк/i.test(i.name)" },
+      { "key": "classic", "label": "Классические", "test": "!/рычажк/i.test(i.name)" },
+      { "key": "32a", "label": "32 А", "test": "i.name.includes('32А')" },
+      { "key": "24a", "label": "24 А", "test": "i.name.includes('24А')" }
+    ]
   },
   "patch-cords": {
     "slug": "patch-cords",
@@ -51,6 +64,14 @@
     "title": "Кабель",
     "subtitle": "FTP / UTP / SAT · 19 моделей",
     "description": "Сетевой и ТВ-кабель в бухтах. Медные жилы, варианты для внутренней и наружной прокладки, гелевая защита для премиум-серий.",
-    "cover": "/img/products/AWS-12982.webp"
+    "cover": "/img/products/AWS-12982.webp",
+    "filters": [
+      { "key": "all", "label": "Все", "test": "true" },
+      { "key": "cat5e", "label": "Cat.5e", "test": "i.name.includes('CAT5E')" },
+      { "key": "cat6", "label": "Cat.6", "test": "i.name.includes('CAT6')" },
+      { "key": "sat", "label": "ТВ (SAT)", "test": "i.name.includes('SAT')" },
+      { "key": "ftp", "label": "FTP", "test": "/FTP/.test(i.name)" },
+      { "key": "utp", "label": "UTP", "test": "/\\bUTP\\b/.test(i.name)" }
+    ]
   }
 }

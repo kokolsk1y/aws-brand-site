@@ -3059,15 +3059,18 @@ a { text-decoration: none; color: inherit; }
     background-size: 200px 200px;
 }
 
-/* Пылинки — 2 слоя для глубины (за и над товарами) */
-.hero-slide__bg--mesh .hero-dust {
+/* Пылинки — 2 слоя (за и перед товарами, но ВСЕГДА под текстом) */
+.hero-dust {
     position: absolute;
     inset: 0;
     pointer-events: none;
     overflow: hidden;
 }
 .hero-slide__bg--mesh .hero-dust--back { z-index: 2; }
-.hero-slide__bg--mesh .hero-dust--front { z-index: 25; }
+/* --front вставлен внутрь .hero-showcase (stacking context),
+   там __center z-index: 20, поэтому front z-index: 5 — над плитками,
+   под центральным текстом */
+.hero-showcase > .hero-dust--front { z-index: 5; }
 
 .hero-dust__particle {
     position: absolute;
@@ -3076,29 +3079,23 @@ a { text-decoration: none; color: inherit; }
     animation-timing-function: linear;
     animation-iteration-count: infinite;
 }
-/* ДАЛЬНИЕ пылинки — размытые, с тёплым блеском (за товарами) */
+/* ДАЛЬНИЕ — маленькие, размытые, тёплый блик */
 .hero-dust__particle--far {
     background: radial-gradient(circle,
-        rgba(255,220,150,0.95) 0%,
-        rgba(200,160,90,0.6) 30%,
-        rgba(180,140,80,0.25) 55%,
+        rgba(200,160,100,0.7) 0%,
+        rgba(180,140,80,0.3) 45%,
         transparent 80%);
-    box-shadow:
-        0 0 12px rgba(255,210,140,0.45),
-        0 0 24px rgba(200,160,90,0.25);
-    filter: blur(1.2px);
+    box-shadow: 0 0 6px rgba(200,160,100,0.25);
+    filter: blur(0.8px);
 }
-/* БЛИЖНИЕ пылинки — чёткие, ярче (перед товарами) */
+/* БЛИЖНИЕ — совсем мелкие, чёткие, чуть ярче */
 .hero-dust__particle--near {
     background: radial-gradient(circle,
-        rgba(255,240,200,1) 0%,
-        rgba(220,180,120,0.7) 35%,
-        rgba(180,140,80,0.3) 60%,
+        rgba(200,160,100,0.85) 0%,
+        rgba(180,140,80,0.35) 50%,
         transparent 85%);
-    box-shadow:
-        0 0 10px rgba(255,225,160,0.6),
-        0 0 20px rgba(220,180,120,0.3);
-    filter: blur(0.4px);
+    box-shadow: 0 0 4px rgba(200,160,100,0.3);
+    filter: blur(0.3px);
 }
 @keyframes dustFloat {
     0%   { transform: translate(0, 100vh) scale(0.8); opacity: 0; }

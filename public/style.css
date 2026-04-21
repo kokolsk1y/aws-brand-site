@@ -14,9 +14,9 @@
     --gray-100: #f5f5f3;
     --warm-100: #f7f4ef;    /* тёплый беж */
     --warm-200: #ede8df;    /* беж потемнее */
-    --warm-gold: #c9a96e;   /* золотистый акцент */
+    --warm-gold: #5E8C3A;   /* deep green — для светлого фона (был #c9a96e gold) */
     --white: #ffffff;
-    --accent: #8CB86B;      /* AWS green */
+    --accent: #8CB86B;      /* AWS green — для тёмного фона */
 
     --font: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
     --container: 1400px;
@@ -549,7 +549,7 @@ a { text-decoration: none; color: inherit; }
 .adv-price-card__price {
     font-size: 18px;
     font-weight: 800;
-    color: var(--warm-gold, #c9a96e);
+    color: var(--accent, #8CB86B);
     white-space: nowrap;
     flex-shrink: 0;
 }
@@ -921,7 +921,7 @@ a { text-decoration: none; color: inherit; }
 .dot--white { background: #fff; border: 1.5px solid var(--gray-200); }
 .dot--black { background: #1a1a1a; }
 .dot.active {
-    outline: 2px solid var(--accent, #c8a165);
+    outline: 2px solid var(--accent, #8CB86B);
     outline-offset: 2px;
 }
 
@@ -1747,7 +1747,7 @@ a { text-decoration: none; color: inherit; }
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(200,161,101,0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(140,184,107,0.35), transparent);
 }
 .footer-v2__inner {
     max-width: 1480px;
@@ -3010,7 +3010,7 @@ a { text-decoration: none; color: inherit; }
 /* Midjourney-фон: туманная комната с лучами света */
 .hero-slide__bg--mesh {
     background-color: #ede7dd;
-    background-image: url('img/hero/hero-5-bg.png');
+    background-image: url('/img/hero/hero-5-bg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -3032,19 +3032,20 @@ a { text-decoration: none; color: inherit; }
     inset: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 24px;
+    gap: 16px;
     /* top 120px = 96px header + 24px воздуха; side 2% для максимальной ширины товаров */
-    padding: 120px 2% 50px;
+    padding: 120px 2% 40px;
     z-index: 1;
 }
 .hero-showcase__row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
+    gap: 36px;
     width: 100%;
     max-width: 1700px;
+    flex: 1; /* ряд занимает доступную высоту автоматически */
+    min-height: 0;
 }
 
 /* Центральный текст — ПОВЕРХ карточек (frosted glass) */
@@ -3095,7 +3096,9 @@ a { text-decoration: none; color: inherit; }
 /* Плитка — товар ПЛАВАЕТ в тумане (нет белого прямоугольника) */
 .hero-showcase__tile {
     position: relative;
-    aspect-ratio: 5 / 4; /* шире высоты → товар крупнее по горизонтали */
+    width: 100%;
+    height: 100%;
+    min-height: 0;
     opacity: 0;
     transform: translateY(30px);
     transition:

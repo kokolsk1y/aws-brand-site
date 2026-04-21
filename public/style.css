@@ -2998,3 +2998,419 @@ a { text-decoration: none; color: inherit; }
 @media (prefers-reduced-motion: reduce) {
     .js-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
+
+/* ============================
+   HERO 5 — SHOWCASE (6 категорий витрина)
+   ============================ */
+.hero-slide--showcase {
+    overflow: hidden;
+}
+.hero-showcase {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    padding: 120px 8% 80px;
+    z-index: 1;
+}
+/* Центральный текст занимает центральную колонку между рядами */
+.hero-showcase__center {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    text-align: center;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+.hero-slide--showcase.is-active .hero-showcase__center {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: 1.4s;
+}
+.hero-showcase__center .hero-slide__label {
+    color: var(--gray-600);
+    margin: 0;
+}
+.hero-showcase__center .hero-slide__title {
+    font-size: clamp(44px, 5.5vw, 84px);
+    margin: 0;
+    text-shadow: none;
+    color: var(--black);
+    line-height: 1;
+    letter-spacing: -2px;
+}
+.hero-showcase__center .hero-slide__btn {
+    margin-top: 8px;
+}
+
+/* Плитка товара — flip-карта */
+.hero-showcase__tile {
+    position: relative;
+    min-height: 160px;
+    perspective: 1000px;
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    transition:
+        opacity 0.7s cubic-bezier(0.22,1,0.36,1),
+        transform 0.7s cubic-bezier(0.22,1,0.36,1),
+        filter 0.8s ease;
+    filter: blur(0px);
+    cursor: pointer;
+}
+.hero-showcase__tile.is-revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+/* Когда центральный текст виден — плитки слегка приглушены (но остаются видны) */
+.hero-slide--showcase.is-active .hero-showcase__tile {
+    opacity: 0.85;
+}
+.hero-slide--showcase.is-active .hero-showcase__tile:hover {
+    opacity: 1;
+    filter: blur(0);
+    z-index: 3;
+}
+
+/* Grid позиции для 6 tile'ов (центр пропущен) */
+.hero-showcase__tile:nth-of-type(1) { grid-column: 1; grid-row: 1; }
+.hero-showcase__tile:nth-of-type(2) { grid-column: 2; grid-row: 1; }
+.hero-showcase__tile:nth-of-type(3) { grid-column: 3; grid-row: 1; }
+.hero-showcase__tile:nth-of-type(4) { grid-column: 1; grid-row: 2; }
+.hero-showcase__tile:nth-of-type(5) { grid-column: 2; grid-row: 2; }
+.hero-showcase__tile:nth-of-type(6) { grid-column: 3; grid-row: 2; }
+
+/* Если используем центральный слот между 3 и 4 tile — убираем плитки из центра */
+.hero-showcase__center {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+}
+/* 2-й и 5-й tile (tiles in middle column) переносятся */
+.hero-showcase .hero-showcase__tile:nth-of-type(2) { grid-column: 1; grid-row: 1; }
+.hero-showcase .hero-showcase__tile:nth-of-type(1) { grid-column: 1; grid-row: 1; }
+.hero-showcase .hero-showcase__tile:nth-of-type(2) { grid-column: 1; grid-row: 2; }
+.hero-showcase .hero-showcase__tile:nth-of-type(3) { grid-column: 3; grid-row: 1; }
+.hero-showcase .hero-showcase__tile:nth-of-type(4) { grid-column: 3; grid-row: 2; }
+.hero-showcase .hero-showcase__tile:nth-of-type(5) { grid-column: 1; grid-row: 1; }
+.hero-showcase .hero-showcase__tile:nth-of-type(6) { grid-column: 1; grid-row: 2; }
+
+/* Flip-карточка */
+.hero-showcase__inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.22,1,0.36,1);
+}
+.hero-showcase__tile:hover .hero-showcase__inner {
+    transform: rotateY(180deg);
+}
+.hero-showcase__front,
+.hero-showcase__back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.hero-showcase__front {
+    padding: 20px;
+}
+.hero-showcase__img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: opacity 0.45s ease;
+}
+.hero-showcase__back {
+    transform: rotateY(180deg);
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding: 22px 26px;
+    gap: 10px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #252118 100%);
+    color: #fff;
+}
+.hero-showcase__cat {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--warm-gold);
+}
+.hero-showcase__price {
+    font-size: clamp(22px, 2.4vw, 32px);
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    line-height: 1;
+    color: #fff;
+}
+.hero-showcase__desc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.75);
+    margin-top: auto;
+}
+
+/* Переход между товарами внутри одной категории */
+.hero-showcase__img.is-changing {
+    opacity: 0;
+}
+
+/* Мобильный адаптив — колонка */
+@media (max-width: 900px) {
+    .hero-showcase {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto auto;
+        padding: 100px 20px 60px;
+        gap: 12px;
+    }
+    .hero-showcase__center {
+        grid-column: 1 / span 2;
+        grid-row: 2;
+        margin: 12px 0;
+    }
+    .hero-showcase .hero-showcase__tile:nth-of-type(1) { grid-column: 1; grid-row: 1; }
+    .hero-showcase .hero-showcase__tile:nth-of-type(2) { grid-column: 2; grid-row: 1; }
+    .hero-showcase .hero-showcase__tile:nth-of-type(3) { grid-column: 1; grid-row: 3; }
+    .hero-showcase .hero-showcase__tile:nth-of-type(4) { grid-column: 2; grid-row: 3; }
+    .hero-showcase .hero-showcase__tile:nth-of-type(5) { grid-column: 1; grid-row: 4; }
+    .hero-showcase .hero-showcase__tile:nth-of-type(6) { grid-column: 2; grid-row: 4; }
+    .hero-showcase__tile { min-height: 120px; }
+    .hero-showcase__back { padding: 14px 16px; gap: 6px; }
+    .hero-showcase__desc { font-size: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-showcase__tile,
+    .hero-showcase__center {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
+/* ЭЦ лого в отзывах — шире по аспекту */
+.review-card__source--ec img {
+    height: 40px;
+    max-width: 140px;
+}
+
+/* ============================
+   DOC MODAL — просмотр сертификата
+   ============================ */
+.doc-card {
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.06);
+    background: #fff;
+    color: inherit;
+}
+.doc-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+    border-color: var(--warm-gold);
+}
+
+.doc-modal[hidden] { display: none !important; }
+.doc-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    animation: docModalIn 0.3s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes docModalIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.doc-modal__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(20,18,15,0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    cursor: pointer;
+}
+.doc-modal__panel {
+    position: relative;
+    background: #fff;
+    border-radius: 20px;
+    max-width: 1100px;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+    animation: docPanelIn 0.4s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes docPanelIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+.doc-modal__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 3;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.05);
+    border: none;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--black);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.doc-modal__close:hover { background: rgba(0,0,0,0.1); }
+.doc-modal__body {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+/* A4 preview — левая часть */
+.doc-modal__preview {
+    background: linear-gradient(135deg, #ede8df 0%, #e3ded3 100%);
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.doc-modal__sheet {
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 1 / 1.414; /* A4 */
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+.doc-modal__sheet-watermark {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(80px, 18vw, 160px);
+    font-weight: 900;
+    color: rgba(201,169,110,0.08);
+    letter-spacing: 4px;
+    transform: rotate(-18deg);
+    pointer-events: none;
+}
+.doc-modal__sheet-content {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+.doc-modal__sheet-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--warm-gold);
+    background: rgba(201,169,110,0.12);
+    padding: 6px 14px;
+    border-radius: 99px;
+}
+.doc-modal__sheet-hint {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--gray-600);
+    max-width: 240px;
+}
+
+/* Info — правая часть */
+.doc-modal__info {
+    padding: 48px 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.doc-modal__info .label { margin: 0; }
+.doc-modal__title {
+    font-size: clamp(26px, 2.6vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    line-height: 1.15;
+    color: var(--black);
+    margin: 0;
+}
+.doc-modal__desc {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--gray-600);
+    margin: 0;
+    flex: 1;
+}
+.doc-modal__actions {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.doc-modal__download {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+.doc-modal__download[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.doc-modal__request {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--black);
+    padding-bottom: 2px;
+}
+.doc-modal__request:hover { color: var(--warm-gold); border-color: var(--warm-gold); }
+.doc-modal__note {
+    font-size: 12px;
+    color: var(--gray-400);
+    font-style: italic;
+    margin: 0;
+}
+
+@media (max-width: 800px) {
+    .doc-modal__body { grid-template-columns: 1fr; }
+    .doc-modal__preview { padding: 24px; }
+    .doc-modal__sheet { max-width: 260px; }
+    .doc-modal__info { padding: 28px 24px; }
+}

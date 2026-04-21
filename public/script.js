@@ -848,3 +848,135 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
     }, { threshold: 0.4 });
     counters.forEach(c => observer.observe(c));
 })();
+
+
+// ─── HERO 5 — showcase animation (stagger reveal + cycle items) ───
+(function initShowcase() {
+    const showcaseSlide = document.querySelector('.hero-slide--showcase');
+    if (!showcaseSlide) return;
+    const tiles = showcaseSlide.querySelectorAll('.hero-showcase__tile');
+    if (!tiles.length) return;
+
+    let triggered = false;
+    let cycleTimers = [];
+
+    function startAnimation() {
+        if (triggered) return;
+        triggered = true;
+
+        // Фаза 1: плитки появляются со stagger 150мс
+        tiles.forEach((tile, i) => {
+            setTimeout(() => tile.classList.add('is-revealed'), 100 + i * 150);
+        });
+
+        // Фаза 2 (1.4с): центральный текст активируется
+        setTimeout(() => {
+            showcaseSlide.classList.add('is-active');
+        }, 1400);
+
+        // Фаза 3 (3.5с+): цикл смены товаров внутри каждой категории
+        setTimeout(() => {
+            tiles.forEach((tile, i) => {
+                const img = tile.querySelector('.hero-showcase__img');
+                if (!img) return;
+                let items = [];
+                try { items = JSON.parse(img.dataset.items || '[]'); } catch (e) {}
+                if (!items.length || items.length < 2) return;
+                let idx = items.indexOf(img.getAttribute('src'));
+                if (idx < 0) idx = 0;
+                // Каждая плитка меняется со своим интервалом и смещением
+                const interval = 3500 + i * 400;
+                const offset = i * 500;
+                const tid = setTimeout(function tick() {
+                    idx = (idx + 1) % items.length;
+                    const nextSrc = items[idx];
+                    const pre = new Image();
+                    pre.src = nextSrc;
+                    pre.onload = () => {
+                        img.classList.add('is-changing');
+                        setTimeout(() => {
+                            img.src = nextSrc;
+                            img.classList.remove('is-changing');
+                        }, 450);
+                    };
+                    cycleTimers.push(setTimeout(tick, interval));
+                }, offset + interval);
+                cycleTimers.push(tid);
+            });
+        }, 2000);
+    }
+
+    function stopAnimation() {
+        cycleTimers.forEach(t => clearTimeout(t));
+        cycleTimers = [];
+    }
+
+    // Запускаем когда слайд становится активным в Swiper
+    // heroSwiper доступен глобально в script.js выше
+    if (typeof heroSwiper !== 'undefined') {
+        // На каждый вход в этот слайд — сброс и повтор
+        heroSwiper.on('slideChangeTransitionEnd', () => {
+            // Находим realIndex hero-5 (слайд с классом --showcase)
+            const activeEl = heroSwiper.slides[heroSwiper.activeIndex];
+            if (activeEl && activeEl.querySelector('.hero-slide--showcase')) {
+                // Сброс стейта для повторного проигрывания
+                triggered = false;
+                stopAnimation();
+                showcaseSlide.classList.remove('is-active');
+                tiles.forEach(t => t.classList.remove('is-revealed'));
+                setTimeout(startAnimation, 50);
+            } else {
+                stopAnimation();
+            }
+        });
+    }
+    // Первый запуск — если слайд уже активен
+    if (showcaseSlide.closest('.swiper-slide-active')) {
+        setTimeout(startAnimation, 300);
+    }
+})();
+
+// ─── DOC MODAL — просмотр сертификатов / документов ───
+(function initDocModal() {
+    const modal = document.getElementById('docModal');
+    if (!modal) return;
+    const titleEl = document.getElementById('docModalTitle');
+    const descEl = document.getElementById('docModalDesc');
+    const downloadBtn = document.getElementById('docModalDownload');
+    const watermarkEl = document.getElementById('docSheetWatermark');
+    let lastFocus = null;
+
+    function open(card) {
+        lastFocus = card;
+        titleEl.textContent = card.dataset.docTitle || 'Документ';
+        descEl.textContent = card.dataset.docDesc || '';
+        // watermark = первое слово названия (напр. EAC / ГОСТ / AWS)
+        const wmWord = (card.dataset.docTitle || 'AWS').split(' ').slice(-1)[0];
+        watermarkEl.textContent = wmWord;
+        // Если есть файл — включаем скачивание
+        const file = card.dataset.docFile || '';
+        if (file) {
+            downloadBtn.disabled = false;
+            downloadBtn.onclick = () => { window.open(file, '_blank'); };
+        } else {
+            downloadBtn.disabled = true;
+            downloadBtn.onclick = null;
+        }
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+    }
+    function close() {
+        modal.hidden = true;
+        document.body.style.overflow = '';
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    document.querySelectorAll('.doc-card[data-doc]').forEach(card => {
+        card.addEventListener('click', () => open(card));
+    });
+    modal.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', close));
+    document.addEventListener('keydown', e => {
+        if (modal.hidden) return;
+        if (e.key === 'Escape') close();
+    });
+})();

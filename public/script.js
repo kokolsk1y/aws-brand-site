@@ -1024,30 +1024,41 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
         if (triggered) return;
         triggered = true;
 
-        // Первые 3 плитки — верхний ряд (tiles 0, 1, 2)
-        // Последние 3 — нижний ряд (tiles 3, 4, 5)
+        // Таймлайн (параллельно с swiper-crossfade 1000мс):
+        //
+        // t=0    → tile 1 (верх левый)      →→→ visible к t=550
+        // t=120  → tile 2 (верх центр)      →→→ visible к t=670
+        // t=240  → tile 3 (верх правый)     →→→ visible к t=790
+        // t=500  → текст "160+ позиций"     →→→ visible к t=1100 (наезжает на ряд плавно)
+        // t=850  → tile 4 (низ левый)       →→→ visible к t=1400
+        // t=970  → tile 5 (низ центр)       →→→ visible к t=1520
+        // t=1090 → tile 6 (низ правый)      →→→ visible к t=1640
+        //
+        // В итоге всё settled к ~1.6с — естественное заполнение без пустот,
+        // параллельно swiper-crossfade (1с) = переход + reveal сливаются в одно движение.
+
         const topTiles = Array.from(tiles).slice(0, 3);
         const bottomTiles = Array.from(tiles).slice(3, 6);
 
-        // Фаза 1 (0мс): СРАЗУ появляется ВЕРХНИЙ РЯД товаров слева→направо
+        // Верхний ряд (сразу, stagger 120мс)
         topTiles.forEach((tile, i) => {
-            cycleTimers.push(setTimeout(() => tile.classList.add('is-revealed'), i * 100));
+            cycleTimers.push(setTimeout(() => tile.classList.add('is-revealed'), i * 120));
         });
 
-        // Фаза 2 (~350мс, когда верхний ряд заполнен): появляется ТЕКСТ "160+ позиций"
+        // Текст — после того как верхний ряд в 60% готовности
         cycleTimers.push(setTimeout(() => {
             showcaseSlide.classList.add('is-active');
-        }, 400));
+        }, 500));
 
-        // Фаза 3 (~850мс): появляется НИЖНИЙ РЯД слева→направо
+        // Нижний ряд — после текста
         bottomTiles.forEach((tile, i) => {
-            cycleTimers.push(setTimeout(() => tile.classList.add('is-revealed'), 800 + i * 100));
+            cycleTimers.push(setTimeout(() => tile.classList.add('is-revealed'), 850 + i * 120));
         });
 
-        // Фаза 4 (3с): синхронная смена товаров — каждые 3с
+        // Цикл смены — после settled (1.6с) + пауза 1.5с на любование = старт через 3с
         cycleTimers.push(setTimeout(function cycleSwap() {
             syncSwap();
-            cycleTimers.push(setTimeout(cycleSwap, 3000));
+            cycleTimers.push(setTimeout(cycleSwap, 3200));
         }, 3000));
     }
 
@@ -1066,15 +1077,17 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
     }
 
     if (typeof heroSwiper !== 'undefined') {
-        // slideChange — самый РАННИЙ event при смене realIndex.
-        // Чистим состояние ДО начала transition, чтобы текст не успел мелькнуть.
-        heroSwiper.on('slideChange', resetState);
-
-        // После завершения transition — если активен hero-5, запускаем анимацию заново
-        heroSwiper.on('slideChangeTransitionEnd', () => {
+        // slideChange — самый РАННИЙ event. Сбрасываем + сразу запускаем анимацию
+        // параллельно swiper-crossfade (1000мс), чтобы товары появлялись СРАЗУ,
+        // а не через 1с после завершения crossfade.
+        heroSwiper.on('slideChange', () => {
+            resetState();
+            // Индекс hero-5 по HERO_THEMES или по realIndex (он 4 для showcase)
             const activeEl = heroSwiper.slides[heroSwiper.activeIndex];
-            if (activeEl && activeEl.querySelector('.hero-slide--showcase')) {
-                setTimeout(startAnimation, 50);
+            const isShowcaseActive = activeEl && activeEl.querySelector('.hero-slide--showcase');
+            if (isShowcaseActive) {
+                // requestAnimationFrame чтобы reset классов успел применится
+                requestAnimationFrame(() => requestAnimationFrame(startAnimation));
             }
         });
     }

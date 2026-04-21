@@ -2817,7 +2817,13 @@ a { text-decoration: none; color: inherit; }
     height: 100%;
     object-fit: contain;
     object-position: bottom right;
-    mix-blend-mode: multiply; /* убирает белый фон PNG/JPG */
+    /* Все 3 лого — прозрачные PNG, blend-mode не нужен */
+}
+/* ЭЦ лого — широкий aspect (4.5:1), увеличиваем чтобы зрительный размер совпадал */
+.where-buy__watermark--ec {
+    width: 95%;
+    height: 50%;
+    bottom: 8%;
 }
 
 /* На hover — лого увеличивается и становится ярче (карточка остаётся светлой) */

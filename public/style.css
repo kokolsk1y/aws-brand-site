@@ -2819,6 +2819,14 @@ a { text-decoration: none; color: inherit; }
     object-position: bottom right;
     /* Все 3 лого — прозрачные PNG, blend-mode не нужен */
 }
+/* ЭЦ portrait (287×364), Ozon/WB landscape (~16:9) — уменьшаем контейнер
+   чтобы визуальная высота совпала с Ozon/WB. Нижняя грань через bottom: -5% */
+.where-buy__watermark--ec {
+    width: 35%;
+    height: 50%;
+    bottom: -5%;
+    right: -5%;
+}
 
 /* На hover — лого увеличивается и становится ярче (карточка остаётся светлой) */
 .where-buy__card:hover .where-buy__watermark {

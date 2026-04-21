@@ -871,17 +871,17 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
         if (triggered) return;
         triggered = true;
 
-        // Фаза 1: плитки появляются со stagger 150мс
+        // Фаза 1 (0–0.9с): плитки слева→направо, stagger 110мс
         tiles.forEach((tile, i) => {
-            setTimeout(() => tile.classList.add('is-revealed'), 100 + i * 150);
+            setTimeout(() => tile.classList.add('is-revealed'), 80 + i * 110);
         });
 
-        // Фаза 2 (1.4с): центральный текст активируется
+        // Фаза 2 (1.2с): уход в туман + появление центрального текста
         setTimeout(() => {
             showcaseSlide.classList.add('is-active');
-        }, 1400);
+        }, 1200);
 
-        // Фаза 3 (3.5с+): цикл смены товаров внутри каждой категории
+        // Фаза 3 (3.5с+): "дыхание" — каждая плитка по очереди меняет товар
         setTimeout(() => {
             tiles.forEach((tile, i) => {
                 const img = tile.querySelector('.hero-showcase__img');
@@ -891,9 +891,9 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
                 if (!items.length || items.length < 2) return;
                 let idx = items.indexOf(img.getAttribute('src'));
                 if (idx < 0) idx = 0;
-                // Каждая плитка меняется со своим интервалом и смещением
-                const interval = 3500 + i * 400;
-                const offset = i * 500;
+                // Каждая плитка со своим интервалом и большим смещением (анимации видно по очереди)
+                const interval = 4200 + i * 300;
+                const offset = i * 700;
                 const tid = setTimeout(function tick() {
                     idx = (idx + 1) % items.length;
                     const nextSrc = items[idx];
@@ -904,13 +904,13 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
                         setTimeout(() => {
                             img.src = nextSrc;
                             img.classList.remove('is-changing');
-                        }, 450);
+                        }, 600);
                     };
                     cycleTimers.push(setTimeout(tick, interval));
                 }, offset + interval);
                 cycleTimers.push(tid);
             });
-        }, 2000);
+        }, 2400);
     }
 
     function stopAnimation() {

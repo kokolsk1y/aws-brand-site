@@ -3034,16 +3034,17 @@ a { text-decoration: none; color: inherit; }
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 22px;
-    padding: 90px 4% 60px;
+    gap: 24px;
+    /* top 120px = 96px header + 24px воздуха; side 2% для максимальной ширины товаров */
+    padding: 120px 2% 50px;
     z-index: 1;
 }
 .hero-showcase__row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
+    gap: 40px;
     width: 100%;
-    max-width: 1400px;
+    max-width: 1700px;
 }
 
 /* Центральный текст — ПОВЕРХ карточек (frosted glass) */
@@ -3094,7 +3095,7 @@ a { text-decoration: none; color: inherit; }
 /* Плитка — товар ПЛАВАЕТ в тумане (нет белого прямоугольника) */
 .hero-showcase__tile {
     position: relative;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 5 / 4; /* шире высоты → товар крупнее по горизонтали */
     opacity: 0;
     transform: translateY(30px);
     transition:

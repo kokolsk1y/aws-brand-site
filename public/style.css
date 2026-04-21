@@ -3008,14 +3008,14 @@ a { text-decoration: none; color: inherit; }
 .hero-slide--showcase {
     overflow: hidden;
 }
-/* Midjourney-фон: туманная комната с лучами света */
+/* Midjourney-фон: туманная комната с лучами света.
+   position НЕ переопределяем — .hero-slide__bg уже absolute + inset 0 */
 .hero-slide__bg--mesh {
     background-color: #ede7dd;
     background-image: url(/img/hero/hero-5-bg.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    position: relative;
 }
 /* Тонкий overlay: слегка затемняет левую зону (где лучи) для читаемости
    светлых товаров, правую оставляет как есть */

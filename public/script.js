@@ -637,43 +637,46 @@ advantagesSwiper.on('slideChangeTransitionStart', () => {
     if (text) gsap.fromTo(text, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.35, ease: 'power3.out' });
 });
 
-// ─── PRICE TICKERS: автоклонирование для seamless loop ───
-// Cобирает уникальные карточки из HTML и клонирует столько раз, чтобы
-// "половина трека" (50% — точка повтора в CSS keyframes) гарантированно
-// покрывала контейнер. Иначе при translateY(-50%) снизу/сверху образуется
-// пустое пространство ("пробка прерывается").
+// ─── PRICE TICKERS: точное смещение в пикселях + автоклонирование ───
+// Чтобы loop был seamless надо сместить трек ровно на высоту одной копии
+// с gap. translateY(-50%) в процентах не даёт точности — между копиями
+// смещение отличается на полгапа, и при возврате на слайд (swiper) виден
+// разрыв. JS замеряет oneCopy + gap и записывает в var(--copy-h), keyframes
+// используют calc(-1 * var(--copy-h)).
 
 function setupPriceTicker(ticker) {
     const track = ticker.querySelector('.adv-ticker__track');
     if (!track) return;
 
-    // Первый вызов: сохраним оригинал в data-атрибут, чтобы при resize пересобирать с нуля
-    if (!track.dataset.sourceSaved) {
-        track.dataset.sourceSaved = '1';
-        // Берём первую половину карточек (в HTML они уже задублированы 2×)
-        const all = Array.from(track.children);
-        const half = Math.max(1, Math.floor(all.length / 2));
-        const sourceHTML = all.slice(0, half).map(el => el.outerHTML).join('');
-        track.dataset.source = sourceHTML;
+    // Один раз сохраняем уникальный набор (первую половину) в dataset
+    if (!track.dataset.src) {
+        const all = Array.from(track.children).filter(c => c.nodeType === 1);
+        const n = Math.max(1, Math.floor(all.length / 2));
+        track.dataset.src = all.slice(0, n).map(el => el.outerHTML).join('');
     }
+    const src = track.dataset.src;
+    if (!src) return;
 
-    const sourceHTML = track.dataset.source;
-    if (!sourceHTML) return;
+    // Отключаем анимацию на время измерения, ставим одну копию
+    track.style.animation = 'none';
+    track.innerHTML = src;
 
-    // Ставим один экземпляр, чтобы измерить высоту одной копии
-    track.innerHTML = sourceHTML;
-    // Высоту измеряем после rAF, чтобы учесть лэйаут
     requestAnimationFrame(() => {
-        const copyH = track.scrollHeight;
+        const gap = parseFloat(getComputedStyle(track).rowGap) || 12;
+        const oneCopyH = track.scrollHeight;
         const containerH = ticker.clientHeight;
-        if (!copyH || !containerH) return;
+        if (!oneCopyH || !containerH) return;
 
-        // "Половина трека" должна покрывать контейнер → копий в половине ≥ ceil(containerH / copyH) + 1 (запас)
-        const copiesPerHalf = Math.max(1, Math.ceil(containerH / copyH) + 1);
-        const totalCopies = copiesPerHalf * 2;
+        // Копий нужно чтобы одна копия ≥ viewport (+1 запас)
+        const copies = Math.max(2, Math.ceil(containerH / oneCopyH) + 1);
+        track.innerHTML = src.repeat(copies);
 
-        // Собираем финальный трек
-        track.innerHTML = sourceHTML.repeat(totalCopies);
+        // Точное смещение = высота карточек + gap между последней и первой следующей копии
+        const copyOffset = oneCopyH + gap;
+        track.style.setProperty('--copy-h', copyOffset + 'px');
+
+        // Сбрасываем inline → CSS правило animation пересчитает keyframes с новым var
+        track.style.animation = '';
     });
 }
 
@@ -1021,21 +1024,31 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
         if (triggered) return;
         triggered = true;
 
-        // Фаза 1 (0.2с): СНАЧАЛА появляется центральный текст "160+ позиций"
-        cycleTimers.push(setTimeout(() => {
-            showcaseSlide.classList.add('is-active');
-        }, 200));
+        // Первые 3 плитки — верхний ряд (tiles 0, 1, 2)
+        // Последние 3 — нижний ряд (tiles 3, 4, 5)
+        const topTiles = Array.from(tiles).slice(0, 3);
+        const bottomTiles = Array.from(tiles).slice(3, 6);
 
-        // Фаза 2 (1.0с): ПОТОМ плитки товаров слева→направо, stagger 110мс
-        tiles.forEach((tile, i) => {
-            cycleTimers.push(setTimeout(() => tile.classList.add('is-revealed'), 1000 + i * 110));
+        // Фаза 1 (0мс): СРАЗУ появляется ВЕРХНИЙ РЯД товаров слева→направо
+        topTiles.forEach((tile, i) => {
+            cycleTimers.push(setTimeout(() => tile.classList.add('is-revealed'), i * 100));
         });
 
-        // Фаза 3 (3.5с): синхронная смена — каждые 3с
+        // Фаза 2 (~350мс, когда верхний ряд заполнен): появляется ТЕКСТ "160+ позиций"
+        cycleTimers.push(setTimeout(() => {
+            showcaseSlide.classList.add('is-active');
+        }, 400));
+
+        // Фаза 3 (~850мс): появляется НИЖНИЙ РЯД слева→направо
+        bottomTiles.forEach((tile, i) => {
+            cycleTimers.push(setTimeout(() => tile.classList.add('is-revealed'), 800 + i * 100));
+        });
+
+        // Фаза 4 (3с): синхронная смена товаров — каждые 3с
         cycleTimers.push(setTimeout(function cycleSwap() {
             syncSwap();
             cycleTimers.push(setTimeout(cycleSwap, 3000));
-        }, 3500));
+        }, 3000));
     }
 
     function stopAnimation() {

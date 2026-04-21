@@ -463,7 +463,7 @@ a { text-decoration: none; color: inherit; }
 .advantages__media--prices {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, #1a1a1a 0%, #252118 100%);
+    background: #1a1a1a;
     display: flex;
     gap: 12px;
     padding: 0 16px;
@@ -484,34 +484,39 @@ a { text-decoration: none; color: inherit; }
 }
 .advantages__media--prices::after {
     bottom: 0;
-    background: linear-gradient(0deg, #1f1c16 0%, transparent 100%);
+    background: linear-gradient(0deg, #1a1a1a 0%, transparent 100%);
 }
 .adv-ticker {
     flex: 1;
     overflow: hidden;
+    padding: 12px 0;
 }
 .adv-ticker__track {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding: 12px 0;
 }
+/*
+ * Анимация задаётся JS в пикселях (--copy-h) для точного seamless
+ * перехода одна-копия → вторая-копия. Keyframes в процентах (-50%)
+ * не подходят: из-за gap между копиями точка перехода смещена.
+ */
 .adv-ticker--up .adv-ticker__track {
-    animation: tickerUp 55s linear infinite;
+    animation: tickerUp var(--adv-ticker-dur, 55s) linear infinite;
 }
 .adv-ticker--down .adv-ticker__track {
-    animation: tickerDown 70s linear infinite;
+    animation: tickerDown var(--adv-ticker-dur, 70s) linear infinite;
 }
 .adv-ticker:hover .adv-ticker__track {
     animation-play-state: paused;
 }
 @keyframes tickerUp {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-50%); }
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(0, calc(-1 * var(--copy-h, 50%)), 0); }
 }
 @keyframes tickerDown {
-    0% { transform: translateY(-50%); }
-    100% { transform: translateY(0); }
+    0% { transform: translate3d(0, calc(-1 * var(--copy-h, 50%)), 0); }
+    100% { transform: translate3d(0, 0, 0); }
 }
 .adv-price-card {
     display: flex;

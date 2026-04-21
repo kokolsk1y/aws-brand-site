@@ -1021,21 +1021,21 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
         if (triggered) return;
         triggered = true;
 
-        // Фаза 1 (0–0.9с): плитки слева→направо, stagger 110мс
-        tiles.forEach((tile, i) => {
-            cycleTimers.push(setTimeout(() => tile.classList.add('is-revealed'), 80 + i * 110));
-        });
-
-        // Фаза 2 (1.2с): появление центрального текста
+        // Фаза 1 (0.2с): СНАЧАЛА появляется центральный текст "160+ позиций"
         cycleTimers.push(setTimeout(() => {
             showcaseSlide.classList.add('is-active');
-        }, 1200));
+        }, 200));
 
-        // Фаза 3 (3.2с): синхронная смена — каждые 3с
+        // Фаза 2 (1.0с): ПОТОМ плитки товаров слева→направо, stagger 110мс
+        tiles.forEach((tile, i) => {
+            cycleTimers.push(setTimeout(() => tile.classList.add('is-revealed'), 1000 + i * 110));
+        });
+
+        // Фаза 3 (3.5с): синхронная смена — каждые 3с
         cycleTimers.push(setTimeout(function cycleSwap() {
             syncSwap();
             cycleTimers.push(setTimeout(cycleSwap, 3000));
-        }, 3200));
+        }, 3500));
     }
 
     function stopAnimation() {

@@ -867,50 +867,57 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
     let triggered = false;
     let cycleTimers = [];
 
+    // Состояние смены товара для каждой плитки (индекс текущего items[])
+    const tileState = Array.from(tiles).map(tile => {
+        const img = tile.querySelector('.hero-showcase__img');
+        let items = [];
+        try { items = JSON.parse(img.dataset.items || '[]'); } catch (e) {}
+        let idx = items.indexOf(img.getAttribute('src'));
+        if (idx < 0) idx = 0;
+        return { img, items, idx };
+    });
+
+    // Меняем товар в одной конкретной плитке (с "дыханием")
+    function changeOne(tIdx) {
+        const st = tileState[tIdx];
+        if (!st || !st.items.length || st.items.length < 2) return;
+        st.idx = (st.idx + 1) % st.items.length;
+        const nextSrc = st.items[st.idx];
+        const pre = new Image();
+        pre.src = nextSrc;
+        pre.onload = () => {
+            st.img.classList.add('is-changing');
+            setTimeout(() => {
+                st.img.src = nextSrc;
+                st.img.classList.remove('is-changing');
+            }, 600);
+        };
+    }
+
     function startAnimation() {
         if (triggered) return;
         triggered = true;
 
         // Фаза 1 (0–0.9с): плитки слева→направо, stagger 110мс
         tiles.forEach((tile, i) => {
-            setTimeout(() => tile.classList.add('is-revealed'), 80 + i * 110);
+            cycleTimers.push(setTimeout(() => tile.classList.add('is-revealed'), 80 + i * 110));
         });
 
         // Фаза 2 (1.2с): уход в туман + появление центрального текста
-        setTimeout(() => {
+        cycleTimers.push(setTimeout(() => {
             showcaseSlide.classList.add('is-active');
-        }, 1200);
+        }, 1200));
 
-        // Фаза 3 (3.5с+): "дыхание" — каждая плитка по очереди меняет товар
-        setTimeout(() => {
-            tiles.forEach((tile, i) => {
-                const img = tile.querySelector('.hero-showcase__img');
-                if (!img) return;
-                let items = [];
-                try { items = JSON.parse(img.dataset.items || '[]'); } catch (e) {}
-                if (!items.length || items.length < 2) return;
-                let idx = items.indexOf(img.getAttribute('src'));
-                if (idx < 0) idx = 0;
-                // Каждая плитка со своим интервалом и большим смещением (анимации видно по очереди)
-                const interval = 4200 + i * 300;
-                const offset = i * 700;
-                const tid = setTimeout(function tick() {
-                    idx = (idx + 1) % items.length;
-                    const nextSrc = items[idx];
-                    const pre = new Image();
-                    pre.src = nextSrc;
-                    pre.onload = () => {
-                        img.classList.add('is-changing');
-                        setTimeout(() => {
-                            img.src = nextSrc;
-                            img.classList.remove('is-changing');
-                        }, 600);
-                    };
-                    cycleTimers.push(setTimeout(tick, interval));
-                }, offset + interval);
-                cycleTimers.push(tid);
-            });
-        }, 2400);
+        // Фаза 3 (2.6с): wave-смена товара — одна плитка за раз
+        cycleTimers.push(setTimeout(function startWave() {
+            let waveIdx = 0;
+            function tick() {
+                changeOne(waveIdx % tiles.length);
+                waveIdx++;
+                cycleTimers.push(setTimeout(tick, 1700)); // 1.7с между сменами
+            }
+            tick();
+        }, 2600));
     }
 
     function stopAnimation() {
@@ -918,22 +925,25 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
         cycleTimers = [];
     }
 
-    // Запускаем когда слайд становится активным в Swiper
-    // heroSwiper доступен глобально в script.js выше
+    function resetState() {
+        triggered = false;
+        stopAnimation();
+        showcaseSlide.classList.remove('is-active');
+        tiles.forEach(t => t.classList.remove('is-revealed'));
+        // Также сбросим is-changing на картинках (если осталось)
+        tileState.forEach(st => st.img && st.img.classList.remove('is-changing'));
+    }
+
     if (typeof heroSwiper !== 'undefined') {
-        // На каждый вход в этот слайд — сброс и повтор
+        // slideChange — самый РАННИЙ event при смене realIndex.
+        // Чистим состояние ДО начала transition, чтобы текст не успел мелькнуть.
+        heroSwiper.on('slideChange', resetState);
+
+        // После завершения transition — если активен hero-5, запускаем анимацию заново
         heroSwiper.on('slideChangeTransitionEnd', () => {
-            // Находим realIndex hero-5 (слайд с классом --showcase)
             const activeEl = heroSwiper.slides[heroSwiper.activeIndex];
             if (activeEl && activeEl.querySelector('.hero-slide--showcase')) {
-                // Сброс стейта для повторного проигрывания
-                triggered = false;
-                stopAnimation();
-                showcaseSlide.classList.remove('is-active');
-                tiles.forEach(t => t.classList.remove('is-revealed'));
                 setTimeout(startAnimation, 50);
-            } else {
-                stopAnimation();
             }
         });
     }

@@ -1772,7 +1772,7 @@ a { text-decoration: none; color: inherit; }
     color: #fff; text-decoration: none;
     transition: color 0.3s ease;
 }
-.footer-v2__email:hover { color: #c8a165; }
+.footer-v2__email:hover { color: #8CB86B; }
 .footer-v2__email-arrow {
     font-size: 0.6em; font-weight: 400;
     transform: translateX(0);
@@ -1792,7 +1792,7 @@ a { text-decoration: none; color: inherit; }
 }
 .footer-v2__col-title {
     font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
-    color: #c8a165; margin-bottom: 12px;
+    color: #8CB86B; margin-bottom: 12px;
 }
 .footer-v2__col a {
     font-size: 15px; font-weight: 400;
@@ -1811,7 +1811,7 @@ a { text-decoration: none; color: inherit; }
     color: rgba(255,255,255,0.5);
 }
 .footer-v2__icon svg { width: 100%; height: 100%; }
-.footer-v2__col a:hover .footer-v2__icon { color: #c8a165; }
+.footer-v2__col a:hover .footer-v2__icon { color: #8CB86B; }
 
 /* Gigantic word mark — выходит за края контейнера */
 .footer-v2__markrow {
@@ -1926,7 +1926,7 @@ a { text-decoration: none; color: inherit; }
     content: '';
     position: absolute; top: 0; left: 0;
     width: 40%; height: 100%;
-    background: linear-gradient(90deg, transparent, #c8a165, transparent);
+    background: linear-gradient(90deg, transparent, #8CB86B, transparent);
     animation: splashShimmer 1.6s infinite cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1982,7 +1982,7 @@ a { text-decoration: none; color: inherit; }
 }
 .scroll-progress__bar {
     height: 100%;
-    background: linear-gradient(90deg, #c8a165, #8CB86B);
+    background: linear-gradient(90deg, #5E8C3A, #8CB86B);
     transform-origin: left center;
     transform: scaleX(0);
     transition: transform 0.1s ease-out;
@@ -2065,7 +2065,7 @@ a { text-decoration: none; color: inherit; }
 }
 .footer-v2__news-label {
     font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
-    color: #c8a165; margin-bottom: 12px;
+    color: #8CB86B; margin-bottom: 12px;
 }
 .footer-v2__news-text {
     font-size: 14px; line-height: 1.5;
@@ -2086,7 +2086,7 @@ a { text-decoration: none; color: inherit; }
 }
 .footer-v2__news-input:focus {
     outline: none;
-    border-color: #c8a165;
+    border-color: #8CB86B;
     background: rgba(255,255,255,0.08);
 }
 .footer-v2__news-input::placeholder { color: rgba(255,255,255,0.3); }
@@ -2100,9 +2100,10 @@ a { text-decoration: none; color: inherit; }
     transition: all 0.2s ease;
 }
 .footer-v2__news-btn:hover {
-    background: #c8a165;
+    background: #8CB86B;
+    color: #0a0908;
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(200,161,101,0.25);
+    box-shadow: 0 6px 18px rgba(140,184,107,0.3);
 }
 .footer-v2__news-msg {
     flex-basis: 100%;
@@ -2364,7 +2365,7 @@ a { text-decoration: none; color: inherit; }
     font-weight: 700;
     letter-spacing: 2px;
     color: var(--warm-gold);
-    background: rgba(201,169,110,0.15);
+    background: rgba(94,140,58,0.15);
     padding: 3px 10px;
     border-radius: 99px;
     text-transform: uppercase;
@@ -2384,7 +2385,7 @@ a { text-decoration: none; color: inherit; }
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 .compare__cell--us {
-    background: rgba(201,169,110,0.08);
+    background: rgba(94,140,58,0.08);
     color: var(--black);
 }
 .compare__cell--us strong {
@@ -2405,7 +2406,7 @@ a { text-decoration: none; color: inherit; }
 }
 .compare__cell--us .compare__yes {
     background: var(--warm-gold);
-    box-shadow: 0 2px 8px rgba(201,169,110,0.4);
+    box-shadow: 0 2px 8px rgba(94,140,58,0.4);
 }
 
 /* Строка с ценой — выделена и подчёркивает главный аргумент */
@@ -2413,16 +2414,16 @@ a { text-decoration: none; color: inherit; }
     font-size: 16px;
     font-weight: 700;
     color: var(--black);
-    background: rgba(201,169,110,0.04);
+    background: rgba(94,140,58,0.04);
 }
 .compare__cell--price {
     font-size: 17px !important;
     font-weight: 800 !important;
     padding: 18px 14px !important;
-    background: rgba(201,169,110,0.04);
+    background: rgba(94,140,58,0.04);
 }
 .compare__cell--us.compare__cell--price {
-    background: rgba(201,169,110,0.18);
+    background: rgba(94,140,58,0.18);
     position: relative;
 }
 .compare__cell--us.compare__cell--price strong {
@@ -2751,7 +2752,7 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(201,169,110,0.12);
+    background: rgba(94,140,58,0.12);
     color: var(--warm-gold);
     border-radius: 12px;
     margin-bottom: 8px;
@@ -3238,7 +3239,7 @@ a { text-decoration: none; color: inherit; }
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background: rgba(201,169,110,0.18);
+    background: rgba(94,140,58,0.18);
     color: var(--warm-gold);
     font-weight: 800;
     font-size: 14px;
@@ -3387,7 +3388,7 @@ a { text-decoration: none; color: inherit; }
     justify-content: center;
     font-size: clamp(80px, 18vw, 160px);
     font-weight: 900;
-    color: rgba(201,169,110,0.08);
+    color: rgba(94,140,58,0.08);
     letter-spacing: 4px;
     transform: rotate(-18deg);
     pointer-events: none;
@@ -3407,7 +3408,7 @@ a { text-decoration: none; color: inherit; }
     font-weight: 800;
     letter-spacing: 3px;
     color: var(--warm-gold);
-    background: rgba(201,169,110,0.12);
+    background: rgba(94,140,58,0.12);
     padding: 6px 14px;
     border-radius: 99px;
 }

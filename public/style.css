@@ -3059,24 +3059,46 @@ a { text-decoration: none; color: inherit; }
     background-size: 200px 200px;
 }
 
-/* Пылинки — слой с floating dots */
+/* Пылинки — 2 слоя для глубины (за и над товарами) */
 .hero-slide__bg--mesh .hero-dust {
     position: absolute;
     inset: 0;
-    z-index: 2;
     pointer-events: none;
     overflow: hidden;
 }
+.hero-slide__bg--mesh .hero-dust--back { z-index: 2; }
+.hero-slide__bg--mesh .hero-dust--front { z-index: 25; }
+
 .hero-dust__particle {
     position: absolute;
     border-radius: 50%;
-    /* Тёмно-бежевые пылинки — видны на белом фоне */
-    background: radial-gradient(circle, rgba(180,140,80,0.55) 0%, rgba(160,120,70,0.25) 45%, transparent 75%);
-    box-shadow: 0 0 8px rgba(180,140,80,0.2);
     animation-name: dustFloat;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-    filter: blur(0.3px);
+}
+/* ДАЛЬНИЕ пылинки — размытые, с тёплым блеском (за товарами) */
+.hero-dust__particle--far {
+    background: radial-gradient(circle,
+        rgba(255,220,150,0.95) 0%,
+        rgba(200,160,90,0.6) 30%,
+        rgba(180,140,80,0.25) 55%,
+        transparent 80%);
+    box-shadow:
+        0 0 12px rgba(255,210,140,0.45),
+        0 0 24px rgba(200,160,90,0.25);
+    filter: blur(1.2px);
+}
+/* БЛИЖНИЕ пылинки — чёткие, ярче (перед товарами) */
+.hero-dust__particle--near {
+    background: radial-gradient(circle,
+        rgba(255,240,200,1) 0%,
+        rgba(220,180,120,0.7) 35%,
+        rgba(180,140,80,0.3) 60%,
+        transparent 85%);
+    box-shadow:
+        0 0 10px rgba(255,225,160,0.6),
+        0 0 20px rgba(220,180,120,0.3);
+    filter: blur(0.4px);
 }
 @keyframes dustFloat {
     0%   { transform: translate(0, 100vh) scale(0.8); opacity: 0; }

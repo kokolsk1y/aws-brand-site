@@ -154,22 +154,41 @@
                         <div class="hero-slide__bg hero-slide__bg--mesh">
                             <div class="hero-grain" aria-hidden="true"></div>
                             <div class="hero-vignette" aria-hidden="true"></div>
-                            <div class="hero-dust" aria-hidden="true">
-                                <span class="hero-dust__particle" style="left:8%;width:4px;height:4px;animation-duration:22s;animation-delay:0s;--dx:40px"></span>
-                                <span class="hero-dust__particle" style="left:18%;width:6px;height:6px;animation-duration:28s;animation-delay:-4s;--dx:-30px"></span>
-                                <span class="hero-dust__particle" style="left:28%;width:3px;height:3px;animation-duration:24s;animation-delay:-8s;--dx:60px"></span>
-                                <span class="hero-dust__particle" style="left:35%;width:5px;height:5px;animation-duration:32s;animation-delay:-2s;--dx:-50px"></span>
-                                <span class="hero-dust__particle" style="left:45%;width:4px;height:4px;animation-duration:26s;animation-delay:-12s;--dx:20px"></span>
-                                <span class="hero-dust__particle" style="left:52%;width:7px;height:7px;animation-duration:30s;animation-delay:-6s;--dx:-40px"></span>
-                                <span class="hero-dust__particle" style="left:62%;width:3px;height:3px;animation-duration:25s;animation-delay:-10s;--dx:50px"></span>
-                                <span class="hero-dust__particle" style="left:72%;width:5px;height:5px;animation-duration:29s;animation-delay:-14s;--dx:-25px"></span>
-                                <span class="hero-dust__particle" style="left:82%;width:4px;height:4px;animation-duration:27s;animation-delay:-3s;--dx:35px"></span>
-                                <span class="hero-dust__particle" style="left:92%;width:6px;height:6px;animation-duration:33s;animation-delay:-7s;--dx:-45px"></span>
-                                <span class="hero-dust__particle" style="left:14%;width:3px;height:3px;animation-duration:26s;animation-delay:-16s;--dx:30px"></span>
-                                <span class="hero-dust__particle" style="left:38%;width:8px;height:8px;animation-duration:35s;animation-delay:-18s;--dx:-55px"></span>
-                                <span class="hero-dust__particle" style="left:58%;width:4px;height:4px;animation-duration:23s;animation-delay:-11s;--dx:40px"></span>
-                                <span class="hero-dust__particle" style="left:76%;width:5px;height:5px;animation-duration:31s;animation-delay:-5s;--dx:-35px"></span>
-                                <span class="hero-dust__particle" style="left:88%;width:3px;height:3px;animation-duration:24s;animation-delay:-9s;--dx:25px"></span>
+                            <!-- Дальний слой пылинок — ЗА товарами (крупные, размытые, медленные) -->
+                            <div class="hero-dust hero-dust--back" aria-hidden="true">
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:6%;width:8px;height:8px;animation-duration:34s;animation-delay:0s;--dx:50px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:12%;width:10px;height:10px;animation-duration:38s;animation-delay:-5s;--dx:-40px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:22%;width:7px;height:7px;animation-duration:30s;animation-delay:-12s;--dx:70px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:28%;width:12px;height:12px;animation-duration:42s;animation-delay:-3s;--dx:-60px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:34%;width:6px;height:6px;animation-duration:28s;animation-delay:-15s;--dx:45px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:42%;width:9px;height:9px;animation-duration:36s;animation-delay:-8s;--dx:-55px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:48%;width:8px;height:8px;animation-duration:32s;animation-delay:-20s;--dx:35px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:56%;width:11px;height:11px;animation-duration:40s;animation-delay:-4s;--dx:-50px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:64%;width:7px;height:7px;animation-duration:31s;animation-delay:-11s;--dx:60px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:72%;width:10px;height:10px;animation-duration:37s;animation-delay:-16s;--dx:-45px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:78%;width:6px;height:6px;animation-duration:29s;animation-delay:-7s;--dx:40px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:84%;width:9px;height:9px;animation-duration:35s;animation-delay:-22s;--dx:-55px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:92%;width:8px;height:8px;animation-duration:33s;animation-delay:-14s;--dx:50px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:18%;width:7px;height:7px;animation-duration:39s;animation-delay:-18s;--dx:-38px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:38%;width:11px;height:11px;animation-duration:41s;animation-delay:-6s;--dx:45px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:52%;width:6px;height:6px;animation-duration:27s;animation-delay:-13s;--dx:-52px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:68%;width:9px;height:9px;animation-duration:34s;animation-delay:-2s;--dx:38px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--far" style="left:88%;width:7px;height:7px;animation-duration:32s;animation-delay:-19s;--dx:-42px"></span>
+                            </div>
+                            <!-- Передний слой пылинок — НАД товарами (мелкие, чёткие, быстрые) -->
+                            <div class="hero-dust hero-dust--front" aria-hidden="true">
+                                <span class="hero-dust__particle hero-dust__particle--near" style="left:10%;width:3px;height:3px;animation-duration:20s;animation-delay:-1s;--dx:25px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--near" style="left:24%;width:4px;height:4px;animation-duration:22s;animation-delay:-10s;--dx:-30px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--near" style="left:36%;width:3px;height:3px;animation-duration:18s;animation-delay:-4s;--dx:35px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--near" style="left:46%;width:5px;height:5px;animation-duration:24s;animation-delay:-13s;--dx:-25px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--near" style="left:58%;width:3px;height:3px;animation-duration:19s;animation-delay:-7s;--dx:40px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--near" style="left:66%;width:4px;height:4px;animation-duration:21s;animation-delay:-17s;--dx:-30px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--near" style="left:76%;width:3px;height:3px;animation-duration:23s;animation-delay:-9s;--dx:28px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--near" style="left:86%;width:5px;height:5px;animation-duration:25s;animation-delay:-14s;--dx:-35px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--near" style="left:94%;width:3px;height:3px;animation-duration:20s;animation-delay:-6s;--dx:22px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--near" style="left:15%;width:4px;height:4px;animation-duration:26s;animation-delay:-15s;--dx:30px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--near" style="left:44%;width:3px;height:3px;animation-duration:17s;animation-delay:-3s;--dx:-28px"></span>
+                                <span class="hero-dust__particle hero-dust__particle--near" style="left:82%;width:4px;height:4px;animation-duration:22s;animation-delay:-11s;--dx:32px"></span>
                             </div>
                         </div>
 

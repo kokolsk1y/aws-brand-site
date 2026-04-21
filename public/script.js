@@ -637,6 +637,65 @@ advantagesSwiper.on('slideChangeTransitionStart', () => {
     if (text) gsap.fromTo(text, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.35, ease: 'power3.out' });
 });
 
+// ─── PRICE TICKERS: автоклонирование для seamless loop ───
+// Cобирает уникальные карточки из HTML и клонирует столько раз, чтобы
+// "половина трека" (50% — точка повтора в CSS keyframes) гарантированно
+// покрывала контейнер. Иначе при translateY(-50%) снизу/сверху образуется
+// пустое пространство ("пробка прерывается").
+
+function setupPriceTicker(ticker) {
+    const track = ticker.querySelector('.adv-ticker__track');
+    if (!track) return;
+
+    // Первый вызов: сохраним оригинал в data-атрибут, чтобы при resize пересобирать с нуля
+    if (!track.dataset.sourceSaved) {
+        track.dataset.sourceSaved = '1';
+        // Берём первую половину карточек (в HTML они уже задублированы 2×)
+        const all = Array.from(track.children);
+        const half = Math.max(1, Math.floor(all.length / 2));
+        const sourceHTML = all.slice(0, half).map(el => el.outerHTML).join('');
+        track.dataset.source = sourceHTML;
+    }
+
+    const sourceHTML = track.dataset.source;
+    if (!sourceHTML) return;
+
+    // Ставим один экземпляр, чтобы измерить высоту одной копии
+    track.innerHTML = sourceHTML;
+    // Высоту измеряем после rAF, чтобы учесть лэйаут
+    requestAnimationFrame(() => {
+        const copyH = track.scrollHeight;
+        const containerH = ticker.clientHeight;
+        if (!copyH || !containerH) return;
+
+        // "Половина трека" должна покрывать контейнер → копий в половине ≥ ceil(containerH / copyH) + 1 (запас)
+        const copiesPerHalf = Math.max(1, Math.ceil(containerH / copyH) + 1);
+        const totalCopies = copiesPerHalf * 2;
+
+        // Собираем финальный трек
+        track.innerHTML = sourceHTML.repeat(totalCopies);
+    });
+}
+
+function initPriceTickers() {
+    document.querySelectorAll('.adv-ticker').forEach(setupPriceTicker);
+}
+
+// Первая инициализация — после загрузки всех картинок (чтобы высоты карточек были корректными)
+if (document.readyState === 'complete') {
+    initPriceTickers();
+} else {
+    window.addEventListener('load', initPriceTickers);
+}
+
+// Пересобираем при resize (debounced)
+let _tickerResizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(_tickerResizeTimer);
+    _tickerResizeTimer = setTimeout(initPriceTickers, 200);
+});
+
+
 // ─── HERO TAGS → ADVANTAGES SLIDE ───
 
 document.querySelectorAll('.hero-slide__tag[data-adv-slide]').forEach(tag => {

@@ -3007,14 +3007,32 @@ a { text-decoration: none; color: inherit; }
 .hero-slide--showcase {
     overflow: hidden;
 }
-/* Gradient mesh — placeholder пока нет Midjourney фона */
+/* "Туман в комнате" — placeholder пока нет Midjourney фона.
+   Имитация: горизонт пол/стена, направленный свет сверху-слева,
+   атмосферная дымка по центру, лёгкая виньетка по краям */
 .hero-slide__bg--mesh {
-    background-color: #f7f4ef;
+    background-color: #ede7dd;
     background-image:
-        radial-gradient(at 10% 15%, rgba(201,169,110,0.14) 0%, transparent 45%),
-        radial-gradient(at 85% 25%, rgba(140,184,107,0.10) 0%, transparent 50%),
-        radial-gradient(at 70% 85%, rgba(201,169,110,0.18) 0%, transparent 55%),
-        radial-gradient(at 20% 80%, rgba(140,160,110,0.08) 0%, transparent 50%);
+        /* Направленный свет сверху-слева (окно в комнате) */
+        radial-gradient(ellipse 60% 50% at 18% 8%, rgba(255,240,210,0.55) 0%, transparent 55%),
+        /* Атмосферный ореол по центру (рассеянный свет) */
+        radial-gradient(circle at 50% 55%, rgba(255,235,200,0.3) 0%, transparent 60%),
+        /* Лёгкая тень в дальнем правом углу — глубина комнаты */
+        radial-gradient(ellipse at 100% 100%, rgba(80,60,35,0.18) 0%, transparent 50%),
+        /* Контрсвет снизу-справа (подсветка пола) */
+        radial-gradient(ellipse 50% 30% at 80% 95%, rgba(255,225,190,0.18) 0%, transparent 60%),
+        /* Базовый градиент: пол → стена (горизонт на ~50%) */
+        linear-gradient(180deg, #f0e9dc 0%, #f4ece0 45%, #e8ddc9 55%, #ddd1ba 100%);
+    position: relative;
+}
+/* Мягкая дымка поверх — создаёт ощущение тумана */
+.hero-slide__bg--mesh::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 80% 40% at 50% 55%, rgba(250,240,220,0.35) 0%, transparent 70%);
+    pointer-events: none;
 }
 .hero-showcase {
     position: absolute;
@@ -3080,7 +3098,7 @@ a { text-decoration: none; color: inherit; }
     margin-top: 8px;
 }
 
-/* Плитка — товар ПЛАВАЕТ на бежевом фоне (нет белого прямоугольника) */
+/* Плитка — товар ПЛАВАЕТ в тумане (нет белого прямоугольника) */
 .hero-showcase__tile {
     position: relative;
     aspect-ratio: 1 / 1;
@@ -3092,60 +3110,73 @@ a { text-decoration: none; color: inherit; }
     cursor: pointer;
     --parallax-x: 0px;
     --parallax-y: 0px;
+    overflow: visible;
 }
 .hero-showcase__tile.is-revealed {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* Синхронная пульсация: все плитки «выдохнули-вдохнули» одновременно */
-.hero-slide--showcase.is-pulsing .hero-showcase__tile .hero-showcase__img {
+/* Синхронная пульсация: товар + тень "вдыхают-выдыхают" одновременно */
+.hero-slide--showcase.is-pulsing .hero-showcase__img {
     opacity: 0;
-    transform: scale(0.88);
-    filter: drop-shadow(0 12px 28px rgba(85,60,20,0.18))
-            drop-shadow(0 4px 8px rgba(0,0,0,0.08))
-            blur(8px);
+    transform: scale(0.92) translateY(-6px);
+    filter: drop-shadow(0 8px 16px rgba(85,60,20,0.15)) blur(4px);
+}
+.hero-slide--showcase.is-pulsing .hero-showcase__shadow {
+    transform: scaleY(0.6) scale(0.5);
+    opacity: 0.3;
 }
 
-/* Hover — подсветка конкретной плитки (parallax НЕ применяется) */
+/* Hover — товар слегка приподнимается + тень расширяется (стоит на полу) */
 .hero-showcase__tile:hover { z-index: 15; }
 .hero-showcase__tile:hover .hero-showcase__img {
-    transform: scale(1.05) translate(var(--parallax-x), var(--parallax-y));
-    filter: drop-shadow(0 22px 40px rgba(85,60,20,0.25))
-            drop-shadow(0 6px 12px rgba(0,0,0,0.12));
+    transform: translateY(-6%) scale(1.03) translate(var(--parallax-x), var(--parallax-y));
+    filter: drop-shadow(0 18px 28px rgba(85,60,20,0.22))
+            drop-shadow(0 6px 10px rgba(0,0,0,0.12));
+}
+.hero-showcase__tile:hover .hero-showcase__shadow {
+    transform: scaleY(0.6) scale(1.15);
+    opacity: 0.75;
+    filter: blur(12px);
 }
 
 .hero-showcase__inner {
     position: relative;
     width: 100%;
     height: 100%;
-    /* НЕТ фона, НЕТ border — товар плавает на странице */
-}
-
-/* Front — товар без контейнера */
-.hero-showcase__front {
-    position: absolute;
-    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10%;
-    transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1),
-                transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    /* НЕТ фона, НЕТ рамки — товар плавает в тумане */
 }
-.hero-showcase__tile:hover .hero-showcase__front {
-    opacity: 0;
-    transform: translateY(-12%) scale(0.96);
+
+/* Эллиптическая тень под товаром — "стоит на полу" */
+.hero-showcase__shadow {
+    position: absolute;
+    bottom: 8%;
+    left: 20%;
+    right: 20%;
+    height: 30px;
+    background: radial-gradient(ellipse at center, rgba(60,40,10,0.35) 0%, rgba(60,40,10,0.15) 40%, transparent 70%);
+    filter: blur(8px);
+    transform: scaleY(0.6);
+    z-index: 0;
+    pointer-events: none;
+    transition: transform 0.7s cubic-bezier(0.22,1,0.36,1),
+                opacity 0.5s cubic-bezier(0.22,1,0.36,1);
 }
-/* Товар: белый фон PNG/WEBP сливается с бежевым фоном через multiply,
-   warm drop-shadow создаёт floating-эффект, повторяющий контур */
+
+/* Товар — реально прозрачный PNG, multiply НЕ нужен,
+   drop-shadow работает чисто по контуру */
 .hero-showcase__img {
-    max-width: 100%;
-    max-height: 100%;
+    position: relative;
+    z-index: 1;
+    max-width: 78%;
+    max-height: 78%;
     object-fit: contain;
-    mix-blend-mode: multiply;
-    filter: drop-shadow(0 14px 28px rgba(85,60,20,0.18))
-            drop-shadow(0 5px 10px rgba(0,0,0,0.08));
+    filter: drop-shadow(0 8px 16px rgba(85,60,20,0.15))
+            drop-shadow(0 2px 4px rgba(0,0,0,0.08));
     transition:
         opacity 0.7s cubic-bezier(0.22,1,0.36,1),
         transform 0.7s cubic-bezier(0.22,1,0.36,1),
@@ -3153,11 +3184,12 @@ a { text-decoration: none; color: inherit; }
     will-change: transform, opacity, filter;
 }
 
-/* Back — frosted dark overlay при hover (по центру всё) */
+/* Back — frosted dark overlay при hover. inset:0 — СТРОГО в границах плитки */
 .hero-showcase__back {
     position: absolute;
     inset: 0;
-    background: linear-gradient(140deg, rgba(26,26,26,0.92) 0%, rgba(42,36,26,0.95) 100%);
+    z-index: 5;
+    background: linear-gradient(140deg, rgba(26,26,26,0.94) 0%, rgba(42,36,26,0.96) 100%);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -3167,17 +3199,19 @@ a { text-decoration: none; color: inherit; }
     align-items: center;
     justify-content: center;
     text-align: center;
-    gap: 10px;
-    padding: 20px 18px;
-    transform: translateY(30%) scale(0.96);
+    gap: 8px;
+    padding: 18px 16px;
+    box-sizing: border-box;
+    transform: translateY(15%);
     opacity: 0;
-    transition: transform 0.55s cubic-bezier(0.22,1,0.36,1),
-                opacity 0.4s ease;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.2);
+    pointer-events: none;
+    transition: transform 0.45s cubic-bezier(0.22,1,0.36,1),
+                opacity 0.35s ease;
 }
 .hero-showcase__tile:hover .hero-showcase__back {
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
     opacity: 1;
+    pointer-events: auto;
 }
 .hero-showcase__cat {
     font-size: 10px;

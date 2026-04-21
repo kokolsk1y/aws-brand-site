@@ -864,6 +864,37 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
         tile.addEventListener('click', () => { window.location.href = link; });
     });
 
+    // Tonkij mouse parallax — товары слегка «следят» за курсором
+    (function initParallax() {
+        let rafId = null;
+        showcaseSlide.addEventListener('mousemove', (e) => {
+            if (rafId) return;
+            rafId = requestAnimationFrame(() => {
+                const rect = showcaseSlide.getBoundingClientRect();
+                const cx = (e.clientX - rect.left) / rect.width - 0.5;  // -0.5..0.5
+                const cy = (e.clientY - rect.top) / rect.height - 0.5;
+                tiles.forEach(tile => {
+                    const tr = tile.getBoundingClientRect();
+                    // расстояние от центра курсора до центра плитки (-1..1)
+                    const tdx = ((tr.left + tr.width / 2) - (rect.left + rect.width / 2)) / rect.width;
+                    const tdy = ((tr.top + tr.height / 2) - (rect.top + rect.height / 2)) / rect.height;
+                    // сдвиг: плитки на краях реагируют сильнее, центральные слабо
+                    const px = (cx * 8 + tdx * 4) * -1;
+                    const py = (cy * 8 + tdy * 4) * -1;
+                    tile.style.setProperty('--parallax-x', px + 'px');
+                    tile.style.setProperty('--parallax-y', py + 'px');
+                });
+                rafId = null;
+            });
+        }, { passive: true });
+        showcaseSlide.addEventListener('mouseleave', () => {
+            tiles.forEach(tile => {
+                tile.style.setProperty('--parallax-x', '0px');
+                tile.style.setProperty('--parallax-y', '0px');
+            });
+        });
+    })();
+
     let triggered = false;
     let cycleTimers = [];
 
@@ -894,6 +925,31 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
         };
     }
 
+    // СИНХРОННАЯ пульсация: все плитки одновременно выдыхают и вдыхают
+    function pulseAll() {
+        showcaseSlide.classList.add('is-pulsing');
+        // Фаза выдоха 700мс: все скрываются синхронно
+        cycleTimers.push(setTimeout(() => {
+            // Преzagruzim все изображения, затем swap синхронно
+            const promises = tileState.map(st => new Promise(resolve => {
+                if (!st.items.length || st.items.length < 2) return resolve();
+                st.idx = (st.idx + 1) % st.items.length;
+                const pre = new Image();
+                pre.onload = pre.onerror = resolve;
+                pre.src = st.items[st.idx];
+            }));
+            Promise.all(promises).then(() => {
+                tileState.forEach(st => {
+                    if (st.items.length >= 2) st.img.src = st.items[st.idx];
+                });
+                // Фаза вдоха: все возвращаются одновременно
+                cycleTimers.push(setTimeout(() => {
+                    showcaseSlide.classList.remove('is-pulsing');
+                }, 50));
+            });
+        }, 700));
+    }
+
     function startAnimation() {
         if (triggered) return;
         triggered = true;
@@ -903,21 +959,16 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
             cycleTimers.push(setTimeout(() => tile.classList.add('is-revealed'), 80 + i * 110));
         });
 
-        // Фаза 2 (1.2с): уход в туман + появление центрального текста
+        // Фаза 2 (1.2с): появление центрального текста
         cycleTimers.push(setTimeout(() => {
             showcaseSlide.classList.add('is-active');
         }, 1200));
 
-        // Фаза 3 (2.6с): wave-смена товара — одна плитка за раз
-        cycleTimers.push(setTimeout(function startWave() {
-            let waveIdx = 0;
-            function tick() {
-                changeOne(waveIdx % tiles.length);
-                waveIdx++;
-                cycleTimers.push(setTimeout(tick, 1700)); // 1.7с между сменами
-            }
-            tick();
-        }, 2600));
+        // Фаза 3 (3.2с): синхронная пульсация, каждые 3.5с
+        cycleTimers.push(setTimeout(function cyclePulse() {
+            pulseAll();
+            cycleTimers.push(setTimeout(cyclePulse, 3500));
+        }, 3200));
     }
 
     function stopAnimation() {

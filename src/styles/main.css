@@ -14,9 +14,9 @@
     --gray-100: #f5f5f3;
     --warm-100: #f7f4ef;    /* тёплый беж */
     --warm-200: #ede8df;    /* беж потемнее */
-    --warm-gold: #c9a96e;   /* золотистый акцент */
+    --warm-gold: #5E8C3A;   /* deep green — для светлого фона (был #c9a96e gold) */
     --white: #ffffff;
-    --accent: #8CB86B;      /* AWS green */
+    --accent: #8CB86B;      /* AWS green — для тёмного фона */
 
     --font: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
     --container: 1400px;
@@ -605,7 +605,7 @@ a { text-decoration: none; color: inherit; }
 .about__title em {
     font-style: normal;
     font-weight: 300;
-    color: var(--warm-gold, #c9a96e);
+    color: var(--warm-gold, #5E8C3A);
     letter-spacing: -1.5px;
 }
 
@@ -702,7 +702,7 @@ a { text-decoration: none; color: inherit; }
 .dot--white { background: #fff; border: 1.5px solid var(--gray-200); }
 .dot--black { background: #1a1a1a; }
 .dot.active {
-    outline: 2px solid var(--accent, #c8a165);
+    outline: 2px solid var(--accent, #8CB86B);
     outline-offset: 2px;
 }
 
@@ -1548,7 +1548,7 @@ a { text-decoration: none; color: inherit; }
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(200,161,101,0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(140,184,107,0.3), transparent);
 }
 .footer-v2__inner {
     max-width: 1480px;
@@ -1573,7 +1573,7 @@ a { text-decoration: none; color: inherit; }
     color: #fff; text-decoration: none;
     transition: color 0.3s ease;
 }
-.footer-v2__email:hover { color: #c8a165; }
+.footer-v2__email:hover { color: #8CB86B; }
 .footer-v2__email-arrow {
     font-size: 0.6em; font-weight: 400;
     transform: translateX(0);
@@ -1593,7 +1593,7 @@ a { text-decoration: none; color: inherit; }
 }
 .footer-v2__col-title {
     font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
-    color: #c8a165; margin-bottom: 12px;
+    color: #8CB86B; margin-bottom: 12px;
 }
 .footer-v2__col a {
     font-size: 15px; font-weight: 400;
@@ -1612,7 +1612,7 @@ a { text-decoration: none; color: inherit; }
     color: rgba(255,255,255,0.5);
 }
 .footer-v2__icon svg { width: 100%; height: 100%; }
-.footer-v2__col a:hover .footer-v2__icon { color: #c8a165; }
+.footer-v2__col a:hover .footer-v2__icon { color: #8CB86B; }
 
 /* Gigantic word mark — выходит за края контейнера */
 .footer-v2__markrow {
@@ -1727,7 +1727,7 @@ a { text-decoration: none; color: inherit; }
     content: '';
     position: absolute; top: 0; left: 0;
     width: 40%; height: 100%;
-    background: linear-gradient(90deg, transparent, #c8a165, transparent);
+    background: linear-gradient(90deg, transparent, #8CB86B, transparent);
     animation: splashShimmer 1.6s infinite cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1783,7 +1783,7 @@ a { text-decoration: none; color: inherit; }
 }
 .scroll-progress__bar {
     height: 100%;
-    background: linear-gradient(90deg, #c8a165, #8CB86B);
+    background: linear-gradient(90deg, #8CB86B, #8CB86B);
     transform-origin: left center;
     transform: scaleX(0);
     transition: transform 0.1s ease-out;
@@ -1866,7 +1866,7 @@ a { text-decoration: none; color: inherit; }
 }
 .footer-v2__news-label {
     font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
-    color: #c8a165; margin-bottom: 12px;
+    color: #8CB86B; margin-bottom: 12px;
 }
 .footer-v2__news-text {
     font-size: 14px; line-height: 1.5;
@@ -1887,7 +1887,7 @@ a { text-decoration: none; color: inherit; }
 }
 .footer-v2__news-input:focus {
     outline: none;
-    border-color: #c8a165;
+    border-color: #8CB86B;
     background: rgba(255,255,255,0.08);
 }
 .footer-v2__news-input::placeholder { color: rgba(255,255,255,0.3); }
@@ -1901,9 +1901,9 @@ a { text-decoration: none; color: inherit; }
     transition: all 0.2s ease;
 }
 .footer-v2__news-btn:hover {
-    background: #c8a165;
+    background: #8CB86B;
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(200,161,101,0.25);
+    box-shadow: 0 6px 18px rgba(140,184,107,0.25);
 }
 .footer-v2__news-msg {
     flex-basis: 100%;

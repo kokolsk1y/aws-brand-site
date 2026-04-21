@@ -824,7 +824,7 @@ a { text-decoration: none; color: inherit; }
 .about__title em {
     font-style: normal;
     font-weight: 300;
-    color: var(--warm-gold, #c9a96e);
+    color: var(--warm-gold, #5E8C3A);
     letter-spacing: -1.5px;
 }
 
@@ -3011,7 +3011,7 @@ a { text-decoration: none; color: inherit; }
 /* Midjourney-фон: туманная комната с лучами света */
 .hero-slide__bg--mesh {
     background-color: #ede7dd;
-    background-image: url('/img/hero/hero-5-bg.png');
+    background-image: url(/img/hero/hero-5-bg.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

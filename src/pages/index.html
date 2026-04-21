@@ -154,45 +154,65 @@
                         <div class="hero-slide__bg" style="background:#f7f4ef"></div>
 
                         <div class="hero-showcase">
-                            <!-- ВЕРХНИЙ РЯД -->
-                            <div class="hero-showcase__tile" data-cat="switches" data-category-name="Выключатели" data-price-from="138">
-                                <div class="hero-showcase__inner">
-                                    <div class="hero-showcase__front">
-                                        <img class="hero-showcase__img" src="img/series/uno-1kl-w.png" alt=""
-                                             data-items='["img/series/uno-1kl-w.png","img/series/uno-1kl-b.png","img/series/aura-1kl-w.png","img/series/aura-1kl-b.png"]'>
-                                    </div>
-                                    <div class="hero-showcase__back">
-                                        <span class="hero-showcase__cat">Выключатели в сборе</span>
-                                        <span class="hero-showcase__price">от 138 ₽</span>
-                                        <span class="hero-showcase__desc">Серии UNO и AURA · soft-touch покрытие · тихий клик</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="hero-showcase__tile" data-cat="sockets" data-category-name="Розетки" data-price-from="173">
-                                <div class="hero-showcase__inner">
-                                    <div class="hero-showcase__front">
-                                        <img class="hero-showcase__img" src="img/products/A-001W.webp" alt=""
-                                             data-items='["img/products/A-001W.webp","img/products/A-001B.webp","img/products/A-023W.webp","img/products/A-031B.webp"]'>
-                                    </div>
-                                    <div class="hero-showcase__back">
-                                        <span class="hero-showcase__cat">Розетки AURA</span>
-                                        <span class="hero-showcase__price">от 173 ₽</span>
-                                        <span class="hero-showcase__desc">С заземлением, шторками, IP44 · белые и чёрные</span>
+                            <!-- ВЕРХНИЙ РЯД — 4 плитки -->
+                            <div class="hero-showcase__row hero-showcase__row--top">
+                                <div class="hero-showcase__tile" data-cat-link="/series/uno">
+                                    <div class="hero-showcase__inner">
+                                        <div class="hero-showcase__front">
+                                            <img class="hero-showcase__img" src="img/series/uno-1kl-w.png" alt=""
+                                                 data-items='["img/series/uno-1kl-w.png","img/series/uno-1kl-b.png"]'>
+                                        </div>
+                                        <div class="hero-showcase__back">
+                                            <span class="hero-showcase__cat">Выключатели</span>
+                                            <span class="hero-showcase__price">от 138 ₽</span>
+                                            <span class="hero-showcase__desc">Серии UNO и AURA в сборе. Soft-touch покрытие, тихий клик.</span>
+                                            <span class="hero-showcase__arrow">→</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="hero-showcase__tile" data-cat="extensions" data-category-name="Удлинители" data-price-from="209">
-                                <div class="hero-showcase__inner">
-                                    <div class="hero-showcase__front">
-                                        <img class="hero-showcase__img" src="img/products/AWS-H03-1,5.webp" alt=""
-                                             data-items='["img/products/AWS-H03-1,5.webp","img/products/AWS-H05-3.webp","img/products/AWS-HZ2-01-15.webp","img/products/AWS-HZ2-01-25.webp"]'>
+                                <div class="hero-showcase__tile" data-cat-link="/series/aura">
+                                    <div class="hero-showcase__inner">
+                                        <div class="hero-showcase__front">
+                                            <img class="hero-showcase__img" src="img/products/A-001W.webp" alt=""
+                                                 data-items='["img/products/A-001W.webp","img/products/A-001B.webp","img/products/A-023W.webp","img/products/A-031B.webp"]'>
+                                        </div>
+                                        <div class="hero-showcase__back">
+                                            <span class="hero-showcase__cat">Розетки</span>
+                                            <span class="hero-showcase__price">от 173 ₽</span>
+                                            <span class="hero-showcase__desc">Серия AURA. С заземлением, шторками, для влажных помещений.</span>
+                                            <span class="hero-showcase__arrow">→</span>
+                                        </div>
                                     </div>
-                                    <div class="hero-showcase__back">
-                                        <span class="hero-showcase__cat">Удлинители</span>
-                                        <span class="hero-showcase__price">от 209 ₽</span>
-                                        <span class="hero-showcase__desc">Бытовые и садовые · 1.5–25 м · ПВС с защитой</span>
+                                </div>
+
+                                <div class="hero-showcase__tile" data-cat-link="/category/extensions-home">
+                                    <div class="hero-showcase__inner">
+                                        <div class="hero-showcase__front">
+                                            <img class="hero-showcase__img" src="img/products/AWS-H03-1,5.webp" alt=""
+                                                 data-items='["img/products/AWS-H03-1,5.webp","img/products/AWS-H03-3.webp","img/products/AWS-H05-3.webp"]'>
+                                        </div>
+                                        <div class="hero-showcase__back">
+                                            <span class="hero-showcase__cat">Удлинители бытовые</span>
+                                            <span class="hero-showcase__price">от 209 ₽</span>
+                                            <span class="hero-showcase__desc">1.5–5 м · 3–5 гнёзд · кабель ПВС, ABS-корпус.</span>
+                                            <span class="hero-showcase__arrow">→</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="hero-showcase__tile" data-cat-link="/category/extensions-garden">
+                                    <div class="hero-showcase__inner">
+                                        <div class="hero-showcase__front">
+                                            <img class="hero-showcase__img" src="img/products/AWS-HZ2-01-15.webp" alt=""
+                                                 data-items='["img/products/AWS-HZ2-01-15.webp","img/products/AWS-HZ2-01-10.webp","img/products/AWS-HZ2-01-25.webp"]'>
+                                        </div>
+                                        <div class="hero-showcase__back">
+                                            <span class="hero-showcase__cat">Удлинители садовые</span>
+                                            <span class="hero-showcase__price">от 768 ₽</span>
+                                            <span class="hero-showcase__desc">10–25 м · морозостойкая оранжевая изоляция.</span>
+                                            <span class="hero-showcase__arrow">→</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -204,45 +224,50 @@
                                 <a href="#categories" class="hero-slide__btn hero-slide__btn--dark">В каталог <span>→</span></a>
                             </div>
 
-                            <!-- НИЖНИЙ РЯД -->
-                            <div class="hero-showcase__tile" data-cat="connectors" data-category-name="Силовые разъёмы" data-price-from="364">
-                                <div class="hero-showcase__inner">
-                                    <div class="hero-showcase__front">
-                                        <img class="hero-showcase__img" src="img/products/SN-33.webp" alt=""
-                                             data-items='["img/products/SN-33.webp","img/products/SN-53.webp"]'>
-                                    </div>
-                                    <div class="hero-showcase__back">
-                                        <span class="hero-showcase__cat">Силовые разъёмы</span>
-                                        <span class="hero-showcase__price">от 364 ₽</span>
-                                        <span class="hero-showcase__desc">IP68 герметичные · для влажных и уличных условий</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="hero-showcase__tile" data-cat="clamps" data-category-name="Клеммы" data-price-from="17">
-                                <div class="hero-showcase__inner">
-                                    <div class="hero-showcase__front">
-                                        <img class="hero-showcase__img" src="img/products/SN-222415D.webp" alt=""
-                                             data-items='["img/products/SN-222415D.webp","img/products/SN-221412.webp","img/products/SN-222414.webp","img/products/SN-205.webp"]'>
-                                    </div>
-                                    <div class="hero-showcase__back">
-                                        <span class="hero-showcase__cat">Клеммы</span>
-                                        <span class="hero-showcase__price">от 17 ₽</span>
-                                        <span class="hero-showcase__desc">Рычажковые Wago-style · 0.2–4 мм² · 24–32 А</span>
+                            <!-- НИЖНИЙ РЯД — 3 плитки -->
+                            <div class="hero-showcase__row hero-showcase__row--bottom">
+                                <div class="hero-showcase__tile" data-cat-link="/category/power-connectors">
+                                    <div class="hero-showcase__inner">
+                                        <div class="hero-showcase__front">
+                                            <img class="hero-showcase__img" src="img/products/SN-33.webp" alt=""
+                                                 data-items='["img/products/SN-33.webp","img/products/SN-53.webp"]'>
+                                        </div>
+                                        <div class="hero-showcase__back">
+                                            <span class="hero-showcase__cat">Силовые разъёмы</span>
+                                            <span class="hero-showcase__price">от 364 ₽</span>
+                                            <span class="hero-showcase__desc">IP68 герметичные, для влажных и уличных условий.</span>
+                                            <span class="hero-showcase__arrow">→</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="hero-showcase__tile" data-cat="cable" data-category-name="Патч-корды и кабель" data-price-from="26">
-                                <div class="hero-showcase__inner">
-                                    <div class="hero-showcase__front">
-                                        <img class="hero-showcase__img" src="img/products/AWS-13010.webp" alt=""
-                                             data-items='["img/products/AWS-13010.webp","img/products/AWS-13027.webp","img/products/AWS-12982.webp","img/products/AWS-12985.webp"]'>
+                                <div class="hero-showcase__tile" data-cat-link="/category/clamps">
+                                    <div class="hero-showcase__inner">
+                                        <div class="hero-showcase__front">
+                                            <img class="hero-showcase__img" src="img/products/SN-222415D.webp" alt=""
+                                                 data-items='["img/products/SN-222415D.webp","img/products/SN-221412.webp","img/products/SN-222414.webp","img/products/SN-205.webp"]'>
+                                        </div>
+                                        <div class="hero-showcase__back">
+                                            <span class="hero-showcase__cat">Клеммы</span>
+                                            <span class="hero-showcase__price">от 17 ₽</span>
+                                            <span class="hero-showcase__desc">Рычажковые Wago-style · 0.2–4 мм² · 24–32 А.</span>
+                                            <span class="hero-showcase__arrow">→</span>
+                                        </div>
                                     </div>
-                                    <div class="hero-showcase__back">
-                                        <span class="hero-showcase__cat">Патч-корды и кабель</span>
-                                        <span class="hero-showcase__price">от 26 ₽</span>
-                                        <span class="hero-showcase__desc">Cat.5e / Cat.6e · FTP / UTP · медь, до 30 м</span>
+                                </div>
+
+                                <div class="hero-showcase__tile" data-cat-link="/category/patch-cords">
+                                    <div class="hero-showcase__inner">
+                                        <div class="hero-showcase__front">
+                                            <img class="hero-showcase__img" src="img/products/AWS-13010.webp" alt=""
+                                                 data-items='["img/products/AWS-13010.webp","img/products/AWS-13027.webp","img/products/AWS-12982.webp","img/products/AWS-12985.webp"]'>
+                                        </div>
+                                        <div class="hero-showcase__back">
+                                            <span class="hero-showcase__cat">Патч-корды и кабель</span>
+                                            <span class="hero-showcase__price">от 26 ₽</span>
+                                            <span class="hero-showcase__desc">Cat.5e / Cat.6e · FTP / UTP · медь, до 30 м.</span>
+                                            <span class="hero-showcase__arrow">→</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -615,7 +640,7 @@
                     <p class="label">Отзывы</p>
                     <h2 class="reviews__title">Что говорят покупатели</h2>
                 </div>
-                <p class="reviews__subtitle">Реальные отзывы с Ozon и Wildberries</p>
+                <p class="reviews__subtitle">Отзывы наших покупателей и партнёров</p>
             </div>
         </div>
 
@@ -753,9 +778,8 @@
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                             Скачать PDF
                         </button>
-                        <a href="mailto:info@awsproducts.ru" class="doc-modal__request">Запросить оригинал →</a>
                     </div>
-                    <p class="doc-modal__note">Документ будет доступен для скачивания после загрузки. Запросите оригинал по почте.</p>
+                    <p class="doc-modal__note">Документ будет доступен для скачивания после загрузки менеджером.</p>
                 </div>
             </div>
         </div>

@@ -3008,43 +3008,72 @@ a { text-decoration: none; color: inherit; }
 .hero-slide--showcase {
     overflow: hidden;
 }
-/* Живой CSS-фон: тёплый mesh + медленно дрейфующие световые пятна.
-   Никаких картинок — чистые градиенты с animation drift */
+/* Белый фон + тёплая атмосфера: мягкое световое пятно + пылинки */
 .hero-slide__bg--mesh {
-    background-color: #ede7dd;
+    background-color: #fdfbf6;
     overflow: hidden;
 }
-/* Слой 1 — основной mesh (неподвижный): базовые warm градиенты */
+/* Тёплый свет сверху-слева — лёгкий ореол */
 .hero-slide__bg--mesh::before {
     content: '';
     position: absolute;
-    inset: -10%;
+    inset: 0;
     background:
-        radial-gradient(ellipse 40% 35% at 20% 20%, rgba(255,240,210,0.6) 0%, transparent 60%),
-        radial-gradient(ellipse 35% 30% at 80% 75%, rgba(255,225,180,0.5) 0%, transparent 60%),
-        radial-gradient(ellipse 30% 25% at 90% 15%, rgba(230,210,170,0.4) 0%, transparent 60%),
-        radial-gradient(ellipse 35% 30% at 10% 85%, rgba(200,170,120,0.3) 0%, transparent 60%),
-        linear-gradient(135deg, #f2ebdc 0%, #e8dec8 50%, #ddd0b5 100%);
+        radial-gradient(ellipse 50% 45% at 18% 15%, rgba(255,240,210,0.5) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 35% at 85% 85%, rgba(255,230,195,0.3) 0%, transparent 60%);
     z-index: 0;
     pointer-events: none;
+    animation: bgBreath 18s ease-in-out infinite;
 }
-/* Слой 2 — дрейфующее световое пятно (живость) */
-.hero-slide__bg--mesh::after {
-    content: '';
+@keyframes bgBreath {
+    0%, 100% { opacity: 0.85; transform: scale(1); }
+    50%      { opacity: 1;    transform: scale(1.05); }
+}
+
+/* Premium-слой: тонкая виньетка по краям + grain (шум) */
+.hero-slide__bg--mesh .hero-vignette {
     position: absolute;
-    inset: -20%;
-    background:
-        radial-gradient(ellipse 30% 40% at 50% 50%, rgba(255,235,195,0.5) 0%, transparent 55%);
-    z-index: 1;
+    inset: 0;
+    z-index: 3;
     pointer-events: none;
-    animation: bgDrift 28s ease-in-out infinite;
+    background:
+        radial-gradient(ellipse 100% 80% at 50% 50%, transparent 50%, rgba(60,40,10,0.08) 100%);
 }
-@keyframes bgDrift {
-    0%   { transform: translate(-15%, -10%); }
-    25%  { transform: translate(10%, -15%); }
-    50%  { transform: translate(15%, 10%); }
-    75%  { transform: translate(-10%, 15%); }
-    100% { transform: translate(-15%, -10%); }
+/* SVG grain — еле заметный шум для премиум-ощущения */
+.hero-slide__bg--mesh .hero-grain {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0.12;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+}
+
+/* Пылинки — слой с floating dots */
+.hero-slide__bg--mesh .hero-dust {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+}
+.hero-dust__particle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,230,180,0.8) 0%, rgba(255,220,170,0.3) 40%, transparent 70%);
+    animation-name: dustFloat;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    filter: blur(0.5px);
+}
+@keyframes dustFloat {
+    0%   { transform: translate(0, 100vh) scale(0.8); opacity: 0; }
+    10%  { opacity: 0.9; }
+    50%  { transform: translate(var(--dx), 45vh) scale(1); opacity: 1; }
+    90%  { opacity: 0.6; }
+    100% { transform: translate(calc(var(--dx) * 1.5), -20vh) scale(0.6); opacity: 0; }
 }
 .hero-showcase {
     position: absolute;
@@ -3133,15 +3162,15 @@ a { text-decoration: none; color: inherit; }
     transform: translateY(0);
 }
 
-/* Синхронная пульсация: товар + тень "вдыхают-выдыхают" одновременно */
+/* Синхронная смена — все плитки одновременно "дышат" (быстро: 300мс out + 350мс in) */
 .hero-slide--showcase.is-pulsing .hero-showcase__img {
     opacity: 0;
-    transform: scale(0.92) translateY(-6px);
-    filter: drop-shadow(0 8px 16px rgba(85,60,20,0.15)) blur(4px);
+    transform: scale(0.92) translateY(-5px);
+    filter: drop-shadow(0 6px 12px rgba(85,60,20,0.12)) blur(6px);
 }
 .hero-slide--showcase.is-pulsing .hero-showcase__shadow {
-    transform: scaleY(0.6) scale(0.5);
-    opacity: 0.3;
+    transform: scaleY(0.6) scale(0.6);
+    opacity: 0.35;
 }
 
 /* Hover — товар слегка приподнимается + тень расширяется (стоит на полу) */

@@ -984,29 +984,37 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
         };
     }
 
-    // СИНХРОННАЯ пульсация: все плитки одновременно выдыхают и вдыхают
-    function pulseAll() {
+    // Предзагрузка всех вариаций товаров при инициализации
+    const preloadedImages = new Map();
+    tileState.forEach(st => {
+        st.items.forEach(src => {
+            if (!preloadedImages.has(src)) {
+                const img = new Image();
+                img.src = src;
+                preloadedImages.set(src, img);
+            }
+        });
+    });
+
+    // Синхронная смена ВСЕХ плиток — быстро (350мс выдох + 350мс вдох)
+    function syncSwap() {
+        // Фаза выдоха: все скрываются одновременно
         showcaseSlide.classList.add('is-pulsing');
-        // Фаза выдоха 700мс: все скрываются синхронно
+        // Параллельно сразу меняем idx и src (preloaded уже в кэше → instant)
+        tileState.forEach(st => {
+            if (st.items.length < 2) return;
+            st.idx = (st.idx + 1) % st.items.length;
+        });
+        // Через 300мс swap src и возврат
         cycleTimers.push(setTimeout(() => {
-            // Преzagruzim все изображения, затем swap синхронно
-            const promises = tileState.map(st => new Promise(resolve => {
-                if (!st.items.length || st.items.length < 2) return resolve();
-                st.idx = (st.idx + 1) % st.items.length;
-                const pre = new Image();
-                pre.onload = pre.onerror = resolve;
-                pre.src = st.items[st.idx];
-            }));
-            Promise.all(promises).then(() => {
-                tileState.forEach(st => {
-                    if (st.items.length >= 2) st.img.src = st.items[st.idx];
-                });
-                // Фаза вдоха: все возвращаются одновременно
-                cycleTimers.push(setTimeout(() => {
-                    showcaseSlide.classList.remove('is-pulsing');
-                }, 50));
+            tileState.forEach(st => {
+                if (st.items.length >= 2) st.img.src = st.items[st.idx];
             });
-        }, 700));
+            // Мгновенный возврат через requestAnimationFrame
+            requestAnimationFrame(() => {
+                showcaseSlide.classList.remove('is-pulsing');
+            });
+        }, 300));
     }
 
     function startAnimation() {
@@ -1023,10 +1031,10 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
             showcaseSlide.classList.add('is-active');
         }, 1200));
 
-        // Фаза 3 (3.2с): синхронная пульсация, каждые 3.5с
-        cycleTimers.push(setTimeout(function cyclePulse() {
-            pulseAll();
-            cycleTimers.push(setTimeout(cyclePulse, 3500));
+        // Фаза 3 (3.2с): синхронная смена — каждые 3с
+        cycleTimers.push(setTimeout(function cycleSwap() {
+            syncSwap();
+            cycleTimers.push(setTimeout(cycleSwap, 3000));
         }, 3200));
     }
 

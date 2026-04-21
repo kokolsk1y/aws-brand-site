@@ -857,6 +857,13 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
     const tiles = showcaseSlide.querySelectorAll('.hero-showcase__tile');
     if (!tiles.length) return;
 
+    // Клик по плитке → переход на страницу категории
+    tiles.forEach(tile => {
+        const link = tile.dataset.catLink;
+        if (!link) return;
+        tile.addEventListener('click', () => { window.location.href = link; });
+    });
+
     let triggered = false;
     let cycleTimers = [];
 

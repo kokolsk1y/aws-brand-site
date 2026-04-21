@@ -3070,11 +3070,13 @@ a { text-decoration: none; color: inherit; }
 .hero-dust__particle {
     position: absolute;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,230,180,0.8) 0%, rgba(255,220,170,0.3) 40%, transparent 70%);
+    /* Тёмно-бежевые пылинки — видны на белом фоне */
+    background: radial-gradient(circle, rgba(180,140,80,0.55) 0%, rgba(160,120,70,0.25) 45%, transparent 75%);
+    box-shadow: 0 0 8px rgba(180,140,80,0.2);
     animation-name: dustFloat;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-    filter: blur(0.5px);
+    filter: blur(0.3px);
 }
 @keyframes dustFloat {
     0%   { transform: translate(0, 100vh) scale(0.8); opacity: 0; }

@@ -1141,3 +1141,57 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
         if (e.key === 'Escape') close();
     });
 })();
+
+
+// ========== Селектор сечения провода (слайд 02 «Одна на все соединения») ==========
+(function leverSelector() {
+    const root = document.querySelector('[data-lever-selector]');
+    if (!root) return;
+
+    const gauges = Array.from(root.querySelectorAll('.lever-gauge'));
+    const valEl = root.querySelector('[data-lever-val]');
+    const subEl = root.querySelector('[data-lever-sub]');
+    const barEl = root.querySelector('[data-lever-bar]');
+    const MAX_VAL = 4; // максимальное сечение для расчёта ширины полосы
+    const CYCLE_MS = 1800;
+
+    let activeIdx = 0;
+    let paused = false;
+    let timer = null;
+
+    function apply(idx) {
+        activeIdx = idx;
+        gauges.forEach((g, i) => g.classList.toggle('is-active', i === idx));
+        const g = gauges[idx];
+        const val = g.dataset.val;
+        valEl.textContent = val;
+        subEl.textContent = g.dataset.sub;
+        const pct = Math.max(2, (parseFloat(val) / MAX_VAL) * 100);
+        barEl.style.width = pct + '%';
+    }
+
+    function tick() {
+        if (paused) return;
+        apply((activeIdx + 1) % gauges.length);
+    }
+
+    function start() { if (!timer) timer = setInterval(tick, CYCLE_MS); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    apply(0);
+    start();
+
+    gauges.forEach((g, i) => {
+        g.addEventListener('mouseenter', () => { paused = true; apply(i); });
+        g.addEventListener('mouseleave', () => { paused = false; });
+        g.addEventListener('focus', () => { paused = true; apply(i); });
+        g.addEventListener('blur', () => { paused = false; });
+        g.addEventListener('click', () => { paused = true; apply(i); setTimeout(() => { paused = false; }, 4000); });
+    });
+
+    // При уходе со страницы / уходе в фон — ставим на паузу чтобы не сжигать CPU
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) stop();
+        else start();
+    });
+})();

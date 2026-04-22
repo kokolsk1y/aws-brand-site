@@ -476,32 +476,94 @@
         <div class="swiper advantages-swiper">
             <div class="swiper-wrapper">
 
-                <!-- 01 — Надёжные материалы (фото СЛЕВА) -->
+                <!-- 01 — Надёжные материалы (интерактивная декомпозиция) -->
                 <div class="swiper-slide">
                     <div class="advantages__slide">
-                        <div class="advantages__media advantages__media--cover">
-                            <img src="img/advantages/01-brass.jpg?v=20260414e" alt="Контактные группы из латуни" class="advantages__cover-img" onerror="this.style.display='none'">
+                        <div class="advantages__media advantages__media--exploded">
+                            <svg class="advantages__decomp" viewBox="0 0 1200 1300" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                                <image href="img/advantages/01-exploded.png?v=20260422c" x="50" y="50" width="755" height="1200" preserveAspectRatio="xMidYMid meet"/>
+
+                                <g class="adv-callout adv-callout--1">
+                                    <circle class="adv-callout__dot" cx="567" cy="165" r="5"/>
+                                    <line x1="567" y1="165" x2="820" y2="130"/>
+                                    <text x="832" y="126">Клавиша</text>
+                                    <text x="832" y="154" class="adv-callout__sub">из поликарбоната</text>
+                                </g>
+
+                                <g class="adv-callout adv-callout--2">
+                                    <circle class="adv-callout__dot" cx="517" cy="292" r="5"/>
+                                    <line x1="517" y1="292" x2="820" y2="290"/>
+                                    <text x="832" y="286">Рамка</text>
+                                    <text x="832" y="314" class="adv-callout__sub">из закалённого стекла</text>
+                                </g>
+
+                                <g class="adv-callout adv-callout--3">
+                                    <circle class="adv-callout__dot" cx="509" cy="463" r="5"/>
+                                    <line x1="509" y1="463" x2="820" y2="460"/>
+                                    <text x="832" y="456">Стальной суппорт</text>
+                                    <text x="832" y="484" class="adv-callout__sub">толщиной 1.2 мм</text>
+                                </g>
+
+                                <g class="adv-callout adv-callout--4">
+                                    <circle class="adv-callout__dot" cx="473" cy="633" r="5"/>
+                                    <line x1="473" y1="633" x2="820" y2="640"/>
+                                    <text x="832" y="636">Литой корпус</text>
+                                    <text x="832" y="664" class="adv-callout__sub">из поликарбоната</text>
+                                </g>
+
+                                <g class="adv-callout adv-callout--5">
+                                    <circle class="adv-callout__dot" cx="335" cy="836" r="5"/>
+                                    <line x1="335" y1="836" x2="820" y2="840"/>
+                                    <text x="832" y="836">Латунные контакты</text>
+                                    <text x="832" y="864" class="adv-callout__sub">с добавлением серебра</text>
+                                </g>
+
+                                <g class="adv-callout adv-callout--6">
+                                    <circle class="adv-callout__dot" cx="231" cy="1076" r="5"/>
+                                    <line x1="231" y1="1076" x2="820" y2="1080"/>
+                                    <text x="832" y="1076">Основание</text>
+                                    <text x="832" y="1104" class="adv-callout__sub">из термостойкого поликарбоната</text>
+                                </g>
+                            </svg>
                         </div>
                         <div class="advantages__gradient advantages__gradient--right"></div>
                         <div class="advantages__content advantages__content--right">
                             <span class="advantages__num">01</span>
                             <h3 class="advantages__heading">Надёжные материалы</h3>
-                            <p class="advantages__text">Контактные группы из латуни для стабильной работы. Контроль качества на каждом этапе — от сырья до упаковки.</p>
+                            <p class="advantages__text">Шесть материалов в одном выключателе. Каждый выбран под конкретную нагрузку — от термостойкости основания до точности латунных контактов.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- 02 — Точное исполнение (фото СПРАВА) -->
+                <!-- 02 — Точное исполнение (клемма с анимированным рычажком) -->
                 <div class="swiper-slide">
                     <div class="advantages__slide advantages__slide--reverse">
-                        <div class="advantages__media advantages__media--cover">
-                            <img src="img/advantages/02-click.jpg?v=20260414f" alt="Точное исполнение" class="advantages__cover-img" onerror="this.style.display='none'">
+                        <div class="advantages__media advantages__media--lever">
+                            <div class="advantages__lever-wrap">
+                                <img src="img/products/SN-222415.png?v=20260422c" alt="Клемма AWS SN-222415" class="advantages__lever-img">
+                                <div class="lever-selector" data-lever-selector>
+                                    <div class="lever-selector__label">Сечение провода</div>
+                                    <div class="lever-selector__active">
+                                        <span class="lever-selector__val" data-lever-val>0.08</span>
+                                        <span class="lever-selector__unit">мм²</span>
+                                    </div>
+                                    <div class="lever-selector__sub" data-lever-sub>сигнальная жила</div>
+                                    <div class="lever-selector__bar"><div class="lever-selector__bar-fill" data-lever-bar></div></div>
+                                    <ul class="lever-gauges">
+                                        <li class="lever-gauge" data-val="0.08" data-sub="сигнальная жила" tabindex="0">0.08</li>
+                                        <li class="lever-gauge" data-val="0.5" data-sub="слаботочка / аудио" tabindex="0">0.5</li>
+                                        <li class="lever-gauge" data-val="1.5" data-sub="освещение" tabindex="0">1.5</li>
+                                        <li class="lever-gauge" data-val="2.5" data-sub="розетки" tabindex="0">2.5</li>
+                                        <li class="lever-gauge" data-val="4" data-sub="вводная / силовая" tabindex="0">4</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                         <div class="advantages__gradient advantages__gradient--left"></div>
                         <div class="advantages__content advantages__content--left">
                             <span class="advantages__num">02</span>
-                            <h3 class="advantages__heading">Точное исполнение</h3>
-                            <p class="advantages__text">Плотная посадка и чёткий ход механизмов. Клемма защёлкивается с первого раза, кабель не ломается на сгибе.</p>
+                            <h3 class="advantages__heading">Одна на все соединения</h3>
+                            <p class="advantages__text">Пять проводов в одной клемме — от осветительной жилы 0.08 мм² до силовой 4 мм². Щёлкает, держит, переносится. Любое сечение одним механизмом.</p>
                         </div>
                     </div>
                 </div>
@@ -609,7 +671,6 @@
                             <th class="compare__th-feature"></th>
                             <th class="compare__th compare__th--us">
                                 <span class="compare__brand-name">AWS Products</span>
-                                <span class="compare__brand-tag">Мы</span>
                             </th>
                             <th class="compare__th">Legrand</th>
                             <th class="compare__th">Werkel</th>

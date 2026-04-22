@@ -1375,6 +1375,251 @@ a { text-decoration: none; color: inherit; }
     100%     { clip-path: inset(0 0 0 100%); }    /* чёрный ушёл слева→направо, белый снова виден */
 }
 
+/* 01 — Надёжные материалы: интерактивная декомпозиция */
+.advantages__media--exploded {
+    background: radial-gradient(ellipse at 35% 45%, #f5f1e9 0%, #ece7dd 55%, #ddd6c8 100%);
+    min-height: 55vh;
+    overflow: hidden;
+    position: relative;
+}
+.advantages__decomp {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+.advantages__decomp image {
+    filter: drop-shadow(0 24px 40px rgba(20, 18, 14, 0.22));
+}
+
+.adv-callout { cursor: default; transition: opacity 0.25s ease; }
+.adv-callout line {
+    stroke: rgba(20, 18, 14, 0.35);
+    stroke-width: 1.2;
+    stroke-dasharray: 6 4;
+    opacity: 0;
+    animation: callout-line-in 0.7s cubic-bezier(0.25, 0.8, 0.3, 1) forwards,
+               callout-line-flow 20s linear infinite 2s;
+    transition: stroke 0.25s ease, stroke-width 0.25s ease;
+}
+.adv-callout text {
+    font-family: 'Montserrat', system-ui, sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    fill: rgba(20, 18, 14, 0.9);
+    letter-spacing: 0.3px;
+    opacity: 0;
+    animation: callout-text-in 0.5s cubic-bezier(0.25, 0.8, 0.3, 1) forwards;
+    transition: fill 0.25s ease;
+}
+.adv-callout__sub {
+    font-size: 19px !important;
+    font-weight: 400 !important;
+    fill: rgba(20, 18, 14, 0.52) !important;
+    letter-spacing: 0.2px !important;
+    transition: fill 0.25s ease;
+}
+.adv-callout__dot {
+    fill: rgba(20, 18, 14, 0.7);
+    opacity: 0;
+    animation: callout-dot-in 0.4s ease forwards,
+               callout-dot-pulse 2.4s ease-in-out infinite 1.5s;
+    transition: fill 0.25s ease;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+
+.adv-callout--1 line, .adv-callout--1 text, .adv-callout--1 circle { animation-delay: 0.3s, 3s; }
+.adv-callout--1 text { animation-delay: 0.5s; }
+.adv-callout--1 circle { animation-delay: 0.3s, 1.5s; }
+.adv-callout--2 line { animation-delay: 0.5s, 3.5s; }
+.adv-callout--2 text { animation-delay: 0.7s; }
+.adv-callout--2 circle { animation-delay: 0.5s, 1.8s; }
+.adv-callout--3 line { animation-delay: 0.7s, 4s; }
+.adv-callout--3 text { animation-delay: 0.9s; }
+.adv-callout--3 circle { animation-delay: 0.7s, 2.1s; }
+.adv-callout--4 line { animation-delay: 0.9s, 4.5s; }
+.adv-callout--4 text { animation-delay: 1.1s; }
+.adv-callout--4 circle { animation-delay: 0.9s, 2.4s; }
+.adv-callout--5 line { animation-delay: 1.1s, 5s; }
+.adv-callout--5 text { animation-delay: 1.3s; }
+.adv-callout--5 circle { animation-delay: 1.1s, 2.7s; }
+.adv-callout--6 line { animation-delay: 1.3s, 5.5s; }
+.adv-callout--6 text { animation-delay: 1.5s; }
+.adv-callout--6 circle { animation-delay: 1.3s, 3s; }
+
+/* Интерактив: наведение на выноску — подсвечивается линия, точка и текст */
+.advantages__decomp:has(.adv-callout:hover) .adv-callout { opacity: 0.35; }
+.adv-callout { pointer-events: auto; }
+.adv-callout:hover { opacity: 1 !important; }
+.adv-callout:hover line { stroke: rgba(184, 115, 51, 0.95); stroke-width: 1.8; }
+.adv-callout:hover text { fill: rgba(20, 18, 14, 1); }
+.adv-callout:hover .adv-callout__sub { fill: rgba(20, 18, 14, 0.8) !important; }
+.adv-callout:hover .adv-callout__dot { fill: #b87333; r: 8; }
+
+@keyframes callout-line-in {
+    from { opacity: 0; stroke-dashoffset: 120; }
+    to   { opacity: 1; stroke-dashoffset: 0; }
+}
+@keyframes callout-line-flow {
+    from { stroke-dashoffset: 0; }
+    to   { stroke-dashoffset: -200; }
+}
+@keyframes callout-text-in {
+    from { opacity: 0; transform: translateX(-6px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes callout-dot-in {
+    from { opacity: 0; transform: scale(0); }
+    to   { opacity: 1; transform: scale(1); }
+}
+@keyframes callout-dot-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50%      { transform: scale(1.5); opacity: 1; }
+}
+
+/* 02 — Точное исполнение: клемма + tech-specs */
+.advantages__media--lever {
+    background: radial-gradient(ellipse at 50% 45%, #ffffff 0%, #f2efe8 65%, #e8e4dc 100%);
+    min-height: 55vh;
+    overflow: hidden;
+    position: relative;
+    padding: 40px 48px;
+}
+.advantages__lever-wrap {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    padding: 32px 40px;
+}
+.advantages__lever-img {
+    flex: 1 1 auto;
+    width: auto;
+    max-width: 62%;
+    max-height: 72%;
+    object-fit: contain;
+    filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.22));
+    animation: lever-bob 4.5s ease-in-out infinite;
+}
+
+/* Интерактивный селектор сечения */
+.lever-selector {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 240px;
+    max-width: 280px;
+    font-family: 'Montserrat', system-ui, sans-serif;
+}
+.lever-selector__label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: rgba(20, 18, 14, 0.45);
+}
+.lever-selector__active {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+.lever-selector__val {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1;
+    color: rgba(20, 18, 14, 0.92);
+    letter-spacing: -1.5px;
+    transition: color 0.25s ease;
+    font-variant-numeric: tabular-nums;
+}
+.lever-selector__unit {
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(20, 18, 14, 0.55);
+}
+.lever-selector__sub {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(20, 18, 14, 0.6);
+    letter-spacing: 0.2px;
+    min-height: 20px;
+    transition: color 0.25s ease;
+}
+.lever-selector__bar {
+    position: relative;
+    height: 6px;
+    background: rgba(20, 18, 14, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
+}
+.lever-selector__bar-fill {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 2%;
+    background: linear-gradient(90deg, #b87333 0%, #e69143 100%);
+    border-radius: 3px;
+    transition: width 0.55s cubic-bezier(0.25, 0.8, 0.3, 1);
+}
+
+.lever-gauges {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+}
+.lever-gauge {
+    flex: 1 1 0;
+    text-align: center;
+    padding: 8px 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(20, 18, 14, 0.42);
+    background: transparent;
+    border: 1px solid rgba(20, 18, 14, 0.1);
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+.lever-gauge:hover,
+.lever-gauge:focus-visible {
+    color: rgba(20, 18, 14, 0.85);
+    border-color: rgba(184, 115, 51, 0.5);
+    outline: none;
+    transform: translateY(-1px);
+}
+.lever-gauge.is-active {
+    background: #f26a1a;
+    color: #fff;
+    border-color: #f26a1a;
+    box-shadow: 0 4px 12px rgba(242, 106, 26, 0.35);
+}
+
+@keyframes lever-bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+}
+
+@media (max-width: 1100px) {
+    .advantages__lever-wrap { flex-direction: column; gap: 24px; padding: 24px; }
+    .advantages__lever-img { max-width: 320px; max-height: 40%; }
+    .lever-selector { min-width: 0; max-width: 100%; width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .adv-callout line, .adv-callout text, .adv-callout__dot,
+    .advantages__lever-img, .lever-selector__bar-fill {
+        animation: none;
+        transition: none;
+    }
+}
+
 /* Видео в advantages */
 .advantages__video {
     position: absolute;

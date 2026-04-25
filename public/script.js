@@ -687,7 +687,6 @@ document.querySelectorAll('.series__card-visual, .categories__card-img').forEach
 // MAGNETIC CTA убран — кнопки больше не следуют за курсором.
 // Эффект "выезд вперёд" реализован чисто CSS-ом через transform: translateY(-2px) scale(1.04) на :hover.
 
-console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
 
 // ─── Reveal on scroll для новых секций главной (compare/reviews/docs/faq) ───
 (function initReveal() {

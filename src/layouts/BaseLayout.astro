@@ -346,46 +346,55 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
         }
 
         // ---- GSAP scrub-engine для [data-reveal] ----
-        // Унифицированный движок: вниз → --reveal-progress растёт, вверх → убывает.
-        // Работает одинаково везде (включая Safari).
-        if (window.gsap && window.ScrollTrigger && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          gsap.registerPlugin(ScrollTrigger);
+        // Ждём пока gsap+ScrollTrigger загрузятся (CDN async), потом инициализируем.
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          const tryInit = (attempt = 0) => {
+            if (!window.gsap || !window.ScrollTrigger) {
+              if (attempt < 30) return setTimeout(() => tryInit(attempt + 1), 50);
+              return;
+            }
+            gsap.registerPlugin(ScrollTrigger);
 
-          // Чистим старые триггеры при SPA-навигации
-          ScrollTrigger.getAll().forEach(t => {
-            if (t.vars && t.vars.id && t.vars.id.startsWith('reveal-')) t.kill();
-          });
-
-          document.querySelectorAll('[data-reveal]').forEach((el, idx) => {
-            const i = parseFloat(el.style.getPropertyValue('--i')) || 0;
-            const startOffset = Math.min(i * 1.5, 12);
-            // top 95% = низ viewport (раннее срабатывание при скролле вниз)
-            // top 87% = глубже в viewport (позднее срабатывание)
-            // i=0 (первая в строке) → 95%, i=N → 95-N% — волна слева направо
-            ScrollTrigger.create({
-              id: 'reveal-' + idx,
-              trigger: el,
-              start: `top ${95 - startOffset}%`,
-              end: `top ${70 - startOffset * 0.5}%`,
-              scrub: 0.5,
-              onUpdate: self => el.style.setProperty('--reveal-progress', self.progress.toFixed(3))
+            // Чистим старые триггеры при SPA-навигации
+            ScrollTrigger.getAll().forEach(t => {
+              if (t.vars && t.vars.id && (t.vars.id.startsWith('reveal-') || t.vars.id.startsWith('parallax-'))) t.kill();
             });
-          });
 
-          // Параллакс крупной картинки категории
-          document.querySelectorAll('.cat-hero__media-img, .ser-hero__media img').forEach(img => {
-            gsap.to(img, {
-              yPercent: 6,
-              ease: 'none',
-              scrollTrigger: {
-                id: 'parallax-' + (img.alt || 'hero'),
-                trigger: img.closest('.cat-hero, .ser-hero') || img,
-                start: 'top top',
-                end: 'bottom top',
-                scrub: 0.6
-              }
+            document.querySelectorAll('[data-reveal]').forEach((el, idx) => {
+              const i = parseFloat(el.style.getPropertyValue('--i')) || 0;
+              const startOffset = Math.min(i * 1.5, 12);
+              ScrollTrigger.create({
+                id: 'reveal-' + idx + '-' + Date.now(),
+                trigger: el,
+                start: `top ${95 - startOffset}%`,
+                end: `top ${70 - startOffset * 0.5}%`,
+                scrub: 0.5,
+                invalidateOnRefresh: true,
+                onUpdate: self => el.style.setProperty('--reveal-progress', self.progress.toFixed(3))
+              });
             });
-          });
+
+            // Параллакс крупной картинки категории/серии
+            document.querySelectorAll('.cat-hero__media-img, .ser-hero__media img').forEach((img, pi) => {
+              gsap.to(img, {
+                yPercent: 6,
+                ease: 'none',
+                scrollTrigger: {
+                  id: 'parallax-' + pi + '-' + Date.now(),
+                  trigger: img.closest('.cat-hero, .ser-hero') || img,
+                  start: 'top top',
+                  end: 'bottom top',
+                  scrub: 0.6,
+                  invalidateOnRefresh: true
+                }
+              });
+            });
+
+            // Пересчёт позиций после load (картинки лениво грузятся)
+            ScrollTrigger.refresh();
+            window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+          };
+          tryInit();
         }
 
         // ---- Hash scroll (после View Transitions) ----

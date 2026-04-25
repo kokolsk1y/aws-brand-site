@@ -245,26 +245,26 @@ const description = buildDescription();
       </nav>
 
       <div class="prod-hero__grid">
-        <div class="prod-hero__media">
+        <div class="prod-hero__media" data-reveal="zoom">
           <img src={product.photo} alt={title} onerror="this.style.display='none';this.parentElement.querySelector('.prod-hero__placeholder').style.display='flex'" />
           <div class="prod-hero__placeholder" style="display:none">Фото готовится</div>
         </div>
 
         <div class="prod-hero__text">
-          <span class="prod-hero__article">{product.article}</span>
-          <h1 class="prod-hero__title">{title}</h1>
+          <span class="prod-hero__article" data-reveal="blur">{product.article}</span>
+          <h1 class="prod-hero__title" data-reveal="focus">{title}</h1>
 
           {meta3.length > 0 && (
-            <div class="prod-hero__meta">
+            <div class="prod-hero__meta" data-reveal="slide">
               {meta3.map(m => <span class="prod-hero__chip">{m}</span>)}
             </div>
           )}
 
-          <div class="prod-hero__desc">
+          <div class="prod-hero__desc" data-reveal="blur">
             {description.map(p => <p>{p}</p>)}
           </div>
 
-          <button class="btn-switch" id="buyBtn">Где купить</button>
+          <button class="btn-switch" id="buyBtn" data-reveal="slide">Где купить</button>
         </div>
       </div>
     </div>
@@ -274,13 +274,13 @@ const description = buildDescription();
   {related.length > 0 && (
     <section class="prod-related">
       <div class="prod-related__inner">
-        <p class="label">Похожие</p>
-        <h2 class="prod-related__title">
+        <p class="label" data-reveal="blur">Похожие</p>
+        <h2 class="prod-related__title" data-reveal="focus">
           {product.crumbType === 'category' ? 'Другие из этой категории' : 'Ещё из этой серии'}
         </h2>
-        <div class="prod-related__grid">
-          {related.map(r => (
-            <a href={`/aws-brand-site/product/${encodeURIComponent(r.article)}`} class="prod-related__card" data-tilt data-tilt-max="5">
+        <div class="prod-related__grid" data-reveal-grid>
+          {related.map((r, idx) => (
+            <a href={`/aws-brand-site/product/${encodeURIComponent(r.article)}`} class="prod-related__card" data-tilt data-tilt-max="5" data-reveal="slide" style={`--i: ${idx % 9}`}>
               <div class="prod-related__img">
                 <img src={r.photo} alt={r.name} loading="lazy" onerror="this.style.display='none'" />
               </div>
@@ -303,9 +303,9 @@ const description = buildDescription();
   <!-- CTA -->
   <section class="cat-cta">
     <div class="cat-cta__inner">
-      <h2 class="cat-cta__title">Не нашли нужный артикул?</h2>
-      <p class="cat-cta__sub">Напишите нам — проконсультируем и подскажем аналог</p>
-      <a href="mailto:info@awsproducts.ru" class="btn-switch">Связаться</a>
+      <h2 class="cat-cta__title" data-reveal="focus">Не нашли нужный артикул?</h2>
+      <p class="cat-cta__sub" data-reveal="blur">Напишите нам — проконсультируем и подскажем аналог</p>
+      <a href="mailto:info@awsproducts.ru" class="btn-switch" data-reveal="slide">Связаться</a>
     </div>
   </section>
 

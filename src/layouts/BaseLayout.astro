@@ -359,6 +359,9 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
           document.querySelectorAll('[data-reveal]').forEach((el, idx) => {
             const i = parseFloat(el.style.getPropertyValue('--i')) || 0;
             const startOffset = Math.min(i * 1.5, 12);
+            // top 95% = низ viewport (раннее срабатывание при скролле вниз)
+            // top 87% = глубже в viewport (позднее срабатывание)
+            // i=0 (первая в строке) → 95%, i=N → 95-N% — волна слева направо
             ScrollTrigger.create({
               id: 'reveal-' + idx,
               trigger: el,

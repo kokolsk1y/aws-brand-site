@@ -2030,8 +2030,9 @@ a { text-decoration: none; color: inherit; }
 }
 
 [data-reveal="slide"] {
-    opacity: calc(0.75 + var(--p) * 0.25);
-    translate: 0 calc((1 - var(--p)) * 8px);
+    filter: blur(calc((1 - var(--p)) * 4px));
+    opacity: calc(0.55 + var(--p) * 0.45);
+    translate: 0 calc((1 - var(--p)) * 10px);
 }
 
 [data-reveal="zoom"] {

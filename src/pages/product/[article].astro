@@ -225,19 +225,19 @@ const description = buildDescription();
   <section class="prod-hero">
     <div class="prod-hero__inner">
       <nav class="prod-hero__crumbs">
-        <a href="/">Главная</a>
+        <a href="/aws-brand-site/">Главная</a>
         <span>/</span>
         {product.crumbType === 'category' ? (
           <>
-            <a href="/#categories">Ассортимент</a>
+            <a href="/aws-brand-site/#categories">Ассортимент</a>
             <span>/</span>
-            <a href={`/category/${product.category}`}>{product.categoryTitle}</a>
+            <a href={`/aws-brand-site/category/${product.category}`}>{product.categoryTitle}</a>
           </>
         ) : (
           <>
-            <a href="/#series">Коллекции</a>
+            <a href="/aws-brand-site/#series">Коллекции</a>
             <span>/</span>
-            <a href={`/series/${product.series}`}>Серия {product.seriesName}</a>
+            <a href={`/aws-brand-site/series/${product.series}`}>Серия {product.seriesName}</a>
           </>
         )}
         <span>/</span>
@@ -280,7 +280,7 @@ const description = buildDescription();
         </h2>
         <div class="prod-related__grid">
           {related.map(r => (
-            <a href={`/product/${encodeURIComponent(r.article)}`} class="prod-related__card" data-tilt data-tilt-max="5">
+            <a href={`/aws-brand-site/product/${encodeURIComponent(r.article)}`} class="prod-related__card" data-tilt data-tilt-max="5">
               <div class="prod-related__img">
                 <img src={r.photo} alt={r.name} loading="lazy" onerror="this.style.display='none'" />
               </div>

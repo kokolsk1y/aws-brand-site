@@ -83,22 +83,22 @@ function shortName(name) {
   <section class="cat-hero">
     <div class="cat-hero__inner">
       <nav class="cat-hero__crumbs">
-        <a href="/">Главная</a>
+        <a href="/aws-brand-site/">Главная</a>
         <span>/</span>
-        <a href="/#categories">Ассортимент</a>
+        <a href="/aws-brand-site/#categories">Ассортимент</a>
         <span>/</span>
         <span class="cat-hero__crumbs-current">{category.title}</span>
       </nav>
 
       <div class="cat-hero__grid">
         <div class="cat-hero__text">
-          <p class="label">Категория</p>
-          <h1 class="cat-hero__title">{category.title}</h1>
-          <p class="cat-hero__subtitle">{category.subtitle}</p>
-          <p class="cat-hero__desc">{category.description}</p>
+          <p class="label" data-reveal="blur">Категория</p>
+          <h1 class="cat-hero__title" data-reveal="focus">{category.title}</h1>
+          <p class="cat-hero__subtitle" data-reveal="blur">{category.subtitle}</p>
+          <p class="cat-hero__desc" data-reveal="blur">{category.description}</p>
         </div>
-        <div class="cat-hero__media">
-          <img src={category.cover} alt={category.title} />
+        <div class="cat-hero__media" data-reveal="zoom">
+          <img src={category.cover} alt={category.title} class="cat-hero__media-img" />
         </div>
       </div>
     </div>
@@ -115,11 +115,11 @@ function shortName(name) {
         </div>
       )}
 
-      <div class="cat-grid" id="catGrid">
-        {products.map(p => {
+      <div class="cat-grid" id="catGrid" data-reveal-grid>
+        {products.map((p, idx) => {
           const meta = extractMeta(p.name);
           return (
-            <a href={`/product/${p.article}`} class="prod-card" data-name={p.name} data-tilt data-tilt-max="6">
+            <a href={`/aws-brand-site/product/${p.article}`} class="prod-card" data-name={p.name} data-tilt data-tilt-max="6" data-reveal="slide" style={`--i: ${idx % 9}`}>
               <div class="prod-card__img">
                 <img src={p.photo.replace(/^img\//, '/img/')} alt={p.name} loading="lazy" />
               </div>
@@ -146,11 +146,11 @@ function shortName(name) {
   <!-- CROSS-SELL -->
   <section class="cat-related">
     <div class="cat-related__inner">
-      <p class="label">Другие категории</p>
-      <h2 class="cat-related__title">Возможно вас<br>заинтересует</h2>
-      <div class="cat-related__grid">
-        {otherCats.map(c => (
-          <a href={`/category/${c.slug}`} class="cat-related__card" data-astro-reload data-tilt data-tilt-max="5">
+      <p class="label" data-reveal="blur">Другие категории</p>
+      <h2 class="cat-related__title" data-reveal="focus">Возможно вас<br>заинтересует</h2>
+      <div class="cat-related__grid" data-reveal-grid>
+        {otherCats.map((c, idx) => (
+          <a href={`/aws-brand-site/category/${c.slug}`} class="cat-related__card" data-astro-reload data-tilt data-tilt-max="5" data-reveal="slide" style={`--i: ${idx}`}>
             <div class="cat-related__img">
               <img src={c.cover} alt={c.title} loading="lazy" />
             </div>
@@ -165,9 +165,9 @@ function shortName(name) {
   <!-- CTA -->
   <section class="cat-cta">
     <div class="cat-cta__inner">
-      <h2 class="cat-cta__title">Не нашли подходящий?</h2>
-      <p class="cat-cta__sub">Напишите нам — подберём вариант под вашу задачу</p>
-      <a href="mailto:info@awsproducts.ru" class="btn-switch">Связаться</a>
+      <h2 class="cat-cta__title" data-reveal="focus">Не нашли подходящий?</h2>
+      <p class="cat-cta__sub" data-reveal="blur">Напишите нам — подберём вариант под вашу задачу</p>
+      <a href="mailto:info@awsproducts.ru" class="btn-switch" data-reveal="slide">Связаться</a>
     </div>
   </section>
 
@@ -200,7 +200,7 @@ function shortName(name) {
   </div>
 
   <script is:inline>
-    // Фильтры товаров
+    // Фильтры товаров — с плавным fade-out / fade-in
     const filtersEl = document.getElementById('catFilters');
     const grid = document.getElementById('catGrid');
     if (filtersEl && grid) {
@@ -210,12 +210,21 @@ function shortName(name) {
           chip.classList.add('active');
           const testExpr = chip.dataset.test || 'true';
           const cards = grid.querySelectorAll('.prod-card');
-          cards.forEach(card => {
-            const i = { name: card.dataset.name || '' };
-            let show = true;
-            try { show = new Function('i', 'return ' + testExpr)(i); } catch (e) { show = true; }
-            card.style.display = show ? '' : 'none';
-          });
+          cards.forEach(card => card.classList.add('is-filter-out'));
+          setTimeout(() => {
+            cards.forEach(card => {
+              const i = { name: card.dataset.name || '' };
+              let show = true;
+              try { show = new Function('i', 'return ' + testExpr)(i); } catch (e) { show = true; }
+              card.classList.remove('is-filter-out', 'is-filter-in');
+              if (show) {
+                card.style.display = '';
+                requestAnimationFrame(() => card.classList.add('is-filter-in'));
+              } else {
+                card.style.display = 'none';
+              }
+            });
+          }, 250);
         });
       });
     }
@@ -301,6 +310,19 @@ function shortName(name) {
       max-width: 100%; max-height: 100%; object-fit: contain;
       mix-blend-mode: multiply;
     }
+    /* Параллакс hero-картинки категории */
+    @supports (animation-timeline: view()) {
+      .cat-hero__media-img {
+        animation: cat-hero-parallax linear;
+        animation-timeline: view();
+        animation-range: cover;
+        will-change: transform;
+      }
+      @keyframes cat-hero-parallax {
+        from { transform: translateY(-30px); }
+        to   { transform: translateY(30px); }
+      }
+    }
 
     /* Фильтры */
     .cat-products { padding: 60px 0 100px; background: var(--white, #fff); }
@@ -329,11 +351,41 @@ function shortName(name) {
     .prod-card {
       background: var(--white, #fff);
       border-radius: 12px; overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, outline-color 0.3s ease;
       display: flex; flex-direction: column;
       text-decoration: none; color: inherit;
+      outline: 1px solid transparent;
+      outline-offset: -1px;
+      position: relative;
     }
-    .prod-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+    .prod-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      box-shadow: 0 0 0 0 rgba(140, 184, 107, 0);
+      transition: box-shadow 0.4s ease;
+      pointer-events: none;
+    }
+    .prod-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+    .prod-card:hover::after {
+      box-shadow: 0 0 0 2px rgba(140, 184, 107, 0.45), 0 0 24px rgba(140, 184, 107, 0.18);
+    }
+    .prod-card.is-filter-out {
+      opacity: 0;
+      transform: scale(0.94);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+    }
+    .prod-card.is-filter-in {
+      animation: filterIn 0.4s ease both;
+    }
+    @keyframes filterIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
     .prod-card__img {
       aspect-ratio: 1/1; background: var(--warm-200, #ede7de);
       display: flex; align-items: center; justify-content: center;

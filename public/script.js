@@ -387,39 +387,11 @@ document.querySelectorAll('.series__card[data-series]').forEach(card => {
         // Не переходить если кликнули на точку цвета (она своя логика)
         if (e.target.closest('.dot[data-color]')) return;
         const slug = card.dataset.series;
-        if (slug) window.location.href = '/series/' + slug;
+        if (slug) window.location.href = '/aws-brand-site/series/' + slug;
     });
 });
 
-// ─── SERIES: Появление карточек ───
-
-const seriesCards = document.querySelectorAll('.series__card');
-seriesCards.forEach((card, i) => {
-    gsap.from(card, {
-        opacity: 0,
-        y: 50,
-        duration: 0.8,
-        delay: i * 0.12,
-        ease: 'power3.out',
-        scrollTrigger: {
-            trigger: '.series__grid',
-            start: 'top 80%',
-            once: true
-        }
-    });
-});
-
-// Series header
-gsap.from('.series__header', {
-    opacity: 0, y: 40,
-    duration: 0.9,
-    ease: 'power3.out',
-    scrollTrigger: {
-        trigger: '.series',
-        start: 'top 75%',
-        once: true
-    }
-});
+// ─── SERIES: появление перенесено в REVEAL ENGINE (data-reveal в HTML) ───
 
 // ─── SERIES CARDS: Переключатель цвета (статичное фото) ───
 
@@ -478,10 +450,10 @@ const constructorPlaceholder = document.getElementById('constructorPlaceholder')
 
 const IMG_VERSION = 'v=20260414e';
 const constructorMap = {
-    'UNO|Белый|Пластик':   `img/series/uno-1kl-w.png?${IMG_VERSION}`,
-    'UNO|Чёрный|Пластик':  `img/series/uno-1kl-b.png?${IMG_VERSION}`,
-    'AURA|Белый|Пластик':  `img/series/aura-1kl-w.png?${IMG_VERSION}`,
-    'AURA|Чёрный|Пластик': `img/series/aura-1kl-b.png?${IMG_VERSION}`
+    'UNO|Белый|Пластик':   `/aws-brand-site/img/series/uno-1kl-w.png?${IMG_VERSION}`,
+    'UNO|Чёрный|Пластик':  `/aws-brand-site/img/series/uno-1kl-b.png?${IMG_VERSION}`,
+    'AURA|Белый|Пластик':  `/aws-brand-site/img/series/aura-1kl-w.png?${IMG_VERSION}`,
+    'AURA|Чёрный|Пластик': `/aws-brand-site/img/series/aura-1kl-b.png?${IMG_VERSION}`
 };
 
 function showConstructorPlaceholder() {
@@ -541,70 +513,11 @@ document.querySelectorAll('.constructor__option').forEach(option => {
     });
 });
 
-// Constructor появление
-gsap.from('.constructor', {
-    opacity: 0, y: 40,
-    duration: 0.9,
-    ease: 'power3.out',
-    scrollTrigger: {
-        trigger: '.constructor',
-        start: 'top 80%',
-        once: true
-    }
-});
-
-// ─── CATEGORIES: Появление карточек ───
-
-document.querySelectorAll('.categories__card').forEach((card, i) => {
-    gsap.from(card, {
-        opacity: 0,
-        y: 40,
-        scale: 0.97,
-        duration: 0.7,
-        delay: i * 0.08,
-        ease: 'power3.out',
-        scrollTrigger: {
-            trigger: '.categories__grid',
-            start: 'top 80%',
-            once: true
-        }
-    });
-});
-
-gsap.from('.categories__header', {
-    opacity: 0, y: 30,
-    duration: 0.8,
-    ease: 'power3.out',
-    scrollTrigger: {
-        trigger: '.categories',
-        start: 'top 75%',
-        once: true
-    }
-});
+// ─── CONSTRUCTOR / CATEGORIES: появление перенесено в REVEAL ENGINE ───
 
 // ─── ABOUT BRAND ───
-
-const aboutSection = document.querySelector('.about');
-if (aboutSection) {
-    const aboutEls = ['.about .label', '.about__title', '.about__desc', '.about__link'];
-    aboutEls.forEach((sel, i) => {
-        gsap.from(sel, {
-            opacity: 0, y: 30,
-            duration: 0.8,
-            delay: i * 0.12,
-            ease: 'power3.out',
-            scrollTrigger: { trigger: aboutSection, start: 'top 70%', once: true }
-        });
-    });
-
-    gsap.from('.about__image', {
-        opacity: 0, y: 50, scale: 0.97,
-        duration: 1,
-        delay: 0.2,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: aboutSection, start: 'top 70%', once: true }
-    });
-}
+// Анимация перенесена в REVEAL ENGINE через data-reveal атрибуты в index.html.
+// Reveal реверсится при скролле вверх — старый once:true заменён на этот движок.
 
 // ─── ADVANTAGES SWIPER ───
 
@@ -716,49 +629,12 @@ document.querySelectorAll('.hero-slide__tag[data-adv-slide]').forEach(tag => {
     });
 });
 
-// ─── WHERE BUY ───
+// ─── WHERE BUY: появление перенесено в REVEAL ENGINE ───
 
-gsap.from('.where-buy__title', {
-    opacity: 0, y: 40,
-    duration: 0.9,
-    ease: 'power3.out',
-    scrollTrigger: {
-        trigger: '.where-buy',
-        start: 'top 75%',
-        once: true
-    }
-});
+// ─── FOOTER: переведено в REVEAL ENGINE через data-reveal в HTML ───
 
-document.querySelectorAll('.where-buy__card').forEach((card, i) => {
-    gsap.from(card, {
-        opacity: 0, y: 40,
-        duration: 0.7,
-        delay: i * 0.1,
-        ease: 'power3.out',
-        scrollTrigger: {
-            trigger: '.where-buy__grid',
-            start: 'top 80%',
-            once: true
-        }
-    });
-});
-
-// ─── FOOTER ───
-
-gsap.from('.footer__top', {
-    opacity: 0, y: 30,
-    duration: 0.8,
-    ease: 'power3.out',
-    scrollTrigger: {
-        trigger: '.footer',
-        start: 'top 85%',
-        once: true
-    }
-});
-
-// ─── PARALLAX: мягкий drift только на контейнерах (продукт не вылезает) ───
-
-document.querySelectorAll('.series__card-visual, .categories__card-img, .about__image').forEach(el => {
+// ─── PARALLAX: единый слой на контейнерах (двойной параллакс на картинках убран) ───
+document.querySelectorAll('.series__card-visual, .categories__card-img').forEach(el => {
     gsap.to(el, {
         yPercent: -4,
         ease: 'none',
@@ -767,20 +643,6 @@ document.querySelectorAll('.series__card-visual, .categories__card-img, .about__
             start: 'top bottom',
             end: 'bottom top',
             scrub: true
-        }
-    });
-});
-
-// Лёгкий drift самого продукта — внутри безопасной амплитуды 4%, не выскочит за padding
-document.querySelectorAll('.series__photo-img, .categories__card-img img').forEach(el => {
-    gsap.to(el, {
-        yPercent: -4,
-        ease: 'none',
-        scrollTrigger: {
-            trigger: el.closest('.series__card, .categories__card'),
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1.5
         }
     });
 });
@@ -1193,5 +1055,56 @@ console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) stop();
         else start();
+    });
+})();
+
+
+// ─── REVEAL ENGINE: scrub-based ───
+// Прогресс анимации = прогресс скролла через диапазон триггера.
+// Вниз → --reveal-progress растёт от 0 к 1. Вверх → убывает обратно.
+// Типы: data-reveal="mask|blur|slide"
+
+(function initRevealEngine() {
+    const targets = document.querySelectorAll('[data-reveal]');
+    if (!targets.length) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    targets.forEach(el => {
+        ScrollTrigger.create({
+            trigger: el,
+            start: 'top 95%',
+            end: 'top 70%',
+            scrub: 0.5,
+            onUpdate: self => el.style.setProperty('--reveal-progress', self.progress.toFixed(3))
+        });
+    });
+})();
+
+
+// ─── SECTION CONNECTORS: плавная перемычка только между БЛИЗКИМИ тонами ───
+// Между сильно контрастными секциями (white→black) connector выглядит как грязь,
+// поэтому их там не рисуем — резкая граница работает как акцент дизайна.
+(function buildSectionConnectors() {
+    const sections = Array.from(document.querySelectorAll('body > section, body > footer'))
+        .filter(s => !s.classList.contains('hero'));
+    if (sections.length < 2) return;
+
+    const rgb = el => {
+        const c = getComputedStyle(el).backgroundColor;
+        if (!c || c === 'rgba(0, 0, 0, 0)' || c === 'transparent') return null;
+        const m = c.match(/\d+/g);
+        return m ? { raw: c, r: +m[0], g: +m[1], b: +m[2] } : null;
+    };
+    const diff = (a, b) => Math.abs(a.r - b.r) + Math.abs(a.g - b.g) + Math.abs(a.b - b.b);
+
+    sections.forEach((sec, i) => {
+        if (i === sections.length - 1) return;
+        const a = rgb(sec), b = rgb(sections[i + 1]);
+        if (!a || !b || a.raw === b.raw) return;
+        if (diff(a, b) > 120) return; // высокий контраст — оставляем резкую границу
+        const conn = document.createElement('div');
+        conn.className = 'section-connector';
+        conn.style.background = `linear-gradient(to bottom, ${a.raw}, ${b.raw})`;
+        sec.after(conn);
     });
 })();

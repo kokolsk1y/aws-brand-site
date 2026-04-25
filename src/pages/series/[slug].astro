@@ -18,23 +18,23 @@ const defaultColor = series.colors[0];
   <section class="ser-hero">
     <div class="ser-hero__inner">
       <nav class="ser-hero__crumbs">
-        <a href="/">Главная</a>
+        <a href="/aws-brand-site/">Главная</a>
         <span>/</span>
-        <a href="/#series">Коллекции</a>
+        <a href="/aws-brand-site/#series">Коллекции</a>
         <span>/</span>
         <span class="ser-hero__crumbs-current">{series.name}</span>
       </nav>
 
       <div class="ser-hero__grid">
         <div class="ser-hero__text">
-          <p class="label">Серия</p>
-          {series.badge && <span class="ser-hero__badge">{series.badge}</span>}
-          <h1 class="ser-hero__title">{series.name}</h1>
-          <p class="ser-hero__tagline">{series.tagline}</p>
-          <p class="ser-hero__desc">{series.description}</p>
+          <p class="label" data-reveal="blur">Серия</p>
+          {series.badge && <span class="ser-hero__badge" data-reveal="blur">{series.badge}</span>}
+          <h1 class="ser-hero__title" data-reveal="focus">{series.name}</h1>
+          <p class="ser-hero__tagline" data-reveal="blur">{series.tagline}</p>
+          <p class="ser-hero__desc" data-reveal="blur">{series.description}</p>
 
           {series.colors.length > 0 && (
-            <div class="ser-hero__colors" id="serColors">
+            <div class="ser-hero__colors" id="serColors" data-reveal="slide">
               {series.colors.map((c, i) => (
                 <button
                   class={`ser-hero__color-btn ${i === 0 ? 'active' : ''}`}
@@ -49,7 +49,7 @@ const defaultColor = series.colors[0];
           )}
         </div>
 
-        <div class="ser-hero__media">
+        <div class="ser-hero__media" data-reveal="zoom">
           {defaultColor ? (
             <img id="serHeroImg" src={defaultColor.img} alt={series.name} />
           ) : (
@@ -64,9 +64,9 @@ const defaultColor = series.colors[0];
   {series.groups && (series.groups.switches.length + series.groups.sockets.length + series.groups.frames.length) > 0 && (
     <section class="ser-lineup">
       <div class="ser-lineup__inner">
-        <p class="label">Линейка</p>
-        <h2 class="ser-lineup__title">Что входит в серию</h2>
-        <p class="ser-lineup__subtitle">
+        <p class="label" data-reveal="blur">Линейка</p>
+        <h2 class="ser-lineup__title" data-reveal="focus">Что входит в серию</h2>
+        <p class="ser-lineup__subtitle" data-reveal="blur">
           <a href="#ser-group-switches" class="ser-lineup__count-link" data-jump="ser-group-switches">{series.groups.switches.length} выключателей</a>
           <span class="ser-lineup__dot">·</span>
           <a href="#ser-group-sockets" class="ser-lineup__count-link" data-jump="ser-group-sockets">{series.groups.sockets.length} розеток</a>
@@ -108,9 +108,9 @@ const defaultColor = series.colors[0];
                  aria-labelledby={`ser-group-trigger-${group.key}`}
                  data-open="true">
               <div class="ser-lineup__group-inner">
-                <div class="ser-lineup__grid">
-                  {group.items.map(item => (
-                    <a href={`/product/${item.article}`} class="ser-lineup__card" data-color={item.color || 'unknown'} data-tilt data-tilt-max="5">
+                <div class="ser-lineup__grid" data-reveal-grid>
+                  {group.items.map((item, idx) => (
+                    <a href={`/aws-brand-site/product/${item.article}`} class="ser-lineup__card" data-color={item.color || 'unknown'} data-tilt data-tilt-max="5" data-reveal="slide" style={`--i: ${idx % 9}`}>
                       <div class="ser-lineup__photo">
                         <img src={`/img/products/${item.article}.webp`} alt={item.name} loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
                         <div class="ser-lineup__photo-fallback" style="display:none">
@@ -139,11 +139,11 @@ const defaultColor = series.colors[0];
   <!-- CROSS-SELL: другие серии -->
   <section class="ser-related">
     <div class="ser-related__inner">
-      <p class="label">Другие серии</p>
-      <h2 class="ser-related__title">Посмотреть<br>остальные коллекции</h2>
-      <div class="ser-related__grid">
-        {otherSeries.map(s => (
-          <a href={`/series/${s.slug}`} class="ser-related__card" data-astro-reload data-tilt data-tilt-max="5">
+      <p class="label" data-reveal="blur">Другие серии</p>
+      <h2 class="ser-related__title" data-reveal="focus">Посмотреть<br>остальные коллекции</h2>
+      <div class="ser-related__grid" data-reveal-grid>
+        {otherSeries.map((s, idx) => (
+          <a href={`/aws-brand-site/series/${s.slug}`} class="ser-related__card" data-astro-reload data-tilt data-tilt-max="5" data-reveal="slide" style={`--i: ${idx}`}>
             <div class="ser-related__img">
               {s.colors[0] ? <img src={s.colors[0].img} alt={s.name} /> : <span class="ser-related__placeholder">Скоро</span>}
             </div>
@@ -158,9 +158,9 @@ const defaultColor = series.colors[0];
   <!-- CTA -->
   <section class="cat-cta">
     <div class="cat-cta__inner">
-      <h2 class="cat-cta__title">Не нашли подходящий?</h2>
-      <p class="cat-cta__sub">Напишите нам — расскажем подробнее или подберём аналог</p>
-      <a href="mailto:info@awsproducts.ru" class="btn-switch">Связаться</a>
+      <h2 class="cat-cta__title" data-reveal="focus">Не нашли подходящий?</h2>
+      <p class="cat-cta__sub" data-reveal="blur">Напишите нам — расскажем подробнее или подберём аналог</p>
+      <a href="mailto:info@awsproducts.ru" class="btn-switch" data-reveal="slide">Связаться</a>
     </div>
   </section>
 

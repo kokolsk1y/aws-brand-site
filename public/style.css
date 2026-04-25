@@ -3821,3 +3821,55 @@ a { text-decoration: none; color: inherit; }
     .doc-modal__sheet { max-width: 260px; }
     .doc-modal__info { padding: 28px 24px; }
 }
+
+/* ============================
+   REVEAL ENGINE — scrub-based, плавная привязка к скроллу
+   --reveal-progress (0→1) выставляется ScrollTrigger из script.js
+   Вниз → progress растёт. Вверх → убывает. Без дискретных переключений.
+   ============================ */
+
+[data-reveal] {
+    --p: var(--reveal-progress, 0);
+    will-change: translate, scale, opacity, filter;
+}
+
+/* focus — наводка объектива: blur+scale → чёткость. Глаз притягивается к буквам.
+   translate/scale отдельно от transform — не конфликтуют с hover-transform на карточках. */
+[data-reveal="focus"] {
+    filter: blur(calc((1 - var(--p)) * 8px));
+    scale: calc(1.04 - var(--p) * 0.04);
+    opacity: calc(0.4 + var(--p) * 0.6);
+}
+
+[data-reveal="blur"] {
+    filter: blur(calc((1 - var(--p)) * 8px));
+    opacity: calc(0.4 + var(--p) * 0.6);
+    translate: 0 calc((1 - var(--p)) * 10px);
+}
+
+[data-reveal="slide"] {
+    opacity: calc(0.45 + var(--p) * 0.55);
+    translate: 0 calc((1 - var(--p)) * 18px);
+}
+
+/* zoom — для крупных hero-картинок: «приближение к продукту» */
+[data-reveal="zoom"] {
+    opacity: calc(0.55 + var(--p) * 0.45);
+    scale: calc(1.06 - var(--p) * 0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+        --p: 1;
+    }
+}
+
+/* Section connectors — только между близкими тонами. JS-ом в script.js. */
+.section-connector {
+    height: 60px;
+    pointer-events: none;
+    margin-top: -30px;
+    margin-bottom: -30px;
+    position: relative;
+    z-index: 0;
+}

@@ -1998,3 +1998,81 @@ a { text-decoration: none; color: inherit; }
         transition: none !important;
     }
 }
+
+/* ============================
+   REVEAL ENGINE (Astro pages) — нативный CSS scroll-driven
+   data-reveal="mask|blur|slide" → анимация скрабится по прогрессу
+   входа элемента в viewport. Вверх → реверс автоматический.
+   Fallback для старых браузеров: класс .is-revealed через IO в BaseLayout.
+   ============================ */
+
+@keyframes reveal-focus {
+    from { filter: blur(8px); scale: 1.04; opacity: 0.4; }
+    to   { filter: blur(0);   scale: 1;    opacity: 1;   }
+}
+@keyframes reveal-blur {
+    from { filter: blur(8px); translate: 0 10px; opacity: 0.4; }
+    to   { filter: blur(0);   translate: 0 0;    opacity: 1;   }
+}
+@keyframes reveal-slide {
+    from { opacity: 0.45; translate: 0 18px; }
+    to   { opacity: 1;    translate: 0 0;    }
+}
+@keyframes reveal-zoom {
+    from { opacity: 0.55; scale: 1.06; }
+    to   { opacity: 1;    scale: 1;    }
+}
+
+@supports (animation-timeline: view()) {
+    [data-reveal] {
+        animation-timeline: view();
+        animation-range: entry 0% entry 90%;
+        animation-fill-mode: both;
+        will-change: translate, scale, opacity, filter;
+    }
+    [data-reveal="focus"] { animation-name: reveal-focus; }
+    [data-reveal="blur"]  { animation-name: reveal-blur;  }
+    [data-reveal="slide"] { animation-name: reveal-slide; }
+    [data-reveal="zoom"]  { animation-name: reveal-zoom;  }
+}
+
+/* Fallback: старые браузеры без animation-timeline */
+@supports not (animation-timeline: view()) {
+    [data-reveal] {
+        opacity: 0.4;
+        transition: opacity .7s ease, translate .7s cubic-bezier(.22,1,.36,1), scale .7s, filter .7s;
+    }
+    [data-reveal="focus"] { filter: blur(8px); scale: 1.04; }
+    [data-reveal="blur"]  { filter: blur(8px); translate: 0 10px; }
+    [data-reveal="slide"] { translate: 0 18px; }
+    [data-reveal="zoom"]  { scale: 1.06; }
+    [data-reveal].is-revealed {
+        opacity: 1;
+        translate: 0 0;
+        scale: 1;
+        filter: blur(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        clip-path: none !important;
+    }
+}
+
+/* Stagger для сетки карточек: каждая i-я карточка имеет свой animation-range
+   (animation-delay не работает для scroll-driven animations) */
+@supports (animation-timeline: view()) {
+    [data-reveal-grid] > *[data-reveal] {
+        animation-range: entry calc(var(--i, 0) * 3%) entry calc(95% - var(--i, 0) * 1%);
+    }
+}
+@supports not (animation-timeline: view()) {
+    [data-reveal-grid] > *[data-reveal] {
+        transition-delay: calc(var(--i, 0) * 70ms);
+    }
+}

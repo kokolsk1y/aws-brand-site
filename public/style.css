@@ -698,7 +698,6 @@ a { text-decoration: none; color: inherit; }
     overflow: hidden;
 }
 
-.hero-slide__btn::after,
 .btn-switch::after {
     content: '';
     width: 28px;
@@ -710,6 +709,8 @@ a { text-decoration: none; color: inherit; }
     flex-shrink: 0;
     z-index: 1;
 }
+/* На hero-кнопках линию не показываем — там уже есть стрелка → в HTML */
+.hero-slide__btn::after { display: none; }
 
 .hero-slide__btn::before,
 .btn-switch::before {
@@ -727,11 +728,10 @@ a { text-decoration: none; color: inherit; }
 
 .hero-slide__btn:hover,
 .btn-switch:hover {
-    transform: translateY(1px);
+    transform: translateY(-2px) scale(1.04);
     box-shadow:
-        0 1px 0 rgba(0,0,0,0.12),
-        0 4px 14px rgba(0,0,0,0.16),
-        0 14px 24px -10px rgba(94,140,58,0.55),
+        0 6px 14px rgba(0,0,0,0.18),
+        0 18px 32px -10px rgba(94,140,58,0.55),
         inset 0 1px 0 rgba(255,255,255,0.9);
     color: var(--black);
 }
@@ -739,7 +739,6 @@ a { text-decoration: none; color: inherit; }
 .hero-slide__btn:hover::before,
 .btn-switch:hover::before { transform: translateX(120%); }
 
-.hero-slide__btn:hover::after,
 .btn-switch:hover::after { transform: scaleX(1); }
 
 .hero-slide__btn:active,
@@ -2071,13 +2070,12 @@ a { text-decoration: none; color: inherit; }
     font-size: 15px; font-weight: 400;
     color: rgba(255,255,255,0.7);
     text-decoration: none;
-    transition: color 0.2s ease, transform 0.2s ease;
+    transition: color 0.2s ease;
     display: inline-flex; align-items: center; gap: 8px;
     width: fit-content;
 }
 .footer-v2__col a:hover {
     color: #fff;
-    transform: translateX(4px);
 }
 .footer-v2__icon {
     width: 16px; height: 16px; display: inline-flex;
@@ -3096,10 +3094,9 @@ a { text-decoration: none; color: inherit; }
 /* ЭЦ PNG теперь 1600×900 с прозрачным padding — как Ozon/WB.
    Override не нужен, используется общее правило. */
 
-/* На hover — лого увеличивается и становится ярче (карточка остаётся светлой) */
+/* На hover — лого только проявляется ярче, без увеличения (иначе вылезает за карточку) */
 .where-buy__card:hover .where-buy__watermark {
     opacity: 0.9;
-    transform: scale(1.22);
 }
 
 /* Контент поверх watermark'а */

@@ -684,30 +684,8 @@ document.querySelectorAll('.series__card-visual, .categories__card-img').forEach
     });
 })();
 
-// ─── MAGNETIC CTA: кнопки "притягиваются" к курсору ───
-(function initMagneticButtons() {
-    if (window.matchMedia('(hover: none)').matches) return; // пропускаем на тач-устройствах
-    const STRENGTH = 0.35;
-    const RADIUS = 90;
-    document.querySelectorAll('.hero-slide__btn, .about__link').forEach(btn => {
-        btn.style.transition = 'transform 0.25s cubic-bezier(0.23, 1, 0.32, 1)';
-        btn.style.willChange = 'transform';
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const cx = rect.left + rect.width / 2;
-            const cy = rect.top + rect.height / 2;
-            const dx = e.clientX - cx;
-            const dy = e.clientY - cy;
-            const dist = Math.sqrt(dx*dx + dy*dy);
-            if (dist < RADIUS + Math.max(rect.width, rect.height) / 2) {
-                btn.style.transform = `translate(${dx * STRENGTH}px, ${dy * STRENGTH}px)`;
-            }
-        });
-        btn.addEventListener('mouseleave', () => {
-            btn.style.transform = '';
-        });
-    });
-})();
+// MAGNETIC CTA убран — кнопки больше не следуют за курсором.
+// Эффект "выезд вперёд" реализован чисто CSS-ом через transform: translateY(-2px) scale(1.04) на :hover.
 
 console.log('AWS Brand Site v6 — По ТЗ Яны loaded');
 

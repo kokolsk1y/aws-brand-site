@@ -2015,27 +2015,28 @@ a { text-decoration: none; color: inherit; }
     will-change: translate, scale, opacity, filter;
 }
 
-/* focus — наводка объектива: blur+scale → чёткость */
+/* На каталоге эффекты заметно тоньше — страницы информативные,
+   reveal не должен перетягивать внимание. */
 [data-reveal="focus"] {
-    filter: blur(calc((1 - var(--p)) * 8px));
-    scale: calc(1.04 - var(--p) * 0.04);
-    opacity: calc(0.4 + var(--p) * 0.6);
+    filter: blur(calc((1 - var(--p)) * 5px));
+    scale: calc(1.025 - var(--p) * 0.025);
+    opacity: calc(0.6 + var(--p) * 0.4);
 }
 
 [data-reveal="blur"] {
-    filter: blur(calc((1 - var(--p)) * 8px));
-    opacity: calc(0.4 + var(--p) * 0.6);
-    translate: 0 calc((1 - var(--p)) * 10px);
+    filter: blur(calc((1 - var(--p)) * 5px));
+    opacity: calc(0.65 + var(--p) * 0.35);
+    translate: 0 calc((1 - var(--p)) * 6px);
 }
 
 [data-reveal="slide"] {
-    opacity: calc(0.45 + var(--p) * 0.55);
-    translate: 0 calc((1 - var(--p)) * 18px);
+    opacity: calc(0.75 + var(--p) * 0.25);
+    translate: 0 calc((1 - var(--p)) * 8px);
 }
 
 [data-reveal="zoom"] {
-    opacity: calc(0.55 + var(--p) * 0.45);
-    scale: calc(1.06 - var(--p) * 0.06);
+    opacity: calc(0.7 + var(--p) * 0.3);
+    scale: calc(1.03 - var(--p) * 0.03);
 }
 
 @media (prefers-reduced-motion: reduce) {

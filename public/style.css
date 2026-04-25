@@ -730,8 +730,8 @@ a { text-decoration: none; color: inherit; }
 .btn-switch:hover {
     transform: translateY(-2px) scale(1.04);
     box-shadow:
-        0 6px 14px rgba(0,0,0,0.18),
-        0 18px 32px -10px rgba(94,140,58,0.55),
+        0 6px 14px rgba(0,0,0,0.16),
+        0 14px 28px -10px rgba(0,0,0,0.18),
         inset 0 1px 0 rgba(255,255,255,0.9);
     color: var(--black);
 }

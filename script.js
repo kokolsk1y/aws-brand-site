@@ -223,7 +223,7 @@ function animateSlideContent() {
     if (label) gsap.fromTo(label, { opacity: 0, y: 15 }, { opacity: 0.5, y: 0, duration: 0.7, delay: 0.2, ease: 'power3.out' });
     if (title) gsap.fromTo(title, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.9, delay: 0.3, ease: 'power3.out' });
     if (subtitle) gsap.fromTo(subtitle, { opacity: 0, y: 20 }, { opacity: 0.6, y: 0, duration: 0.8, delay: 0.5, ease: 'power3.out' });
-    if (btn) gsap.fromTo(btn, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.6, ease: 'power3.out' });
+    if (btn) gsap.fromTo(btn, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.6, ease: 'power3.out', clearProps: 'transform,y' });
     if (tags) gsap.fromTo(tags, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.7, ease: 'power3.out' });
 }
 

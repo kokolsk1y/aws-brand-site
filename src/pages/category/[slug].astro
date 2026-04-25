@@ -310,19 +310,8 @@ function shortName(name) {
       max-width: 100%; max-height: 100%; object-fit: contain;
       mix-blend-mode: multiply;
     }
-    /* Параллакс hero-картинки категории */
-    @supports (animation-timeline: view()) {
-      .cat-hero__media-img {
-        animation: cat-hero-parallax linear;
-        animation-timeline: view();
-        animation-range: cover;
-        will-change: transform;
-      }
-      @keyframes cat-hero-parallax {
-        from { transform: translateY(-30px); }
-        to   { transform: translateY(30px); }
-      }
-    }
+    /* Параллакс делается через GSAP в BaseLayout (универсально для Safari) */
+    .cat-hero__media-img { will-change: transform; }
 
     /* Фильтры */
     .cat-products { padding: 60px 0 100px; background: var(--white, #fff); }

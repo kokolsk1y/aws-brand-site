@@ -30,6 +30,8 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" is:inline></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" is:inline></script>
     <ClientRouter />
 </head>
 <body>
@@ -331,18 +333,55 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
           }
         });
 
+        // Старая is-visible-система — для секций без data-reveal (заголовки, баннеры)
         if ('IntersectionObserver' in window) {
           const obs = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
               entry.target.classList.toggle('is-visible', entry.isIntersecting);
-              entry.target.classList.toggle('is-revealed', entry.isIntersecting);
             });
           }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
-          document.querySelectorAll('[data-reveal-item], [data-reveal-section], [data-reveal]').forEach(el => obs.observe(el));
+          document.querySelectorAll('[data-reveal-item], [data-reveal-section]').forEach(el => obs.observe(el));
         } else {
-          document.querySelectorAll('[data-reveal-item], [data-reveal-section], [data-reveal]').forEach(el => {
-            el.classList.add('is-visible');
-            el.classList.add('is-revealed');
+          document.querySelectorAll('[data-reveal-item], [data-reveal-section]').forEach(el => el.classList.add('is-visible'));
+        }
+
+        // ---- GSAP scrub-engine для [data-reveal] ----
+        // Унифицированный движок: вниз → --reveal-progress растёт, вверх → убывает.
+        // Работает одинаково везде (включая Safari).
+        if (window.gsap && window.ScrollTrigger && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          gsap.registerPlugin(ScrollTrigger);
+
+          // Чистим старые триггеры при SPA-навигации
+          ScrollTrigger.getAll().forEach(t => {
+            if (t.vars && t.vars.id && t.vars.id.startsWith('reveal-')) t.kill();
+          });
+
+          document.querySelectorAll('[data-reveal]').forEach((el, idx) => {
+            const i = parseFloat(el.style.getPropertyValue('--i')) || 0;
+            const startOffset = Math.min(i * 1.5, 12);
+            ScrollTrigger.create({
+              id: 'reveal-' + idx,
+              trigger: el,
+              start: `top ${95 - startOffset}%`,
+              end: `top ${70 - startOffset * 0.5}%`,
+              scrub: 0.5,
+              onUpdate: self => el.style.setProperty('--reveal-progress', self.progress.toFixed(3))
+            });
+          });
+
+          // Параллакс крупной картинки категории
+          document.querySelectorAll('.cat-hero__media-img, .ser-hero__media img').forEach(img => {
+            gsap.to(img, {
+              yPercent: 6,
+              ease: 'none',
+              scrollTrigger: {
+                id: 'parallax-' + (img.alt || 'hero'),
+                trigger: img.closest('.cat-hero, .ser-hero') || img,
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 0.6
+              }
+            });
           });
         }
 

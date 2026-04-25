@@ -3094,9 +3094,10 @@ a { text-decoration: none; color: inherit; }
 /* ЭЦ PNG теперь 1600×900 с прозрачным padding — как Ozon/WB.
    Override не нужен, используется общее правило. */
 
-/* На hover — лого только проявляется ярче, без увеличения (иначе вылезает за карточку) */
+/* На hover — лого увеличивается и становится ярче */
 .where-buy__card:hover .where-buy__watermark {
     opacity: 0.9;
+    transform: scale(1.22);
 }
 
 /* Контент поверх watermark'а */

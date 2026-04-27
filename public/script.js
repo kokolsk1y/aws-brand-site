@@ -1058,7 +1058,30 @@ document.querySelectorAll('.series__card-visual, .categories__card-img').forEach
 })();
 
 
-// SECTION CONNECTORS убраны — давали двойную горизонтальную границу из-за
-// negative margins и padding соседних секций. Между однотонными секциями
-// (compare↔reviews) стык и так не виден. Между контрастными — резкая граница
-// работает как акцент дизайна.
+// ─── SECTION CONNECTORS: плавная перемычка только между БЛИЗКИМИ тонами ───
+// Между сильно контрастными секциями (white→black) connector выглядит как грязь,
+// поэтому их там не рисуем — резкая граница работает как акцент дизайна.
+(function buildSectionConnectors() {
+    const sections = Array.from(document.querySelectorAll('body > section, body > footer'))
+        .filter(s => !s.classList.contains('hero'));
+    if (sections.length < 2) return;
+
+    const rgb = el => {
+        const c = getComputedStyle(el).backgroundColor;
+        if (!c || c === 'rgba(0, 0, 0, 0)' || c === 'transparent') return null;
+        const m = c.match(/\d+/g);
+        return m ? { raw: c, r: +m[0], g: +m[1], b: +m[2] } : null;
+    };
+    const diff = (a, b) => Math.abs(a.r - b.r) + Math.abs(a.g - b.g) + Math.abs(a.b - b.b);
+
+    sections.forEach((sec, i) => {
+        if (i === sections.length - 1) return;
+        const a = rgb(sec), b = rgb(sections[i + 1]);
+        if (!a || !b || a.raw === b.raw) return;
+        if (diff(a, b) > 120) return; // высокий контраст — оставляем резкую границу
+        const conn = document.createElement('div');
+        conn.className = 'section-connector';
+        conn.style.background = `linear-gradient(to bottom, ${a.raw}, ${b.raw})`;
+        sec.after(conn);
+    });
+})();

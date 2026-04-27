@@ -3862,3 +3862,12 @@ a { text-decoration: none; color: inherit; }
     }
 }
 
+/* Section connectors — только между близкими тонами. JS-ом в script.js. */
+.section-connector {
+    height: 60px;
+    pointer-events: none;
+    margin-top: -30px;
+    margin-bottom: -30px;
+    position: relative;
+    z-index: 0;
+}

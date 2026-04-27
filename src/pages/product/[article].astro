@@ -681,13 +681,11 @@ const docs = [
     .prod-hero__media:hover img { transform: scale(1.04); }
 
     /* === Серия UNO ===
-       1) тень обложки уменьшена (карточка перестаёт «парить»)
-       2) у img убран mix-blend-mode: multiply — он перебивал drop-shadow,
-          поэтому раньше тень от товара не была видна
-       3) сам выключатель получает drop-shadow — тень падает по форме
-          объекта на бежевый фон обложки */
+       Обложка без своей тени — единственная тень принадлежит товару
+       и падает по его силуэту через filter: drop-shadow.
+       mix-blend-mode: normal обязателен — иначе multiply перебивает filter. */
     .prod-hero--uno .prod-hero__media {
-      box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+      box-shadow: none;
     }
     .prod-hero--uno .prod-hero__media img {
       mix-blend-mode: normal;

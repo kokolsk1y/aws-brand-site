@@ -330,65 +330,12 @@ function buildDescription() {
 
 const description = buildDescription();
 
-// Подсветка ключевых терминов в описании — «маркером» через <mark>
-function highlightTerms(text) {
-  const terms = [
-    'медные жилы', 'медный', 'медь', 'латунные контакты', 'латунные', 'латунь',
-    'ABS-пластик', 'ABS пластик', 'самозатухающего', 'самозатухающий',
-    'IP68', 'IP44', 'IP54',
-    'EAC', 'ГОСТ',
-    'soft-touch', 'Soft-touch', 'Soft Touch',
-    'Cat\\.5e', 'Cat\\.6', 'Cat\\.6e',
-    'Indoor', 'Outdoor',
-    '1 Гбит/с', '1 Гбит',
-    'тихий ход', 'позолочен', 'герметичн', 'УФ-стойк',
-    'без потерь', 'годы вперёд', 'без подгорания'
-  ];
-  const escaped = terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, m => m === '\\' ? '\\\\' : '\\' + m));
-  const regex = new RegExp(`(${escaped.join('|')})`, 'g');
-  return text.replace(regex, '<mark class="prod-mark">$1</mark>');
-}
-
-// Стат-карточки сверху deтails — берём 3 самых важных параметра
-function pickStats(rows, name) {
-  const isExt = /удлинитель/i.test(name);
-  const isCable = /^кабель|патч-корд/i.test(name);
-  const isClamp = /клемма/i.test(name);
-  const isConn = /коннектор|разъ[её]м/i.test(name);
-  const isSwitch = /выключатель|розетк|рамк/i.test(name);
-
-  let priority;
-  if (isExt) priority = ['Длина', 'Гнёзд', 'Заземление', 'Сечение жилы'];
-  else if (isCable) priority = ['Длина', 'Категория', 'Экран', 'Применение'];
-  else if (isClamp) priority = ['Сечение жилы', 'Тип кабеля', 'Гарантия'];
-  else if (isConn) priority = ['Класс защиты', 'Номинальный ток', 'Гарантия'];
-  else if (isSwitch) priority = ['Серия', 'Цвет', 'Гарантия'];
-  else priority = ['Гарантия', 'Сертификация', 'Бренд'];
-
-  const map = new Map(rows);
-  const picked = [];
-  for (const k of priority) {
-    if (map.has(k) && picked.length < 3) picked.push([k, map.get(k)]);
-  }
-  // Дозабиваем чем найдём
-  for (const [k, v] of rows) {
-    if (picked.length >= 3) break;
-    if (k === 'Артикул' || k === 'Бренд') continue;
-    if (!picked.find(p => p[0] === k)) picked.push([k, v]);
-  }
-  return picked;
-}
-
-const descHTML = highlightTerms(description);
-const stats = pickStats(specs, product.name);
-
-// Ссылки на маркетплейсы — стиль идентичен блоку "Где купить" на главной
+// Маркетплейсы — стиль как у блока "Где купить" на главной
 const marketplaceLinks = [
   {
     key: 'ozon',
     label: 'Маркетплейс',
     name: 'Ozon',
-    desc: 'Быстрая доставка по России · ПВЗ в каждом городе',
     url: 'https://www.ozon.ru/seller/ip-popov-a-yu/',
     logo: '/aws-brand-site/logo/retailers/ozon.png'
   },
@@ -396,7 +343,6 @@ const marketplaceLinks = [
     key: 'wb',
     label: 'Маркетплейс',
     name: 'Wildberries',
-    desc: 'Пункты выдачи по всей стране',
     url: 'https://www.wildberries.ru/brands/312201750-awsproducts',
     logo: '/aws-brand-site/logo/retailers/wildberries.png'
   },
@@ -404,10 +350,17 @@ const marketplaceLinks = [
     key: 'ec',
     label: 'Партнёр · опт',
     name: 'Электроцентр',
-    desc: 'Консультация для монтажников',
     url: 'https://stv39.ru/help/nashi-partnery/awsproducts/',
     logo: '/aws-brand-site/logo/retailers/electrocentre.png'
   }
+];
+
+// 4 документа соответствия — открываются по mailto до загрузки реальных PDF
+const docs = [
+  { key: 'eac', title: 'Декларация EAC', desc: 'Соответствие ТР ТС' },
+  { key: 'gost', title: 'Сертификат ГОСТ', desc: 'Российские стандарты' },
+  { key: 'passport', title: 'Паспорт качества', desc: 'Контроль производства' },
+  { key: 'manual', title: 'Инструкция', desc: 'Схемы подключения' }
 ];
 ---
 <BaseLayout title={`${title || product.article} — AWS Products`} description={description.slice(0, 160)}>
@@ -484,12 +437,6 @@ const marketplaceLinks = [
                   </div>
                   <span class="prod-buy-btn__label">{m.label}</span>
                   <span class="prod-buy-btn__name">{m.name}</span>
-                  <span class="prod-buy-btn__desc">{m.desc}</span>
-                  <span class="prod-buy-btn__arrow" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-                    </svg>
-                  </span>
                 </a>
               ))}
             </div>
@@ -499,26 +446,15 @@ const marketplaceLinks = [
     </div>
   </section>
 
-  <!-- ОПИСАНИЕ + ХАРАКТЕРИСТИКИ -->
+  <!-- ОПИСАНИЕ + ХАРАКТЕРИСТИКИ + ДОКУМЕНТЫ -->
   <section class="prod-details">
     <div class="prod-details__inner">
-
-      {stats.length > 0 && (
-        <div class="prod-stats" data-reveal="slide">
-          {stats.map(([k, v], i) => (
-            <div class="prod-stat" data-reveal="slide" style={`--i: ${i}`}>
-              <span class="prod-stat__value">{v}</span>
-              <span class="prod-stat__label">{k}</span>
-            </div>
-          ))}
-        </div>
-      )}
 
       <div class="prod-details__grid">
         <div class="prod-details__col prod-details__col--text">
           <p class="label" data-reveal="blur">О товаре</p>
           <h2 class="prod-details__title" data-reveal="focus">Что важно знать</h2>
-          <p class="prod-details__text" data-reveal="blur" set:html={descHTML}></p>
+          <p class="prod-details__text" data-reveal="blur">{description}</p>
         </div>
         <div class="prod-details__col prod-details__col--specs">
           <p class="label" data-reveal="blur">Характеристики</p>
@@ -531,6 +467,31 @@ const marketplaceLinks = [
               </div>
             ))}
           </dl>
+        </div>
+      </div>
+
+      <!-- Документы соответствия -->
+      <div class="prod-docs">
+        <div class="prod-docs__head">
+          <p class="label" data-reveal="blur">Документы</p>
+          <h2 class="prod-details__title" data-reveal="focus">Сертификаты соответствия</h2>
+        </div>
+        <div class="prod-docs__grid" data-reveal-grid>
+          {docs.map((d, i) => (
+            <a href="mailto:info@awsproducts.ru?subject=Запрос документа" class="prod-doc-card" data-reveal="slide" style={`--i: ${i}`}>
+              <div class="prod-doc-card__icon" aria-hidden="true">
+                {d.key === 'eac' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>}
+                {d.key === 'gost' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>}
+                {d.key === 'passport' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>}
+                {d.key === 'manual' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>}
+              </div>
+              <div class="prod-doc-card__body">
+                <h3 class="prod-doc-card__title">{d.title}</h3>
+                <span class="prod-doc-card__desc">{d.desc}</span>
+              </div>
+              <span class="prod-doc-card__badge">PDF</span>
+            </a>
+          ))}
         </div>
       </div>
     </div>
@@ -715,7 +676,7 @@ const marketplaceLinks = [
       --brand: 0, 0, 0;
       position: relative;
       display: flex; flex-direction: column; gap: 4px;
-      padding: 26px 24px 60px;
+      padding: 24px 26px;
       background: var(--warm-100, #f7f4ef);
       border: 1px solid rgba(0,0,0,0.04);
       border-radius: 18px;
@@ -726,7 +687,7 @@ const marketplaceLinks = [
                   box-shadow 0.5s cubic-bezier(.22,1,.36,1);
       overflow: hidden;
       isolation: isolate;
-      min-height: 156px;
+      min-height: 130px;
       transform-style: preserve-3d;
       will-change: transform;
     }
@@ -770,28 +731,29 @@ const marketplaceLinks = [
     .prod-buy-btn:hover .prod-buy-btn__glow { opacity: 1; }
     .prod-buy-btn:hover::before { transform: translateX(130%); }
 
-    /* Watermark лого — крупное, с brand-glow за ним при hover */
+    /* Watermark лого — крупное и поднятое выше (центрировано по высоте) */
     .prod-buy-btn__watermark {
       position: absolute;
-      bottom: -12%; right: -12%;
-      width: 70%; height: 95%;
-      opacity: 0.42;
+      top: 50%; right: -8%;
+      transform: translateY(-50%) scale(1);
+      width: 78%; height: 88%;
+      opacity: 0.5;
       pointer-events: none;
-      transform-origin: bottom right;
+      transform-origin: center right;
       transition: opacity 0.55s cubic-bezier(.22,1,.36,1),
                   transform 0.55s cubic-bezier(.22,1,.36,1),
                   filter 0.55s ease;
       z-index: 0;
-      filter: saturate(0.7);
+      filter: saturate(0.75);
     }
     .prod-buy-btn__watermark img {
       width: 100%; height: 100%;
       object-fit: contain;
-      object-position: bottom right;
+      object-position: center right;
     }
     .prod-buy-btn:hover .prod-buy-btn__watermark {
-      opacity: 0.95;
-      transform: scale(1.2);
+      opacity: 1;
+      transform: translateY(-50%) scale(1.12);
       filter: saturate(1);
     }
 
@@ -799,7 +761,7 @@ const marketplaceLinks = [
       position: relative; z-index: 2;
       font-size: 10px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase;
       color: var(--gray-400, #999);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       transition: color 0.3s ease;
     }
     .prod-buy-btn:hover .prod-buy-btn__label {
@@ -807,33 +769,9 @@ const marketplaceLinks = [
     }
     .prod-buy-btn__name {
       position: relative; z-index: 2;
-      font-size: 19px; font-weight: 700; color: var(--black, #111);
+      font-size: 20px; font-weight: 700; color: var(--black, #111);
       letter-spacing: -0.3px;
       line-height: 1.1;
-    }
-    .prod-buy-btn__desc {
-      position: relative; z-index: 2;
-      font-size: 12px; line-height: 1.4;
-      color: var(--gray-600, #666);
-      margin-top: 6px; max-width: 90%;
-    }
-    .prod-buy-btn__arrow {
-      position: absolute; bottom: 22px; left: 24px;
-      z-index: 3;
-      width: 28px; height: 28px;
-      display: inline-flex; align-items: center; justify-content: center;
-      border-radius: 50%;
-      background: var(--white, #fff);
-      color: var(--black, #111);
-      transition: transform 0.35s cubic-bezier(.22,1,.36,1),
-                  background 0.35s, color 0.35s;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-    }
-    .prod-buy-btn__arrow svg { width: 14px; height: 14px; }
-    .prod-buy-btn:hover .prod-buy-btn__arrow {
-      transform: translateX(8px);
-      background: var(--black);
-      color: var(--white);
     }
 
     /* === DETAILS — стат-hero сверху + 2 колонки (description + specs) === */
@@ -858,40 +796,6 @@ const marketplaceLinks = [
       position: relative; z-index: 1;
     }
 
-    /* === Stats hero — 3 ключевых параметра крупно === */
-    .prod-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      padding: 36px 40px;
-      background: rgba(255,255,255,0.55);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.7);
-      border-radius: 20px;
-      margin-bottom: 64px;
-      box-shadow: 0 24px 48px -16px rgba(0,0,0,0.08);
-    }
-    .prod-stat {
-      display: flex; flex-direction: column; gap: 6px;
-      padding: 0 28px;
-      border-right: 1px solid rgba(0,0,0,0.08);
-    }
-    .prod-stat:first-child { padding-left: 8px; }
-    .prod-stat:last-child { border-right: none; padding-right: 8px; }
-    .prod-stat__value {
-      font-size: clamp(26px, 3vw, 38px);
-      font-weight: 800;
-      color: var(--black, #111);
-      letter-spacing: -1.2px;
-      line-height: 1;
-    }
-    .prod-stat__label {
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 1.6px; text-transform: uppercase;
-      color: var(--gray-600, #666);
-    }
-
     /* === Двухколонночный grid === */
     .prod-details__grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
@@ -906,19 +810,6 @@ const marketplaceLinks = [
       font-size: 16.5px; line-height: 1.8;
       color: var(--gray-800, #333);
       margin: 0;
-    }
-
-    /* Маркер ключевых терминов — мелом по нижней половине слова */
-    .prod-mark {
-      background: linear-gradient(180deg, transparent 55%, rgba(140,184,107,0.38) 55%);
-      color: var(--black);
-      padding: 0 2px;
-      font-weight: 600;
-      transition: background 0.3s ease;
-      border-radius: 1px;
-    }
-    .prod-details__text:hover .prod-mark {
-      background: linear-gradient(180deg, transparent 0%, rgba(140,184,107,0.45) 0%);
     }
 
     /* Specs list */
@@ -950,6 +841,80 @@ const marketplaceLinks = [
       font-size: 14.5px; font-weight: 600;
       color: var(--black, #111);
       margin: 0;
+    }
+
+    /* === Документы соответствия — компактные карточки 4 в ряд === */
+    .prod-docs {
+      margin-top: 80px;
+      padding-top: 56px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+    .prod-docs__head { margin-bottom: 36px; }
+    .prod-docs__head .label { display: block; margin-bottom: 16px; }
+    .prod-docs__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .prod-doc-card {
+      position: relative;
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 20px;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--black, #111);
+      transition: background 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .prod-doc-card:hover {
+      background: var(--white, #fff);
+      border-color: var(--warm-gold, #5E8C3A);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.08);
+    }
+    .prod-doc-card__icon {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 10px;
+      background: var(--warm-100, #f7f4ef);
+      color: var(--warm-gold, #5E8C3A);
+      transition: background 0.3s, color 0.3s;
+    }
+    .prod-doc-card__icon svg { width: 18px; height: 18px; }
+    .prod-doc-card:hover .prod-doc-card__icon {
+      background: var(--warm-gold, #5E8C3A);
+      color: var(--white);
+    }
+    .prod-doc-card__body {
+      flex: 1; min-width: 0;
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .prod-doc-card__title {
+      font-size: 13px; font-weight: 700; letter-spacing: -0.1px;
+      color: var(--black);
+      margin: 0;
+    }
+    .prod-doc-card__desc {
+      font-size: 11px; color: var(--gray-600, #666);
+      letter-spacing: 0.1px;
+    }
+    .prod-doc-card__badge {
+      flex-shrink: 0;
+      font-size: 9px; font-weight: 700; letter-spacing: 1.2px;
+      text-transform: uppercase;
+      padding: 4px 9px;
+      border-radius: 6px;
+      background: rgba(0,0,0,0.06);
+      color: var(--gray-600, #666);
+      transition: background 0.3s, color 0.3s;
+    }
+    .prod-doc-card:hover .prod-doc-card__badge {
+      background: var(--black);
+      color: var(--white);
     }
 
     /* === RELATED === */
@@ -1003,18 +968,15 @@ const marketplaceLinks = [
       .prod-hero__media-wrap { position: static; }
       .prod-hero__media { padding: 40px; }
       .prod-details__grid { grid-template-columns: 1fr; gap: 56px; }
-      .prod-stats { padding: 28px 24px; gap: 0; }
-      .prod-stat { padding: 0 16px; }
+      .prod-docs__grid { grid-template-columns: repeat(2, 1fr); }
       .prod-related__grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 560px) {
       .prod-hero { padding: 80px 0 60px; }
       .prod-buy-row { grid-template-columns: 1fr; gap: 10px; }
-      .prod-buy-btn { min-height: 120px; padding: 22px 20px 56px; }
+      .prod-buy-btn { min-height: 100px; padding: 22px 24px; }
+      .prod-docs__grid { grid-template-columns: 1fr; }
       .prod-related__grid { grid-template-columns: 1fr; }
-      .prod-stats { grid-template-columns: 1fr; padding: 20px 24px; }
-      .prod-stat { padding: 14px 0; border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); }
-      .prod-stat:last-child { border-bottom: none; }
     }
   </style>
 </BaseLayout>

@@ -1078,10 +1078,11 @@ document.querySelectorAll('.series__card-visual, .categories__card-img').forEach
         if (i === sections.length - 1) return;
         const a = rgb(sec), b = rgb(sections[i + 1]);
         if (!a || !b || a.raw === b.raw) return;
-        if (diff(a, b) > 120) return; // высокий контраст — оставляем резкую границу
+        if (diff(a, b) > 120) return; // высокий контраст — резкая граница (blur размыл бы серый artefact)
         const conn = document.createElement('div');
         conn.className = 'section-connector';
-        conn.style.background = `linear-gradient(to bottom, ${a.raw}, ${b.raw})`;
+        // background не задаём — connector прозрачный, backdrop-filter размывает
+        // нижние 40px верхней секции и верхние 40px нижней
         sec.after(conn);
     });
 })();

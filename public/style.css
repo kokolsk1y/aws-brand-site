@@ -826,7 +826,7 @@ a { text-decoration: none; color: inherit; }
 .series > *, .categories > *, .about > * { position: relative; z-index: 1; }
 
 .series {
-    padding: 80px 0 30px;
+    padding: 120px 0 80px;
     background: var(--warm-100);
 }
 
@@ -1117,7 +1117,7 @@ a { text-decoration: none; color: inherit; }
    ============================ */
 
 .categories {
-    padding: 60px 0 60px;
+    padding: 120px 0;
     background: var(--white);
 }
 
@@ -1226,7 +1226,7 @@ a { text-decoration: none; color: inherit; }
    ============================ */
 
 .about {
-    padding: 100px 0 110px;
+    padding: 160px 0;
     background: var(--warm-100);
 }
 
@@ -1711,7 +1711,7 @@ a { text-decoration: none; color: inherit; }
    ============================ */
 
 .where-buy {
-    padding: 60px 0;
+    padding: 120px 0;
     background: var(--white);
 }
 
@@ -2557,7 +2557,7 @@ a { text-decoration: none; color: inherit; }
    СРАВНЕНИЕ
    ============================ */
 .compare {
-    padding: 110px 0 70px;
+    padding: 160px 0 110px;
     background: var(--white);
 }
 .compare__inner {
@@ -2735,7 +2735,7 @@ a { text-decoration: none; color: inherit; }
    ОТЗЫВЫ — бесконечная лента (2 ряда)
    ============================ */
 .reviews {
-    padding: 40px 0;
+    padding: 80px 0;
     background: var(--warm-100);
     overflow: hidden;
 }
@@ -2891,7 +2891,7 @@ a { text-decoration: none; color: inherit; }
    FAQ
    ============================ */
 .faq {
-    padding: 100px 0;
+    padding: 160px 0;
     background: var(--white);
 }
 .faq__inner {
@@ -2965,7 +2965,7 @@ a { text-decoration: none; color: inherit; }
    ДОКУМЕНТЫ
    ============================ */
 .docs {
-    padding: 100px 0;
+    padding: 160px 0;
     background: var(--warm-100);
 }
 .docs__inner {
@@ -3863,14 +3863,20 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* Section connectors — только между близкими тонами. JS-ом в script.js. */
-/* Section connector — плавный градиент-перемычка между светлыми соседями.
-   Без negative margin: жёсткий чистый блок 100px между секциями, не перекрывает
-   их и не подвержен stacking-context конфликтам (.series/.categories/.about
-   имеют isolation: isolate). Layout сдвигается на 100px на каждом стыке —
-   приемлемо для естественного «вдоха» между блоками. */
+/* Section connector — настоящий blur на стыке через backdrop-filter.
+   Лежит поверх стыка (negative margin -40 сверху и снизу), прозрачный,
+   размывает то что за ним — нижние 40px верхней секции и верхние 40px
+   нижней. Дает «замыленный» переход вместо резкой границы.
+   z-index: 5 + backdrop-filter создают свой stacking context — гарантирует
+   видимость поверх секций с isolation: isolate. */
 .section-connector {
-    height: 100px;
+    height: 80px;
+    margin-top: -40px;
+    margin-bottom: -40px;
     pointer-events: none;
     position: relative;
-    z-index: 0;
+    z-index: 5;
+    background: transparent;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 }

@@ -330,11 +330,32 @@ function buildDescription() {
 
 const description = buildDescription();
 
-// Ссылки на маркетплейсы (универсальные на бренд)
+// Ссылки на маркетплейсы — стиль идентичен блоку "Где купить" на главной
 const marketplaceLinks = [
-  { brand: 'OZON', name: 'Маркетплейс Ozon', url: 'https://www.ozon.ru/seller/ip-popov-a-yu/' },
-  { brand: 'WB', name: 'Wildberries', url: 'https://www.wildberries.ru/brands/312201750-awsproducts' },
-  { brand: 'ЭЦ', name: 'Электроцентр', url: 'https://stv39.ru/help/nashi-partnery/awsproducts/' }
+  {
+    key: 'ozon',
+    label: 'Маркетплейс',
+    name: 'Ozon',
+    desc: 'Быстрая доставка по России · ПВЗ в каждом городе',
+    url: 'https://www.ozon.ru/seller/ip-popov-a-yu/',
+    logo: '/aws-brand-site/logo/retailers/ozon.png'
+  },
+  {
+    key: 'wb',
+    label: 'Маркетплейс',
+    name: 'Wildberries',
+    desc: 'Пункты выдачи по всей стране',
+    url: 'https://www.wildberries.ru/brands/312201750-awsproducts',
+    logo: '/aws-brand-site/logo/retailers/wildberries.png'
+  },
+  {
+    key: 'ec',
+    label: 'Партнёр · опт',
+    name: 'Электроцентр',
+    desc: 'Консультация для монтажников',
+    url: 'https://stv39.ru/help/nashi-partnery/awsproducts/',
+    logo: '/aws-brand-site/logo/retailers/electrocentre.png'
+  }
 ];
 ---
 <BaseLayout title={`${title || product.article} — AWS Products`} description={description.slice(0, 160)}>
@@ -401,10 +422,22 @@ const marketplaceLinks = [
             <span class="prod-hero__buy-label">Где купить</span>
             <div class="prod-buy-row">
               {marketplaceLinks.map((m, i) => (
-                <a href={m.url} target="_blank" rel="noopener" class="prod-buy-btn" data-reveal="slide" style={`--i: ${8 + i}`}>
-                  <span class="prod-buy-btn__brand">{m.brand}</span>
+                <a href={m.url} target="_blank" rel="noopener"
+                   class={`prod-buy-btn prod-buy-btn--${m.key}`}
+                   data-tilt data-tilt-max="3"
+                   data-reveal="slide" style={`--i: ${8 + i}`}>
+                  <div class="prod-buy-btn__glow" aria-hidden="true"></div>
+                  <div class="prod-buy-btn__watermark" aria-hidden="true">
+                    <img src={m.logo} alt="" loading="lazy" />
+                  </div>
+                  <span class="prod-buy-btn__label">{m.label}</span>
                   <span class="prod-buy-btn__name">{m.name}</span>
-                  <span class="prod-buy-btn__arrow" aria-hidden="true">→</span>
+                  <span class="prod-buy-btn__desc">{m.desc}</span>
+                  <span class="prod-buy-btn__arrow" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                  </span>
                 </a>
               ))}
             </div>
@@ -414,28 +447,26 @@ const marketplaceLinks = [
     </div>
   </section>
 
-  <!-- ХАРАКТЕРИСТИКИ -->
-  <section class="prod-specs">
-    <div class="prod-specs__inner">
-      <p class="label" data-reveal="blur">Характеристики</p>
-      <h2 class="prod-specs__title" data-reveal="focus">Технические параметры</h2>
-      <dl class="prod-specs__list">
-        {specs.map(([k, v], i) => (
-          <div class="prod-specs__row" data-reveal="slide" style={`--i: ${i % 9}`}>
-            <dt class="prod-specs__label">{k}</dt>
-            <dd class="prod-specs__value">{v}</dd>
-          </div>
-        ))}
-      </dl>
-    </div>
-  </section>
-
-  <!-- ОПИСАНИЕ -->
-  <section class="prod-about">
-    <div class="prod-about__inner">
-      <p class="label" data-reveal="blur">Описание</p>
-      <h2 class="prod-about__title" data-reveal="focus">Что важно знать</h2>
-      <p class="prod-about__text" data-reveal="blur">{description}</p>
+  <!-- ОПИСАНИЕ + ХАРАКТЕРИСТИКИ (двухколоночная) -->
+  <section class="prod-details">
+    <div class="prod-details__inner">
+      <div class="prod-details__col prod-details__col--text">
+        <p class="label" data-reveal="blur">О товаре</p>
+        <h2 class="prod-details__title" data-reveal="focus">Что важно знать</h2>
+        <p class="prod-details__text" data-reveal="blur">{description}</p>
+      </div>
+      <div class="prod-details__col prod-details__col--specs">
+        <p class="label" data-reveal="blur">Характеристики</p>
+        <h2 class="prod-details__title" data-reveal="focus">Технические параметры</h2>
+        <dl class="prod-specs__list">
+          {specs.map(([k, v], i) => (
+            <div class="prod-specs__row" data-reveal="slide" style={`--i: ${i % 9}`}>
+              <dt class="prod-specs__label">{k}</dt>
+              <dd class="prod-specs__value">{v}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </div>
   </section>
 
@@ -607,87 +638,171 @@ const marketplaceLinks = [
       font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
       color: var(--gray-400, #999); margin: 24px 0 16px;
     }
+    /* === Buy-кнопки 2026 — glassmorphism, brand-glow, 3D-tilt, brand-shadow === */
     .prod-buy-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      gap: 12px;
+      perspective: 1000px;
     }
     .prod-buy-btn {
+      --brand: 0, 0, 0;
       position: relative;
-      display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
-      padding: 18px 22px;
-      background: var(--white, #fff);
-      border: 1.5px solid var(--gray-200, #e5e5e3);
-      border-radius: 14px;
+      display: flex; flex-direction: column; gap: 4px;
+      padding: 26px 24px 60px;
+      background: var(--warm-100, #f7f4ef);
+      border: 1px solid rgba(0,0,0,0.04);
+      border-radius: 18px;
       text-decoration: none;
       color: var(--black, #111);
-      transition: transform 0.25s cubic-bezier(.22,1,.36,1),
-                  border-color 0.25s ease,
-                  box-shadow 0.25s ease;
+      transition: background 0.5s cubic-bezier(.22,1,.36,1),
+                  border-color 0.4s,
+                  box-shadow 0.5s cubic-bezier(.22,1,.36,1);
       overflow: hidden;
       isolation: isolate;
+      min-height: 156px;
+      transform-style: preserve-3d;
+      will-change: transform;
     }
+    /* Brand-цвета: Ozon синий, WB фуксия, ЭЦ оранжевый */
+    .prod-buy-btn--ozon { --brand: 0, 91, 255; }
+    .prod-buy-btn--wb   { --brand: 203, 17, 171; }
+    .prod-buy-btn--ec   { --brand: 232, 93, 47; }
+
+    /* Brand-glow — невидимый по умолчанию radial-gradient в углу */
+    .prod-buy-btn__glow {
+      position: absolute; inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 85% 90%, rgba(var(--brand), 0.32) 0%, transparent 55%),
+        radial-gradient(circle at 15% 10%, rgba(var(--brand), 0.08) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.6s cubic-bezier(.22,1,.36,1);
+    }
+    /* Sweep-блик при hover */
     .prod-buy-btn::before {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(135deg, transparent 30%, rgba(140,184,107,0.12) 50%, transparent 70%);
-      transform: translateX(-120%);
-      transition: transform 0.7s cubic-bezier(.4,0,.2,1);
-      z-index: -1;
-    }
-    .prod-buy-btn:hover {
-      border-color: var(--black);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-    }
-    .prod-buy-btn:hover::before { transform: translateX(120%); }
-    .prod-buy-btn__brand {
-      font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
-      color: var(--gray-400, #999);
-    }
-    .prod-buy-btn__name {
-      font-size: 15px; font-weight: 700; color: var(--black, #111);
-      letter-spacing: -0.2px;
-    }
-    .prod-buy-btn__arrow {
-      position: absolute; top: 50%; right: 22px;
-      transform: translateY(-50%);
-      font-size: 18px; opacity: 0.3;
-      transition: transform 0.25s ease, opacity 0.25s ease, color 0.25s ease;
-      color: var(--gray-600);
-    }
-    .prod-buy-btn:hover .prod-buy-btn__arrow {
-      transform: translateY(-50%) translateX(4px);
-      opacity: 1;
-      color: var(--black);
+      background: linear-gradient(115deg,
+        transparent 30%,
+        rgba(255,255,255,0.6) 50%,
+        transparent 70%);
+      transform: translateX(-130%);
+      transition: transform 0.9s cubic-bezier(.4,0,.2,1);
+      pointer-events: none;
+      z-index: 1;
     }
 
-    /* === SPECS === */
-    .prod-specs {
+    .prod-buy-btn:hover {
       background: var(--white, #fff);
-      padding: 100px 0;
+      border-color: rgba(var(--brand), 0.25);
+      box-shadow:
+        0 4px 12px rgba(0,0,0,0.04),
+        0 22px 44px -12px rgba(var(--brand), 0.32);
     }
-    .prod-specs__inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
-    .prod-specs .label { display: block; margin-bottom: 16px; }
-    .prod-specs__title {
-      font-size: clamp(28px, 3.2vw, 44px);
+    .prod-buy-btn:hover .prod-buy-btn__glow { opacity: 1; }
+    .prod-buy-btn:hover::before { transform: translateX(130%); }
+
+    /* Watermark лого — крупное, с brand-glow за ним при hover */
+    .prod-buy-btn__watermark {
+      position: absolute;
+      bottom: -12%; right: -12%;
+      width: 70%; height: 95%;
+      opacity: 0.42;
+      pointer-events: none;
+      transform-origin: bottom right;
+      transition: opacity 0.55s cubic-bezier(.22,1,.36,1),
+                  transform 0.55s cubic-bezier(.22,1,.36,1),
+                  filter 0.55s ease;
+      z-index: 0;
+      filter: saturate(0.7);
+    }
+    .prod-buy-btn__watermark img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      object-position: bottom right;
+    }
+    .prod-buy-btn:hover .prod-buy-btn__watermark {
+      opacity: 0.95;
+      transform: scale(1.2);
+      filter: saturate(1);
+    }
+
+    .prod-buy-btn__label {
+      position: relative; z-index: 2;
+      font-size: 10px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase;
+      color: var(--gray-400, #999);
+      margin-bottom: 4px;
+      transition: color 0.3s ease;
+    }
+    .prod-buy-btn:hover .prod-buy-btn__label {
+      color: rgb(var(--brand));
+    }
+    .prod-buy-btn__name {
+      position: relative; z-index: 2;
+      font-size: 19px; font-weight: 700; color: var(--black, #111);
+      letter-spacing: -0.3px;
+      line-height: 1.1;
+    }
+    .prod-buy-btn__desc {
+      position: relative; z-index: 2;
+      font-size: 12px; line-height: 1.4;
+      color: var(--gray-600, #666);
+      margin-top: 6px; max-width: 90%;
+    }
+    .prod-buy-btn__arrow {
+      position: absolute; bottom: 22px; left: 24px;
+      z-index: 3;
+      width: 28px; height: 28px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: var(--white, #fff);
+      color: var(--black, #111);
+      transition: transform 0.35s cubic-bezier(.22,1,.36,1),
+                  background 0.35s, color 0.35s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    .prod-buy-btn__arrow svg { width: 14px; height: 14px; }
+    .prod-buy-btn:hover .prod-buy-btn__arrow {
+      transform: translateX(8px);
+      background: var(--black);
+      color: var(--white);
+    }
+
+    /* === DETAILS (Описание + Характеристики двумя колонками) === */
+    .prod-details {
+      background: var(--warm-100, #f7f4ef);
+      padding: 110px 0;
+    }
+    .prod-details__inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 60px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    }
+    .prod-details__col .label { display: block; margin-bottom: 16px; }
+    .prod-details__title {
+      font-size: clamp(26px, 3vw, 40px);
       font-weight: 800; line-height: 1.05; letter-spacing: -1px;
-      color: var(--black, #111); margin-bottom: 56px;
+      color: var(--black, #111); margin-bottom: 32px;
+    }
+    .prod-details__text {
+      font-size: 16.5px; line-height: 1.75;
+      color: var(--gray-800, #333);
+      margin: 0;
     }
     .prod-specs__list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0 80px;
-      margin: 0;
+      display: grid; grid-template-columns: 1fr;
+      gap: 0; margin: 0;
     }
     .prod-specs__row {
       display: grid;
-      grid-template-columns: minmax(140px, 200px) 1fr;
-      gap: 24px;
-      padding: 18px 0;
-      border-bottom: 1px solid var(--gray-200, #ececec);
+      grid-template-columns: minmax(140px, 180px) 1fr;
+      gap: 20px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
       align-items: center;
     }
+    .prod-specs__row:first-child { padding-top: 0; }
     .prod-specs__label {
       font-size: 13px; font-weight: 500;
       color: var(--gray-600, #666);
@@ -695,26 +810,8 @@ const marketplaceLinks = [
       margin: 0;
     }
     .prod-specs__value {
-      font-size: 15px; font-weight: 600;
+      font-size: 14.5px; font-weight: 600;
       color: var(--black, #111);
-      margin: 0;
-    }
-
-    /* === ABOUT === */
-    .prod-about {
-      background: var(--warm-100, #f7f4ef);
-      padding: 100px 0;
-    }
-    .prod-about__inner { max-width: 880px; margin: 0 auto; padding: 0 60px; }
-    .prod-about .label { display: block; margin-bottom: 16px; }
-    .prod-about__title {
-      font-size: clamp(28px, 3.2vw, 44px);
-      font-weight: 800; line-height: 1.05; letter-spacing: -1px;
-      color: var(--black, #111); margin-bottom: 36px;
-    }
-    .prod-about__text {
-      font-size: 17px; line-height: 1.75;
-      color: var(--gray-800, #333);
       margin: 0;
     }
 
@@ -764,16 +861,17 @@ const marketplaceLinks = [
 
     /* === RESPONSIVE === */
     @media (max-width: 980px) {
-      .prod-hero__inner, .prod-specs__inner, .prod-about__inner, .prod-related__inner { padding: 0 24px; }
+      .prod-hero__inner, .prod-details__inner, .prod-related__inner { padding: 0 24px; }
       .prod-hero__grid { grid-template-columns: 1fr; gap: 40px; }
       .prod-hero__media-wrap { position: static; }
       .prod-hero__media { padding: 40px; }
-      .prod-specs__list { grid-template-columns: 1fr; gap: 0; }
+      .prod-details__inner { grid-template-columns: 1fr; gap: 56px; }
       .prod-related__grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 560px) {
       .prod-hero { padding: 80px 0 60px; }
-      .prod-buy-row { grid-template-columns: 1fr; }
+      .prod-buy-row { grid-template-columns: 1fr; gap: 10px; }
+      .prod-buy-btn { min-height: 120px; padding: 22px 20px 56px; }
       .prod-related__grid { grid-template-columns: 1fr; }
     }
   </style>

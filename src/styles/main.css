@@ -500,11 +500,10 @@ a { text-decoration: none; color: inherit; }
 
 .hero-slide__btn:hover,
 .btn-switch:hover {
-    transform: translateY(1px);
+    transform: translateY(-2px) scale(1.04);
     box-shadow:
-        0 1px 0 rgba(0,0,0,0.12),
-        0 4px 14px rgba(0,0,0,0.16),
-        0 14px 24px -10px rgba(94,140,58,0.55),
+        0 6px 14px rgba(0,0,0,0.16),
+        0 14px 28px -10px rgba(0,0,0,0.18),
         inset 0 1px 0 rgba(255,255,255,0.9);
     color: var(--black);
 }
@@ -1522,6 +1521,14 @@ a { text-decoration: none; color: inherit; }
     margin-bottom: 40px !important;
 }
 .cat-cta .btn-switch { margin: 0 auto; }
+/* На тёмном фоне cat-cta — без линии и без зелёной подсветки */
+.cat-cta .btn-switch::after { display: none; }
+.cat-cta .btn-switch:hover {
+    box-shadow:
+        0 6px 14px rgba(0,0,0,0.35),
+        0 16px 28px -10px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.9) !important;
+}
 
 /* === GLOBAL: модалка «Где купить» === */
 .buy-modal { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; }
@@ -1619,13 +1626,12 @@ a { text-decoration: none; color: inherit; }
     font-size: 15px; font-weight: 400;
     color: rgba(255,255,255,0.7);
     text-decoration: none;
-    transition: color 0.2s ease, transform 0.2s ease;
+    transition: color 0.2s ease;
     display: inline-flex; align-items: center; gap: 8px;
     width: fit-content;
 }
 .footer-v2__col a:hover {
     color: #fff;
-    transform: translateX(4px);
 }
 .footer-v2__icon {
     width: 16px; height: 16px; display: inline-flex;

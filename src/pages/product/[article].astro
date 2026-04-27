@@ -676,7 +676,7 @@ const docs = [
       --brand: 0, 0, 0;
       position: relative;
       display: flex; flex-direction: column; gap: 4px;
-      padding: 24px 26px;
+      padding: 24px 30px 70px 26px;
       background: var(--warm-100, #f7f4ef);
       border: 1px solid rgba(0,0,0,0.04);
       border-radius: 18px;
@@ -687,7 +687,7 @@ const docs = [
                   box-shadow 0.5s cubic-bezier(.22,1,.36,1);
       overflow: hidden;
       isolation: isolate;
-      min-height: 130px;
+      min-height: 150px;
       transform-style: preserve-3d;
       will-change: transform;
     }
@@ -731,15 +731,15 @@ const docs = [
     .prod-buy-btn:hover .prod-buy-btn__glow { opacity: 1; }
     .prod-buy-btn:hover::before { transform: translateX(130%); }
 
-    /* Watermark лого — крупное и поднятое выше (центрировано по высоте) */
+    /* Watermark лого — в правом НИЖНЕМ углу (не перекрывает текст) */
     .prod-buy-btn__watermark {
       position: absolute;
-      top: 50%; right: -8%;
-      transform: translateY(-50%) scale(1);
-      width: 78%; height: 88%;
-      opacity: 0.5;
+      bottom: -10%; right: -8%;
+      width: 62%; height: 75%;
+      opacity: 0.42;
       pointer-events: none;
-      transform-origin: center right;
+      transform-origin: bottom right;
+      transform: scale(1);
       transition: opacity 0.55s cubic-bezier(.22,1,.36,1),
                   transform 0.55s cubic-bezier(.22,1,.36,1),
                   filter 0.55s ease;
@@ -749,11 +749,11 @@ const docs = [
     .prod-buy-btn__watermark img {
       width: 100%; height: 100%;
       object-fit: contain;
-      object-position: center right;
+      object-position: bottom right;
     }
     .prod-buy-btn:hover .prod-buy-btn__watermark {
-      opacity: 1;
-      transform: translateY(-50%) scale(1.12);
+      opacity: 0.95;
+      transform: scale(1.18);
       filter: saturate(1);
     }
 
@@ -769,9 +769,12 @@ const docs = [
     }
     .prod-buy-btn__name {
       position: relative; z-index: 2;
-      font-size: 20px; font-weight: 700; color: var(--black, #111);
-      letter-spacing: -0.3px;
-      line-height: 1.1;
+      font-size: 18px; font-weight: 700; color: var(--black, #111);
+      letter-spacing: -0.4px;
+      line-height: 1.15;
+      max-width: 100%;
+      word-break: keep-all;
+      overflow-wrap: break-word;
     }
 
     /* === DETAILS — стат-hero сверху + 2 колонки (description + specs) === */

@@ -44,14 +44,24 @@ def main():
             # Пропускаем дубли в нижнем регистре
             if article.lower() == article and any(d.name == article.upper() for d in source_dir.iterdir()):
                 continue
-            anfas = article_dir / f"{article} 1_nobg.png"
-            if not anfas.exists():
-                # Пробуем альтернативные имена
-                anfas = next(article_dir.glob("* 1_nobg.png"), None)
-                if not anfas or not anfas.exists():
-                    print(f"  SKIP {article}: нет 1_nobg.png")
-                    not_found += 1
-                    continue
+            # Кандидаты на анфас-фото в порядке предпочтения:
+            # 1) UNO-стиль: "${article} 1_nobg.png"
+            # 2) AURA-стиль: "${article} 1 без фона_nobg.png"
+            # 3) Любой "* 1*_nobg.png" (fallback)
+            candidates = [
+                article_dir / f"{article} 1_nobg.png",
+                article_dir / f"{article} 1 без фона_nobg.png",
+            ]
+            anfas = next((c for c in candidates if c.exists()), None)
+            if not anfas:
+                # Fallback по glob
+                anfas = next(article_dir.glob("* 1*_nobg.png"), None)
+                if not anfas:
+                    anfas = next(article_dir.glob("*_nobg.png"), None)
+            if not anfas or not anfas.exists():
+                print(f"  SKIP {article}: нет _nobg.png")
+                not_found += 1
+                continue
 
             target = PRODUCTS_DIR / f"{article}.webp"
             if not target.exists():

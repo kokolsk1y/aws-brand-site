@@ -1146,7 +1146,7 @@ a { text-decoration: none; color: inherit; }
 
 .categories__card {
     display: block;
-    background: var(--gray-100);
+    background: var(--warm-100);
     border-radius: 12px;
     overflow: hidden;
     transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s;
@@ -1738,7 +1738,7 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     flex-direction: column;
     padding: 48px 36px;
-    background: var(--gray-100);
+    background: var(--warm-100);
     transition: background 0.4s, color 0.4s;
     position: relative;
     overflow: hidden;
@@ -3863,11 +3863,14 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* Section connectors — только между близкими тонами. JS-ом в script.js. */
+/* Section connector — плавный градиент-перемычка между светлыми соседями.
+   z-index: 5 нужен чтобы перекрыть стек-контекст соседних секций
+   (у секций position: relative по умолчанию, они перекрывали connector). */
 .section-connector {
-    height: 60px;
+    height: 80px;
     pointer-events: none;
-    margin-top: -30px;
-    margin-bottom: -30px;
+    margin-top: -40px;
+    margin-bottom: -40px;
     position: relative;
-    z-index: 0;
+    z-index: 5;
 }

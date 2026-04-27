@@ -826,7 +826,7 @@ a { text-decoration: none; color: inherit; }
 .series > *, .categories > *, .about > * { position: relative; z-index: 1; }
 
 .series {
-    padding: 120px 0 80px;
+    padding: 80px 0 30px;
     background: var(--warm-100);
 }
 
@@ -1117,7 +1117,7 @@ a { text-decoration: none; color: inherit; }
    ============================ */
 
 .categories {
-    padding: 120px 0;
+    padding: 60px 0 60px;
     background: var(--white);
 }
 
@@ -1226,7 +1226,7 @@ a { text-decoration: none; color: inherit; }
    ============================ */
 
 .about {
-    padding: 160px 0;
+    padding: 100px 0 110px;
     background: var(--warm-100);
 }
 
@@ -1711,7 +1711,7 @@ a { text-decoration: none; color: inherit; }
    ============================ */
 
 .where-buy {
-    padding: 120px 0;
+    padding: 60px 0;
     background: var(--white);
 }
 
@@ -2557,7 +2557,7 @@ a { text-decoration: none; color: inherit; }
    СРАВНЕНИЕ
    ============================ */
 .compare {
-    padding: 160px 0 110px;
+    padding: 110px 0 70px;
     background: var(--white);
 }
 .compare__inner {
@@ -2735,7 +2735,7 @@ a { text-decoration: none; color: inherit; }
    ОТЗЫВЫ — бесконечная лента (2 ряда)
    ============================ */
 .reviews {
-    padding: 80px 0;
+    padding: 40px 0;
     background: var(--warm-100);
     overflow: hidden;
 }
@@ -2891,7 +2891,7 @@ a { text-decoration: none; color: inherit; }
    FAQ
    ============================ */
 .faq {
-    padding: 160px 0;
+    padding: 100px 0;
     background: var(--white);
 }
 .faq__inner {
@@ -2965,7 +2965,7 @@ a { text-decoration: none; color: inherit; }
    ДОКУМЕНТЫ
    ============================ */
 .docs {
-    padding: 160px 0;
+    padding: 100px 0;
     background: var(--warm-100);
 }
 .docs__inner {
@@ -3864,13 +3864,13 @@ a { text-decoration: none; color: inherit; }
 
 /* Section connectors — только между близкими тонами. JS-ом в script.js. */
 /* Section connector — плавный градиент-перемычка между светлыми соседями.
-   z-index: 5 нужен чтобы перекрыть стек-контекст соседних секций
-   (у секций position: relative по умолчанию, они перекрывали connector). */
+   Без negative margin: жёсткий чистый блок 100px между секциями, не перекрывает
+   их и не подвержен stacking-context конфликтам (.series/.categories/.about
+   имеют isolation: isolate). Layout сдвигается на 100px на каждом стыке —
+   приемлемо для естественного «вдоха» между блоками. */
 .section-connector {
-    height: 80px;
+    height: 100px;
     pointer-events: none;
-    margin-top: -40px;
-    margin-bottom: -40px;
     position: relative;
-    z-index: 5;
+    z-index: 0;
 }

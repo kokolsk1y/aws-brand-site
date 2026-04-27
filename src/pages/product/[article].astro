@@ -390,7 +390,7 @@ const docs = [
 <BaseLayout title={`${title || product.article} — AWS Products`} description={description.slice(0, 160)}>
 
   <!-- HERO ТОВАРА -->
-  <section class={`prod-hero ${product.series === 'uno' ? 'prod-hero--uno' : ''}`}>
+  <section class="prod-hero">
     <div class="prod-hero__inner">
       <nav class="prod-hero__crumbs">
         <a href="/aws-brand-site/">Главная</a>
@@ -666,30 +666,23 @@ const docs = [
     .prod-hero__media-wrap { position: sticky; top: 100px; }
     .prod-hero__media {
       aspect-ratio: 1/1; background: var(--warm-100, #f7f4ef);
-      border-radius: 20px; overflow: hidden;
+      border-radius: 20px; overflow: visible;
       display: flex; align-items: center; justify-content: center;
       padding: 60px;
-      box-shadow: 0 30px 60px -20px rgba(0,0,0,0.12);
-      transition: transform 0.6s cubic-bezier(.22,1,.36,1);
     }
-    .prod-hero__media:hover { transform: translateY(-4px); }
     .prod-hero__media img {
       max-width: 100%; max-height: 100%; object-fit: contain;
-      mix-blend-mode: multiply;
-      transition: transform 0.6s cubic-bezier(.22,1,.36,1);
-    }
-    .prod-hero__media:hover img { transform: scale(1.04); }
-
-    /* === Серия UNO ===
-       Обложка без своей тени — единственная тень принадлежит товару
-       и падает по его силуэту через filter: drop-shadow.
-       mix-blend-mode: normal обязателен — иначе multiply перебивает filter. */
-    .prod-hero--uno .prod-hero__media {
-      box-shadow: none;
-    }
-    .prod-hero--uno .prod-hero__media img {
-      mix-blend-mode: normal;
       filter: drop-shadow(0 22px 28px rgba(0,0,0,0.28));
+      transition:
+        transform 0.55s cubic-bezier(.22,1,.36,1),
+        filter 0.55s cubic-bezier(.22,1,.36,1);
+      will-change: transform, filter;
+    }
+    /* Hover: товар «взлетает» над обложкой — поднимается, увеличивается,
+       тень углубляется и смещается ниже (физика подъёма объекта). */
+    .prod-hero__media:hover img {
+      transform: translateY(-10px) scale(1.05);
+      filter: drop-shadow(0 38px 48px rgba(0,0,0,0.34));
     }
     .prod-hero__placeholder {
       font-size: 13px; letter-spacing: 2px; text-transform: uppercase;

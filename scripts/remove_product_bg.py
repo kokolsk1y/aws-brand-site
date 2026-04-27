@@ -19,8 +19,8 @@ PRODUCTS_DIR = ROOT / "public" / "img" / "products"
 BACKUP_DIR = ROOT / "scripts" / "products_backup"
 BACKUP_DIR.mkdir(parents=True, exist_ok=True)
 
-# UNO: префиксы U1A (белый цвет) и U2B (чёрный цвет)
-PATTERNS = ["U1A-*.webp", "U2B-*.webp"]
+# Все товары — серия UNO (U1A/U2B), AURA (A-*) и категории
+PATTERNS = ["*.webp"]
 
 # Допуск маленький: 5 единиц на канал. Не захватит белые клавиши
 # выключателя (отделены от внешнего фона серой рамой).
@@ -32,14 +32,26 @@ def color_close(a, b, tol):
     return all(abs(int(a[i]) - int(b[i])) <= tol for i in range(3))
 
 
+def is_white(px, tol=10):
+    return all(c >= 255 - tol for c in px[:3])
+
+
 def remove_bg(path: Path):
     img = Image.open(path).convert("RGBA")
     w, h = img.size
     pixels = img.load()
-    bg = pixels[0, 0][:3]
+
+    # Стартуем flood ТОЛЬКО из тех углов где явно белый фон —
+    # иначе если в углу торчит часть товара (кабель и т.п.),
+    # скрипт примет его за фон и стирёт.
+    corners = [(0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)]
+    white_corners = [(x, y) for x, y in corners if is_white(pixels[x, y])]
+    if not white_corners:
+        return None  # ни одного белого угла — фон не белый, пропускаем
+    bg = (255, 255, 255)
 
     visited = bytearray(w * h)
-    stack = [(0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)]
+    stack = list(white_corners)
 
     while stack:
         x, y = stack.pop()

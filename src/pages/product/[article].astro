@@ -390,7 +390,7 @@ const docs = [
 <BaseLayout title={`${title || product.article} — AWS Products`} description={description.slice(0, 160)}>
 
   <!-- HERO ТОВАРА -->
-  <section class="prod-hero">
+  <section class={`prod-hero ${product.series === 'uno' ? 'prod-hero--uno' : ''}`}>
     <div class="prod-hero__inner">
       <nav class="prod-hero__crumbs">
         <a href="/aws-brand-site/">Главная</a>
@@ -679,6 +679,20 @@ const docs = [
       transition: transform 0.6s cubic-bezier(.22,1,.36,1);
     }
     .prod-hero__media:hover img { transform: scale(1.04); }
+
+    /* === Серия UNO ===
+       1) тень обложки уменьшена (карточка перестаёт «парить»)
+       2) у img убран mix-blend-mode: multiply — он перебивал drop-shadow,
+          поэтому раньше тень от товара не была видна
+       3) сам выключатель получает drop-shadow — тень падает по форме
+          объекта на бежевый фон обложки */
+    .prod-hero--uno .prod-hero__media {
+      box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+    }
+    .prod-hero--uno .prod-hero__media img {
+      mix-blend-mode: normal;
+      filter: drop-shadow(0 22px 28px rgba(0,0,0,0.28));
+    }
     .prod-hero__placeholder {
       font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
       color: rgba(0,0,0,0.25);

@@ -14,51 +14,8 @@ const keyToCategory = {
   'cable': 'cables'
 };
 
-// Собираем все товары из products.json + series.json
-function collectAll() {
-  const all = [];
-  // 1. Из products.json — 6 категорий
-  for (const [key, data] of Object.entries(productsAll)) {
-    const catSlug = keyToCategory[key];
-    if (!data.items) continue;
-    for (const item of data.items) {
-      all.push({
-        article: item.article,
-        name: item.name,
-        photo: item.photo.replace(/^img\//, '/img/'),
-        category: catSlug,
-        categoryTitle: categoriesMeta[catSlug]?.title || data.title,
-        isProduct: true
-      });
-    }
-  }
-  // 2. Из series.json — товары серий UNO/AURA
-  for (const [slug, series] of Object.entries(seriesData)) {
-    if (!series.groups) continue;
-    for (const groupKey of ['switches', 'sockets', 'frames', 'accessories', 'other']) {
-      const items = series.groups[groupKey] || [];
-      for (const item of items) {
-        all.push({
-          article: item.article,
-          name: item.name,
-          photo: `/img/products/${item.article}.webp`,
-          category: null,
-          categoryTitle: null,
-          series: slug,
-          seriesName: series.name,
-          color: item.color,
-          groupKey,
-          isSeries: true
-        });
-      }
-    }
-  }
-  return all;
-}
-
 export async function getStaticPaths() {
   const all = [];
-  // Повторяем логику сбора (нельзя вызвать функцию из body вне getStaticPaths)
   const keyToCat = {
     'udl_home': 'extensions-home', 'udl_garden': 'extensions-garden',
     'power': 'power-connectors', 'clamps': 'clamps',
@@ -85,7 +42,6 @@ export async function getStaticPaths() {
 const { article } = Astro.params;
 const { meta } = Astro.props;
 
-// Достаём полные данные
 let product;
 if (meta.source === 'cat') {
   const catSlug = keyToCategory[meta.key];
@@ -111,49 +67,202 @@ if (meta.source === 'cat') {
   };
 }
 
-// Парсинг меты как на category странице
+// === Парсинг названия и характеристик ===
+
 function extractMeta(name) {
   const m = [];
-  const len = name.match(/(\d+(?:[,.]\d+)?)\s*м(?![м²])/);
+  const len = name.match(/(\d+(?:[,.]\d+)?)\s*м(?![м²a-zа-я])/);
   if (len) m.push(`${len[1].replace(',', '.')} м`);
   const sockets = name.match(/(\d+)\s*гн/);
-  if (sockets) m.push(`${sockets[1]} гнёзд`);
+  if (sockets) m.push(`${sockets[1]} ${+sockets[1] === 1 ? 'гнездо' : 'гнёзд'}`);
   if (/с\/з/.test(name)) m.push('с заземлением');
   else if (/б\/з/.test(name)) m.push('без заземления');
   const ip = name.match(/IP\s*(\d{2})/i);
   if (ip) m.push(`IP${ip[1]}`);
   const amp = name.match(/(\d+)\s*А(?![a-z])/);
   if (amp) m.push(`${amp[1]} А`);
-  const holes = name.match(/(\d+)\s*отверст/i);
-  if (holes) m.push(`${holes[1]} отв.`);
-  if (/рычажк/i.test(name)) m.push('рычажк.');
+  if (/рычажк/i.test(name)) m.push('рычажковая');
   const cat = name.match(/CAT\.?\s*(\d[a-zA-Z]*)/i);
   if (cat) m.push(`Cat.${cat[1]}`);
-  if (/FTP/i.test(name) && !m.some(x => /FTP/i.test(x))) m.push('FTP');
-  if (/\bUTP\b/i.test(name) && !m.some(x => /UTP/i.test(x))) m.push('UTP');
-  if (/SAT-\d+/i.test(name)) m.push('SAT');
+  if (/FTP/i.test(name)) m.push('FTP');
+  else if (/\bUTP\b/i.test(name)) m.push('UTP');
   if (/OUTDOOR/i.test(name)) m.push('Outdoor');
   else if (/INDOOR/i.test(name)) m.push('Indoor');
-  const wire = name.match(/(\d+(?:[,.]\d+)?)-(\d+(?:[,.]\d+)?)\s*мм²?/);
-  if (wire) m.push(`${wire[1].replace(',','.')}–${wire[2].replace(',','.')} мм²`);
   return m;
 }
 
-function shortName(name) {
-  return name
+// Очищенное короткое название — без артикула, тех-обозначений и кодов.
+// Оставляет тип товара и 1-2 ключевых модификатора.
+function cleanTitle(name) {
+  let t = name
     .replace(/\s*\(AWSPRODUCTS\)/gi, '')
     .replace(/\s*AWSproducts?/gi, '')
-    .replace(/\"Uno\"|\"Аура\"|\"Aura\"/gi, '')
-    .replace(/\bSoftTouch\b/gi, '')
+    .replace(/"[^"]*"/g, '')
     .replace(/[A-Z]\d+[A-Z]?-\S+/g, '')
+    .replace(/\bSoftTouch\b/gi, '')
+    .replace(/\bПВС\s*\d+(?:[xх]\d+)?(?:[,.]\d+)?\s*(?:мм²?|mm2)?\b/gi, '')
+    .replace(/\b\d+(?:[,.]\d+)?[xх]\d+(?:[,.]\d+)?\s*(?:мм²?|mm2)\b/gi, '')
+    .replace(/\b\d+(?:[,.]\d+)?\s*мм²?\b/gi, '')
+    .replace(/\bIP\s*\d{2}\b/gi, '')
+    .replace(/\bCAT\.?\s*\d[a-zA-Z]*\b/gi, '')
+    .replace(/\b(?:FTP|UTP|SAT-?\d+)\b/gi, '')
+    .replace(/\b(?:Indoor|Outdoor)\b/gi, '')
+    .replace(/[,;]\s*[,;]/g, ',')
+    .replace(/^[,.\s]+|[,.\s]+$/g, '')
     .replace(/\s+/g, ' ')
     .trim();
+  return t;
+}
+
+// Сабтайтл — 1-строчная сводка из ключевых характеристик
+function buildTeaser(meta) {
+  if (!meta.length) return '';
+  return meta.slice(0, 3).join(' · ');
+}
+
+// 4 highlights в зависимости от типа товара
+function buildHighlights(name, seriesName) {
+  if (/удлинитель/i.test(name)) {
+    return [
+      'Кабель ПВС с медными жилами',
+      'Корпус из ABS-пластика, устойчивого к нагреву',
+      'Защёлкивающиеся гнёзда — стабильный контакт',
+      'Гарантия производителя 1 год'
+    ];
+  }
+  if (/клемма/i.test(name)) {
+    if (/рычажк/i.test(name)) {
+      return [
+        'Рычажковый зажим — соединение без инструмента',
+        'Подходит для одножильного и многожильного провода',
+        'Прозрачный корпус — видно полноту захвата',
+        'Сертификация EAC и ГОСТ'
+      ];
+    }
+    return [
+      'Полированные латунные контакты',
+      'Винтовое соединение под высокий ток',
+      'Корпус из самозатухающего полимера',
+      'Сертификация EAC и ГОСТ'
+    ];
+  }
+  if (/патч-корд/i.test(name)) {
+    return [
+      'Литые RJ45 коннекторы с позолоченными контактами',
+      'Стабильная передача данных до 1 Гбит/с',
+      'Гибкий кабель с защитой от перелома',
+      'Совместимость со всем сетевым оборудованием'
+    ];
+  }
+  if (/^кабель/i.test(name)) {
+    return [
+      'Медные жилы — без алюминия и омеднённой стали',
+      'Категория 5e/6 — скорость до 1 Гбит/с',
+      'Версии Indoor и Outdoor для разных условий',
+      'Соответствие ГОСТ 15845-80'
+    ];
+  }
+  if (/коннектор|разъём|разъем/i.test(name)) {
+    return [
+      'Класс защиты IP68 — пыль и погружение в воду',
+      'Литой корпус из УФ-стойкого пластика',
+      'Уплотнительные кольца для герметичности',
+      'Подходит для уличного освещения и насосов'
+    ];
+  }
+  if (/выключатель/i.test(name)) {
+    return [
+      `Серия ${seriesName || 'AWS'} — продуманная классика`,
+      'Soft-touch покрытие клавиши',
+      'Латунные контакты, тихий ход',
+      'Гарантия производителя 2 года'
+    ];
+  }
+  if (/розетк/i.test(name)) {
+    return [
+      'Защитные шторки от детей',
+      'Полированная латунь на контактах',
+      'Корпус из ABS, не желтеет со временем',
+      'Гарантия производителя 2 года'
+    ];
+  }
+  if (/рамк/i.test(name)) {
+    return [
+      'Точная геометрия и ровные линии',
+      'ABS-пластик устойчивый к УФ',
+      'Совместимость с механизмами серии',
+      'Гарантия производителя 2 года'
+    ];
+  }
+  return [
+    'Качественные материалы и сборка',
+    'Стандарт EAC и ГОСТ',
+    'Гарантия производителя',
+    'Совместимость с распространёнными подрозетниками'
+  ];
+}
+
+// Таблица характеристик
+function buildSpecs(p) {
+  const rows = [['Артикул', p.article]];
+  const n = p.name;
+
+  const len = n.match(/(\d+(?:[,.]\d+)?)\s*м(?![м²a-zа-я])/);
+  if (len) rows.push(['Длина', `${len[1].replace(',', '.')} м`]);
+
+  const sockets = n.match(/(\d+)\s*гн/);
+  if (sockets) rows.push(['Гнёзд', sockets[1]]);
+
+  if (/с\/з/.test(n)) rows.push(['Заземление', 'Да']);
+  else if (/б\/з/.test(n)) rows.push(['Заземление', 'Нет']);
+
+  const wire = n.match(/(\d+(?:[,.]\d+)?)[xх](\d+(?:[,.]\d+)?)\s*(?:мм²?|mm2)?/);
+  if (wire) rows.push(['Сечение жилы', `${wire[1]}×${wire[2]} мм²`]);
+
+  if (/\bПВС\b/i.test(n)) rows.push(['Тип кабеля', 'ПВС']);
+  if (/\bВВГ/i.test(n)) rows.push(['Тип кабеля', 'ВВГ']);
+
+  const ip = n.match(/IP\s*(\d{2})/i);
+  if (ip) rows.push(['Класс защиты', `IP${ip[1]}`]);
+
+  const amp = n.match(/(\d+)\s*А(?![a-z])/);
+  if (amp) rows.push(['Номинальный ток', `${amp[1]} А`]);
+
+  const cat = n.match(/CAT\.?\s*(\d[a-zA-Z]*)/i);
+  if (cat) rows.push(['Категория', `Cat.${cat[1]}`]);
+
+  if (/FTP/i.test(n)) rows.push(['Экран', 'FTP (фольгированный)']);
+  else if (/\bUTP\b/i.test(n)) rows.push(['Экран', 'UTP (без экрана)']);
+
+  if (/OUTDOOR/i.test(n)) rows.push(['Применение', 'Outdoor — для улицы']);
+  else if (/INDOOR/i.test(n)) rows.push(['Применение', 'Indoor — для помещений']);
+
+  if (p.color) {
+    const colorRu = { white: 'Белый', black: 'Чёрный' }[p.color] || p.color;
+    rows.push(['Цвет', colorRu]);
+  }
+
+  if (p.seriesName) rows.push(['Серия', p.seriesName]);
+
+  if (/удлинитель|клемма|патч-корд|^кабель|коннектор|разъ[её]м/i.test(n)) {
+    rows.push(['Гарантия', '1 год']);
+  } else {
+    rows.push(['Гарантия', '2 года']);
+  }
+
+  rows.push(['Сертификация', 'EAC, ГОСТ']);
+  rows.push(['Бренд', 'AWS Products']);
+
+  return rows;
 }
 
 const meta3 = extractMeta(product.name);
-const title = shortName(product.name);
+const title = cleanTitle(product.name);
+const teaser = buildTeaser(meta3);
+const highlights = buildHighlights(product.name, product.seriesName);
+const specs = buildSpecs(product);
 
-// Связанные товары (до 4 штук из той же категории/серии)
+// Связанные товары
 function findRelated() {
   const list = [];
   if (product.crumbType === 'category') {
@@ -162,7 +271,7 @@ function findRelated() {
     if (data?.items) {
       list.push(...data.items.filter(i => i.article !== product.article).slice(0, 4).map(i => ({
         article: i.article,
-        name: shortName(i.name),
+        name: cleanTitle(i.name),
         photo: i.photo.replace(/^img\//, '/img/'),
         meta: extractMeta(i.name).slice(0, 2)
       })));
@@ -186,40 +295,49 @@ function findRelated() {
 
 const related = findRelated();
 
-// Генерим подробное описание на основе типа
+// Описание
 function buildDescription() {
-  const base = [];
   if (/удлинитель/i.test(product.name)) {
-    base.push('Надёжный удлинитель с качественным кабелем ПВС и защёлкивающимися гнёздами. Корпус из ABS-пластика устойчивого к нагреву. Прочный провод с изолирующим слоем, обеспечивающим безопасное соединение.');
-  } else if (/клемма/i.test(product.name)) {
-    if (/рычажк/i.test(product.name)) {
-      base.push('Рычажковая клемма для быстрого соединения проводов без пайки. Защёлкивается с первого раза — надёжный контакт обеспечен. Подходит для многожильного и одножильного провода.');
-    } else {
-      base.push('Винтовая клемма для надёжного соединения проводов в распределительных коробках, светильниках и бытовой электрике. Полированные латунные контакты обеспечивают стабильное соединение.');
-    }
-  } else if (/патч-корд/i.test(product.name)) {
-    base.push('Патч-корд для соединения сетевого оборудования. Литые RJ45 коннекторы с позолоченными контактами — стабильная передача данных. Гибкий кабель с защитой от перелома.');
-  } else if (/^кабель/i.test(product.name)) {
-    base.push('Сетевой кабель с медными жилами категории 5e/6. Подходит для передачи данных и телевизионного сигнала. Есть версии для внутренней (Indoor) и наружной (Outdoor) прокладки.');
-  } else if (/коннектор/i.test(product.name)) {
-    base.push('Герметичный кабельный коннектор с классом защиты IP68 — выдерживает погружение и пыль. Используется для уличного освещения, насосов и других уличных систем.');
-  } else if (/выключатель/i.test(product.name)) {
-    const series = product.seriesName || 'AWS';
-    base.push(`Выключатель серии ${series}. Soft-touch покрытие клавиши, тихий ход, латунные контакты для стабильной работы в течение многих лет.`);
-  } else if (/розетк/i.test(product.name)) {
-    base.push(`Розетка с защитой от детей — шторки закрывают отверстия пока не вставишь вилку. Корпус из прочного ABS, контактные группы — полированная латунь.`);
-  } else if (/рамка/i.test(product.name)) {
-    base.push(`Рамка для монтажа электроустановочных изделий. Точная геометрия, ровные линии, ABS-пластик устойчивый к УФ и пожелтению.`);
-  } else {
-    base.push('Изделие бренда AWS Products. Качественные материалы, надёжная сборка, долгая эксплуатация.');
+    return 'Удлинитель собран на качественном кабеле ПВС с медными жилами — стабильное соединение и низкий нагрев под нагрузкой. Корпус выполнен из ABS-пластика, устойчивого к ультрафиолету и температурным перепадам. Защёлкивающиеся гнёзда удерживают вилку без люфта, обеспечивая надёжный контакт. Подходит для использования в быту, на даче и на улице — модели с маркировкой Outdoor имеют усиленную изоляцию для уличных условий.';
   }
-  base.push('Совместимо со стандартными подрозетниками 68 мм. Быстрый монтаж благодаря винтовым зажимам и чёткой маркировке контактов.');
-  return base;
+  if (/клемма/i.test(product.name)) {
+    if (/рычажк/i.test(product.name)) {
+      return 'Рычажковая клемма — самый быстрый способ соединить провода без пайки и инструмента. Поднимаете рычаг, вставляете зачищенный провод, опускаете рычаг — соединение готово. Прозрачный корпус позволяет визуально контролировать качество захвата. Подходит для одножильного и многожильного медного провода.';
+    }
+    return 'Винтовая клемма с латунными контактами для надёжного соединения проводов в распределительных коробках, светильниках и бытовой электрике. Полированные контактные группы обеспечивают стабильное соединение без подгорания. Корпус из самозатухающего полимера соответствует требованиям пожарной безопасности.';
+  }
+  if (/патч-корд/i.test(product.name)) {
+    return 'Патч-корд для коммутации сетевого оборудования — серверов, роутеров, коммутаторов, рабочих мест. Литые RJ45 коннекторы с позолоченными контактами обеспечивают стабильную передачу данных без потерь. Гибкий медный кабель сохраняет работоспособность после многократных перегибов и совместим со всем стандартным сетевым оборудованием.';
+  }
+  if (/^кабель/i.test(product.name)) {
+    return 'Сетевой кабель с медными жилами категории Cat.5e или Cat.6 — стандарт для построения локальных сетей со скоростью до 1 Гбит/с. Без алюминиевых заменителей и омеднённой стали — только чистая медь, что гарантирует стабильную передачу сигнала на расстоянии до 100 м. Версии Indoor и Outdoor отличаются изоляцией для соответствующих условий прокладки.';
+  }
+  if (/коннектор|разъ[её]м/i.test(product.name)) {
+    return 'Кабельный коннектор с классом защиты IP68 — выдерживает погружение в воду и пыль высокой концентрации. Литой корпус из УФ-стойкого пластика, уплотнительные кольца обеспечивают герметичность соединения. Используется для уличного освещения, садовых насосов, систем полива и других уличных электросистем где требуется стойкость к атмосферным условиям.';
+  }
+  if (/выключатель/i.test(product.name)) {
+    const s = product.seriesName || 'AWS';
+    return `Выключатель серии ${s} — продуманная классика для жилых интерьеров. Soft-touch покрытие клавиши приятно на ощупь и не собирает отпечатков. Латунные контактные группы и тихий ход механизма обеспечивают стабильную работу на годы вперёд. Совместим со стандартными подрозетниками 68 мм, монтаж винтовыми зажимами с чёткой маркировкой.`;
+  }
+  if (/розетк/i.test(product.name)) {
+    return 'Розетка с защитными шторками от детей — отверстия закрыты, пока в них одновременно не вставлена вилка. Контактные группы из полированной латуни, корпус из прочного ABS-пластика, не желтеет под воздействием УФ. Точная посадка в подрозетники 68 мм без зазоров.';
+  }
+  if (/рамк/i.test(product.name)) {
+    return 'Рамка для монтажа выключателей и розеток одной серии. Точная геометрия, ровные линии и выверенные пропорции. ABS-пластик устойчив к ультрафиолету и сохраняет цвет годами. Совместима только с механизмами своей серии — не подходит к Werkel, Schneider или Legrand.';
+  }
+  return 'Изделие бренда AWS Products. Качественные материалы, надёжная сборка и контроль на производстве. Совместимо со стандартными подрозетниками 68 мм. Сертифицировано EAC и ГОСТ.';
 }
 
 const description = buildDescription();
+
+// Ссылки на маркетплейсы (универсальные на бренд)
+const marketplaceLinks = [
+  { brand: 'OZON', name: 'Маркетплейс Ozon', url: 'https://www.ozon.ru/seller/ip-popov-a-yu/' },
+  { brand: 'WB', name: 'Wildberries', url: 'https://www.wildberries.ru/brands/312201750-awsproducts' },
+  { brand: 'ЭЦ', name: 'Электроцентр', url: 'https://stv39.ru/help/nashi-partnery/awsproducts/' }
+];
 ---
-<BaseLayout title={`${title} — AWS Products`} description={description[0]}>
+<BaseLayout title={`${title || product.article} — AWS Products`} description={description.slice(0, 160)}>
 
   <!-- HERO ТОВАРА -->
   <section class="prod-hero">
@@ -245,32 +363,83 @@ const description = buildDescription();
       </nav>
 
       <div class="prod-hero__grid">
-        <div class="prod-hero__media" data-reveal="zoom">
-          <img src={product.photo} alt={title} onerror="this.style.display='none';this.parentElement.querySelector('.prod-hero__placeholder').style.display='flex'" />
-          <div class="prod-hero__placeholder" style="display:none">Фото готовится</div>
+        <div class="prod-hero__media-wrap">
+          <div class="prod-hero__media" data-reveal="zoom">
+            <img src={product.photo} alt={title} onerror="this.style.display='none';this.parentElement.querySelector('.prod-hero__placeholder').style.display='flex'" />
+            <div class="prod-hero__placeholder" style="display:none">Фото готовится</div>
+          </div>
         </div>
 
         <div class="prod-hero__text">
-          <span class="prod-hero__article" data-reveal="blur">{product.article}</span>
-          <h1 class="prod-hero__title" data-reveal="focus">{title}</h1>
+          <span class="prod-hero__article" data-reveal="blur" style="--i: 0">{product.article}</span>
+          <h1 class="prod-hero__title" data-reveal="focus" style="--i: 1">{title}</h1>
+
+          {teaser && (
+            <p class="prod-hero__teaser" data-reveal="blur" style="--i: 2">{teaser}</p>
+          )}
 
           {meta3.length > 0 && (
-            <div class="prod-hero__meta" data-reveal="slide">
+            <div class="prod-hero__chips" data-reveal="slide" style="--i: 3">
               {meta3.map(m => <span class="prod-hero__chip">{m}</span>)}
             </div>
           )}
 
-          <div class="prod-hero__desc" data-reveal="blur">
-            {description.map(p => <p>{p}</p>)}
-          </div>
+          <ul class="prod-hero__highlights">
+            {highlights.map((h, i) => (
+              <li class="prod-highlight" data-reveal="slide" style={`--i: ${4 + i}`}>
+                <span class="prod-highlight__check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12 L10 17 L19 7"/>
+                  </svg>
+                </span>
+                <span class="prod-highlight__text">{h}</span>
+              </li>
+            ))}
+          </ul>
 
-          <button class="btn-switch" id="buyBtn" data-reveal="slide">Где купить</button>
+          <div class="prod-hero__buy">
+            <span class="prod-hero__buy-label">Где купить</span>
+            <div class="prod-buy-row">
+              {marketplaceLinks.map((m, i) => (
+                <a href={m.url} target="_blank" rel="noopener" class="prod-buy-btn" data-reveal="slide" style={`--i: ${8 + i}`}>
+                  <span class="prod-buy-btn__brand">{m.brand}</span>
+                  <span class="prod-buy-btn__name">{m.name}</span>
+                  <span class="prod-buy-btn__arrow" aria-hidden="true">→</span>
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Связанные товары -->
+  <!-- ХАРАКТЕРИСТИКИ -->
+  <section class="prod-specs">
+    <div class="prod-specs__inner">
+      <p class="label" data-reveal="blur">Характеристики</p>
+      <h2 class="prod-specs__title" data-reveal="focus">Технические параметры</h2>
+      <dl class="prod-specs__list">
+        {specs.map(([k, v], i) => (
+          <div class="prod-specs__row" data-reveal="slide" style={`--i: ${i % 9}`}>
+            <dt class="prod-specs__label">{k}</dt>
+            <dd class="prod-specs__value">{v}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- ОПИСАНИЕ -->
+  <section class="prod-about">
+    <div class="prod-about__inner">
+      <p class="label" data-reveal="blur">Описание</p>
+      <h2 class="prod-about__title" data-reveal="focus">Что важно знать</h2>
+      <p class="prod-about__text" data-reveal="blur">{description}</p>
+    </div>
+  </section>
+
+  <!-- СВЯЗАННЫЕ ТОВАРЫ -->
   {related.length > 0 && (
     <section class="prod-related">
       <div class="prod-related__inner">
@@ -309,82 +478,41 @@ const description = buildDescription();
     </div>
   </section>
 
-  <!-- МОДАЛКА «Где купить» -->
-  <div class="buy-modal" id="buyModal" role="dialog" aria-modal="true" aria-label="Где купить" hidden>
-    <div class="buy-modal__overlay" id="buyModalOverlay"></div>
-    <div class="buy-modal__panel">
-      <button class="buy-modal__close" id="buyModalClose" aria-label="Закрыть">&times;</button>
-      <p class="label">Где купить</p>
-      <h3 class="buy-modal__title">{title}</h3>
-      <p class="buy-modal__article">Артикул: {product.article}</p>
-      <div class="buy-modal__links">
-        <a href="https://www.ozon.ru/seller/ip-popov-a-yu/" target="_blank" rel="noopener" class="buy-modal__link">
-          <span class="buy-modal__link-logo">OZON</span>
-          <span class="buy-modal__link-text">Маркетплейс Ozon</span>
-          <span class="buy-modal__link-arrow">→</span>
-        </a>
-        <a href="https://www.wildberries.ru/brands/312201750-awsproducts" target="_blank" rel="noopener" class="buy-modal__link">
-          <span class="buy-modal__link-logo">WB</span>
-          <span class="buy-modal__link-text">Wildberries</span>
-          <span class="buy-modal__link-arrow">→</span>
-        </a>
-        <a href="https://stv39.ru/help/nashi-partnery/awsproducts/" target="_blank" rel="noopener" class="buy-modal__link">
-          <span class="buy-modal__link-logo">ЭЦ</span>
-          <span class="buy-modal__link-text">Электроцентр</span>
-          <span class="buy-modal__link-arrow">→</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
   <script is:inline>
+    // Копирование артикула в буфер при клике
     (function () {
-      const modal = document.getElementById('buyModal');
-      const overlay = document.getElementById('buyModalOverlay');
-      const closeBtn = document.getElementById('buyModalClose');
-      const buyBtn = document.getElementById('buyBtn');
-      if (!modal) return;
-      let lastFocus = null;
-      const focusablesSel = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
-      function openBuy() {
-        lastFocus = document.activeElement;
-        modal.hidden = false;
-        document.body.style.overflow = 'hidden';
-        const first = modal.querySelector(focusablesSel);
-        if (first) first.focus();
-      }
-      function closeBuy() {
-        modal.hidden = true;
-        document.body.style.overflow = '';
-        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
-      }
-      if (buyBtn) buyBtn.addEventListener('click', openBuy);
-      if (overlay) overlay.addEventListener('click', closeBuy);
-      if (closeBtn) closeBtn.addEventListener('click', closeBuy);
-      document.addEventListener('keydown', e => {
-        if (modal.hidden) return;
-        if (e.key === 'Escape') { closeBuy(); return; }
-        if (e.key === 'Tab') {
-          const f = Array.from(modal.querySelectorAll(focusablesSel)).filter(el => !el.hasAttribute('disabled') && el.offsetParent !== null);
-          if (!f.length) return;
-          const first = f[0], last = f[f.length - 1];
-          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      const art = document.querySelector('.prod-hero__article');
+      if (!art) return;
+      art.style.cursor = 'pointer';
+      art.title = 'Скопировать артикул';
+      art.addEventListener('click', () => {
+        const text = art.textContent.trim();
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(text).then(() => {
+            const orig = art.textContent;
+            art.textContent = 'Скопировано ✓';
+            art.classList.add('is-copied');
+            setTimeout(() => {
+              art.textContent = orig;
+              art.classList.remove('is-copied');
+            }, 1400);
+          });
         }
       });
     })();
   </script>
 
   <style is:global>
+    /* === HERO === */
     .prod-hero {
       background: linear-gradient(180deg, var(--warm-100, #f7f4ef) 0%, var(--white, #fff) 100%);
-      padding: 120px 0 80px;
+      padding: 120px 0 100px;
     }
     .prod-hero__inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
     .prod-hero__crumbs {
       display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
       font-size: 11px; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase;
-      color: var(--gray-400, #999); margin-bottom: 48px;
+      color: var(--gray-400, #999); margin-bottom: 56px;
     }
     .prod-hero__crumbs a { color: var(--gray-400, #999); text-decoration: none; transition: color 0.2s; }
     .prod-hero__crumbs a:hover { color: var(--black, #111); }
@@ -394,52 +522,208 @@ const description = buildDescription();
     .prod-hero__grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
     }
+
+    .prod-hero__media-wrap { position: sticky; top: 100px; }
     .prod-hero__media {
       aspect-ratio: 1/1; background: var(--warm-200, #ede7de);
-      border-radius: 16px; overflow: hidden;
+      border-radius: 20px; overflow: hidden;
       display: flex; align-items: center; justify-content: center;
-      padding: 60px; position: sticky; top: 100px;
+      padding: 60px;
+      box-shadow: 0 30px 60px -20px rgba(0,0,0,0.12);
+      transition: transform 0.6s cubic-bezier(.22,1,.36,1);
     }
+    .prod-hero__media:hover { transform: translateY(-4px); }
     .prod-hero__media img {
       max-width: 100%; max-height: 100%; object-fit: contain;
       mix-blend-mode: multiply;
+      transition: transform 0.6s cubic-bezier(.22,1,.36,1);
     }
+    .prod-hero__media:hover img { transform: scale(1.04); }
     .prod-hero__placeholder {
       font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
       color: rgba(0,0,0,0.25);
       border: 1.5px dashed rgba(0,0,0,0.15); padding: 20px 28px; border-radius: 4px;
     }
-    .prod-hero__text { padding: 12px 0; }
+
+    .prod-hero__text { padding: 8px 0; }
+
     .prod-hero__article {
-      font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--gray-400, #999); margin-bottom: 16px; display: block;
+      display: inline-block;
+      font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gray-400, #999); margin-bottom: 18px;
+      padding: 6px 12px; border: 1px solid var(--gray-200, #e5e5e3); border-radius: 100px;
+      transition: all 0.2s ease;
     }
+    .prod-hero__article:hover { border-color: var(--black); color: var(--black); }
+    .prod-hero__article.is-copied { background: var(--accent, #8CB86B); color: #fff; border-color: var(--accent, #8CB86B); }
+
     .prod-hero__title {
-      font-size: clamp(32px, 4vw, 52px);
-      font-weight: 800; line-height: 1.05; letter-spacing: -1px;
-      margin-bottom: 24px; color: var(--black, #111);
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 800; line-height: 1.02; letter-spacing: -1.5px;
+      margin-bottom: 18px; color: var(--black, #111);
+      max-width: 520px;
     }
-    .prod-hero__meta {
-      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+    .prod-hero__teaser {
+      font-size: 17px; line-height: 1.5; color: var(--gray-600, #666);
+      margin-bottom: 24px; max-width: 480px;
+    }
+
+    .prod-hero__chips {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 36px;
     }
     .prod-hero__chip {
       font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
-      padding: 6px 14px; border: 1px solid var(--gray-200, #ddd); border-radius: 100px;
-      color: var(--gray-600, #666);
+      padding: 7px 14px; border: 1px solid var(--gray-200, #ddd); border-radius: 100px;
+      color: var(--gray-600, #666); background: rgba(255,255,255,0.5);
     }
-    .prod-hero__desc {
-      font-size: 15px; line-height: 1.75; color: var(--gray-600, #666);
-      margin-bottom: 36px; max-width: 520px;
-    }
-    .prod-hero__desc p { margin-bottom: 16px; }
-    .prod-hero__desc p:last-child { margin-bottom: 0; }
 
-    /* Related */
-    .prod-related { background: var(--warm-100, #f7f4ef); padding: 100px 0; }
+    .prod-hero__highlights {
+      list-style: none; padding: 0; margin: 0 0 40px;
+      display: grid; gap: 14px;
+      max-width: 480px;
+    }
+    .prod-highlight {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 14.5px; line-height: 1.45;
+      color: var(--gray-800, #333);
+    }
+    .prod-highlight__check {
+      flex-shrink: 0; width: 26px; height: 26px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: var(--warm-100, #f7f4ef);
+      color: var(--warm-gold, #5E8C3A);
+    }
+    .prod-highlight__check svg { width: 14px; height: 14px; }
+    .prod-highlight__text { flex: 1; }
+
+    /* Buy block */
+    .prod-hero__buy {
+      padding-top: 12px;
+      border-top: 1px solid var(--gray-200, #e5e5e3);
+    }
+    .prod-hero__buy-label {
+      display: block;
+      font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gray-400, #999); margin: 24px 0 16px;
+    }
+    .prod-buy-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .prod-buy-btn {
+      position: relative;
+      display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+      padding: 18px 22px;
+      background: var(--white, #fff);
+      border: 1.5px solid var(--gray-200, #e5e5e3);
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--black, #111);
+      transition: transform 0.25s cubic-bezier(.22,1,.36,1),
+                  border-color 0.25s ease,
+                  box-shadow 0.25s ease;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .prod-buy-btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 30%, rgba(140,184,107,0.12) 50%, transparent 70%);
+      transform: translateX(-120%);
+      transition: transform 0.7s cubic-bezier(.4,0,.2,1);
+      z-index: -1;
+    }
+    .prod-buy-btn:hover {
+      border-color: var(--black);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+    }
+    .prod-buy-btn:hover::before { transform: translateX(120%); }
+    .prod-buy-btn__brand {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+      color: var(--gray-400, #999);
+    }
+    .prod-buy-btn__name {
+      font-size: 15px; font-weight: 700; color: var(--black, #111);
+      letter-spacing: -0.2px;
+    }
+    .prod-buy-btn__arrow {
+      position: absolute; top: 50%; right: 22px;
+      transform: translateY(-50%);
+      font-size: 18px; opacity: 0.3;
+      transition: transform 0.25s ease, opacity 0.25s ease, color 0.25s ease;
+      color: var(--gray-600);
+    }
+    .prod-buy-btn:hover .prod-buy-btn__arrow {
+      transform: translateY(-50%) translateX(4px);
+      opacity: 1;
+      color: var(--black);
+    }
+
+    /* === SPECS === */
+    .prod-specs {
+      background: var(--white, #fff);
+      padding: 100px 0;
+    }
+    .prod-specs__inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+    .prod-specs .label { display: block; margin-bottom: 16px; }
+    .prod-specs__title {
+      font-size: clamp(28px, 3.2vw, 44px);
+      font-weight: 800; line-height: 1.05; letter-spacing: -1px;
+      color: var(--black, #111); margin-bottom: 56px;
+    }
+    .prod-specs__list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 80px;
+      margin: 0;
+    }
+    .prod-specs__row {
+      display: grid;
+      grid-template-columns: minmax(140px, 200px) 1fr;
+      gap: 24px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--gray-200, #ececec);
+      align-items: center;
+    }
+    .prod-specs__label {
+      font-size: 13px; font-weight: 500;
+      color: var(--gray-600, #666);
+      letter-spacing: 0.2px;
+      margin: 0;
+    }
+    .prod-specs__value {
+      font-size: 15px; font-weight: 600;
+      color: var(--black, #111);
+      margin: 0;
+    }
+
+    /* === ABOUT === */
+    .prod-about {
+      background: var(--warm-100, #f7f4ef);
+      padding: 100px 0;
+    }
+    .prod-about__inner { max-width: 880px; margin: 0 auto; padding: 0 60px; }
+    .prod-about .label { display: block; margin-bottom: 16px; }
+    .prod-about__title {
+      font-size: clamp(28px, 3.2vw, 44px);
+      font-weight: 800; line-height: 1.05; letter-spacing: -1px;
+      color: var(--black, #111); margin-bottom: 36px;
+    }
+    .prod-about__text {
+      font-size: 17px; line-height: 1.75;
+      color: var(--gray-800, #333);
+      margin: 0;
+    }
+
+    /* === RELATED === */
+    .prod-related { background: var(--white, #fff); padding: 100px 0; }
     .prod-related__inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
     .prod-related .label { margin-bottom: 16px; }
     .prod-related__title {
-      font-size: clamp(32px, 3.5vw, 48px);
+      font-size: clamp(28px, 3.2vw, 44px);
       font-weight: 800; letter-spacing: -1px;
       margin-bottom: 48px; color: var(--black, #111);
     }
@@ -448,7 +732,7 @@ const description = buildDescription();
     }
     .prod-related__card {
       text-decoration: none; color: inherit;
-      background: var(--white, #fff); border-radius: 12px; overflow: hidden;
+      background: var(--warm-100, #f7f4ef); border-radius: 14px; overflow: hidden;
       transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
     .prod-related__card:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(0,0,0,0.07); }
@@ -478,14 +762,18 @@ const description = buildDescription();
       color: var(--gray-600, #666);
     }
 
-    @media (max-width: 900px) {
-      .prod-hero__inner, .prod-related__inner { padding: 0 24px; }
+    /* === RESPONSIVE === */
+    @media (max-width: 980px) {
+      .prod-hero__inner, .prod-specs__inner, .prod-about__inner, .prod-related__inner { padding: 0 24px; }
       .prod-hero__grid { grid-template-columns: 1fr; gap: 40px; }
-      .prod-hero__media { position: static; padding: 40px; }
+      .prod-hero__media-wrap { position: static; }
+      .prod-hero__media { padding: 40px; }
+      .prod-specs__list { grid-template-columns: 1fr; gap: 0; }
       .prod-related__grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 560px) {
-      .prod-hero { padding: 80px 0 40px; }
+      .prod-hero { padding: 80px 0 60px; }
+      .prod-buy-row { grid-template-columns: 1fr; }
       .prod-related__grid { grid-template-columns: 1fr; }
     }
   </style>

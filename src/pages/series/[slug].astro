@@ -331,7 +331,14 @@ const defaultColor = series.colors[0];
     .ser-hero__crumbs a { color: var(--gray-400, #999); text-decoration: none; transition: color 0.2s; }
     .ser-hero__crumbs a:hover { color: var(--black, #111); }
     .ser-hero__crumbs span { opacity: 0.4; }
-    .ser-hero__crumbs-current { color: var(--black, #111) !important; opacity: 1 !important; }
+    .ser-hero__crumbs-current {
+      color: var(--black, #111) !important;
+      opacity: 1 !important;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      font-variant-numeric: tabular-nums;
+    }
 
     .ser-hero__grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
@@ -618,10 +625,15 @@ const defaultColor = series.colors[0];
     }
     .ser-lineup__photo img {
       max-width: 100%; max-height: 100%; object-fit: contain;
-      mix-blend-mode: multiply;
-      transition: transform 0.4s ease;
+      filter: drop-shadow(0 8px 14px rgba(0,0,0,0.12));
+      transition:
+        transform 0.45s cubic-bezier(.22,1,.36,1),
+        filter 0.45s cubic-bezier(.22,1,.36,1);
     }
-    .ser-lineup__card:hover .ser-lineup__photo img { transform: scale(1.05); }
+    .ser-lineup__card:hover .ser-lineup__photo img {
+      transform: translateY(-6px) scale(1.06);
+      filter: drop-shadow(0 18px 26px rgba(0,0,0,0.22));
+    }
     .ser-lineup__photo-fallback {
       width: 56px; height: 56px;
       display: flex; align-items: center; justify-content: center;

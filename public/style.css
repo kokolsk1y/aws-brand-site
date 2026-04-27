@@ -967,11 +967,16 @@ a { text-decoration: none; color: inherit; }
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.14));
-    transition: transform 0.4s ease;
+    filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.14));
+    transition:
+      translate 0.45s cubic-bezier(.22,1,.36,1),
+      transform 0.45s cubic-bezier(.22,1,.36,1),
+      filter 0.45s cubic-bezier(.22,1,.36,1);
 }
 .series__card:hover .series__photo-img {
-    transform: scale(1.04);
+    translate: 0 -6px;
+    transform: scale(1.06);
+    filter: drop-shadow(0 24px 32px rgba(0, 0, 0, 0.22));
 }
 .series__photo-placeholder {
     font-size: 12px;
@@ -1178,8 +1183,11 @@ a { text-decoration: none; color: inherit; }
     max-width: 98%;
     max-height: 98%;
     object-fit: contain;
-    filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.12));
-    transition: transform 0.4s ease;
+    filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.12));
+    transition:
+      translate 0.45s cubic-bezier(.22,1,.36,1),
+      transform 0.45s cubic-bezier(.22,1,.36,1),
+      filter 0.45s cubic-bezier(.22,1,.36,1);
 }
 
 /* Индивидуальная нормализация: вытянутые товары масштабируем побольше */
@@ -1190,7 +1198,9 @@ a { text-decoration: none; color: inherit; }
 }
 
 .categories__card:hover .categories__card-img img {
+    translate: 0 -6px;
     transform: scale(1.1);
+    filter: drop-shadow(0 22px 30px rgba(0, 0, 0, 0.22));
 }
 .categories__card[data-cat="power"]:hover .categories__card-img img,
 .categories__card[data-cat="cable"]:hover .categories__card-img img,

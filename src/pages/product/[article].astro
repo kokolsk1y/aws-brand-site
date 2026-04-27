@@ -355,12 +355,36 @@ const marketplaceLinks = [
   }
 ];
 
-// 4 документа соответствия — открываются по mailto до загрузки реальных PDF
+// 4 документа соответствия — модалка с заглушкой как на главной
 const docs = [
-  { key: 'eac', title: 'Декларация EAC', desc: 'Соответствие ТР ТС' },
-  { key: 'gost', title: 'Сертификат ГОСТ', desc: 'Российские стандарты' },
-  { key: 'passport', title: 'Паспорт качества', desc: 'Контроль производства' },
-  { key: 'manual', title: 'Инструкция', desc: 'Схемы подключения' }
+  {
+    key: 'eac',
+    title: 'Декларация EAC',
+    desc: 'Соответствие ТР ТС',
+    descFull: 'Декларация соответствия техническим регламентам Евразийского экономического союза. Подтверждает безопасность продукции для потребителей.',
+    watermark: 'EAC'
+  },
+  {
+    key: 'gost',
+    title: 'Сертификат ГОСТ',
+    desc: 'Российские стандарты',
+    descFull: 'Подтверждение соответствия государственным стандартам Российской Федерации. Испытания проведены в аккредитованной лаборатории.',
+    watermark: 'ГОСТ'
+  },
+  {
+    key: 'passport',
+    title: 'Паспорт качества',
+    desc: 'Контроль производства',
+    descFull: 'Протоколы испытаний и результаты внутреннего контроля на производстве. Ресурс работы механизма, испытание на нагрев, старение.',
+    watermark: 'AWS'
+  },
+  {
+    key: 'manual',
+    title: 'Инструкция по монтажу',
+    desc: 'Схемы подключения',
+    descFull: 'Пошаговая установка выключателей, розеток и рамок. Рекомендации для электромонтажников, схемы подключения, моменты затяжки.',
+    watermark: 'AWS'
+  }
 ];
 ---
 <BaseLayout title={`${title || product.article} — AWS Products`} description={description.slice(0, 160)}>
@@ -478,7 +502,12 @@ const docs = [
         </div>
         <div class="prod-docs__grid" data-reveal-grid>
           {docs.map((d, i) => (
-            <a href="mailto:info@awsproducts.ru?subject=Запрос документа" class="prod-doc-card" data-reveal="slide" style={`--i: ${i}`}>
+            <button type="button" class="prod-doc-card"
+                    data-doc={d.key}
+                    data-doc-title={d.title}
+                    data-doc-desc={d.descFull}
+                    data-doc-watermark={d.watermark}
+                    data-reveal="slide" style={`--i: ${i}`}>
               <div class="prod-doc-card__icon" aria-hidden="true">
                 {d.key === 'eac' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>}
                 {d.key === 'gost' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>}
@@ -490,12 +519,43 @@ const docs = [
                 <span class="prod-doc-card__desc">{d.desc}</span>
               </div>
               <span class="prod-doc-card__badge">PDF</span>
-            </a>
+            </button>
           ))}
         </div>
       </div>
     </div>
   </section>
+
+  <!-- МОДАЛКА ПРОСМОТРА ДОКУМЕНТА (как на главной) -->
+  <div class="doc-modal" id="docModal" role="dialog" aria-modal="true" aria-labelledby="docModalTitle" hidden>
+    <div class="doc-modal__overlay" data-doc-close></div>
+    <div class="doc-modal__panel">
+      <button class="doc-modal__close" data-doc-close aria-label="Закрыть">&times;</button>
+      <div class="doc-modal__body">
+        <div class="doc-modal__preview">
+          <div class="doc-modal__sheet">
+            <div class="doc-modal__sheet-watermark" id="docSheetWatermark">AWS</div>
+            <div class="doc-modal__sheet-content">
+              <span class="doc-modal__sheet-badge">ЗАГЛУШКА</span>
+              <p class="doc-modal__sheet-hint">Оригинал документа появится после загрузки PDF менеджером</p>
+            </div>
+          </div>
+        </div>
+        <div class="doc-modal__info">
+          <p class="label">Документ</p>
+          <h3 class="doc-modal__title" id="docModalTitle">—</h3>
+          <p class="doc-modal__desc" id="docModalDesc">—</p>
+          <div class="doc-modal__actions">
+            <button class="btn-switch doc-modal__download" type="button" disabled>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Скачать PDF
+            </button>
+          </div>
+          <p class="doc-modal__note">Документ будет доступен для скачивания после загрузки менеджером.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- СВЯЗАННЫЕ ТОВАРЫ -->
   {related.length > 0 && (
@@ -556,6 +616,38 @@ const docs = [
             }, 1400);
           });
         }
+      });
+    })();
+
+    // Модалка просмотра документа
+    (function () {
+      const modal = document.getElementById('docModal');
+      if (!modal) return;
+      const titleEl = document.getElementById('docModalTitle');
+      const descEl = document.getElementById('docModalDesc');
+      const watermarkEl = document.getElementById('docSheetWatermark');
+      let lastFocus = null;
+
+      function openDoc(btn) {
+        lastFocus = document.activeElement;
+        if (titleEl) titleEl.textContent = btn.dataset.docTitle || '—';
+        if (descEl) descEl.textContent = btn.dataset.docDesc || '—';
+        if (watermarkEl) watermarkEl.textContent = btn.dataset.docWatermark || 'AWS';
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+      }
+      function closeDoc() {
+        modal.hidden = true;
+        document.body.style.overflow = '';
+        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+      }
+
+      document.querySelectorAll('.prod-doc-card').forEach(btn => {
+        btn.addEventListener('click', () => openDoc(btn));
+      });
+      modal.querySelectorAll('[data-doc-close]').forEach(el => el.addEventListener('click', closeDoc));
+      document.addEventListener('keydown', e => {
+        if (!modal.hidden && e.key === 'Escape') closeDoc();
       });
     })();
   </script>
@@ -980,6 +1072,142 @@ const docs = [
       .prod-buy-btn { min-height: 100px; padding: 22px 24px; }
       .prod-docs__grid { grid-template-columns: 1fr; }
       .prod-related__grid { grid-template-columns: 1fr; }
+    }
+
+    /* === МОДАЛКА документа — копия с главной === */
+    .doc-modal[hidden] { display: none !important; }
+    .doc-modal {
+      position: fixed; inset: 0;
+      z-index: 9998;
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px 20px;
+      animation: docModalIn 0.3s cubic-bezier(0.22,1,0.36,1);
+    }
+    @keyframes docModalIn { from { opacity: 0; } to { opacity: 1; } }
+    .doc-modal__overlay {
+      position: absolute; inset: 0;
+      background: rgba(20,18,15,0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      cursor: pointer;
+    }
+    .doc-modal__panel {
+      position: relative;
+      background: #fff;
+      border-radius: 20px;
+      max-width: 1100px; width: 100%;
+      max-height: 90vh;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+      animation: docPanelIn 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    @keyframes docPanelIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .doc-modal__close {
+      position: absolute; top: 16px; right: 16px;
+      z-index: 3;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.05);
+      border: none;
+      font-size: 28px; line-height: 1;
+      color: var(--black);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .doc-modal__close:hover { background: rgba(0,0,0,0.1); }
+    .doc-modal__body {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      overflow-y: auto;
+      max-height: 90vh;
+    }
+    .doc-modal__preview {
+      background: linear-gradient(135deg, #ede8df 0%, #e3ded3 100%);
+      padding: 40px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .doc-modal__sheet {
+      width: 100%; max-width: 380px;
+      aspect-ratio: 1 / 1.414;
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.08);
+      position: relative;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px;
+    }
+    .doc-modal__sheet-watermark {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: clamp(80px, 18vw, 160px);
+      font-weight: 900;
+      color: rgba(94,140,58,0.08);
+      letter-spacing: 4px;
+      transform: rotate(-18deg);
+      pointer-events: none;
+    }
+    .doc-modal__sheet-content {
+      position: relative;
+      text-align: center;
+      z-index: 1;
+      display: flex; flex-direction: column; gap: 16px; align-items: center;
+    }
+    .doc-modal__sheet-badge {
+      display: inline-block;
+      font-size: 11px; font-weight: 800; letter-spacing: 3px;
+      color: var(--warm-gold);
+      background: rgba(94,140,58,0.12);
+      padding: 6px 14px;
+      border-radius: 99px;
+    }
+    .doc-modal__sheet-hint {
+      font-size: 13px; line-height: 1.6;
+      color: var(--gray-600);
+      max-width: 240px;
+    }
+    .doc-modal__info {
+      padding: 48px 44px;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .doc-modal__info .label { margin: 0; }
+    .doc-modal__title {
+      font-size: clamp(26px, 2.6vw, 34px);
+      font-weight: 800; letter-spacing: -0.8px;
+      line-height: 1.15;
+      color: var(--black);
+      margin: 0;
+    }
+    .doc-modal__desc {
+      font-size: 15px; line-height: 1.65;
+      color: var(--gray-600);
+      margin: 0;
+      flex: 1;
+    }
+    .doc-modal__actions {
+      display: flex; gap: 24px; align-items: center; flex-wrap: wrap;
+    }
+    .doc-modal__download {
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .doc-modal__download[disabled] {
+      opacity: 0.5; cursor: not-allowed;
+    }
+    .doc-modal__note {
+      font-size: 12px;
+      color: var(--gray-400);
+      font-style: italic;
+      margin: 0;
+    }
+    @media (max-width: 800px) {
+      .doc-modal__body { grid-template-columns: 1fr; }
+      .doc-modal__preview { padding: 24px; }
+      .doc-modal__sheet { max-width: 260px; }
+      .doc-modal__info { padding: 28px 24px; }
     }
   </style>
 </BaseLayout>

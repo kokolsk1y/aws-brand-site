@@ -74,15 +74,15 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
                 <div class="side-menu__group">
                     <button class="side-menu__toggle">Ассортимент <span class="side-menu__arrow">&#9662;</span></button>
                     <div class="side-menu__dropdown">
-                        <a href="/aws-brand-site/series/uno" class="side-menu__sub" data-preview="/img/series/uno-1kl-w.png" data-preview-title="UNO Softtouch">Серия UNO Softtouch</a>
-                        <a href="/aws-brand-site/series/aura" class="side-menu__sub" data-preview="/img/series/aura-1kl-w.png" data-preview-title="AURA">Серия AURA</a>
+                        <a href="/aws-brand-site/series/uno" class="side-menu__sub" data-preview="/aws-brand-site/img/series/uno-1kl-w.png" data-preview-title="UNO Softtouch">Серия UNO Softtouch</a>
+                        <a href="/aws-brand-site/series/aura" class="side-menu__sub" data-preview="/aws-brand-site/img/series/aura-1kl-w.png" data-preview-title="AURA">Серия AURA</a>
                         <a href="/aws-brand-site/series/design" class="side-menu__sub" data-preview-title="DESIGN · скоро">Серия DESIGN</a>
-                        <a href="/aws-brand-site/category/extensions-home" class="side-menu__sub" data-preview="/img/products/AWS-H03-1,5.webp" data-preview-title="Удлинители бытовые">Удлинители бытовые</a>
-                        <a href="/aws-brand-site/category/extensions-garden" class="side-menu__sub" data-preview="/img/products/AWS-HZ2-01-15.webp" data-preview-title="Удлинители садовые">Удлинители садовые</a>
-                        <a href="/aws-brand-site/category/power-connectors" class="side-menu__sub" data-preview="/img/products/SN-33.webp" data-preview-title="Силовые разъёмы">Силовые разъёмы</a>
-                        <a href="/aws-brand-site/category/clamps" class="side-menu__sub" data-preview="/img/products/SN-222415.webp" data-preview-title="Клеммы">Клеммы</a>
-                        <a href="/aws-brand-site/category/patch-cords" class="side-menu__sub" data-preview="/img/products/AWS-13010.webp" data-preview-title="Патч-корды">Патч-корды</a>
-                        <a href="/aws-brand-site/category/cables" class="side-menu__sub" data-preview="/img/products/AWS-12982.webp" data-preview-title="Кабель">Кабель</a>
+                        <a href="/aws-brand-site/category/extensions-home" class="side-menu__sub" data-preview="/aws-brand-site/img/products/AWS-H03-1,5.webp" data-preview-title="Удлинители бытовые">Удлинители бытовые</a>
+                        <a href="/aws-brand-site/category/extensions-garden" class="side-menu__sub" data-preview="/aws-brand-site/img/products/AWS-HZ2-01-15.webp" data-preview-title="Удлинители садовые">Удлинители садовые</a>
+                        <a href="/aws-brand-site/category/power-connectors" class="side-menu__sub" data-preview="/aws-brand-site/img/products/SN-33.webp" data-preview-title="Силовые разъёмы">Силовые разъёмы</a>
+                        <a href="/aws-brand-site/category/clamps" class="side-menu__sub" data-preview="/aws-brand-site/img/products/SN-222415.webp" data-preview-title="Клеммы">Клеммы</a>
+                        <a href="/aws-brand-site/category/patch-cords" class="side-menu__sub" data-preview="/aws-brand-site/img/products/AWS-13010.webp" data-preview-title="Патч-корды">Патч-корды</a>
+                        <a href="/aws-brand-site/category/cables" class="side-menu__sub" data-preview="/aws-brand-site/img/products/AWS-12982.webp" data-preview-title="Кабель">Кабель</a>
                     </div>
                 </div>
                 <a href="/aws-brand-site/#about" class="side-menu__item" data-astro-reload>О бренде</a>
@@ -194,9 +194,9 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
                 <div class="footer-v2__legal">
                     <span>&copy; 2026 AWS Products</span>
                     <span class="footer-v2__sep">·</span>
-                    <a href="#">Политика конфиденциальности</a>
+                    <span class="footer-v2__legal-soon" title="Появится скоро">Политика конфиденциальности</span>
                     <span class="footer-v2__sep">·</span>
-                    <a href="#">Оферта</a>
+                    <span class="footer-v2__legal-soon" title="Появится скоро">Оферта</span>
                 </div>
                 <div class="footer-v2__loc">Россия</div>
             </div>
@@ -302,24 +302,26 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
           }
         }
 
-        // ---- 3D tilt ----
-        document.querySelectorAll('[data-tilt]').forEach(el => {
-          if (el._tiltInited) return;
-          el._tiltInited = true;
-          const maxRot = parseFloat(el.dataset.tiltMax) || 8;
-          let rafId = null;
-          el.addEventListener('mousemove', e => {
-            if (rafId) return;
-            rafId = requestAnimationFrame(() => {
-              const rect = el.getBoundingClientRect();
-              const x = (e.clientX - rect.left) / rect.width - 0.5;
-              const y = (e.clientY - rect.top) / rect.height - 0.5;
-              el.style.transform = 'perspective(1000px) rotateX(' + (-y * maxRot) + 'deg) rotateY(' + (x * maxRot) + 'deg) translateY(-4px)';
-              rafId = null;
-            });
-          }, { passive: true });
-          el.addEventListener('mouseleave', () => { el.style.transform = ''; });
-        });
+        // ---- 3D tilt — только на устройствах с указателем (не на touch) ----
+        if (!window.matchMedia('(hover: none)').matches) {
+          document.querySelectorAll('[data-tilt]').forEach(el => {
+            if (el._tiltInited) return;
+            el._tiltInited = true;
+            const maxRot = parseFloat(el.dataset.tiltMax) || 8;
+            let rafId = null;
+            el.addEventListener('mousemove', e => {
+              if (rafId) return;
+              rafId = requestAnimationFrame(() => {
+                const rect = el.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                el.style.transform = 'perspective(1000px) rotateX(' + (-y * maxRot) + 'deg) rotateY(' + (x * maxRot) + 'deg) translateY(-4px)';
+                rafId = null;
+              });
+            }, { passive: true });
+            el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+          });
+        }
 
         // ---- Reveal on scroll ----
         // Авто-добавление data-reveal-section на средне-размерные <section>.
@@ -355,10 +357,8 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
             }
             gsap.registerPlugin(ScrollTrigger);
 
-            // Чистим старые триггеры при SPA-навигации
-            ScrollTrigger.getAll().forEach(t => {
-              if (t.vars && t.vars.id && (t.vars.id.startsWith('reveal-') || t.vars.id.startsWith('parallax-'))) t.kill();
-            });
+            // Чистим ВСЕ старые триггеры при SPA-навигации, чтобы не копились в памяти
+            ScrollTrigger.getAll().forEach(t => t.kill());
 
             document.querySelectorAll('[data-reveal]').forEach((el, idx) => {
               const i = parseFloat(el.style.getPropertyValue('--i')) || 0;

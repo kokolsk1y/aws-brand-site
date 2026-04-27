@@ -2142,12 +2142,15 @@ a { text-decoration: none; color: inherit; }
     font-size: 12px; color: rgba(255,255,255,0.4);
     flex-wrap: wrap;
 }
-.footer-v2__legal a {
+.footer-v2__legal a,
+.footer-v2__legal-soon {
     color: rgba(255,255,255,0.4);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 .footer-v2__legal a:hover { color: #fff; }
+.footer-v2__legal-soon { cursor: default; }
+.side-menu__soon { color: rgba(255,255,255,0.4); cursor: default; }
 .footer-v2__sep { opacity: 0.4; }
 .footer-v2__loc {
     font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;

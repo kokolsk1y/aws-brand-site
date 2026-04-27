@@ -4,7 +4,13 @@
    Lenis + Swiper + GSAP
    ============================ */
 
-gsap.registerPlugin(ScrollTrigger);
+// Защита от race condition с CDN — если GSAP не загрузился (network error),
+// скрипт не падает и продолжает выполнять всё что не зависит от GSAP.
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+} else {
+    console.warn('[AWS] GSAP/ScrollTrigger не загружены — анимации скролла отключены');
+}
 
 // Refresh ScrollTrigger при resize (debounced)
 let _stRefreshTimer;
@@ -15,19 +21,23 @@ window.addEventListener('resize', () => {
 
 // ─── SPLASH SCREEN (первый заход) ───
 (function () {
+    // sessionStorage может бросить QuotaExceededError в private mode браузера
+    const safeGet = k => { try { return sessionStorage.getItem(k); } catch (e) { return null; } };
+    const safeSet = (k, v) => { try { sessionStorage.setItem(k, v); } catch (e) {} };
+
     // Создаём splash если его нет в HTML
-    if (!document.getElementById('splash') && !sessionStorage.getItem('aws-splash-seen')) {
+    if (!document.getElementById('splash') && !safeGet('aws-splash-seen')) {
         const s = document.createElement('div');
         s.id = 'splash';
         s.className = 'splash';
-        s.innerHTML = '<div class="splash__logo-wrap"><img src="logo/AWS.png" alt="AWS" class="splash__logo"><div class="splash__line"></div></div>';
+        s.innerHTML = '<div class="splash__logo-wrap"><img src="/aws-brand-site/logo/AWS.png" alt="AWS" class="splash__logo"><div class="splash__line"></div></div>';
         document.documentElement.appendChild(s);
     }
     const splash = document.getElementById('splash');
     if (!splash) return;
-    const firstVisit = !sessionStorage.getItem('aws-splash-seen');
+    const firstVisit = !safeGet('aws-splash-seen');
     if (!firstVisit) { splash.remove(); return; }
-    sessionStorage.setItem('aws-splash-seen', '1');
+    safeSet('aws-splash-seen', '1');
     let hidden = false;
     const hide = () => {
         if (hidden) return;
@@ -61,17 +71,24 @@ window.addEventListener('resize', () => {
 })();
 
 // ─── LENIS: Плавный скролл ───
+// Защита от случая когда Lenis CDN не загрузился
+let lenis = null;
+if (typeof Lenis !== 'undefined') {
+    lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        touchMultiplier: 1  // 1 вместо 2 — на iOS не дублирует native momentum
+    });
 
-const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smoothWheel: true,
-    touchMultiplier: 2
-});
-
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add((time) => lenis.raf(time * 1000));
-gsap.ticker.lagSmoothing(0);
+    if (typeof ScrollTrigger !== 'undefined') {
+        lenis.on('scroll', ScrollTrigger.update);
+    }
+    if (typeof gsap !== 'undefined') {
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+    }
+}
 
 // Обработка hash-якорей при загрузке (напр. переход с /series/* на /#series)
 function scrollToHashTarget() {
@@ -107,28 +124,36 @@ if (window.location.hash) {
 }
 
 // Плавный скролл для внутренних якорей
-document.querySelectorAll('a[href^="/#"], a[href^="#"]').forEach(a => {
+// Включая якорь "#" (или href пустой) — это «наверх страницы»: используется на header__logo
+document.querySelectorAll('a[href^="/#"], a[href^="#"], a.header__logo').forEach(a => {
     a.addEventListener('click', e => {
-        const href = a.getAttribute('href');
+        const href = a.getAttribute('href') || '';
+        // Спец-случай: header logo или href="#" → плавный скролл наверх
+        if (a.classList.contains('header__logo') || href === '#' || href === '/aws-brand-site/' || href === '/') {
+            e.preventDefault();
+            if (lenis && lenis.scrollTo) lenis.scrollTo(0, { duration: 1.1 });
+            else window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+        }
         const hash = href.startsWith('/#') ? href.slice(1) : href;
-        if (hash === '#' || !hash) return;
+        if (!hash || hash === '#') return;
         const target = document.querySelector(hash);
         if (!target) return;
 
         e.preventDefault();
         history.pushState(null, '', hash);
 
-        // Если ссылка внутри side-menu — сначала закрыть меню, потом скроллить
+        const scroll = () => {
+            if (lenis && lenis.scrollTo) lenis.scrollTo(target, { duration: 1.1 });
+            else target.scrollIntoView({ behavior: 'smooth' });
+        };
+
         const isInSideMenu = a.closest('.side-menu');
         if (isInSideMenu) {
-            // closeMenu триггерим вручную с микро-задержкой до scroll
             if (typeof closeMenu === 'function') closeMenu();
-            // Ждём 320мс (CSS transition меню) чтобы lenis.start() успел отработать
-            setTimeout(() => {
-                lenis.scrollTo(target, { duration: 1.1 });
-            }, 320);
+            setTimeout(scroll, 320);
         } else {
-            lenis.scrollTo(target, { duration: 1.1 });
+            scroll();
         }
     });
 });
@@ -613,21 +638,25 @@ window.addEventListener('resize', () => {
 
 
 // ─── HERO TAGS → ADVANTAGES SLIDE ───
-
-document.querySelectorAll('.hero-slide__tag[data-adv-slide]').forEach(tag => {
-    tag.addEventListener('click', e => {
+// Event delegation на родительском swiper — работает в loop-клонах,
+// где Swiper создаёт копии оригинальных слайдов без оригинальных listeners
+(function () {
+    const heroEl = document.querySelector('.hero-swiper');
+    if (!heroEl) return;
+    heroEl.addEventListener('click', e => {
+        const tag = e.target.closest('.hero-slide__tag[data-adv-slide]');
+        if (!tag) return;
         e.preventDefault();
         const idx = parseInt(tag.dataset.advSlide, 10) || 0;
         const section = document.getElementById('advantages');
         if (!section) return;
-
-        // Переключаем swiper МГНОВЕННО до скролла — пользователь прибудет на готовый слайд
         if (advantagesSwiper && advantagesSwiper.slideToLoop) {
             advantagesSwiper.slideToLoop(idx, 0);
         }
-        lenis.scrollTo(section, { duration: 1.1 });
+        if (lenis && lenis.scrollTo) lenis.scrollTo(section, { duration: 1.1 });
+        else section.scrollIntoView({ behavior: 'smooth' });
     });
-});
+})();
 
 // ─── WHERE BUY: появление перенесено в REVEAL ENGINE ───
 

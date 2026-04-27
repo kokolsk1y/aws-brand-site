@@ -2030,7 +2030,6 @@ a { text-decoration: none; color: inherit; }
 }
 
 [data-reveal="slide"] {
-    filter: blur(calc((1 - var(--p)) * 4px));
     opacity: calc(0.55 + var(--p) * 0.45);
     translate: 0 calc((1 - var(--p)) * 10px);
 }

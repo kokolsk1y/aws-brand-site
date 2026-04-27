@@ -494,7 +494,7 @@ a { text-decoration: none; color: inherit; }
 .adv-ticker__track {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
 }
 /*
  * Анимация задаётся JS в пикселях (--copy-h) для точного seamless
@@ -502,10 +502,10 @@ a { text-decoration: none; color: inherit; }
  * не подходят: из-за gap между копиями точка перехода смещена.
  */
 .adv-ticker--up .adv-ticker__track {
-    animation: tickerUp var(--adv-ticker-dur, 55s) linear infinite;
+    animation: tickerUp var(--adv-ticker-dur, 90s) linear infinite;
 }
 .adv-ticker--down .adv-ticker__track {
-    animation: tickerDown var(--adv-ticker-dur, 70s) linear infinite;
+    animation: tickerDown var(--adv-ticker-dur, 110s) linear infinite;
 }
 .adv-ticker:hover .adv-ticker__track {
     animation-play-state: paused;
@@ -521,45 +521,47 @@ a { text-decoration: none; color: inherit; }
 .adv-price-card {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 18px;
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 14px;
-    padding: 14px 16px;
+    border-radius: 16px;
+    padding: 22px 24px;
     flex-shrink: 0;
 }
 .adv-price-card__img {
-    width: 64px;
-    height: 64px;
+    width: 88px;
+    height: 88px;
     object-fit: contain;
     background: #fff;
-    border-radius: 12px;
-    padding: 6px;
+    border-radius: 14px;
+    padding: 10px;
     flex-shrink: 0;
 }
 .adv-price-card__info {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
     flex: 1;
 }
 .adv-price-card__name {
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 700;
     color: #fff;
+    letter-spacing: -0.2px;
 }
 .adv-price-card__series {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 500;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 0.5px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.6px;
 }
 .adv-price-card__price {
-    font-size: 18px;
+    font-size: 22px;
     font-weight: 800;
     color: var(--accent, #8CB86B);
     white-space: nowrap;
     flex-shrink: 0;
+    letter-spacing: -0.5px;
 }
 
 @media (max-width: 768px) {
@@ -1521,7 +1523,6 @@ a { text-decoration: none; color: inherit; }
     max-height: 72%;
     object-fit: contain;
     filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.22));
-    animation: lever-bob 4.5s ease-in-out infinite;
 }
 
 /* Интерактивный селектор сечения */
@@ -1618,11 +1619,6 @@ a { text-decoration: none; color: inherit; }
     color: #fff;
     border-color: #f26a1a;
     box-shadow: 0 4px 12px rgba(242, 106, 26, 0.35);
-}
-
-@keyframes lever-bob {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-6px); }
 }
 
 @media (max-width: 1100px) {
@@ -1973,6 +1969,14 @@ a { text-decoration: none; color: inherit; }
     margin-bottom: 40px !important;
 }
 .cat-cta .btn-switch { margin: 0 auto; }
+/* На тёмном фоне cat-cta кнопка чище — без линии и без любого цветного свечения */
+.cat-cta .btn-switch::after { display: none; }
+.cat-cta .btn-switch:hover {
+    box-shadow:
+        0 6px 14px rgba(0,0,0,0.35),
+        0 16px 28px -10px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.9) !important;
+}
 
 /* === GLOBAL: модалка «Где купить» === */
 .buy-modal { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; }
@@ -3833,16 +3837,15 @@ a { text-decoration: none; color: inherit; }
 
 /* focus — наводка объектива: blur+scale → чёткость. Глаз притягивается к буквам.
    translate/scale отдельно от transform — не конфликтуют с hover-transform на карточках. */
+/* Без filter blur — только fade с трансформами. Соседние блоки не размываются. */
 [data-reveal="focus"] {
-    filter: blur(calc((1 - var(--p)) * 8px));
-    scale: calc(1.04 - var(--p) * 0.04);
+    scale: calc(1.03 - var(--p) * 0.03);
     opacity: calc(0.4 + var(--p) * 0.6);
 }
 
 [data-reveal="blur"] {
-    filter: blur(calc((1 - var(--p)) * 8px));
     opacity: calc(0.4 + var(--p) * 0.6);
-    translate: 0 calc((1 - var(--p)) * 10px);
+    translate: 0 calc((1 - var(--p)) * 12px);
 }
 
 [data-reveal="slide"] {

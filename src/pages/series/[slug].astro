@@ -27,7 +27,6 @@ const defaultColor = series.colors[0];
 
       <div class="ser-hero__grid">
         <div class="ser-hero__text">
-          <p class="label" data-reveal="blur">Серия</p>
           {series.badge && <span class="ser-hero__badge" data-reveal="blur">{series.badge}</span>}
           <h1 class="ser-hero__title" data-reveal="focus">{series.name}</h1>
           <p class="ser-hero__tagline" data-reveal="blur">{series.tagline}</p>
@@ -64,7 +63,6 @@ const defaultColor = series.colors[0];
   {series.groups && (series.groups.switches.length + series.groups.sockets.length + series.groups.frames.length) > 0 && (
     <section class="ser-lineup">
       <div class="ser-lineup__inner">
-        <p class="label" data-reveal="blur">Линейка</p>
         <h2 class="ser-lineup__title" data-reveal="focus">Что входит в серию</h2>
         <p class="ser-lineup__subtitle" data-reveal="blur">
           <a href="#ser-group-switches" class="ser-lineup__count-link" data-jump="ser-group-switches">{series.groups.switches.length} выключателей</a>
@@ -139,7 +137,6 @@ const defaultColor = series.colors[0];
   <!-- CROSS-SELL: другие серии -->
   <section class="ser-related">
     <div class="ser-related__inner">
-      <p class="label" data-reveal="blur">Другие серии</p>
       <h2 class="ser-related__title" data-reveal="focus">Посмотреть<br>остальные коллекции</h2>
       <div class="ser-related__grid" data-reveal-grid>
         {otherSeries.map((s, idx) => (
@@ -377,7 +374,7 @@ const defaultColor = series.colors[0];
     .ser-hero__color-btn .dot { width: 16px; height: 16px; border-radius: 50%; pointer-events: none; }
 
     .ser-hero__media {
-      aspect-ratio: 4/3; background: var(--warm-200, #ede7de);
+      aspect-ratio: 4/3; background: var(--warm-100, #f7f4ef);
       border-radius: 16px; overflow: hidden;
       display: flex; align-items: center; justify-content: center;
       padding: 60px;
@@ -434,7 +431,7 @@ const defaultColor = series.colors[0];
     .ser-feature.is-visible:hover {
       transform: translateY(-6px);
       background: var(--warm-100, #f7f4ef);
-      border-color: var(--warm-200, #ede7de);
+      border-color: var(--warm-100, #f7f4ef);
       box-shadow: 0 16px 36px rgba(0,0,0,0.06);
       transition-delay: 0s !important;
     }
@@ -615,7 +612,7 @@ const defaultColor = series.colors[0];
     .ser-lineup__card:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(0,0,0,0.06); }
     .ser-lineup__photo {
       aspect-ratio: 1/1;
-      background: var(--warm-200, #ede7de);
+      background: var(--warm-100, #f7f4ef);
       display: flex; align-items: center; justify-content: center;
       padding: 28px; overflow: hidden;
     }
@@ -663,7 +660,7 @@ const defaultColor = series.colors[0];
     }
     .ser-related__card:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(0,0,0,0.06); }
     .ser-related__img {
-      aspect-ratio: 16/10; background: var(--warm-200, #ede7de);
+      aspect-ratio: 16/10; background: var(--warm-100, #f7f4ef);
       display: flex; align-items: center; justify-content: center; padding: 40px;
     }
     .ser-related__img img {

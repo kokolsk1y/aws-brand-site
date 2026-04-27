@@ -92,7 +92,6 @@ function shortName(name) {
 
       <div class="cat-hero__grid">
         <div class="cat-hero__text">
-          <p class="label" data-reveal="blur">Категория</p>
           <h1 class="cat-hero__title" data-reveal="focus">{category.title}</h1>
           <p class="cat-hero__subtitle" data-reveal="blur">{category.subtitle}</p>
           <p class="cat-hero__desc" data-reveal="blur">{category.description}</p>
@@ -146,7 +145,6 @@ function shortName(name) {
   <!-- CROSS-SELL -->
   <section class="cat-related">
     <div class="cat-related__inner">
-      <p class="label" data-reveal="blur">Другие категории</p>
       <h2 class="cat-related__title" data-reveal="focus">Возможно вас<br>заинтересует</h2>
       <div class="cat-related__grid" data-reveal-grid>
         {otherCats.map((c, idx) => (
@@ -301,7 +299,7 @@ function shortName(name) {
     }
     .cat-hero__media {
       aspect-ratio: 4/3;
-      background: var(--warm-200, #ede7de);
+      background: var(--warm-100, #f7f4ef);
       border-radius: 16px; overflow: hidden;
       display: flex; align-items: center; justify-content: center;
       padding: 40px;
@@ -376,7 +374,7 @@ function shortName(name) {
       to   { opacity: 1; transform: translateY(0); }
     }
     .prod-card__img {
-      aspect-ratio: 1/1; background: var(--warm-200, #ede7de);
+      aspect-ratio: 1/1; background: var(--warm-100, #f7f4ef);
       display: flex; align-items: center; justify-content: center;
       padding: 36px; overflow: hidden;
       transition: background 0.4s;
@@ -433,7 +431,7 @@ function shortName(name) {
     }
     .cat-related__card:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(0,0,0,0.06); }
     .cat-related__img {
-      aspect-ratio: 16/10; background: var(--warm-200, #ede7de);
+      aspect-ratio: 16/10; background: var(--warm-100, #f7f4ef);
       display: flex; align-items: center; justify-content: center;
       padding: 24px; overflow: hidden;
     }

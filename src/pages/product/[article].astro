@@ -424,10 +424,6 @@ const docs = [
           <span class="prod-hero__article" data-reveal="blur" style="--i: 0">{product.article}</span>
           <h1 class="prod-hero__title" data-reveal="focus" style="--i: 1">{title}</h1>
 
-          {teaser && (
-            <p class="prod-hero__teaser" data-reveal="blur" style="--i: 2">{teaser}</p>
-          )}
-
           {meta3.length > 0 && (
             <div class="prod-hero__chips" data-reveal="slide" style="--i: 3">
               {meta3.map(m => <span class="prod-hero__chip">{m}</span>)}
@@ -453,9 +449,7 @@ const docs = [
               {marketplaceLinks.map((m, i) => (
                 <a href={m.url} target="_blank" rel="noopener"
                    class={`prod-buy-btn prod-buy-btn--${m.key}`}
-                   data-tilt data-tilt-max="3"
                    data-reveal="slide" style={`--i: ${8 + i}`}>
-                  <div class="prod-buy-btn__glow" aria-hidden="true"></div>
                   <div class="prod-buy-btn__watermark" aria-hidden="true">
                     <img src={m.logo} alt="" loading="lazy" />
                   </div>
@@ -476,13 +470,11 @@ const docs = [
 
       <div class="prod-details__grid">
         <div class="prod-details__col prod-details__col--text">
-          <p class="label" data-reveal="blur">О товаре</p>
-          <h2 class="prod-details__title" data-reveal="focus">Что важно знать</h2>
+          <h2 class="prod-details__title" data-reveal="focus">Описание</h2>
           <p class="prod-details__text" data-reveal="blur">{description}</p>
         </div>
         <div class="prod-details__col prod-details__col--specs">
-          <p class="label" data-reveal="blur">Характеристики</p>
-          <h2 class="prod-details__title" data-reveal="focus">Технические параметры</h2>
+          <h2 class="prod-details__title" data-reveal="focus">Характеристики</h2>
           <dl class="prod-specs__list">
             {specs.map(([k, v], i) => (
               <div class="prod-specs__row" data-reveal="slide" style={`--i: ${i % 9}`}>
@@ -497,7 +489,6 @@ const docs = [
       <!-- Документы соответствия -->
       <div class="prod-docs">
         <div class="prod-docs__head">
-          <p class="label" data-reveal="blur">Документы</p>
           <h2 class="prod-details__title" data-reveal="focus">Сертификаты соответствия</h2>
         </div>
         <div class="prod-docs__grid" data-reveal-grid>
@@ -561,7 +552,6 @@ const docs = [
   {related.length > 0 && (
     <section class="prod-related">
       <div class="prod-related__inner">
-        <p class="label" data-reveal="blur">Похожие</p>
         <h2 class="prod-related__title" data-reveal="focus">
           {product.crumbType === 'category' ? 'Другие из этой категории' : 'Ещё из этой серии'}
         </h2>
@@ -675,7 +665,7 @@ const docs = [
 
     .prod-hero__media-wrap { position: sticky; top: 100px; }
     .prod-hero__media {
-      aspect-ratio: 1/1; background: var(--warm-200, #ede7de);
+      aspect-ratio: 1/1; background: var(--warm-100, #f7f4ef);
       border-radius: 20px; overflow: hidden;
       display: flex; align-items: center; justify-content: center;
       padding: 60px;
@@ -767,7 +757,6 @@ const docs = [
       perspective: 1000px;
     }
     .prod-buy-btn {
-      --brand: 0, 0, 0;
       position: relative;
       display: flex; flex-direction: column; justify-content: center;
       gap: 4px;
@@ -779,51 +768,34 @@ const docs = [
       color: var(--black, #111);
       transition: background 0.5s cubic-bezier(.22,1,.36,1),
                   border-color 0.4s,
+                  transform 0.4s cubic-bezier(.22,1,.36,1),
                   box-shadow 0.5s cubic-bezier(.22,1,.36,1);
       overflow: hidden;
       isolation: isolate;
       min-height: 88px;
-      transform-style: preserve-3d;
       will-change: transform;
     }
-    /* Brand-цвета: Ozon синий, WB фуксия, ЭЦ оранжевый */
-    .prod-buy-btn--ozon { --brand: 0, 91, 255; }
-    .prod-buy-btn--wb   { --brand: 203, 17, 171; }
-    .prod-buy-btn--ec   { --brand: 232, 93, 47; }
-
-    /* Brand-glow — невидимый по умолчанию radial-gradient в углу */
-    .prod-buy-btn__glow {
-      position: absolute; inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background:
-        radial-gradient(circle at 85% 90%, rgba(var(--brand), 0.32) 0%, transparent 55%),
-        radial-gradient(circle at 15% 10%, rgba(var(--brand), 0.08) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.6s cubic-bezier(.22,1,.36,1);
-    }
-    /* Sweep-блик при hover */
+    /* Один эффект — sweep-блик пробегает по карточке при hover */
     .prod-buy-btn::before {
       content: '';
       position: absolute; inset: 0;
       background: linear-gradient(115deg,
         transparent 30%,
-        rgba(255,255,255,0.6) 50%,
+        rgba(255,255,255,0.55) 50%,
         transparent 70%);
       transform: translateX(-130%);
       transition: transform 0.9s cubic-bezier(.4,0,.2,1);
       pointer-events: none;
       z-index: 1;
     }
-
     .prod-buy-btn:hover {
       background: var(--white, #fff);
-      border-color: rgba(var(--brand), 0.25);
+      border-color: rgba(0,0,0,0.08);
+      transform: translateY(-3px);
       box-shadow:
-        0 4px 12px rgba(0,0,0,0.04),
-        0 22px 44px -12px rgba(var(--brand), 0.32);
+        0 6px 14px rgba(0,0,0,0.06),
+        0 22px 44px -14px rgba(0,0,0,0.18);
     }
-    .prod-buy-btn:hover .prod-buy-btn__glow { opacity: 1; }
     .prod-buy-btn:hover::before { transform: translateX(130%); }
 
     /* Watermark лого — sidebar справа, центрирован по высоте, крупное */
@@ -858,10 +830,6 @@ const docs = [
       color: var(--gray-400, #999);
       margin-bottom: 4px;
       padding-right: 110px;
-      transition: color 0.3s ease;
-    }
-    .prod-buy-btn:hover .prod-buy-btn__label {
-      color: rgb(var(--brand));
     }
     .prod-buy-btn__name {
       position: relative; z-index: 2;
@@ -1034,7 +1002,7 @@ const docs = [
     }
     .prod-related__card:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(0,0,0,0.07); }
     .prod-related__img {
-      aspect-ratio: 1/1; background: var(--warm-200, #ede7de);
+      aspect-ratio: 1/1; background: var(--warm-100, #f7f4ef);
       display: flex; align-items: center; justify-content: center; padding: 28px;
     }
     .prod-related__img img {

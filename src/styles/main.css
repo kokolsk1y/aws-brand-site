@@ -2018,15 +2018,13 @@ a { text-decoration: none; color: inherit; }
 /* На каталоге эффекты заметно тоньше — страницы информативные,
    reveal не должен перетягивать внимание. */
 [data-reveal="focus"] {
-    filter: blur(calc((1 - var(--p)) * 5px));
     scale: calc(1.025 - var(--p) * 0.025);
     opacity: calc(0.6 + var(--p) * 0.4);
 }
 
 [data-reveal="blur"] {
-    filter: blur(calc((1 - var(--p)) * 5px));
     opacity: calc(0.65 + var(--p) * 0.35);
-    translate: 0 calc((1 - var(--p)) * 6px);
+    translate: 0 calc((1 - var(--p)) * 8px);
 }
 
 [data-reveal="slide"] {

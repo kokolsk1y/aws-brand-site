@@ -1769,18 +1769,48 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ============================
-   VIEW TRANSITIONS (Astro built-in)
+   VIEW TRANSITIONS (Astro built-in + cross-document)
    ============================ */
+
+/* Cross-document переходы для navigation между Astro и не-Astro страницами */
+@view-transition {
+    navigation: auto;
+}
+
 @keyframes vt-fade-in  { from { opacity: 0; }                      to { opacity: 1; } }
 @keyframes vt-fade-out { from { opacity: 1; }                      to { opacity: 0; } }
 @keyframes vt-slide-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes vt-slide-out { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-6px); } }
 
+/* root: лёгкий fade — играет при любом view transition, должен быть спокойным */
 ::view-transition-old(root) {
     animation: vt-fade-out 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 ::view-transition-new(root) {
     animation: vt-slide-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Морфинг картинки серии: hero на странице серии получает имя через slug.
+   Парные имена выставлены в [slug].astro инлайном. */
+::view-transition-old(series-uno-image),  ::view-transition-new(series-uno-image),
+::view-transition-old(series-aura-image), ::view-transition-new(series-aura-image),
+::view-transition-old(series-uno-title),  ::view-transition-new(series-uno-title),
+::view-transition-old(series-aura-title), ::view-transition-new(series-aura-title),
+::view-transition-old(series-design-title), ::view-transition-new(series-design-title) {
+    animation-duration: 0.6s;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root),
+    ::view-transition-old(series-uno-image),  ::view-transition-new(series-uno-image),
+    ::view-transition-old(series-aura-image), ::view-transition-new(series-aura-image),
+    ::view-transition-old(series-uno-title),  ::view-transition-new(series-uno-title),
+    ::view-transition-old(series-aura-title), ::view-transition-new(series-aura-title),
+    ::view-transition-old(series-design-title), ::view-transition-new(series-design-title) {
+        animation: none !important;
+    }
 }
 
 /* ============================

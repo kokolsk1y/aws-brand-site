@@ -865,6 +865,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .series__card {
+    position: relative;
     background: var(--white);
     border-radius: 12px;
     overflow: hidden;
@@ -907,7 +908,10 @@ a { text-decoration: none; color: inherit; }
 }
 
 .series__card-badge {
-    display: inline-block;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 5;
     font-size: 9px;
     font-weight: 700;
     letter-spacing: 2px;
@@ -916,14 +920,15 @@ a { text-decoration: none; color: inherit; }
     color: var(--white);
     padding: 4px 12px;
     border-radius: 100px;
-    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(140, 184, 107, 0.35);
 }
 
 .series__card-name {
     font-size: 22px;
-    font-weight: 700;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -1px;
     margin-bottom: 8px;
-    letter-spacing: -0.5px;
 }
 
 .series__card-desc {
@@ -2228,18 +2233,56 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ============================
-   VIEW TRANSITIONS (Astro built-in)
+   VIEW TRANSITIONS (Astro built-in + cross-document)
    ============================ */
+
+/* Включаем cross-document переходы для главной (HTML без ClientRouter).
+   Работает в Chrome/Edge 126+. В Firefox/Safari старых — обычный reload. */
+@view-transition {
+    navigation: auto;
+}
+
 @keyframes vt-fade-in  { from { opacity: 0; }                      to { opacity: 1; } }
 @keyframes vt-fade-out { from { opacity: 1; }                      to { opacity: 0; } }
 @keyframes vt-slide-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes vt-slide-out { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-6px); } }
 
+/* root: лёгкий fade — играет при ЛЮБОМ view transition (включая внутренние
+   через startViewTransition в конструкторе/etc), поэтому держим максимально
+   спокойным. Главная «вау» приходит от морфинга named-элементов ниже. */
 ::view-transition-old(root) {
     animation: vt-fade-out 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 ::view-transition-new(root) {
     animation: vt-slide-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Морфинг картинки/заголовка серии: НЕТ статичного view-transition-name —
+   он проставляется через JS только в момент клика по карточке (см. script.js).
+   Иначе VT-name создаёт снэпшот при ЛЮБОМ view transition (конструктор и т.п.)
+   и карточки серий «дёргаются» вместе с другими переходами. */
+
+/* Кастомная скорость и кривая для морфинга серий-элементов */
+::view-transition-old(series-uno-image),  ::view-transition-new(series-uno-image),
+::view-transition-old(series-aura-image), ::view-transition-new(series-aura-image),
+::view-transition-old(series-uno-title),  ::view-transition-new(series-uno-title),
+::view-transition-old(series-aura-title), ::view-transition-new(series-aura-title),
+::view-transition-old(series-design-title), ::view-transition-new(series-design-title) {
+    animation-duration: 0.6s;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Уважаем prefers-reduced-motion: отключаем все view transitions */
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root),
+    ::view-transition-old(series-uno-image),  ::view-transition-new(series-uno-image),
+    ::view-transition-old(series-aura-image), ::view-transition-new(series-aura-image),
+    ::view-transition-old(series-uno-title),  ::view-transition-new(series-uno-title),
+    ::view-transition-old(series-aura-title), ::view-transition-new(series-aura-title),
+    ::view-transition-old(series-design-title), ::view-transition-new(series-design-title) {
+        animation: none !important;
+    }
 }
 
 /* ============================

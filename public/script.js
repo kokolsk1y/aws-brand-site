@@ -412,7 +412,18 @@ document.querySelectorAll('.series__card[data-series]').forEach(card => {
         // Не переходить если кликнули на точку цвета (она своя логика)
         if (e.target.closest('.dot[data-color]')) return;
         const slug = card.dataset.series;
-        if (slug) window.location.href = '/aws-brand-site/series/' + slug;
+        if (!slug) return;
+
+        // View Transition: проставляем VT-name только в момент клика, чтобы
+        // карточка не попадала в снэпшоты других переходов (конструктор и т.п.)
+        const img = card.querySelector('.series__photo-img');
+        const title = card.querySelector('.series__card-name');
+        if (img) img.style.viewTransitionName = 'series-' + slug + '-image';
+        if (title) title.style.viewTransitionName = 'series-' + slug + '-title';
+        // Принудительный reflow, чтобы стили гарантированно успели до snapshot
+        void document.body.offsetHeight;
+
+        window.location.href = '/aws-brand-site/series/' + slug;
     });
 });
 

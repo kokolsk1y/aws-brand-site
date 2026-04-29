@@ -28,7 +28,7 @@ const defaultColor = series.colors[0];
       <div class="ser-hero__grid">
         <div class="ser-hero__text">
           {series.badge && <span class="ser-hero__badge" data-reveal="blur">{series.badge}</span>}
-          <h1 class="ser-hero__title" data-reveal="focus">{series.name}</h1>
+          <h1 class="ser-hero__title" data-reveal="focus" style={`view-transition-name: series-${slug}-title`}>{series.name}</h1>
           <p class="ser-hero__tagline" data-reveal="blur">{series.tagline}</p>
           <p class="ser-hero__desc" data-reveal="blur">{series.description}</p>
 
@@ -50,7 +50,7 @@ const defaultColor = series.colors[0];
 
         <div class="ser-hero__media" data-reveal="zoom">
           {defaultColor ? (
-            <img id="serHeroImg" src={defaultColor.img} alt={series.name} />
+            <img id="serHeroImg" src={defaultColor.img} alt={series.name} style={`view-transition-name: series-${slug}-image`} />
           ) : (
             <div class="ser-hero__placeholder">Скоро</div>
           )}
@@ -322,6 +322,19 @@ const defaultColor = series.colors[0];
     });
   </script>
 
+  <script>
+    // При back/forward навигации (юзер нажал «Назад») отменяем view transition
+    // целиком — морфинг заголовка/картинки в обратную сторону выглядит коряво
+    // из-за разных шрифтовых пропорций между страницей серии и карточкой главной.
+    window.addEventListener('pageswap', (e) => {
+      if (!e.viewTransition) return;
+      const navType = e.activation?.navigationType;
+      if (navType === 'traverse') {
+        e.viewTransition.skipTransition();
+      }
+    });
+  </script>
+
   <style is:global>
     /* === SERIES PAGE === */
     .ser-hero {
@@ -358,8 +371,9 @@ const defaultColor = series.colors[0];
     }
     .ser-hero__title {
       font-size: clamp(56px, 7vw, 112px);
-      font-weight: 800; line-height: 0.95; letter-spacing: -3px;
+      font-weight: 800; line-height: 1; letter-spacing: -2px;
       margin-bottom: 20px; color: var(--black, #111);
+      text-wrap: balance;
     }
     .ser-hero__tagline {
       font-size: 20px; font-weight: 500; color: var(--gray-600, #666);

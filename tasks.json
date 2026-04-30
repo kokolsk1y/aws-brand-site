@@ -38,10 +38,12 @@
     },
     {
       "id": 4,
-      "text": "[Хик-2] Пагинация на категориях patch (25 шт), cable (19), clamps (18) — показывать 9 + кнопка «Показать ещё»",
-      "status": "pending",
-      "approved": false,
-      "created": "2026-04-30 16:38"
+      "text": "[Хик-2] Пагинация на категориях patch-cords (25 шт), cables (19), clamps (18) — показывать 9 + кнопка «Показать ещё»",
+      "status": "done",
+      "approved": true,
+      "created": "2026-04-30 16:38",
+      "completed": "2026-04-30 17:03",
+      "files": ["src/pages/category/[slug].astro"]
     },
     {
       "id": 5,

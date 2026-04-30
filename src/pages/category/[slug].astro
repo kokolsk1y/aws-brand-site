@@ -136,6 +136,14 @@ function shortName(name) {
         })}
       </div>
 
+      {products.length > 9 && (
+        <div class="cat-load-more-wrap">
+          <button class="cat-load-more" id="catLoadMore" type="button">
+            Показать ещё <span id="catLoadMoreCount">9</span>
+          </button>
+        </div>
+      )}
+
       {products.length === 0 && (
         <div class="cat-empty">Каталог в подготовке. Скоро здесь появятся товары.</div>
       )}
@@ -198,32 +206,75 @@ function shortName(name) {
   </div>
 
   <script is:inline>
-    // Фильтры товаров — с плавным fade-out / fade-in
+    // Фильтры + пагинация (Закон Хика: показываем 9, остальное за «Показать ещё»)
+    const PAGE_SIZE = 9;
+    let pageLimit = PAGE_SIZE;
+
     const filtersEl = document.getElementById('catFilters');
     const grid = document.getElementById('catGrid');
+    const loadMoreBtn = document.getElementById('catLoadMore');
+    const loadMoreCount = document.getElementById('catLoadMoreCount');
+    const cards = grid ? Array.from(grid.querySelectorAll('.prod-card')) : [];
+
+    function applyView(testExpr, animate) {
+      const matched = [];
+      cards.forEach(card => {
+        const i = { name: card.dataset.name || '' };
+        let show = true;
+        try { show = new Function('i', 'return ' + testExpr)(i); } catch (e) { show = true; }
+        if (show) {
+          matched.push(card);
+        } else {
+          card.style.display = 'none';
+          card.classList.remove('is-filter-in', 'is-filter-out');
+        }
+      });
+      matched.forEach((card, idx) => {
+        card.classList.remove('is-filter-out');
+        if (idx < pageLimit) {
+          card.style.display = '';
+          if (animate) {
+            card.classList.remove('is-filter-in');
+            requestAnimationFrame(() => card.classList.add('is-filter-in'));
+          }
+        } else {
+          card.style.display = 'none';
+          card.classList.remove('is-filter-in');
+        }
+      });
+      if (loadMoreBtn) {
+        const remaining = matched.length - pageLimit;
+        if (remaining > 0) {
+          loadMoreBtn.style.display = '';
+          if (loadMoreCount) loadMoreCount.textContent = String(Math.min(remaining, PAGE_SIZE));
+        } else {
+          loadMoreBtn.style.display = 'none';
+        }
+      }
+    }
+
+    // Стартовая пагинация: скрыть всё после первых 9
+    if (cards.length > PAGE_SIZE) applyView('true', false);
+
     if (filtersEl && grid) {
       filtersEl.querySelectorAll('.cat-filters__chip').forEach(chip => {
         chip.addEventListener('click', () => {
           filtersEl.querySelectorAll('.cat-filters__chip').forEach(c => c.classList.remove('active'));
           chip.classList.add('active');
           const testExpr = chip.dataset.test || 'true';
-          const cards = grid.querySelectorAll('.prod-card');
+          pageLimit = PAGE_SIZE; // сброс пагинации при смене фильтра
           cards.forEach(card => card.classList.add('is-filter-out'));
-          setTimeout(() => {
-            cards.forEach(card => {
-              const i = { name: card.dataset.name || '' };
-              let show = true;
-              try { show = new Function('i', 'return ' + testExpr)(i); } catch (e) { show = true; }
-              card.classList.remove('is-filter-out', 'is-filter-in');
-              if (show) {
-                card.style.display = '';
-                requestAnimationFrame(() => card.classList.add('is-filter-in'));
-              } else {
-                card.style.display = 'none';
-              }
-            });
-          }, 250);
+          setTimeout(() => applyView(testExpr, true), 250);
         });
+      });
+    }
+
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('click', () => {
+        pageLimit += PAGE_SIZE;
+        const activeChip = filtersEl?.querySelector('.cat-filters__chip.active');
+        const testExpr = activeChip?.dataset.test || 'true';
+        applyView(testExpr, true);
       });
     }
 
@@ -330,10 +381,10 @@ function shortName(name) {
     .cat-filters__chip {
       font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
       padding: 10px 22px; border: 1px solid var(--gray-200, #ddd);
-      border-radius: 100px; background: transparent; color: var(--gray-600, #666);
+      border-radius: 100px; background: var(--gray-100, #f0eee9); color: var(--gray-600, #666);
       cursor: pointer; transition: all 0.2s ease;
     }
-    .cat-filters__chip:hover { border-color: var(--black, #111); color: var(--black, #111); }
+    .cat-filters__chip:hover { border-color: var(--black, #111); color: var(--black, #111); background: var(--white, #fff); }
     .cat-filters__chip.active {
       background: var(--black, #111); color: var(--white, #fff); border-color: var(--black, #111);
     }
@@ -402,11 +453,11 @@ function shortName(name) {
     .prod-card__info { padding: 20px 24px 16px; flex-grow: 1; }
     .prod-card__article {
       font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--gray-400, #999); display: block; margin-bottom: 6px;
+      color: var(--gray-400, #999); display: block; margin-bottom: 4px;
     }
     .prod-card__name {
       font-size: 16px; font-weight: 700; line-height: 1.35;
-      color: var(--black, #111); margin-bottom: 12px;
+      color: var(--black, #111); margin-bottom: 16px;
     }
     .prod-card__meta { display: flex; gap: 6px; flex-wrap: wrap; }
     .prod-card__chip {
@@ -423,6 +474,26 @@ function shortName(name) {
       text-align: center; padding: 80px 20px;
       font-size: 14px; color: var(--gray-400, #999); letter-spacing: 1px; text-transform: uppercase;
     }
+
+    /* «Показать ещё» — пагинация */
+    .cat-load-more-wrap {
+      display: flex; justify-content: center; margin-top: 56px;
+    }
+    .cat-load-more {
+      font-family: inherit;
+      font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 16px 40px; border-radius: 100px;
+      background: var(--black, #111); color: var(--white, #fff);
+      border: 1px solid var(--black, #111);
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
+    }
+    .cat-load-more:hover {
+      background: transparent; color: var(--black, #111);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+    }
+    .cat-load-more:active { transform: translateY(0); }
 
     /* Cross-sell */
     .cat-related { background: var(--warm-100, #f7f4ef); padding: 100px 0; }

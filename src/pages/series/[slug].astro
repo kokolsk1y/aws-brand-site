@@ -88,10 +88,10 @@ const defaultColor = series.colors[0];
           { key: 'switches', title: 'Выключатели', items: series.groups.switches },
           { key: 'sockets',  title: 'Розетки',     items: series.groups.sockets  },
           { key: 'frames',   title: 'Рамки',       items: series.groups.frames   }
-        ].filter(g => g.items.length > 0).map(group => (
+        ].filter(g => g.items.length > 0).map((group, gIdx) => (
           <div class="ser-lineup__group" data-group={group.key} id={`ser-group-${group.key}`}>
             <button class="ser-lineup__group-head" type="button"
-                    aria-expanded="true"
+                    aria-expanded={gIdx === 0 ? "true" : "false"}
                     aria-controls={`ser-group-content-${group.key}`}
                     id={`ser-group-trigger-${group.key}`}>
               <h3 class="ser-lineup__group-title">{group.title}</h3>
@@ -104,7 +104,7 @@ const defaultColor = series.colors[0];
                  id={`ser-group-content-${group.key}`}
                  role="region"
                  aria-labelledby={`ser-group-trigger-${group.key}`}
-                 data-open="true">
+                 data-open={gIdx === 0 ? "true" : "false"}>
               <div class="ser-lineup__group-inner">
                 <div class="ser-lineup__grid" data-reveal-grid>
                   {group.items.map((item, idx) => (
@@ -628,7 +628,7 @@ const defaultColor = series.colors[0];
       }
     }
     .ser-lineup__grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
     }
     .ser-lineup__card {
       background: var(--white, #fff); border-radius: 12px; overflow: hidden;
@@ -666,10 +666,10 @@ const defaultColor = series.colors[0];
     }
     .ser-lineup__article {
       font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--gray-400, #999); display: block; margin-bottom: 6px;
+      color: var(--gray-400, #999); display: block; margin-bottom: 4px;
     }
     .ser-lineup__name {
-      font-size: 14px; font-weight: 600; line-height: 1.4; color: var(--black, #111);
+      font-size: 14px; font-weight: 600; line-height: 1.35; color: var(--black, #111);
     }
     .ser-lineup__cta { text-align: center; margin-top: 24px; }
 

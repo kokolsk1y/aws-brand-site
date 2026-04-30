@@ -1,0 +1,61 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "text": "[Хик] Свернуть группы Розетки/Рамки в /series/[slug] по умолчанию (выключатели остаются открыты)",
+      "status": "done",
+      "approved": true,
+      "created": "2026-04-30 16:30",
+      "completed": "2026-04-30 16:37",
+      "files": ["src/pages/series/[slug].astro"]
+    },
+    {
+      "id": 2,
+      "text": "[Близость] Разнести вертикальный ритм карточек: gap сетки серий 24→40px, desc→colors 16→24px, ser-lineup__grid gap 16→28px, prod-card__name margin 12→16px",
+      "status": "done",
+      "approved": true,
+      "created": "2026-04-30 16:30",
+      "completed": "2026-04-30 16:37",
+      "files": [
+        "src/styles/main.css",
+        "public/style.css",
+        "src/pages/category/[slug].astro",
+        "src/pages/series/[slug].astro"
+      ]
+    },
+    {
+      "id": 3,
+      "text": "[Контраст] Акцентная зелёная обводка на UNO + серый фон неактивным фильтр-чипам в категории",
+      "status": "done",
+      "approved": true,
+      "created": "2026-04-30 16:30",
+      "completed": "2026-04-30 16:37",
+      "files": [
+        "src/styles/main.css",
+        "public/style.css",
+        "src/pages/category/[slug].astro"
+      ]
+    },
+    {
+      "id": 4,
+      "text": "[Хик-2] Пагинация на категориях patch (25 шт), cable (19), clamps (18) — показывать 9 + кнопка «Показать ещё»",
+      "status": "pending",
+      "approved": false,
+      "created": "2026-04-30 16:38"
+    },
+    {
+      "id": 5,
+      "text": "[Контраст-2] Поле featured: true в products.json для одного товара в каждой категории + CSS-выделение этой карточки",
+      "status": "pending",
+      "approved": false,
+      "created": "2026-04-30 16:38"
+    },
+    {
+      "id": 6,
+      "text": "[Хик-3] Внутри раскрытой группы серии показывать первые 6 + кнопка «показать все 24» (для AURA рамок)",
+      "status": "pending",
+      "approved": false,
+      "created": "2026-04-30 16:38"
+    }
+  ]
+}

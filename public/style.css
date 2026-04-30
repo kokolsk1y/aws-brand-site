@@ -860,7 +860,7 @@ a { text-decoration: none; color: inherit; }
 .series__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 40px;
     margin-bottom: 80px;
 }
 
@@ -875,6 +875,14 @@ a { text-decoration: none; color: inherit; }
 .series__card:hover {
     transform: translateY(-8px);
     box-shadow: 0 24px 48px rgba(0,0,0,0.08);
+}
+
+.series__card[data-series="uno"] {
+    box-shadow: 0 0 0 2px var(--accent);
+}
+
+.series__card[data-series="uno"]:hover {
+    box-shadow: 0 0 0 2px var(--accent), 0 24px 48px rgba(140, 184, 107, 0.18);
 }
 
 .series__card-visual {
@@ -935,7 +943,7 @@ a { text-decoration: none; color: inherit; }
     font-size: 14px;
     line-height: 1.6;
     color: var(--gray-600);
-    margin-bottom: 16px;
+    margin-bottom: 24px;
 }
 
 .series__card-colors {

@@ -480,16 +480,16 @@ document.querySelectorAll('.series__card').forEach(card => {
 
 // ─── CONSTRUCTOR: Chip toggle + обновление превью ───
 
-const constructorState = { series: 'UNO', color: 'Белый', frame: 'Пластик' };
+const constructorState = { series: 'УНО', color: 'Белый', frame: 'Пластик' };
 const constructorPreview = document.getElementById('constructorPreview');
 const constructorPlaceholder = document.getElementById('constructorPlaceholder');
 
 const IMG_VERSION = 'v=20260507';
 const constructorMap = {
-    'UNO|Белый|Пластик':   `/aws-brand-site/img/series/uno-1kl-w.webp?${IMG_VERSION}`,
-    'UNO|Чёрный|Пластик':  `/aws-brand-site/img/series/uno-1kl-b.webp?${IMG_VERSION}`,
-    'AURA|Белый|Пластик':  `/aws-brand-site/img/series/aura-1kl-w.webp?${IMG_VERSION}`,
-    'AURA|Чёрный|Пластик': `/aws-brand-site/img/series/aura-1kl-b.webp?${IMG_VERSION}`
+    'УНО|Белый|Пластик':   `/aws-brand-site/img/series/uno-1kl-w.webp?${IMG_VERSION}`,
+    'УНО|Чёрный|Пластик':  `/aws-brand-site/img/series/uno-1kl-b.webp?${IMG_VERSION}`,
+    'АУРА|Белый|Пластик':  `/aws-brand-site/img/series/aura-1kl-w.webp?${IMG_VERSION}`,
+    'АУРА|Чёрный|Пластик': `/aws-brand-site/img/series/aura-1kl-b.webp?${IMG_VERSION}`
 };
 
 const preloadedConstructorImages = new Set();

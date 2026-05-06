@@ -247,16 +247,16 @@ document.querySelectorAll('.series__card').forEach(card => {
 
 // ─── CONSTRUCTOR: Chip toggle + обновление превью ───
 
-const constructorState = { series: 'UNO', color: 'Белый', frame: 'Пластик' };
+const constructorState = { series: 'УНО', color: 'Белый', frame: 'Пластик' };
 const constructorPreview = document.getElementById('constructorPreview');
 const constructorPlaceholder = document.getElementById('constructorPlaceholder');
 
 const IMG_VERSION = 'v=20260507';
 const constructorMap = {
-    'UNO|Белый|Пластик':   `img/series/uno-1kl-w.webp?${IMG_VERSION}`,
-    'UNO|Чёрный|Пластик':  `img/series/uno-1kl-b.webp?${IMG_VERSION}`,
-    'AURA|Белый|Пластик':  `img/series/aura-1kl-w.webp?${IMG_VERSION}`,
-    'AURA|Чёрный|Пластик': `img/series/aura-1kl-b.webp?${IMG_VERSION}`
+    'УНО|Белый|Пластик':   `img/series/uno-1kl-w.webp?${IMG_VERSION}`,
+    'УНО|Чёрный|Пластик':  `img/series/uno-1kl-b.webp?${IMG_VERSION}`,
+    'АУРА|Белый|Пластик':  `img/series/aura-1kl-w.webp?${IMG_VERSION}`,
+    'АУРА|Чёрный|Пластик': `img/series/aura-1kl-b.webp?${IMG_VERSION}`
 };
 
 function showConstructorPlaceholder() {

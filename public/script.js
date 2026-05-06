@@ -492,20 +492,10 @@ const constructorMap = {
     'АУРА|Чёрный|Пластик': `/aws-brand-site/img/series/aura-1kl-b.webp?${IMG_VERSION}`
 };
 
-const preloadedConstructorImages = new Set();
-function preloadConstructorImages() {
-    Object.values(constructorMap).forEach(url => {
-        if (preloadedConstructorImages.has(url)) return;
-        const img = new Image();
-        img.src = url;
-        preloadedConstructorImages.add(url);
-    });
-}
-if ('requestIdleCallback' in window) {
-    requestIdleCallback(preloadConstructorImages, { timeout: 2000 });
-} else {
-    setTimeout(preloadConstructorImages, 1500);
-}
+Object.values(constructorMap).forEach(url => {
+    const img = new Image();
+    img.src = url;
+});
 
 function showConstructorPlaceholder() {
     if (constructorPreview) constructorPreview.style.display = 'none';

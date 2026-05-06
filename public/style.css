@@ -1041,7 +1041,7 @@ a { text-decoration: none; color: inherit; }
 @supports (view-transition-name: none) {
     ::view-transition-old(constructor-product),
     ::view-transition-new(constructor-product) {
-        animation-duration: 450ms;
+        animation-duration: 180ms;
         animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
     }
     ::view-transition-old(constructor-product) {

@@ -9,12 +9,12 @@
       {
         "key": "white",
         "label": "Белый",
-        "img": "/img/series/uno-1kl-w.png"
+        "img": "/img/series/uno-1kl-w.webp"
       },
       {
         "key": "black",
         "label": "Чёрный",
-        "img": "/img/series/uno-1kl-b.png"
+        "img": "/img/series/uno-1kl-b.webp"
       }
     ],
     "features": [
@@ -271,12 +271,12 @@
       {
         "key": "white",
         "label": "Белый",
-        "img": "/img/series/aura-1kl-w.png"
+        "img": "/img/series/aura-1kl-w.webp"
       },
       {
         "key": "black",
         "label": "Чёрный",
-        "img": "/img/series/aura-1kl-b.png"
+        "img": "/img/series/aura-1kl-b.webp"
       }
     ],
     "features": [

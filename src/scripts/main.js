@@ -251,12 +251,12 @@ const constructorState = { series: 'UNO', color: 'Белый', frame: 'Плас�
 const constructorPreview = document.getElementById('constructorPreview');
 const constructorPlaceholder = document.getElementById('constructorPlaceholder');
 
-const IMG_VERSION = 'v=20260414e';
+const IMG_VERSION = 'v=20260507';
 const constructorMap = {
-    'UNO|Белый|Пластик':   `img/series/uno-1kl-w.png?${IMG_VERSION}`,
-    'UNO|Чёрный|Пластик':  `img/series/uno-1kl-b.png?${IMG_VERSION}`,
-    'AURA|Белый|Пластик':  `img/series/aura-1kl-w.png?${IMG_VERSION}`,
-    'AURA|Чёрный|Пластик': `img/series/aura-1kl-b.png?${IMG_VERSION}`
+    'UNO|Белый|Пластик':   `img/series/uno-1kl-w.webp?${IMG_VERSION}`,
+    'UNO|Чёрный|Пластик':  `img/series/uno-1kl-b.webp?${IMG_VERSION}`,
+    'AURA|Белый|Пластик':  `img/series/aura-1kl-w.webp?${IMG_VERSION}`,
+    'AURA|Чёрный|Пластик': `img/series/aura-1kl-b.webp?${IMG_VERSION}`
 };
 
 function showConstructorPlaceholder() {

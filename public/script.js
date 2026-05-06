@@ -484,13 +484,28 @@ const constructorState = { series: 'UNO', color: 'Белый', frame: 'Плас�
 const constructorPreview = document.getElementById('constructorPreview');
 const constructorPlaceholder = document.getElementById('constructorPlaceholder');
 
-const IMG_VERSION = 'v=20260414e';
+const IMG_VERSION = 'v=20260507';
 const constructorMap = {
-    'UNO|Белый|Пластик':   `/aws-brand-site/img/series/uno-1kl-w.png?${IMG_VERSION}`,
-    'UNO|Чёрный|Пластик':  `/aws-brand-site/img/series/uno-1kl-b.png?${IMG_VERSION}`,
-    'AURA|Белый|Пластик':  `/aws-brand-site/img/series/aura-1kl-w.png?${IMG_VERSION}`,
-    'AURA|Чёрный|Пластик': `/aws-brand-site/img/series/aura-1kl-b.png?${IMG_VERSION}`
+    'UNO|Белый|Пластик':   `/aws-brand-site/img/series/uno-1kl-w.webp?${IMG_VERSION}`,
+    'UNO|Чёрный|Пластик':  `/aws-brand-site/img/series/uno-1kl-b.webp?${IMG_VERSION}`,
+    'AURA|Белый|Пластик':  `/aws-brand-site/img/series/aura-1kl-w.webp?${IMG_VERSION}`,
+    'AURA|Чёрный|Пластик': `/aws-brand-site/img/series/aura-1kl-b.webp?${IMG_VERSION}`
 };
+
+const preloadedConstructorImages = new Set();
+function preloadConstructorImages() {
+    Object.values(constructorMap).forEach(url => {
+        if (preloadedConstructorImages.has(url)) return;
+        const img = new Image();
+        img.src = url;
+        preloadedConstructorImages.add(url);
+    });
+}
+if ('requestIdleCallback' in window) {
+    requestIdleCallback(preloadConstructorImages, { timeout: 2000 });
+} else {
+    setTimeout(preloadConstructorImages, 1500);
+}
 
 function showConstructorPlaceholder() {
     if (constructorPreview) constructorPreview.style.display = 'none';
@@ -519,17 +534,15 @@ function updateConstructorPreview() {
         }
     };
 
-    // View Transitions API — нативный морфинг между состояниями (Chrome 111+, Safari 18+)
     if (document.startViewTransition) {
         constructorPreview.style.viewTransitionName = 'constructor-product';
         document.startViewTransition(() => apply());
     } else {
-        // Fallback — fade-out + src swap + fade-in
         constructorPreview.classList.add('fade-out');
-        setTimeout(() => {
+        requestAnimationFrame(() => {
             apply();
-            constructorPreview.classList.remove('fade-out');
-        }, 250);
+            requestAnimationFrame(() => constructorPreview.classList.remove('fade-out'));
+        });
     }
 }
 

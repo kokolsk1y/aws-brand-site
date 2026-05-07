@@ -237,11 +237,14 @@ function shortName(name) {
       if ('requestIdleCallback' in window) requestIdleCallback(preloadSecondaries, { timeout: 2000 });
       else setTimeout(preloadSecondaries, 1500);
 
-      grid.addEventListener('click', (e) => {
+      function handleDot(e) {
         const dot = e.target.closest('.prod-card__dot');
         if (!dot) return;
+        // Перехват на capture: блокируем переход по <a> ДО того как браузер
+        // начнёт навигацию.
         e.preventDefault();
         e.stopPropagation();
+        if (e.type !== 'click') return; // Логика смены фото — только на click
         const card = dot.closest('.prod-card');
         if (!card) return;
         const img = card.querySelector('.prod-card__photo--main') || card.querySelector('.prod-card__photo');
@@ -249,7 +252,6 @@ function shortName(name) {
         const src = dot.dataset.photoSrc;
         if (!src || img.src.endsWith(src.replace(/^\//, ''))) return;
         img.classList.add('is-swapping');
-        // Прелоад → swap → fade-in
         const pre = new Image();
         pre.onload = () => {
           img.src = src;
@@ -259,7 +261,14 @@ function shortName(name) {
         pre.src = src;
         card.querySelectorAll('.prod-card__dot').forEach(d => d.classList.remove('is-active'));
         dot.classList.add('is-active');
-      });
+      }
+      // capture: true — наш handler срабатывает ДО bubble-обработки <a>,
+      // preventDefault успевает заблокировать переход.
+      grid.addEventListener('click', handleDot, true);
+      // На pointerdown/mousedown тоже перехватываем — некоторые браузеры
+      // запускают навигацию на pointerdown.
+      grid.addEventListener('pointerdown', handleDot, true);
+      grid.addEventListener('mousedown', handleDot, true);
 
       // Клавиатура: точки — через keyboard accessible (Enter / Space)
       grid.addEventListener('keydown', (e) => {

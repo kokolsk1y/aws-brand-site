@@ -120,29 +120,25 @@ function shortName(name) {
           const meta = extractMeta(p.name);
           const photos = getProductPhotos(p.article);
           const main = photos[0] || p.photo.replace(/^img\//, '/img/');
-          // Hover-ракурс показываем только если фото ровно 2 (точек не будет).
-          // При 3+ фото — точки переключают, hover не нужен.
-          const hover = photos.length === 2 ? photos[1] : null;
-          const hasDots = photos.length > 1;
+          // У каждого товара с 2+ фото — точки переключения.
+          // Hover-ракурс убран (точки понятнее и работают на мобильных).
+          const showDots = photos.length >= 2;
           return (
             <a href={`/aws-brand-site/product/${p.article}`} class="prod-card" data-name={p.name} data-tilt data-tilt-max="6" data-reveal="slide" style={`--i: ${idx % 9}`}>
-              <div class={`prod-card__img${hover ? ' has-hover' : ''}`}>
-                <img src={main} alt={p.name} class="prod-card__photo prod-card__photo--main" loading="lazy" data-photos={hasDots && photos.length > 2 ? JSON.stringify(photos) : null} />
-                {hover && (
-                  <img src={hover} alt="" class="prod-card__photo prod-card__photo--hover" loading="lazy" aria-hidden="true" />
-                )}
+              <div class="prod-card__img">
+                <img src={main} alt={p.name} class="prod-card__photo prod-card__photo--main" loading="lazy" />
               </div>
               <div class="prod-card__info">
                 <span class="prod-card__article">{p.article}</span>
                 <h3 class="prod-card__name">{shortName(p.name)}</h3>
-                {(meta.length > 0 || photos.length > 2) && (
+                {(meta.length > 0 || showDots) && (
                   <div class="prod-card__meta-row">
                     {meta.length > 0 && (
                       <div class="prod-card__meta">
                         {meta.map(m => <span class="prod-card__chip">{m}</span>)}
                       </div>
                     )}
-                    {photos.length > 2 && (
+                    {showDots && (
                       <div class="prod-card__dots" aria-label="Переключить фото">
                         {photos.map((src, i) => (
                           <span class={`prod-card__dot${i === 0 ? ' is-active' : ''}`} role="button" tabindex="0" data-photo-idx={i} data-photo-src={src} aria-label={`Фото ${i + 1}`}></span>

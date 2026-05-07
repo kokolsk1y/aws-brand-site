@@ -111,16 +111,11 @@ const defaultColor = series.colors[0];
                   {group.items.map((item, idx) => {
                     const photos = getProductPhotos(item.article);
                     const main = photos[0] || `/img/products/${item.article}.webp`;
-                    // Hover-ракурс только при ровно 2 фото, точки — при 3+
-                    const hover = photos.length === 2 ? photos[1] : null;
-                    const showDots = photos.length > 2;
+                    const showDots = photos.length >= 2;
                     return (
                     <a href={`/aws-brand-site/product/${item.article}`} class="ser-lineup__card" data-color={item.color || 'unknown'} data-tilt data-tilt-max="5" data-reveal="slide" style={`--i: ${idx % 9}`}>
-                      <div class={`ser-lineup__photo${hover ? ' has-hover' : ''}`}>
+                      <div class="ser-lineup__photo">
                         <img src={main} alt={item.name} class="ser-lineup__img ser-lineup__img--main" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.ser-lineup__photo-fallback').style.display='flex'" />
-                        {hover && (
-                          <img src={hover} alt="" class="ser-lineup__img ser-lineup__img--hover" loading="lazy" aria-hidden="true" />
-                        )}
                         <div class="ser-lineup__photo-fallback" style="display:none">
                           <span class={`dot dot--${item.color || 'white'}`}></span>
                         </div>

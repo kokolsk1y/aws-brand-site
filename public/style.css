@@ -12,8 +12,9 @@
     --gray-400: #6b6b6b;
     --gray-200: #d4d4d4;
     --gray-100: #f5f5f3;
-    --warm-100: #f7f4ef;    /* тёплый беж */
+    --warm-100: #f7f4ef;    /* тёплый беж — фоны секций */
     --warm-200: #ede8df;    /* беж потемнее */
+    --bg-product: #d4d4d2;  /* мышиный серый — фон под товаром (везде, где лежит PNG продукта) */
     --warm-gold: #5E8C3A;   /* deep green — для светлого фона (был #c9a96e gold) */
     --white: #ffffff;
     --accent: #8CB86B;      /* AWS green — для тёмного фона */
@@ -889,7 +890,7 @@ a { text-decoration: none; color: inherit; }
     aspect-ratio: 4/3;
     background:
         radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 40%),
-        radial-gradient(circle at 50% 45%, #ffffff 0%, #f2efe8 75%, #ebe7dd 100%);
+        radial-gradient(circle at 50% 45%, #ffffff 0%, #d4d4d2 75%, #bcbcba 100%);
     --spot-x: 50%;
     --spot-y: 50%;
     transition: background 0.25s ease;
@@ -1018,7 +1019,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .constructor__preview {
-    background: radial-gradient(circle at 50% 45%, #ffffff 0%, #f2efe8 75%, #ebe7dd 100%);
+    background: radial-gradient(circle at 50% 45%, #ffffff 0%, #d4d4d2 75%, #bcbcba 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1181,7 +1182,7 @@ a { text-decoration: none; color: inherit; }
     aspect-ratio: 4/3;
     background:
         radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 40%),
-        radial-gradient(circle at 50% 45%, #ffffff 0%, #f2efe8 75%, #ebe7dd 100%);
+        radial-gradient(circle at 50% 45%, #ffffff 0%, #d4d4d2 75%, #bcbcba 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1388,7 +1389,7 @@ a { text-decoration: none; color: inherit; }
 
 /* Слайд 03: премиум-переключение цвета через sweep reveal */
 .advantages__media--color-switch {
-    background: radial-gradient(circle at 50% 45%, #ffffff 0%, #f2efe8 65%, #e8e4dc 100%);
+    background: radial-gradient(circle at 50% 45%, #ffffff 0%, #d4d4d2 65%, #bcbcba 100%);
     min-height: 55vh;
     overflow: hidden;
     position: relative;
@@ -1524,7 +1525,7 @@ a { text-decoration: none; color: inherit; }
 
 /* 02 — Точное исполнение: клемма + tech-specs */
 .advantages__media--lever {
-    background: radial-gradient(ellipse at 50% 45%, #ffffff 0%, #f2efe8 65%, #e8e4dc 100%);
+    background: radial-gradient(ellipse at 50% 45%, #ffffff 0%, #d4d4d2 65%, #bcbcba 100%);
     min-height: 55vh;
     overflow: hidden;
     position: relative;
@@ -3956,15 +3957,8 @@ a { text-decoration: none; color: inherit; }
    ПРАВКИ 2026-05-07: фон карточек, hero pagination, soft-touch velvet, advantages controls
    ============================ */
 
-/* --- Мышиный серый фон вместо бежевого: карточки серий + конструктор --- */
-.series__card-visual {
-    background:
-        radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 40%),
-        radial-gradient(circle at 50% 45%, #f1f1f0 0%, #d4d4d2 70%, #bcbcba 100%);
-}
-.constructor__preview {
-    background: radial-gradient(circle at 50% 45%, #f1f1f0 0%, #d4d4d2 70%, #bcbcba 100%);
-}
+/* (фон карточек серий + конструктор обновлён прямо в базовых правилах — бежевые тона
+   #f2efe8/#ebe7dd/#e8e4dc заменены на #d4d4d2/#bcbcba) */
 
 /* --- Hero pagination: крупнее --- */
 .hero-pagination {

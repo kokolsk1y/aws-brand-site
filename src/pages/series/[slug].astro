@@ -672,8 +672,11 @@ const defaultColor = series.colors[0];
     .ser-lineup__group-inner {
       overflow: hidden;
       min-height: 0;
-      /* Место под тени последних карточек при hover (transform:-6px + shadow 40px) */
-      padding-bottom: 48px;
+      /* Место под тени hover'а карточек (transform:-6px + shadow 40px).
+         Padding по всем сторонам, отрицательный margin компенсирует
+         чтобы визуальные границы не сместились. */
+      padding: 12px 40px 48px;
+      margin: -12px -40px 0;
     }
 
     @media (prefers-reduced-motion: reduce) {

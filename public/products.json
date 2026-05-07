@@ -4,29 +4,74 @@
     "sub": "1.5 — 3 м",
     "items": [
       {
+        "article": "AWS-G03-5",
+        "name": "Удлинитель бытовой 3гн. 5м с/з ПВС 3x1mm2 AWS-G03-5 AWSproducts",
+        "photo": "img/products/AWS-G03-5.webp",
+        "price": 628,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-G03K-1,5",
+        "name": "Удлинитель бытовой 3гн. 1,5м с/з с выкл. ПВС 3x1mm2 AWS-G03K-1,5 AWSproducts",
+        "photo": "img/products/AWS-G03K-1,5.webp",
+        "price": 377,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
         "article": "AWS-H03-1,5",
-        "name": "Удлинитель бытовой 3гн. 1,5м б/з ПВС 2x0,75mm2 AWS-H03-1,5",
-        "photo": "img/products/AWS-H03-1,5.webp"
+        "name": "Удлинитель бытовой 3гн. 1,5м б/з ПВС 2x0,75mm2 AWS-H03-1,5 AWSproducts",
+        "photo": "img/products/AWS-H03-1,5.webp",
+        "price": 209,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
         "article": "AWS-H03-3",
-        "name": "Удлинитель бытовой 3гн. 3м б/з ПВС 2x0,75mm2 AWS-H03-3",
-        "photo": "img/products/AWS-H03-3.webp"
+        "name": "Удлинитель бытовой 3гн. 3м б/з ПВС 2x0,75mm2 AWS-H03-3 AWSproducts",
+        "photo": "img/products/AWS-H03-3.webp",
+        "price": 286,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
-        "article": "AWS-G03-5",
-        "name": "Удлинитель бытовой 3гн. 5м с/з ПВС 3x1mm2 AWS-G03-5",
-        "photo": "img/products/AWS-G03-5.webp"
+        "article": "AWS-H03K-1,5",
+        "name": "Удлинитель бытовой 3гн. 1,5м б/з с выкл. ПВС 2x0,75mm2 AWS-H03K-1,5 AWSproducts",
+        "photo": "img/products/AWS-H03K-1,5.webp",
+        "price": 275,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-H03K-5",
+        "name": "Удлинитель бытовой 3гн. 5м б/з с выкл. ПВС 2x0,75mm2 AWS-H03K-5 AWSproducts",
+        "photo": "img/products/AWS-H03K-5.webp",
+        "price": 466,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
         "article": "AWS-H05-1,5",
-        "name": "Удлинитель бытовой 5гн. 1,5м б/з ПВС 2x0,75mm2 AWS-H05-1,5",
-        "photo": "img/products/AWS-H05-1,5.webp"
+        "name": "Удлинитель бытовой 5гн. 1,5м б/з ПВС 2x0,75mm2 AWS-H05-1,5 AWSproducts",
+        "photo": "img/products/AWS-H05-1,5.webp",
+        "price": 247,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
         "article": "AWS-H05-3",
-        "name": "Удлинитель бытовой 5гн. 3м б/з ПВС 2x0,75mm2 AWS-H05-3",
-        "photo": "img/products/AWS-H05-3.webp"
+        "name": "Удлинитель бытовой 5гн. 3м б/з ПВС 2x0,75mm2 AWS-H05-3 AWSproducts",
+        "photo": "img/products/AWS-H05-3.webp",
+        "price": 323,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-H05K-1,5",
+        "name": "Удлинитель бытовой 5гн. 1,5м б/з с выкл. ПВС 2x0,75mm2 AWS-H05K-1,5 AWSproducts",
+        "photo": "img/products/AWS-H05K-1,5.webp",
+        "price": 313,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-H05K-3",
+        "name": "Удлинитель бытовой 5гн. 3м б/з с выкл. ПВС 2x0,75mm2 AWS-H05K-3 AWSproducts",
+        "photo": "img/products/AWS-H05K-3.webp",
+        "price": 395,
+        "description_raw": "Характеристики Показать все характеристики"
       }
     ]
   },
@@ -36,18 +81,24 @@
     "items": [
       {
         "article": "AWS-HZ2-01-10",
-        "name": "Удлинитель садовый 1гн. 10м б/з ПВС 2x1mm2 AWS-HZ2-01-10",
-        "photo": "img/products/AWS-HZ2-01-10.webp"
+        "name": "Удлинитель садовый 1гн. 10м б/з ПВС 2x1mm2 AWS-HZ2-01-10 AWSproducts",
+        "photo": "img/products/AWS-HZ2-01-10.webp",
+        "price": 768,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
         "article": "AWS-HZ2-01-15",
-        "name": "Удлинитель садовый 1гн. 15м б/з ПВС 2x1mm2 AWS-HZ2-01-15",
-        "photo": "img/products/AWS-HZ2-01-15.webp"
+        "name": "Удлинитель садовый 1гн. 15м б/з ПВС 2x1mm2 AWS-HZ2-01-15 AWSproducts",
+        "photo": "img/products/AWS-HZ2-01-15.webp",
+        "price": 1088,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
         "article": "AWS-HZ2-01-25",
-        "name": "Удлинитель садовый 1гн. 25м б/з ПВС 2x1mm2 AWS-HZ2-01-25",
-        "photo": "img/products/AWS-HZ2-01-25.webp"
+        "name": "Удлинитель садовый 1гн. 25м б/з ПВС 2x1mm2 AWS-HZ2-01-25 AWSproducts",
+        "photo": "img/products/AWS-HZ2-01-25.webp",
+        "price": 1731,
+        "description_raw": "Характеристики Показать все характеристики"
       }
     ]
   },
@@ -56,14 +107,298 @@
     "sub": "IP44 / IP67, 16—32A",
     "items": [
       {
-        "article": "SN-33",
-        "name": "Коннектор кабельный SN-33 герметичный IP68 (0,5-2,5; 24А)",
-        "photo": "img/products/SN-33.webp"
+        "article": "SLN-013",
+        "name": "Вилка переносная 16A 3п (2P+PE) SLN-013 IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-013.webp",
+        "price": 326,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
-        "article": "SN-53",
-        "name": "Коннектор кабельный SN-53 герметичный IP68 (0,5-2,5; 24А)",
-        "photo": "img/products/SN-53.webp"
+        "article": "SLN-014",
+        "name": "Вилка переносная 16A 4п (3P+PE) SLN-014 IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-014.webp",
+        "price": 364,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-0142",
+        "name": "Вилка переносная 16A 4п (3P+PE) SLN-0142 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-0142.webp",
+        "price": 487,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-015",
+        "name": "Вилка переносная 16A 5п (3P+PE+N) SLN-015 IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-015.webp",
+        "price": 438,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-0152",
+        "name": "Вилка переносная 16A 5п (3P+PE+N) SLN-0152 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-0152.webp",
+        "price": 617,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-023",
+        "name": "Вилка переносная 32A 3п (2P+PE) SLN-023 IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-023.webp",
+        "price": 525,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-0232",
+        "name": "Вилка переносная 32A 3п (2P+PE) SLN-0232 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-0232.webp",
+        "price": 714,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-024",
+        "name": "Вилка переносная 32A 4п (3P+PE) SLN-024 IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-024.webp",
+        "price": 578,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-0242",
+        "name": "Вилка переносная 32A 4п (3P+PE) SLN-0242 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-0242.webp",
+        "price": 779,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-025",
+        "name": "Вилка переносная 32A 5п (3P+PE+N) SLN-025 IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-025.webp",
+        "price": 668,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-0252",
+        "name": "Вилка переносная 32A 5п (3P+PE+N) SLN-0252 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-0252.webp",
+        "price": 877,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-0342",
+        "name": "Вилка переносная 63A 4п (3P+PE) SLN-0342 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-0342.webp",
+        "price": 2136,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-0352",
+        "name": "Вилка переносная 63A 5п (3P+PE+N) SLN-0352 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-0352.webp",
+        "price": 2331,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-0452",
+        "name": "Вилка переносная 125A 5п (3P+PE+N) SLN-0452 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-0452.webp",
+        "price": 6818,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-1132",
+        "name": "Розетка стационарная 16A 3п (2P+PE) SLN-1132 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-1132.webp",
+        "price": 812,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-113K",
+        "name": "Розетка стационарная 16A 3п (2P+PE) SLN-113K IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-113K.webp",
+        "price": 578,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-1142",
+        "name": "Розетка стационарная 16A 4п (3P+PE) SLN-1142 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-1142.webp",
+        "price": 877,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-114K",
+        "name": "Розетка стационарная 16A 4п (3P+PE) SLN-114K IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-114K.webp",
+        "price": 647,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-1152",
+        "name": "Розетка стационарная 16A 5п (3P+PE+N) SLN-1152 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-1152.webp",
+        "price": 974,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-115K",
+        "name": "Розетка стационарная 16A 5п (3P+PE+N) SLN-115K IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-115K.webp",
+        "price": 734,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-1232",
+        "name": "Розетка стационарная 32A 3п (2P+PE) SLN-1232 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-1232.webp",
+        "price": 1039,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-123K",
+        "name": "Розетка стационарная 32A 3п (2P+PE) SLN-123K IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-123K.webp",
+        "price": 861,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-1242",
+        "name": "Розетка стационарная 32A 4п (3P+PE) SLN-1242 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-1242.webp",
+        "price": 1104,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-1252",
+        "name": "Розетка стационарная 32A 5п (3P+PE+N) SLN-1252 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-1252.webp",
+        "price": 1201,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-125K",
+        "name": "Розетка стационарная 32A 5п (3P+PE+N) SLN-125K IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-125K.webp",
+        "price": 998,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-1342",
+        "name": "Розетка стационарная 63A 4п (3P+PE) SLN-1342 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-1342.webp",
+        "price": 2759,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-1352",
+        "name": "Розетка стационарная 63A 5п (3P+PE+N) SLN-1352 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-1352.webp",
+        "price": 2925,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-1452",
+        "name": "Розетка стационарная 125A 5п (3P+PE+N) SLN-1452 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-1452.webp",
+        "price": 8116,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-213",
+        "name": "Розетка переносная 16A 3п (2P+PE) SLN-213 IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-213.webp",
+        "price": 404,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-2132",
+        "name": "Розетка переносная 16A 3п (2P+PE) SLN-2132 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-2132.webp",
+        "price": 514,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-214",
+        "name": "Розетка переносная 16A 4п (3P+PE) SLN-214 IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-214.webp",
+        "price": 473,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-2142",
+        "name": "Розетка переносная 16A 4п (3P+PE) SLN-2142 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-2142.webp",
+        "price": 620,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-215",
+        "name": "Розетка переносная 16A 5п (3P+PE+N) SLN-215 IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-215.webp",
+        "price": 541,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-2152",
+        "name": "Розетка переносная 16A 5п (3P+PE+N) SLN-2152 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-2152.webp",
+        "price": 721,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-223",
+        "name": "Розетка переносная 32A 3п (2P+PE) SLN-223 IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-223.webp",
+        "price": 675,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-2232",
+        "name": "Розетка переносная 32A 3п (2P+PE) SLN-2232 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-2232.webp",
+        "price": 877,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-224",
+        "name": "Розетка переносная 32A 4п (3P+PE) SLN-224 IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-224.webp",
+        "price": 709,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-2242",
+        "name": "Розетка переносная 32A 4п (3P+PE) SLN-2242 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-2242.webp",
+        "price": 942,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-225",
+        "name": "Розетка переносная 32A 5п (3P+PE+N) SLN-225 IP44, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-225.webp",
+        "price": 808,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-2252",
+        "name": "Розетка переносная 32A 5п (3P+PE+N) SLN-2252 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-2252.webp",
+        "price": 1045,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-2352",
+        "name": "Розетка переносная 63A 5п (3P+PE+N) SLN-2352 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-2352.webp",
+        "price": 2758,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-2452",
+        "name": "Розетка переносная 125A 5п (3P+PE+N) SLN-2452 IP67, 380В, AWSPRODUCTS",
+        "photo": "img/products/SLN-2452.webp",
+        "price": 7141,
+        "description_raw": "Характеристики Показать все характеристики"
       }
     ]
   },
@@ -72,94 +407,130 @@
     "sub": "0.5 — 2.5 мм²",
     "items": [
       {
-        "article": "SN-222415D",
-        "name": "Клемма рычажковая 10 отверстий (2х5) 0,2-4,0 32А SN-222415D (50шт) (штуками), уп",
-        "photo": "img/products/SN-222415D.webp"
-      },
-      {
-        "article": "SN-221412",
-        "name": "Клемма рычажковая 2 отверстия 0,2-4,0 32А SN-221412 (100шт), уп",
-        "photo": "img/products/SN-221412.webp"
-      },
-      {
-        "article": "SN-221412N",
-        "name": "Клемма рычажковая 2 отверстия 0,2-4,0 32А SN-221412N (100шт), уп",
-        "photo": "img/products/SN-221412N.webp"
-      },
-      {
-        "article": "SN-222412",
-        "name": "Клемма рычажковая 2 отверстия 0,2-4,0 32А SN-222412 (100шт), уп",
-        "photo": "img/products/SN-222412.webp"
-      },
-      {
-        "article": "SN-222414",
-        "name": "Клемма рычажковая 4 отверстия 0,2-4,0 32А SN-222414 (100шт), уп",
-        "photo": "img/products/SN-222414.webp"
-      },
-      {
-        "article": "SN-221415",
-        "name": "Клемма рычажковая 5 отверстий 0,2-4,0 32А SN-221415 (50шт), уп",
-        "photo": "img/products/SN-221415.webp"
-      },
-      {
-        "article": "SN-221415N",
-        "name": "Клемма рычажковая 5 отверстий 0,2-4,0 32А SN-221415N (50шт), уп",
-        "photo": "img/products/SN-221415N.webp"
-      },
-      {
-        "article": "SN-222415",
-        "name": "Клемма рычажковая 5 отверстий 0,2-4,0 32А SN-222415 (50шт), уп",
-        "photo": "img/products/SN-222415.webp"
-      },
-      {
-        "article": "SN-222413D",
-        "name": "Клемма рычажковая 6 отверстий (2х3) 0,2-4,0 32А SN-222413D (50шт) (штуками), уп",
-        "photo": "img/products/SN-222413D.webp"
-      },
-      {
-        "article": "SN-222414D",
-        "name": "Клемма рычажковая 8 отверстий (2х4) 0,2-4,0 32А SN-222414D (50шт) (штуками), уп",
-        "photo": "img/products/SN-222414D.webp"
-      },
-      {
-        "article": "SN-224101",
-        "name": "Клемма 0,5-2,5 6А SN-224101 (100шт), уп",
-        "photo": "img/products/SN-224101.webp"
-      },
-      {
-        "article": "SN-224103",
-        "name": "Клемма 0,5-2,5 6А SN-224103 (100шт), уп",
-        "photo": "img/products/SN-224103.webp"
-      },
-      {
         "article": "SN-202",
-        "name": "Клемма 2 отверстия 0,5-2,5 24А SN-202 (100шт), уп",
-        "photo": "img/products/SN-202.webp"
+        "name": "Клемма 2 отверстия 0,5-2,5 24А SN-202 (100шт) AWSPRODUCTS, уп",
+        "photo": "img/products/SN-202.webp",
+        "price": 947,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
         "article": "SN-203",
-        "name": "Клемма 3 отверстия 0,5-2,5 24А SN-203 (100шт), уп",
-        "photo": "img/products/SN-203.webp"
+        "name": "Клемма 3 отверстия 0,5-2,5 24А SN-203 (100шт) AWSPRODUCTS, уп",
+        "photo": "img/products/SN-203.webp",
+        "price": 989,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
         "article": "SN-204",
-        "name": "Клемма 4 отверстия 0,5-2,5 24А SN-204 (100шт), уп",
-        "photo": "img/products/SN-204.webp"
+        "name": "Клемма 4 отверстия 0,5-2,5 24А SN-204 (100шт) AWSPRODUCTS, уп",
+        "photo": "img/products/SN-204.webp",
+        "price": 1118,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
         "article": "SN-205",
-        "name": "Клемма 5 отверстий 0,5-2,5 24А SN-205 (100шт), уп",
-        "photo": "img/products/SN-205.webp"
+        "name": "Клемма 5 отверстий 0,5-2,5 24А SN-205 (100шт) AWSPRODUCTS, уп",
+        "photo": "img/products/SN-205.webp",
+        "price": 1244,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
         "article": "SN-206",
-        "name": "Клемма 6 отверстий 0,5-2,5 24А SN-206 (100шт), уп",
-        "photo": "img/products/SN-206.webp"
+        "name": "Клемма 6 отверстий 0,5-2,5 24А SN-206 (100шт) AWSPRODUCTS, уп",
+        "photo": "img/products/SN-206.webp",
+        "price": 1462,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
         "article": "SN-208",
-        "name": "Клемма 8 отверстий 0,5-2,5 24А SN-208 (100шт), уп",
-        "photo": "img/products/SN-208.webp"
+        "name": "Клемма 8 отверстий 0,5-2,5 24А SN-208 (100шт) AWSPRODUCTS, уп",
+        "photo": "img/products/SN-208.webp",
+        "price": 1977,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SN-221412",
+        "name": "Клемма рычажковая 2 отверстия 0,2-4,0 32А SN-221412 (100шт) AWSPRODUCTS, уп",
+        "photo": "img/products/SN-221412.webp",
+        "price": 1416,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SN-221412N",
+        "name": "Клемма рычажковая 2 отверстия 0,2-4,0 32А SN-221412N (100шт) AWSPRODUCTS, уп",
+        "photo": "img/products/SN-221412N.webp",
+        "price": 1462,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SN-221415",
+        "name": "Клемма рычажковая 5 отверстий 0,2-4,0 32А SN-221415 (50шт) AWSPRODUCTS, уп",
+        "photo": "img/products/SN-221415.webp",
+        "price": 1267,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SN-221415N",
+        "name": "Клемма рычажковая 5 отверстий 0,2-4,0 32А SN-221415N (50шт) AWSPRODUCTS, уп",
+        "photo": "img/products/SN-221415N.webp",
+        "price": 1395,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SN-222414",
+        "name": "Клемма рычажковая 4 отверстия 0,2-4,0 32А SN-222414 (100шт) AWSPRODUCTS, уп",
+        "photo": "img/products/SN-222414.webp",
+        "price": 2019,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SN-222414D",
+        "name": "Клемма рычажковая 8 отверстий (2х4) 0,2-4,0 32А SN-222414D (50шт) AWSPRODUCTS (штуками), уп",
+        "photo": "img/products/SN-222414D.webp",
+        "price": 2750,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SN-222415",
+        "name": "Клемма рычажковая 5 отверстий 0,2-4,0 32А SN-222415 (50шт) AWSPRODUCTS, уп",
+        "photo": "img/products/SN-222415.webp",
+        "price": 1181,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SN-222415D",
+        "name": "Клемма рычажковая 10 отверстий (2х5) 0,2-4,0 32А SN-222415D (50шт) AWSPRODUCTS (штуками), уп",
+        "photo": "img/products/SN-222415D.webp",
+        "price": 3750,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SN-224101",
+        "name": "Клемма 0,5-2,5 6А SN-224101 (100шт) AWSPRODUCTS, уп",
+        "photo": "img/products/SN-224101.webp",
+        "price": 1700,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SN-224103",
+        "name": "Клемма 0,5-2,5 6А SN-224103 (100шт) AWSPRODUCTS, уп",
+        "photo": "img/products/SN-224103.webp",
+        "price": 2400,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SN-33",
+        "name": "Коннектор кабельный SN-33 герметичный IP68 (0,5-2,5; 24А) AWSPRODUCTS",
+        "photo": "img/products/SN-33.webp",
+        "price": 690,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SN-53",
+        "name": "Коннектор кабельный SN-53 герметичный IP68 (0,5-2,5; 24А) AWSPRODUCTS",
+        "photo": "img/products/SN-53.webp",
+        "price": 804,
+        "description_raw": "Характеристики Показать все характеристики"
       }
     ]
   },
@@ -167,31 +538,181 @@
     "title": "Патч-корды UTP",
     "sub": "Cat.5e / Cat.6e, 0.5—30 м",
     "items": [
-      { "article": "AWS-13003", "name": "Патч-корд 0,5м UTP Cat.5e RJ45 желтый (AWSPRODUCTS)", "photo": "img/products/AWS-13003.webp" },
-      { "article": "AWS-13004", "name": "Патч-корд 0,5м UTP Cat.5e RJ45 зеленый (AWSPRODUCTS)", "photo": "img/products/AWS-13004.webp" },
-      { "article": "AWS-13005", "name": "Патч-корд 0,5м UTP Cat.5e RJ45 красный (AWSPRODUCTS)", "photo": "img/products/AWS-13005.webp" },
-      { "article": "AWS-13006", "name": "Патч-корд 0,5м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13006.webp" },
-      { "article": "AWS-13023", "name": "Патч-корд 0,5м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)", "photo": "img/products/AWS-13023.webp" },
-      { "article": "AWS-13007", "name": "Патч-корд 1,0м UTP Cat.5e RJ45 желтый (AWSPRODUCTS)", "photo": "img/products/AWS-13007.webp" },
-      { "article": "AWS-13008", "name": "Патч-корд 1,0м UTP Cat.5e RJ45 зеленый (AWSPRODUCTS)", "photo": "img/products/AWS-13008.webp" },
-      { "article": "AWS-13009", "name": "Патч-корд 1,0м UTP Cat.5e RJ45 красный (AWSPRODUCTS)", "photo": "img/products/AWS-13009.webp" },
-      { "article": "AWS-13010", "name": "Патч-корд 1,0м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13010.webp" },
-      { "article": "AWS-13024", "name": "Патч-корд 1,0м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)", "photo": "img/products/AWS-13024.webp" },
-      { "article": "AWS-13011", "name": "Патч-корд 1,5м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13011.webp" },
-      { "article": "AWS-13025", "name": "Патч-корд 1,5м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)", "photo": "img/products/AWS-13025.webp" },
-      { "article": "AWS-13012", "name": "Патч-корд 2м UTP Cat.5e RJ45 желтый (AWSPRODUCTS)", "photo": "img/products/AWS-13012.webp" },
-      { "article": "AWS-13014", "name": "Патч-корд 2м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13014.webp" },
-      { "article": "AWS-13026", "name": "Патч-корд 2м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)", "photo": "img/products/AWS-13026.webp" },
-      { "article": "AWS-13015", "name": "Патч-корд 3м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13015.webp" },
-      { "article": "AWS-13027", "name": "Патч-корд 3м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)", "photo": "img/products/AWS-13027.webp" },
-      { "article": "AWS-13016", "name": "Патч-корд 5м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13016.webp" },
-      { "article": "AWS-13028", "name": "Патч-корд 5м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)", "photo": "img/products/AWS-13028.webp" },
-      { "article": "AWS-13017", "name": "Патч-корд 7м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13017.webp" },
-      { "article": "AWS-13018", "name": "Патч-корд 10м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13018.webp" },
-      { "article": "AWS-13019", "name": "Патч-корд 15м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13019.webp" },
-      { "article": "AWS-13020", "name": "Патч-корд 20м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13020.webp" },
-      { "article": "AWS-13021", "name": "Патч-корд 25м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13021.webp" },
-      { "article": "AWS-13022", "name": "Патч-корд 30м UTP Cat.5e RJ45 серый (AWSPRODUCTS)", "photo": "img/products/AWS-13022.webp" }
+      {
+        "article": "AWS-13003",
+        "name": "Патч-корд 0,5м UTP Cat.5e RJ45 желтый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13003.webp",
+        "price": 36,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13004",
+        "name": "Патч-корд 0,5м UTP Cat.5e RJ45 зеленый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13004.webp",
+        "price": 36,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13005",
+        "name": "Патч-корд 0,5м UTP Cat.5e RJ45 красный (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13005.webp",
+        "price": 36,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13006",
+        "name": "Патч-корд 0,5м UTP Cat.5e RJ45 серый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13006.webp",
+        "price": 36,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13007",
+        "name": "Патч-корд 1,0м UTP Cat.5e RJ45 желтый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13007.webp",
+        "price": 41,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13008",
+        "name": "Патч-корд 1,0м UTP Cat.5e RJ45 зеленый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13008.webp",
+        "price": 41,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13009",
+        "name": "Патч-корд 1,0м UTP Cat.5e RJ45 красный (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13009.webp",
+        "price": 41,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13010",
+        "name": "Патч-корд 1,0м UTP Cat.5e RJ45 серый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13010.webp",
+        "price": 41,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13011",
+        "name": "Патч-корд 1,5м UTP Cat.5e RJ45 серый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13011.webp",
+        "price": 49,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13012",
+        "name": "Патч-корд 2м UTP Cat.5e RJ45 желтый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13012.webp",
+        "price": 55,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13014",
+        "name": "Патч-корд 2м UTP Cat.5e RJ45 серый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13014.webp",
+        "price": 55,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13015",
+        "name": "Патч-корд 3м UTP Cat.5e RJ45 серый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13015.webp",
+        "price": 70,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13016",
+        "name": "Патч-корд 5м UTP Cat.5e RJ45 серый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13016.webp",
+        "price": 95,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13017",
+        "name": "Патч-корд 7м UTP Cat.5e RJ45 серый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13017.webp",
+        "price": 132,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13018",
+        "name": "Патч-корд 10м UTP Cat.5e RJ45 серый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13018.webp",
+        "price": 169,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13019",
+        "name": "Патч-корд 15м UTP Cat.5e RJ45 серый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13019.webp",
+        "price": 242,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13020",
+        "name": "Патч-корд 20м UTP Cat.5e RJ45 серый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13020.webp",
+        "price": 314,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13021",
+        "name": "Патч-корд 25м UTP Cat.5e RJ45 серый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13021.webp",
+        "price": 385,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13022",
+        "name": "Патч-корд 30м UTP Cat.5e RJ45 серый (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13022.webp",
+        "price": 458,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13023",
+        "name": "Патч-корд 0,5м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13023.webp",
+        "price": 76,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13024",
+        "name": "Патч-корд 1,0м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13024.webp",
+        "price": 95,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13025",
+        "name": "Патч-корд 1,5м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13025.webp",
+        "price": 117,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13026",
+        "name": "Патч-корд 2м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13026.webp",
+        "price": 137,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13027",
+        "name": "Патч-корд 3м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13027.webp",
+        "price": 179,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13028",
+        "name": "Патч-корд 5м UTP Cat.6e RJ45 Cu синий (AWSPRODUCTS)",
+        "photo": "img/products/AWS-13028.webp",
+        "price": 261,
+        "description_raw": "Характеристики Показать все характеристики"
+      }
     ]
   },
   "cable": {
@@ -199,99 +720,137 @@
     "sub": "ТВ и сетевой",
     "items": [
       {
+        "article": "AWS-12980",
+        "name": "Кабель FTP4 CAT6 058 INDOOR CU (медь) premium AWSPRODUCTS",
+        "photo": "img/products/AWS-12980.webp",
+        "price": 64,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
         "article": "AWS-12982",
-        "name": "Кабель FTP4 CAT5E 046 INDOOR CU (медь)",
-        "photo": "img/products/AWS-12982.webp"
-      },
-      {
-        "article": "AWS-12997",
-        "name": "Кабель UTP4 CAT5E 046 INDOOR CU (медь)",
-        "photo": "img/products/AWS-12997.webp"
-      },
-      {
-        "article": "AWS-13001",
-        "name": "Кабель AWS SAT-703 DIGITAL CU 1мм, 64% (медь) (отмотка)",
-        "photo": "img/products/AWS-13001.webp"
-      },
-      {
-        "article": "AWS-12983",
-        "name": "Кабель FTP4 CAT5E 046 OUTDOOR CU (медь)",
-        "photo": "img/products/AWS-12983.webp"
-      },
-      {
-        "article": "AWS-12989",
-        "name": "Кабель FTP4 CAT5E 051 INDOOR CU (медь) premium",
-        "photo": "img/products/AWS-12989.webp"
-      },
-      {
-        "article": "AWS-12988",
-        "name": "Кабель FTP4 CAT5E 051 OUTDOOR CU (медь) premium",
-        "photo": "img/products/AWS-12988.webp"
-      },
-      {
-        "article": "AWS-12985",
-        "name": "Кабель FTP4 CAT6 056 INDOOR CU (медь) синий",
-        "photo": "img/products/AWS-12985.webp"
-      },
-      {
-        "article": "AWS-12998",
-        "name": "Кабель UTP4 CAT5E 046 OUTDOOR CU (медь)",
-        "photo": "img/products/AWS-12998.webp"
-      },
-      {
-        "article": "AWS-12991",
-        "name": "Кабель UTP4 CAT5E 051 INDOOR CU (медь) premium",
-        "photo": "img/products/AWS-12991.webp"
-      },
-      {
-        "article": "AWS-12992",
-        "name": "Кабель UTP4 CAT5E 051 OUTDOOR CU (медь) premium",
-        "photo": "img/products/AWS-12992.webp"
-      },
-      {
-        "article": "AWS-13000",
-        "name": "Кабель UTP4 CAT6 056 INDOOR CU (медь) синий",
-        "photo": "img/products/AWS-13000.webp"
+        "name": "Кабель FTP4 CAT5E 046 INDOOR CU (медь) AWSPRODUCTS",
+        "photo": "img/products/AWS-12982.webp",
+        "price": 26,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
         "article": "AWS-12982-100",
-        "name": "Кабель FTP4 CAT5E 046 INDOOR CU (медь) по 100м",
-        "photo": "img/products/AWS-12982-100.webp"
+        "name": "Кабель FTP4 CAT5E 046 INDOOR CU (медь) по 100м AWSPRODUCTS",
+        "photo": "img/products/AWS-12982-100.webp",
+        "price": 36,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
         "article": "AWS-12982-50",
-        "name": "Кабель FTP4 CAT5E 046 INDOOR CU (медь) по 50м",
-        "photo": "img/products/AWS-12982-50.webp"
+        "name": "Кабель FTP4 CAT5E 046 INDOOR CU (медь) по 50м AWSPRODUCTS",
+        "photo": "img/products/AWS-12982-50.webp",
+        "price": 37,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
-        "article": "AWS-13030",
-        "name": "Кабель FTP4 CAT6 056 OUTDOOR CU (медь) GEL premium",
-        "photo": "img/products/AWS-13030.webp"
+        "article": "AWS-12983",
+        "name": "Кабель FTP4 CAT5E 046 OUTDOOR CU (медь) AWSPRODUCTS",
+        "photo": "img/products/AWS-12983.webp",
+        "price": 40,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
-        "article": "AWS-12980",
-        "name": "Кабель FTP4 CAT6 058 INDOOR CU (медь) premium",
-        "photo": "img/products/AWS-12980.webp"
+        "article": "AWS-12985",
+        "name": "Кабель FTP4 CAT6 056 INDOOR CU (медь) синий AWSPRODUCTS",
+        "photo": "img/products/AWS-12985.webp",
+        "price": 62,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
-        "article": "AWS-13001-50",
-        "name": "Кабель AWS SAT-703 DIGITAL CU 1мм, 64% (медь) по 50м",
-        "photo": "img/products/AWS-13001-50.webp"
+        "article": "AWS-12988",
+        "name": "Кабель FTP4 CAT5E 051 OUTDOOR CU (медь) premium AWSPRODUCTS",
+        "photo": "img/products/AWS-12988.webp",
+        "price": 59,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-12989",
+        "name": "Кабель FTP4 CAT5E 051 INDOOR CU (медь) premium AWSPRODUCTS",
+        "photo": "img/products/AWS-12989.webp",
+        "price": 58,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-12991",
+        "name": "Кабель UTP4 CAT5E 051 INDOOR CU (медь) premium AWSPRODUCTS",
+        "photo": "img/products/AWS-12991.webp",
+        "price": 45,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-12992",
+        "name": "Кабель UTP4 CAT5E 051 OUTDOOR CU (медь) premium AWSPRODUCTS",
+        "photo": "img/products/AWS-12992.webp",
+        "price": 46,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-12997",
+        "name": "Кабель UTP4 CAT5E 046 INDOOR CU (медь) AWSPRODUCTS",
+        "photo": "img/products/AWS-12997.webp",
+        "price": 25,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
         "article": "AWS-12997-100",
-        "name": "Кабель UTP4 CAT5E 046 INDOOR CU (медь) по 100м",
-        "photo": "img/products/AWS-12997-100.webp"
+        "name": "Кабель UTP4 CAT5E 046 INDOOR CU (медь) по 100м AWSPRODUCTS",
+        "photo": "img/products/AWS-12997-100.webp",
+        "price": 35,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
         "article": "AWS-12997-50",
-        "name": "Кабель UTP4 CAT5E 046 INDOOR CU (медь) по 50м",
-        "photo": "img/products/AWS-12997-50.webp"
+        "name": "Кабель UTP4 CAT5E 046 INDOOR CU (медь) по 50м AWSPRODUCTS",
+        "photo": "img/products/AWS-12997-50.webp",
+        "price": 36,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-12998",
+        "name": "Кабель UTP4 CAT5E 046 OUTDOOR CU (медь) AWSPRODUCTS",
+        "photo": "img/products/AWS-12998.webp",
+        "price": 39,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13000",
+        "name": "Кабель UTP4 CAT6 056 INDOOR CU (медь) синий AWSPRODUCTS",
+        "photo": "img/products/AWS-13000.webp",
+        "price": 61,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13001",
+        "name": "Кабель AWS SAT-703 DIGITAL (Цифровой)  CU 1мм, 64% (медь) (отмотка) AWSPRODUCTS",
+        "photo": "img/products/AWS-13001.webp",
+        "price": 43,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13001-50",
+        "name": "Кабель AWS SAT-703 DIGITAL (Цифровой) CU 1мм, 64% (медь) по 50м AWSPRODUCTS",
+        "photo": "img/products/AWS-13001-50.webp",
+        "price": 42,
+        "description_raw": "Характеристики Показать все характеристики"
       },
       {
         "article": "AWS-13029",
-        "name": "Кабель UTP4 CAT6 056 OUTDOOR CU (медь) GEL premium",
-        "photo": "img/products/AWS-13029.webp"
+        "name": "Кабель UTP4 CAT6 056 OUTDOOR CU (медь) GEL premium AWSPRODUCTS",
+        "photo": "img/products/AWS-13029.webp",
+        "price": 68,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13030",
+        "name": "Кабель FTP4 CAT6 056 OUTDOOR CU (медь) GEL premium AWSPRODUCTS",
+        "photo": "img/products/AWS-13030.webp",
+        "price": 69,
+        "description_raw": "Характеристики Показать все характеристики"
       }
     ]
   }

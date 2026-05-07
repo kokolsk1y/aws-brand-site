@@ -629,7 +629,7 @@ const defaultColor = series.colors[0];
       background: var(--black, #111); color: var(--white, #fff); border-color: var(--black, #111);
     }
     .ser-lineup__group {
-      margin-bottom: 48px;
+      margin-bottom: 16px;
       scroll-margin-top: 100px;
     }
     .ser-lineup__group-head {
@@ -672,6 +672,8 @@ const defaultColor = series.colors[0];
     .ser-lineup__group-inner {
       overflow: hidden;
       min-height: 0;
+      /* Место под тени последних карточек при hover (transform:-6px + shadow 40px) */
+      padding-bottom: 48px;
     }
 
     @media (prefers-reduced-motion: reduce) {

@@ -1422,7 +1422,7 @@ a { text-decoration: none; color: inherit; }
 
 /* 01 — Надёжные материалы: интерактивная декомпозиция */
 .advantages__media--exploded {
-    background: radial-gradient(ellipse at 35% 45%, #f5f1e9 0%, #ece7dd 55%, #ddd6c8 100%);
+    background: radial-gradient(ellipse at 35% 45%, #f1f1f0 0%, #d4d4d2 55%, #bcbcba 100%);
     min-height: 55vh;
     overflow: hidden;
     position: relative;

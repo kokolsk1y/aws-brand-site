@@ -120,11 +120,14 @@ function shortName(name) {
           const meta = extractMeta(p.name);
           const photos = getProductPhotos(p.article);
           const main = photos[0] || p.photo.replace(/^img\//, '/img/');
-          const hover = photos[1];
+          // Hover-ракурс показываем только если фото ровно 2 (точек не будет).
+          // При 3+ фото — точки переключают, hover не нужен.
+          const hover = photos.length === 2 ? photos[1] : null;
+          const hasDots = photos.length > 1;
           return (
             <a href={`/aws-brand-site/product/${p.article}`} class="prod-card" data-name={p.name} data-tilt data-tilt-max="6" data-reveal="slide" style={`--i: ${idx % 9}`}>
               <div class={`prod-card__img${hover ? ' has-hover' : ''}`}>
-                <img src={main} alt={p.name} class="prod-card__photo prod-card__photo--main" loading="lazy" />
+                <img src={main} alt={p.name} class="prod-card__photo prod-card__photo--main" loading="lazy" data-photos={hasDots && photos.length > 2 ? JSON.stringify(photos) : null} />
                 {hover && (
                   <img src={hover} alt="" class="prod-card__photo prod-card__photo--hover" loading="lazy" aria-hidden="true" />
                 )}
@@ -132,9 +135,20 @@ function shortName(name) {
               <div class="prod-card__info">
                 <span class="prod-card__article">{p.article}</span>
                 <h3 class="prod-card__name">{shortName(p.name)}</h3>
-                {meta.length > 0 && (
-                  <div class="prod-card__meta">
-                    {meta.map(m => <span class="prod-card__chip">{m}</span>)}
+                {(meta.length > 0 || photos.length > 2) && (
+                  <div class="prod-card__meta-row">
+                    {meta.length > 0 && (
+                      <div class="prod-card__meta">
+                        {meta.map(m => <span class="prod-card__chip">{m}</span>)}
+                      </div>
+                    )}
+                    {photos.length > 2 && (
+                      <div class="prod-card__dots" aria-label="Переключить фото">
+                        {photos.map((src, i) => (
+                          <span class={`prod-card__dot${i === 0 ? ' is-active' : ''}`} role="button" tabindex="0" data-photo-idx={i} data-photo-src={src} aria-label={`Фото ${i + 1}`}></span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -205,6 +219,58 @@ function shortName(name) {
   </div>
 
   <script is:inline>
+    // Точки переключения фото на карточках товаров.
+    // Лёгкая схема: 1 listener на всю сетку, фото грузятся только при первом клике
+    // (браузер кэширует — повторные мгновенные).
+    (function () {
+      const grid = document.getElementById('catGrid');
+      if (!grid) return;
+      // Пред-грузка: после загрузки страницы тихо подгружаем 2-е фото для всех карточек
+      // у которых есть точки — чтобы первый клик не лагал.
+      function preloadSecondaries() {
+        const dots = grid.querySelectorAll('.prod-card__dot[data-photo-idx="1"]');
+        dots.forEach(d => {
+          const src = d.dataset.photoSrc;
+          if (src) { const im = new Image(); im.decoding = 'async'; im.src = src; }
+        });
+      }
+      if ('requestIdleCallback' in window) requestIdleCallback(preloadSecondaries, { timeout: 2000 });
+      else setTimeout(preloadSecondaries, 1500);
+
+      grid.addEventListener('click', (e) => {
+        const dot = e.target.closest('.prod-card__dot');
+        if (!dot) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const card = dot.closest('.prod-card');
+        if (!card) return;
+        const img = card.querySelector('.prod-card__photo--main') || card.querySelector('.prod-card__photo');
+        if (!img) return;
+        const src = dot.dataset.photoSrc;
+        if (!src || img.src.endsWith(src.replace(/^\//, ''))) return;
+        img.classList.add('is-swapping');
+        // Прелоад → swap → fade-in
+        const pre = new Image();
+        pre.onload = () => {
+          img.src = src;
+          requestAnimationFrame(() => img.classList.remove('is-swapping'));
+        };
+        pre.onerror = () => img.classList.remove('is-swapping');
+        pre.src = src;
+        card.querySelectorAll('.prod-card__dot').forEach(d => d.classList.remove('is-active'));
+        dot.classList.add('is-active');
+      });
+
+      // Клавиатура: точки — через keyboard accessible (Enter / Space)
+      grid.addEventListener('keydown', (e) => {
+        if (!e.target.classList.contains('prod-card__dot')) return;
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          e.target.click();
+        }
+      });
+    })();
+
     // Фильтры товаров — с плавным fade-out / fade-in
     const filtersEl = document.getElementById('catFilters');
     const grid = document.getElementById('catGrid');
@@ -426,12 +492,38 @@ function shortName(name) {
       font-size: 16px; font-weight: 700; line-height: 1.35;
       color: var(--black, #111); margin-bottom: 16px;
     }
-    .prod-card__meta { display: flex; gap: 6px; flex-wrap: wrap; }
+    .prod-card__meta-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px;
+    }
+    .prod-card__meta { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; min-width: 0; }
     .prod-card__chip {
       font-size: 10px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase;
       padding: 4px 10px; border: 1px solid var(--gray-200, #ddd); border-radius: 100px;
       color: var(--gray-600, #666);
     }
+    /* Точки переключения фото */
+    .prod-card__dots {
+      display: flex; gap: 6px; flex-shrink: 0;
+      align-items: center;
+    }
+    .prod-card__dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.18);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+      display: inline-block;
+    }
+    .prod-card__dot:hover { background: rgba(0,0,0,0.4); transform: scale(1.25); }
+    .prod-card__dot.is-active {
+      background: var(--accent, #8CB86B);
+      transform: scale(1.25);
+    }
+    .prod-card__photo {
+      transition: opacity 0.25s ease, transform 0.45s cubic-bezier(.22,1,.36,1), filter 0.45s cubic-bezier(.22,1,.36,1);
+    }
+    .prod-card__photo.is-swapping { opacity: 0; }
     .prod-card__cta {
       margin: 0 24px 24px; align-self: flex-start;
       font-size: 11px !important; padding: 12px 24px !important;

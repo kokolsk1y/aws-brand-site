@@ -16,16 +16,35 @@ import path from 'node:path';
 const PRODUCTS_DIR = path.resolve('public/img/products');
 const PRODUCTS_FILES = fs.existsSync(PRODUCTS_DIR) ? fs.readdirSync(PRODUCTS_DIR) : [];
 
+// Приоритет форматов для главного фото: webp > png > jpg
+// (webp обычно в 5-10 раз легче — экономия трафика).
+const FMT_PRIORITY = { webp: 0, png: 1, jpg: 2, jpeg: 2 };
+function pickByFormat(matches) {
+  if (!matches.length) return null;
+  return matches.sort((a, b) => {
+    const ea = a.split('.').pop().toLowerCase();
+    const eb = b.split('.').pop().toLowerCase();
+    return (FMT_PRIORITY[ea] ?? 9) - (FMT_PRIORITY[eb] ?? 9);
+  })[0];
+}
+
 export function getProductPhotos(article) {
   if (!article) return [];
   const safe = String(article).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const reMain = new RegExp('^' + safe + '\\.(webp|png|jpg|jpeg)$', 'i');
   const reExtra = new RegExp('^' + safe + '_(\\d+)\\.(webp|png|jpg|jpeg)$', 'i');
-  const main = PRODUCTS_FILES.find(f => reMain.test(f));
-  const extras = PRODUCTS_FILES
-    .map(f => { const m = f.match(reExtra); return m ? { f, n: parseInt(m[1], 10) } : null; })
-    .filter(Boolean)
-    .sort((a, b) => a.n - b.n)
-    .map(x => x.f);
+  const main = pickByFormat(PRODUCTS_FILES.filter(f => reMain.test(f)));
+  // Группируем доп. ракурсы по индексу — берём по 1 файлу на индекс (webp в приоритете)
+  const byIdx = new Map();
+  for (const f of PRODUCTS_FILES) {
+    const m = f.match(reExtra);
+    if (!m) continue;
+    const idx = parseInt(m[1], 10);
+    if (!byIdx.has(idx)) byIdx.set(idx, []);
+    byIdx.get(idx).push(f);
+  }
+  const extras = [...byIdx.entries()]
+    .sort((a, b) => a[0] - b[0])
+    .map(([, files]) => pickByFormat(files));
   return [main, ...extras].filter(Boolean).map(f => `/img/products/${f}`);
 }

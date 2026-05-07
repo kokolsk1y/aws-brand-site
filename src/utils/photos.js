@@ -1,7 +1,11 @@
 // Auto-detect фотографий товара по артикулу.
 // Соглашение по именованию файлов в /public/img/products/:
 //   АРТИКУЛ.webp / .png / .jpg                ← главное фото
-//   АРТИКУЛ-2.webp ... АРТИКУЛ-N.webp         ← дополнительные ракурсы
+//   АРТИКУЛ_2.webp ... АРТИКУЛ_N.webp         ← дополнительные ракурсы (через подчёркивание!)
+//
+// ⚠️ Подчёркивание, не дефис — потому что в артикулах сами есть дефисы
+// (AWS-12982-50 — это вариант длины, не ракурс). Дефис используется только
+// в артикуле, подчёркивание — только для номера ракурса.
 //
 // Чтобы добавить новый ракурс — положите файл с правильным именем,
 // пересоберите проект — фото автоматически попадёт в галерею.
@@ -16,7 +20,7 @@ export function getProductPhotos(article) {
   if (!article) return [];
   const safe = String(article).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const reMain = new RegExp('^' + safe + '\\.(webp|png|jpg|jpeg)$', 'i');
-  const reExtra = new RegExp('^' + safe + '-(\\d+)\\.(webp|png|jpg|jpeg)$', 'i');
+  const reExtra = new RegExp('^' + safe + '_(\\d+)\\.(webp|png|jpg|jpeg)$', 'i');
   const main = PRODUCTS_FILES.find(f => reMain.test(f));
   const extras = PRODUCTS_FILES
     .map(f => { const m = f.match(reExtra); return m ? { f, n: parseInt(m[1], 10) } : null; })

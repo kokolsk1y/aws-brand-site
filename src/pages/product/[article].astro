@@ -400,9 +400,9 @@ const marketplaceLinks = [
         <div class="prod-hero__media-wrap">
           <div class="prod-hero__media" data-reveal="zoom">
             {product.photos.map((src, i) => (
-              <img src={src} alt={title} class={`prod-hero__photo${i === 0 ? ' is-active' : ''}`} data-photo-index={i} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" onerror="this.dataset.broken='1';this.style.display='none'" />
+              <img src={src} alt={title} class={`prod-hero__photo${i === 0 ? ' is-active' : ''}`} data-photo-index={i} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" onerror="this.dataset.broken='1';this.style.display='none';this.parentElement.classList.add('has-broken');" />
             ))}
-            <div class="prod-hero__placeholder" style="display:none">Фото готовится</div>
+            <div class="prod-hero__placeholder">Фото готовится</div>
           </div>
           {product.photos.length > 1 && (
             <div class="prod-hero__thumbs" role="tablist" aria-label="Дополнительные фото">
@@ -554,15 +554,30 @@ const marketplaceLinks = [
       const media = document.querySelector('.prod-hero__media');
       const thumbs = document.querySelectorAll('.prod-hero__thumb');
       const photos = document.querySelectorAll('.prod-hero__photo');
-      if (!media || photos.length < 2) return;
+      if (!media) return;
 
-      // Спрятать миниатюры/слоты у которых фото битое
+      // Если все фото битые — placeholder (для браузеров без :has)
+      function checkAllBroken() {
+        const alive = [...photos].filter(p => !p.dataset.broken);
+        if (alive.length === 0) media.classList.add('has-no-photo');
+      }
       photos.forEach((p, i) => {
         p.addEventListener('error', () => {
           const t = thumbs[i];
           if (t) t.style.display = 'none';
+          checkAllBroken();
         });
+        // Если уже сломалось до подвешивания listener
+        if (p.complete && p.naturalWidth === 0) {
+          p.dataset.broken = '1';
+          p.style.display = 'none';
+          const t = thumbs[i];
+          if (t) t.style.display = 'none';
+          checkAllBroken();
+        }
       });
+
+      if (photos.length < 2) return;
 
       function setActive(idx) {
         photos.forEach((p, i) => p.classList.toggle('is-active', i === idx));
@@ -650,7 +665,14 @@ const marketplaceLinks = [
       font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
       color: rgba(0,0,0,0.25);
       border: 1.5px dashed rgba(0,0,0,0.15); padding: 20px 28px; border-radius: 4px;
+      display: none;
     }
+    /* Если все фото в галерее битые — показываем placeholder */
+    .prod-hero__media:not(:has(.prod-hero__photo:not([data-broken]))) .prod-hero__placeholder {
+      display: block;
+    }
+    /* Fallback для браузеров без :has — поднимается через JS-класс */
+    .prod-hero__media.has-no-photo .prod-hero__placeholder { display: block; }
 
     /* === Галерея миниатюр === */
     .prod-hero__thumbs {

@@ -2534,6 +2534,10 @@ a { text-decoration: none; color: inherit; }
 .hero-slide__content--right .hero-slide__btn {
     align-self: flex-end;
 }
+.hero-slide__content--right .hero-slide__tags {
+    justify-content: flex-end;
+    align-self: stretch;
+}
 
 /* Лёгкое затемнение правой части кадра — чтобы белый текст читался */
 .hero-slide__overlay {
@@ -3946,4 +3950,125 @@ a { text-decoration: none; color: inherit; }
     background: transparent;
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
+}
+
+/* ============================
+   ПРАВКИ 2026-05-07: фон карточек, hero pagination, soft-touch velvet, advantages controls
+   ============================ */
+
+/* --- Мышиный серый фон вместо бежевого: карточки серий + конструктор --- */
+.series__card-visual {
+    background:
+        radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 40%),
+        radial-gradient(circle at 50% 45%, #f1f1f0 0%, #d4d4d2 70%, #bcbcba 100%);
+}
+.constructor__preview {
+    background: radial-gradient(circle at 50% 45%, #f1f1f0 0%, #d4d4d2 70%, #bcbcba 100%);
+}
+
+/* --- Hero pagination: крупнее --- */
+.hero-pagination {
+    bottom: 44px;
+    gap: 10px;
+}
+.hero-pagination .swiper-pagination-bullet {
+    width: 56px;
+    height: 4px;
+    background: rgba(255,255,255,0.32);
+}
+.hero-pagination .swiper-pagination-bullet-active {
+    background: var(--white);
+    width: 88px;
+    box-shadow: 0 0 12px rgba(255,255,255,0.35);
+}
+@media (max-width: 720px) {
+    .hero-pagination { bottom: 28px; gap: 8px; }
+    .hero-pagination .swiper-pagination-bullet { width: 36px; height: 3px; }
+    .hero-pagination .swiper-pagination-bullet-active { width: 60px; }
+}
+
+/* --- Hero 4 — Soft-touch velvet-фон (заглушка под будущий ролик) --- */
+.hero-slide__bg--velvet {
+    background:
+        radial-gradient(ellipse 70% 90% at 32% 55%, rgba(120, 96, 84, 0.55) 0%, rgba(60, 48, 42, 0.25) 40%, transparent 70%),
+        radial-gradient(ellipse 50% 70% at 78% 50%, rgba(35, 28, 25, 0.6) 0%, transparent 60%),
+        linear-gradient(135deg, #1c1815 0%, #100c0a 60%, #0a0807 100%);
+    overflow: hidden;
+}
+.hero-velvet {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+.hero-velvet__glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    mix-blend-mode: screen;
+}
+.hero-velvet__glow--a {
+    width: 55%; height: 70%;
+    left: -10%; top: 10%;
+    background: radial-gradient(circle, rgba(190, 152, 124, 0.32) 0%, rgba(120, 96, 78, 0) 60%);
+    animation: heroVelvetA 14s ease-in-out infinite alternate;
+}
+.hero-velvet__glow--b {
+    width: 40%; height: 50%;
+    left: 18%; top: 35%;
+    background: radial-gradient(circle, rgba(220, 188, 148, 0.18) 0%, rgba(140, 110, 80, 0) 65%);
+    animation: heroVelvetB 18s ease-in-out infinite alternate;
+}
+.hero-velvet__weave {
+    position: absolute; inset: 0;
+    background-image:
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 3px),
+        repeating-linear-gradient(-45deg, rgba(0,0,0,0.04) 0 1px, transparent 1px 3px);
+    opacity: 0.7;
+}
+@keyframes heroVelvetA {
+    from { transform: translate(0, 0) scale(1); opacity: 0.85; }
+    to   { transform: translate(40px, -20px) scale(1.08); opacity: 1; }
+}
+@keyframes heroVelvetB {
+    from { transform: translate(0, 0) scale(1); opacity: 0.6; }
+    to   { transform: translate(-30px, 18px) scale(1.12); opacity: 0.9; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-velvet__glow--a, .hero-velvet__glow--b { animation: none; }
+}
+
+/* --- Advantages: панель навигации (next + pause) --- */
+.advantages-controls {
+    position: absolute;
+    bottom: 28px; right: 32px;
+    z-index: 11;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.adv-ctl {
+    width: 44px; height: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.85);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+.adv-ctl:hover {
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.4);
+    color: #fff;
+    transform: translateY(-1px);
+}
+.adv-ctl svg { width: 16px; height: 16px; fill: currentColor; }
+.adv-ctl[data-state="play"] .adv-ctl__pause,
+.adv-ctl[data-state="pause"] .adv-ctl__play { display: none; }
+@media (max-width: 720px) {
+    .advantages-controls { bottom: 20px; right: 16px; gap: 8px; }
+    .adv-ctl { width: 38px; height: 38px; }
+    .adv-ctl svg { width: 14px; height: 14px; }
 }

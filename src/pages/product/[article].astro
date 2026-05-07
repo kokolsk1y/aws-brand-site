@@ -355,37 +355,6 @@ const marketplaceLinks = [
   }
 ];
 
-// 4 документа соответствия — модалка с заглушкой как на главной
-const docs = [
-  {
-    key: 'eac',
-    title: 'Декларация EAC',
-    desc: 'Соответствие ТР ТС',
-    descFull: 'Декларация соответствия техническим регламентам Евразийского экономического союза. Подтверждает безопасность продукции для потребителей.',
-    watermark: 'EAC'
-  },
-  {
-    key: 'gost',
-    title: 'Сертификат ГОСТ',
-    desc: 'Российские стандарты',
-    descFull: 'Подтверждение соответствия государственным стандартам Российской Федерации. Испытания проведены в аккредитованной лаборатории.',
-    watermark: 'ГОСТ'
-  },
-  {
-    key: 'passport',
-    title: 'Паспорт качества',
-    desc: 'Контроль производства',
-    descFull: 'Протоколы испытаний и результаты внутреннего контроля на производстве. Ресурс работы механизма, испытание на нагрев, старение.',
-    watermark: 'AWS'
-  },
-  {
-    key: 'manual',
-    title: 'Инструкция по монтажу',
-    desc: 'Схемы подключения',
-    descFull: 'Пошаговая установка выключателей, розеток и рамок. Рекомендации для электромонтажников, схемы подключения, моменты затяжки.',
-    watermark: 'AWS'
-  }
-];
 ---
 <BaseLayout title={`${title || product.article} — AWS Products`} description={description.slice(0, 160)}>
 
@@ -486,67 +455,9 @@ const docs = [
         </div>
       </div>
 
-      <!-- Документы соответствия -->
-      <div class="prod-docs">
-        <div class="prod-docs__head">
-          <h2 class="prod-details__title" data-reveal="focus">Сертификаты соответствия</h2>
-        </div>
-        <div class="prod-docs__grid" data-reveal-grid>
-          {docs.map((d, i) => (
-            <button type="button" class="prod-doc-card"
-                    data-doc={d.key}
-                    data-doc-title={d.title}
-                    data-doc-desc={d.descFull}
-                    data-doc-watermark={d.watermark}
-                    data-reveal="slide" style={`--i: ${i}`}>
-              <div class="prod-doc-card__icon" aria-hidden="true">
-                {d.key === 'eac' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>}
-                {d.key === 'gost' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>}
-                {d.key === 'passport' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>}
-                {d.key === 'manual' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>}
-              </div>
-              <div class="prod-doc-card__body">
-                <h3 class="prod-doc-card__title">{d.title}</h3>
-                <span class="prod-doc-card__desc">{d.desc}</span>
-              </div>
-              <span class="prod-doc-card__badge">PDF</span>
-            </button>
-          ))}
-        </div>
-      </div>
     </div>
   </section>
 
-  <!-- МОДАЛКА ПРОСМОТРА ДОКУМЕНТА (как на главной) -->
-  <div class="doc-modal" id="docModal" role="dialog" aria-modal="true" aria-labelledby="docModalTitle" hidden>
-    <div class="doc-modal__overlay" data-doc-close></div>
-    <div class="doc-modal__panel">
-      <button class="doc-modal__close" data-doc-close aria-label="Закрыть">&times;</button>
-      <div class="doc-modal__body">
-        <div class="doc-modal__preview">
-          <div class="doc-modal__sheet">
-            <div class="doc-modal__sheet-watermark" id="docSheetWatermark">AWS</div>
-            <div class="doc-modal__sheet-content">
-              <span class="doc-modal__sheet-badge">ЗАГЛУШКА</span>
-              <p class="doc-modal__sheet-hint">Оригинал документа появится после загрузки PDF менеджером</p>
-            </div>
-          </div>
-        </div>
-        <div class="doc-modal__info">
-          <p class="label">Документ</p>
-          <h3 class="doc-modal__title" id="docModalTitle">—</h3>
-          <p class="doc-modal__desc" id="docModalDesc">—</p>
-          <div class="doc-modal__actions">
-            <button class="btn-switch doc-modal__download" type="button" disabled>
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Скачать PDF
-            </button>
-          </div>
-          <p class="doc-modal__note">Документ будет доступен для скачивания после загрузки менеджером.</p>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- СВЯЗАННЫЕ ТОВАРЫ -->
   {related.length > 0 && (
@@ -609,37 +520,6 @@ const docs = [
       });
     })();
 
-    // Модалка просмотра документа
-    (function () {
-      const modal = document.getElementById('docModal');
-      if (!modal) return;
-      const titleEl = document.getElementById('docModalTitle');
-      const descEl = document.getElementById('docModalDesc');
-      const watermarkEl = document.getElementById('docSheetWatermark');
-      let lastFocus = null;
-
-      function openDoc(btn) {
-        lastFocus = document.activeElement;
-        if (titleEl) titleEl.textContent = btn.dataset.docTitle || '—';
-        if (descEl) descEl.textContent = btn.dataset.docDesc || '—';
-        if (watermarkEl) watermarkEl.textContent = btn.dataset.docWatermark || 'AWS';
-        modal.hidden = false;
-        document.body.style.overflow = 'hidden';
-      }
-      function closeDoc() {
-        modal.hidden = true;
-        document.body.style.overflow = '';
-        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
-      }
-
-      document.querySelectorAll('.prod-doc-card').forEach(btn => {
-        btn.addEventListener('click', () => openDoc(btn));
-      });
-      modal.querySelectorAll('[data-doc-close]').forEach(el => el.addEventListener('click', closeDoc));
-      document.addEventListener('keydown', e => {
-        if (!modal.hidden && e.key === 'Escape') closeDoc();
-      });
-    })();
   </script>
 
   <style is:global>

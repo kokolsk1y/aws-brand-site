@@ -222,7 +222,7 @@ const header = document.getElementById('header');
 
 // Темы хедера по realIndex слайдов (loop:true создаёт клоны —
 // querySelector ненадёжен, используем массив напрямую)
-const HERO_THEMES = ['dark', 'dark', 'dark', 'dark', 'light'];
+const HERO_THEMES = ['dark', 'dark', 'dark', 'dark'];
 function updateHeaderTheme() {
     const theme = HERO_THEMES[heroSwiper.realIndex] || 'dark';
     if (!header.classList.contains('scrolled')) {
@@ -574,6 +574,35 @@ const advantagesSwiper = new Swiper('.advantages-swiper', {
         clickable: true
     }
 });
+
+// Управление advantages-слайдером (next + pause/play)
+(function () {
+    const toggle = document.getElementById('advToggle');
+    const nextBtn = document.getElementById('advNext');
+    const prevBtn = document.getElementById('advPrev');
+    if (!advantagesSwiper) return;
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => advantagesSwiper.slidePrev());
+    }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => advantagesSwiper.slideNext());
+    }
+    if (toggle) {
+        toggle.addEventListener('click', () => {
+            const playing = toggle.dataset.state === 'play';
+            if (playing) {
+                advantagesSwiper.autoplay && advantagesSwiper.autoplay.stop();
+                toggle.dataset.state = 'pause';
+                toggle.setAttribute('aria-label', 'Воспроизвести');
+            } else {
+                advantagesSwiper.autoplay && advantagesSwiper.autoplay.start();
+                toggle.dataset.state = 'play';
+                toggle.setAttribute('aria-label', 'Пауза');
+            }
+        });
+    }
+})();
 
 // Анимация контента при смене слайда
 advantagesSwiper.on('slideChangeTransitionStart', () => {

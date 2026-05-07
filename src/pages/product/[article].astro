@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import categoriesMeta from '../../data/categories.json';
 import seriesData from '../../data/series.json';
 import productsAll from '../../../public/products.json';
+import { getProductPhotos } from '../../utils/photos.js';
 
 // Маппинг: ключ в products.json → slug категории на сайте
 const keyToCategory = {
@@ -45,20 +46,26 @@ const { meta } = Astro.props;
 let product;
 if (meta.source === 'cat') {
   const catSlug = keyToCategory[meta.key];
+  const photos = getProductPhotos(meta.data.article);
+  const fallback = meta.data.photo.replace(/^img\//, '/img/');
   product = {
     article: meta.data.article,
     name: meta.data.name,
-    photo: meta.data.photo.replace(/^img\//, '/img/'),
+    photo: photos[0] || fallback,
+    photos: photos.length ? photos : [fallback],
     category: catSlug,
     categoryTitle: categoriesMeta[catSlug]?.title,
     crumbType: 'category'
   };
 } else {
   const series = seriesData[meta.slug];
+  const photos = getProductPhotos(meta.data.article);
+  const fallback = `/img/products/${meta.data.article}.webp`;
   product = {
     article: meta.data.article,
     name: meta.data.name,
-    photo: `/img/products/${meta.data.article}.webp`,
+    photo: photos[0] || fallback,
+    photos: photos.length ? photos : [fallback],
     color: meta.data.color,
     groupKey: meta.groupKey,
     series: meta.slug,
@@ -269,12 +276,16 @@ function findRelated() {
     const key = Object.keys(keyToCategory).find(k => keyToCategory[k] === product.category);
     const data = productsAll[key];
     if (data?.items) {
-      list.push(...data.items.filter(i => i.article !== product.article).slice(0, 4).map(i => ({
-        article: i.article,
-        name: cleanTitle(i.name),
-        photo: i.photo.replace(/^img\//, '/img/'),
-        meta: extractMeta(i.name).slice(0, 2)
-      })));
+      list.push(...data.items.filter(i => i.article !== product.article).slice(0, 4).map(i => {
+        const ph = getProductPhotos(i.article);
+        return {
+          article: i.article,
+          name: cleanTitle(i.name),
+          photo: ph[0] || i.photo.replace(/^img\//, '/img/'),
+          hover: ph[1] || null,
+          meta: extractMeta(i.name).slice(0, 2)
+        };
+      }));
     }
   } else {
     const series = seriesData[product.series];
@@ -282,12 +293,16 @@ function findRelated() {
       list.push(...series.groups[product.groupKey]
         .filter(i => i.article !== product.article)
         .slice(0, 4)
-        .map(i => ({
-          article: i.article,
-          name: i.name,
-          photo: `/img/products/${i.article}.webp`,
-          meta: extractMeta(i.name).slice(0, 2)
-        })));
+        .map(i => {
+          const ph = getProductPhotos(i.article);
+          return {
+            article: i.article,
+            name: i.name,
+            photo: ph[0] || `/img/products/${i.article}.webp`,
+            hover: ph[1] || null,
+            meta: extractMeta(i.name).slice(0, 2)
+          };
+        }));
     }
   }
   return list;
@@ -384,9 +399,20 @@ const marketplaceLinks = [
       <div class="prod-hero__grid">
         <div class="prod-hero__media-wrap">
           <div class="prod-hero__media" data-reveal="zoom">
-            <img src={product.photo} alt={title} onerror="this.style.display='none';this.parentElement.querySelector('.prod-hero__placeholder').style.display='flex'" />
+            {product.photos.map((src, i) => (
+              <img src={src} alt={title} class={`prod-hero__photo${i === 0 ? ' is-active' : ''}`} data-photo-index={i} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" onerror="this.dataset.broken='1';this.style.display='none'" />
+            ))}
             <div class="prod-hero__placeholder" style="display:none">Фото готовится</div>
           </div>
+          {product.photos.length > 1 && (
+            <div class="prod-hero__thumbs" role="tablist" aria-label="Дополнительные фото">
+              {product.photos.map((src, i) => (
+                <button type="button" class={`prod-hero__thumb${i === 0 ? ' is-active' : ''}`} data-thumb-index={i} aria-label={`Фото ${i + 1}`} role="tab" aria-selected={i === 0 ? 'true' : 'false'}>
+                  <img src={src} alt="" loading="lazy" decoding="async" />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <div class="prod-hero__text">
@@ -469,8 +495,11 @@ const marketplaceLinks = [
         <div class="prod-related__grid" data-reveal-grid>
           {related.map((r, idx) => (
             <a href={`/aws-brand-site/product/${encodeURIComponent(r.article)}`} class="prod-related__card" data-tilt data-tilt-max="5" data-reveal="slide" style={`--i: ${idx % 9}`}>
-              <div class="prod-related__img">
-                <img src={r.photo} alt={r.name} loading="lazy" onerror="this.style.display='none'" />
+              <div class={`prod-related__img${r.hover ? ' has-hover' : ''}`}>
+                <img src={r.photo} alt={r.name} class="prod-related__photo prod-related__photo--main" loading="lazy" onerror="this.style.display='none'" />
+                {r.hover && (
+                  <img src={r.hover} alt="" class="prod-related__photo prod-related__photo--hover" loading="lazy" aria-hidden="true" />
+                )}
               </div>
               <div class="prod-related__body">
                 <span class="prod-related__article">{r.article}</span>
@@ -520,6 +549,40 @@ const marketplaceLinks = [
       });
     })();
 
+    // Галерея фото товара: переключение по клику на миниатюру + ←/→
+    (function () {
+      const media = document.querySelector('.prod-hero__media');
+      const thumbs = document.querySelectorAll('.prod-hero__thumb');
+      const photos = document.querySelectorAll('.prod-hero__photo');
+      if (!media || photos.length < 2) return;
+
+      // Спрятать миниатюры/слоты у которых фото битое
+      photos.forEach((p, i) => {
+        p.addEventListener('error', () => {
+          const t = thumbs[i];
+          if (t) t.style.display = 'none';
+        });
+      });
+
+      function setActive(idx) {
+        photos.forEach((p, i) => p.classList.toggle('is-active', i === idx));
+        thumbs.forEach((t, i) => {
+          t.classList.toggle('is-active', i === idx);
+          t.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+        });
+      }
+      thumbs.forEach((t, i) => t.addEventListener('click', () => setActive(i)));
+
+      // Клавиатура: ← / → переключают, только если фокус внутри галереи
+      media.addEventListener('keydown', () => {});
+      document.addEventListener('keydown', (e) => {
+        if (e.target.closest('input, textarea, [contenteditable]')) return;
+        const cur = [...photos].findIndex(p => p.classList.contains('is-active'));
+        if (cur === -1) return;
+        if (e.key === 'ArrowLeft') setActive((cur - 1 + photos.length) % photos.length);
+        if (e.key === 'ArrowRight') setActive((cur + 1) % photos.length);
+      });
+    })();
   </script>
 
   <style is:global>
@@ -556,18 +619,30 @@ const marketplaceLinks = [
       border-radius: 20px; overflow: visible;
       display: flex; align-items: center; justify-content: center;
       padding: 60px;
+      position: relative;
     }
-    .prod-hero__media img {
-      max-width: 100%; max-height: 100%; object-fit: contain;
+    /* Все фото лежат друг на друге; активное проявляется fade-ом */
+    .prod-hero__photo {
+      position: absolute;
+      inset: 60px;
+      max-width: calc(100% - 120px); max-height: calc(100% - 120px);
+      width: calc(100% - 120px); height: calc(100% - 120px);
+      object-fit: contain;
+      margin: auto;
       filter: drop-shadow(0 22px 28px rgba(0,0,0,0.28));
+      opacity: 0;
       transition:
+        opacity 0.4s cubic-bezier(.22,1,.36,1),
         transform 0.55s cubic-bezier(.22,1,.36,1),
         filter 0.55s cubic-bezier(.22,1,.36,1);
-      will-change: transform, filter;
+      will-change: opacity, transform, filter;
+      pointer-events: none;
     }
-    /* Hover: товар «взлетает» над обложкой — поднимается, увеличивается,
-       тень углубляется и смещается ниже (физика подъёма объекта). */
-    .prod-hero__media:hover img {
+    .prod-hero__photo.is-active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .prod-hero__media:hover .prod-hero__photo.is-active {
       transform: translateY(-10px) scale(1.05);
       filter: drop-shadow(0 38px 48px rgba(0,0,0,0.34));
     }
@@ -575,6 +650,41 @@ const marketplaceLinks = [
       font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
       color: rgba(0,0,0,0.25);
       border: 1.5px dashed rgba(0,0,0,0.15); padding: 20px 28px; border-radius: 4px;
+    }
+
+    /* === Галерея миниатюр === */
+    .prod-hero__thumbs {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      margin-top: 16px;
+      justify-content: flex-start;
+    }
+    .prod-hero__thumb {
+      flex: 0 0 auto;
+      width: 72px; height: 72px;
+      padding: 6px;
+      border: 1.5px solid var(--gray-200, #e5e5e3);
+      border-radius: 12px;
+      background: var(--bg-product, #d4d4d2);
+      cursor: pointer;
+      transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .prod-hero__thumb img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      pointer-events: none;
+    }
+    .prod-hero__thumb:hover {
+      border-color: var(--black, #111);
+      transform: translateY(-2px);
+    }
+    .prod-hero__thumb.is-active {
+      border-color: var(--accent, #8CB86B);
+      box-shadow: 0 0 0 1px var(--accent, #8CB86B);
+    }
+    @media (max-width: 720px) {
+      .prod-hero__thumb { width: 56px; height: 56px; padding: 4px; border-radius: 10px; }
+      .prod-hero__thumbs { gap: 8px; margin-top: 12px; }
     }
 
     .prod-hero__text { padding: 8px 0; }
@@ -896,11 +1006,13 @@ const marketplaceLinks = [
     .prod-related__img {
       aspect-ratio: 1/1; background: var(--bg-product, #d4d4d2);
       display: flex; align-items: center; justify-content: center; padding: 28px;
+      position: relative;
     }
     .prod-related__img img {
       max-width: 100%; max-height: 100%; object-fit: contain;
       filter: drop-shadow(0 8px 14px rgba(0,0,0,0.12));
       transition:
+        opacity 0.4s ease,
         transform 0.45s cubic-bezier(.22,1,.36,1),
         filter 0.45s cubic-bezier(.22,1,.36,1);
     }
@@ -908,6 +1020,15 @@ const marketplaceLinks = [
       transform: translateY(-6px) scale(1.06);
       filter: drop-shadow(0 18px 26px rgba(0,0,0,0.22));
     }
+    /* Hover-ракурс */
+    .prod-related__img.has-hover .prod-related__photo {
+      position: absolute;
+      inset: 28px;
+      max-width: calc(100% - 56px); max-height: calc(100% - 56px);
+    }
+    .prod-related__img.has-hover .prod-related__photo--hover { opacity: 0; }
+    .prod-related__card:hover .prod-related__img.has-hover .prod-related__photo--main { opacity: 0; }
+    .prod-related__card:hover .prod-related__img.has-hover .prod-related__photo--hover { opacity: 1; }
     .prod-related__body { padding: 18px 20px 20px; }
     .prod-related__article {
       font-size: 10px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase;

@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import categoriesMeta from '../../data/categories.json';
 import productsAll from '../../../public/products.json';
+import { getProductPhotos } from '../../utils/photos.js';
 
 export async function getStaticPaths() {
   return Object.keys(categoriesMeta).map(slug => ({ params: { slug } }));
@@ -117,10 +118,16 @@ function shortName(name) {
       <div class="cat-grid" id="catGrid" data-reveal-grid>
         {products.map((p, idx) => {
           const meta = extractMeta(p.name);
+          const photos = getProductPhotos(p.article);
+          const main = photos[0] || p.photo.replace(/^img\//, '/img/');
+          const hover = photos[1];
           return (
             <a href={`/aws-brand-site/product/${p.article}`} class="prod-card" data-name={p.name} data-tilt data-tilt-max="6" data-reveal="slide" style={`--i: ${idx % 9}`}>
-              <div class="prod-card__img">
-                <img src={p.photo.replace(/^img\//, '/img/')} alt={p.name} loading="lazy" />
+              <div class={`prod-card__img${hover ? ' has-hover' : ''}`}>
+                <img src={main} alt={p.name} class="prod-card__photo prod-card__photo--main" loading="lazy" />
+                {hover && (
+                  <img src={hover} alt="" class="prod-card__photo prod-card__photo--hover" loading="lazy" aria-hidden="true" />
+                )}
               </div>
               <div class="prod-card__info">
                 <span class="prod-card__article">{p.article}</span>
@@ -385,6 +392,7 @@ function shortName(name) {
       display: flex; align-items: center; justify-content: center;
       padding: 36px; overflow: hidden;
       transition: background 0.4s;
+      position: relative;
     }
     .prod-card:hover .prod-card__img { background: var(--bg-product, #d4d4d2); }
     .prod-card__img img {
@@ -398,6 +406,16 @@ function shortName(name) {
       transform: translateY(-6px) scale(1.06);
       filter: drop-shadow(0 18px 26px rgba(0,0,0,0.22));
     }
+    /* Hover-ракурс: второе фото лежит поверх главного, проявляется при наведении */
+    .prod-card__img.has-hover .prod-card__photo {
+      position: absolute;
+      inset: 36px;
+      max-width: calc(100% - 72px); max-height: calc(100% - 72px);
+      transition: opacity 0.4s ease, transform 0.45s cubic-bezier(.22,1,.36,1), filter 0.45s cubic-bezier(.22,1,.36,1);
+    }
+    .prod-card__img.has-hover .prod-card__photo--hover { opacity: 0; }
+    .prod-card:hover .prod-card__img.has-hover .prod-card__photo--main { opacity: 0; }
+    .prod-card:hover .prod-card__img.has-hover .prod-card__photo--hover { opacity: 1; }
 
     .prod-card__info { padding: 20px 24px 16px; flex-grow: 1; }
     .prod-card__article {

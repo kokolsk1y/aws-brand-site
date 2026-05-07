@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getProductPhotos } from '../../utils/photos.js';
 import seriesData from '../../data/series.json';
 
 export async function getStaticPaths() {
@@ -107,10 +108,17 @@ const defaultColor = series.colors[0];
                  data-open="true">
               <div class="ser-lineup__group-inner">
                 <div class="ser-lineup__grid" data-reveal-grid>
-                  {group.items.map((item, idx) => (
+                  {group.items.map((item, idx) => {
+                    const photos = getProductPhotos(item.article);
+                    const main = photos[0] || `/img/products/${item.article}.webp`;
+                    const hover = photos[1];
+                    return (
                     <a href={`/aws-brand-site/product/${item.article}`} class="ser-lineup__card" data-color={item.color || 'unknown'} data-tilt data-tilt-max="5" data-reveal="slide" style={`--i: ${idx % 9}`}>
-                      <div class="ser-lineup__photo">
-                        <img src={`/img/products/${item.article}.webp`} alt={item.name} loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                      <div class={`ser-lineup__photo${hover ? ' has-hover' : ''}`}>
+                        <img src={main} alt={item.name} class="ser-lineup__img ser-lineup__img--main" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.ser-lineup__photo-fallback').style.display='flex'" />
+                        {hover && (
+                          <img src={hover} alt="" class="ser-lineup__img ser-lineup__img--hover" loading="lazy" aria-hidden="true" />
+                        )}
                         <div class="ser-lineup__photo-fallback" style="display:none">
                           <span class={`dot dot--${item.color || 'white'}`}></span>
                         </div>
@@ -120,7 +128,8 @@ const defaultColor = series.colors[0];
                         <h4 class="ser-lineup__name">{item.name}</h4>
                       </div>
                     </a>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -642,7 +651,18 @@ const defaultColor = series.colors[0];
       background: var(--bg-product, #d4d4d2);
       display: flex; align-items: center; justify-content: center;
       padding: 28px; overflow: hidden;
+      position: relative;
     }
+    .ser-lineup__photo.has-hover .ser-lineup__img {
+      position: absolute;
+      inset: 28px;
+      max-width: calc(100% - 56px); max-height: calc(100% - 56px);
+      object-fit: contain;
+      transition: opacity 0.4s ease, transform 0.45s cubic-bezier(.22,1,.36,1), filter 0.45s cubic-bezier(.22,1,.36,1);
+    }
+    .ser-lineup__photo.has-hover .ser-lineup__img--hover { opacity: 0; }
+    .ser-lineup__card:hover .ser-lineup__photo.has-hover .ser-lineup__img--main { opacity: 0; }
+    .ser-lineup__card:hover .ser-lineup__photo.has-hover .ser-lineup__img--hover { opacity: 1; }
     .ser-lineup__photo img {
       max-width: 100%; max-height: 100%; object-fit: contain;
       filter: drop-shadow(0 8px 14px rgba(0,0,0,0.12));

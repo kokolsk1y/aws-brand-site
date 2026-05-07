@@ -283,6 +283,7 @@ function findRelated() {
           name: cleanTitle(i.name),
           photo: ph[0] || i.photo.replace(/^img\//, '/img/'),
           hover: ph[1] || null,
+          allPhotos: ph.length > 2 ? ph : null,
           meta: extractMeta(i.name).slice(0, 2)
         };
       }));
@@ -300,6 +301,7 @@ function findRelated() {
             name: i.name,
             photo: ph[0] || `/img/products/${i.article}.webp`,
             hover: ph[1] || null,
+            allPhotos: ph.length > 2 ? ph : null,
             meta: extractMeta(i.name).slice(0, 2)
           };
         }));
@@ -495,10 +497,17 @@ const marketplaceLinks = [
         <div class="prod-related__grid" data-reveal-grid>
           {related.map((r, idx) => (
             <a href={`/aws-brand-site/product/${encodeURIComponent(r.article)}`} class="prod-related__card" data-tilt data-tilt-max="5" data-reveal="slide" style={`--i: ${idx % 9}`}>
-              <div class={`prod-related__img${r.hover ? ' has-hover' : ''}`}>
+              <div class={`prod-related__img${r.hover && !r.allPhotos ? ' has-hover' : ''}`}>
                 <img src={r.photo} alt={r.name} class="prod-related__photo prod-related__photo--main" loading="lazy" onerror="this.style.display='none'" />
-                {r.hover && (
+                {r.hover && !r.allPhotos && (
                   <img src={r.hover} alt="" class="prod-related__photo prod-related__photo--hover" loading="lazy" aria-hidden="true" />
+                )}
+                {r.allPhotos && r.allPhotos.length > 2 && (
+                  <div class="prod-related__dots" aria-label="Переключить фото">
+                    {r.allPhotos.map((src, i) => (
+                      <span class={`prod-card__dot${i === 0 ? ' is-active' : ''}`} role="button" tabindex="0" data-photo-idx={i} data-photo-src={src} aria-label={`Фото ${i + 1}`}></span>
+                    ))}
+                  </div>
                 )}
               </div>
               <div class="prod-related__body">
@@ -547,6 +556,44 @@ const marketplaceLinks = [
           });
         }
       });
+    })();
+
+    // Точки переключения фото на карточках в cross-sell блоке
+    (function () {
+      const grid = document.querySelector('.prod-related__grid');
+      if (!grid) return;
+      function preloadSecondaries() {
+        grid.querySelectorAll('.prod-card__dot[data-photo-idx="1"]').forEach(d => {
+          const src = d.dataset.photoSrc;
+          if (src) { const im = new Image(); im.decoding = 'async'; im.src = src; }
+        });
+      }
+      if ('requestIdleCallback' in window) requestIdleCallback(preloadSecondaries, { timeout: 2000 });
+      else setTimeout(preloadSecondaries, 1500);
+
+      function handleDot(e) {
+        const dot = e.target.closest('.prod-card__dot');
+        if (!dot || !grid.contains(dot)) return;
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.type !== 'click') return;
+        const card = dot.closest('.prod-related__card');
+        if (!card) return;
+        const img = card.querySelector('.prod-related__photo--main') || card.querySelector('.prod-related__photo');
+        if (!img) return;
+        const src = dot.dataset.photoSrc;
+        if (!src || img.src.endsWith(src.replace(/^\//, ''))) return;
+        img.classList.add('is-swapping');
+        const pre = new Image();
+        pre.onload = () => { img.src = src; requestAnimationFrame(() => img.classList.remove('is-swapping')); };
+        pre.onerror = () => img.classList.remove('is-swapping');
+        pre.src = src;
+        card.querySelectorAll('.prod-card__dot').forEach(d => d.classList.remove('is-active'));
+        dot.classList.add('is-active');
+      }
+      grid.addEventListener('click', handleDot, true);
+      grid.addEventListener('pointerdown', handleDot, true);
+      grid.addEventListener('mousedown', handleDot, true);
     })();
 
     // Галерея фото товара: переключение по клику на миниатюру + ←/→
@@ -1051,6 +1098,28 @@ const marketplaceLinks = [
     .prod-related__img.has-hover .prod-related__photo--hover { opacity: 0; }
     .prod-related__card:hover .prod-related__img.has-hover .prod-related__photo--main { opacity: 0; }
     .prod-related__card:hover .prod-related__img.has-hover .prod-related__photo--hover { opacity: 1; }
+    /* Точки переключения фото в cross-sell — справа снизу плашки */
+    .prod-related__dots {
+      position: absolute;
+      right: 14px; bottom: 14px;
+      display: flex; gap: 5px;
+      align-items: center;
+      z-index: 2;
+    }
+    .prod-related__dots .prod-card__dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.18);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+      display: inline-block;
+    }
+    .prod-related__dots .prod-card__dot:hover { background: rgba(0,0,0,0.4); transform: scale(1.3); }
+    .prod-related__dots .prod-card__dot.is-active {
+      background: var(--accent, #8CB86B);
+      transform: scale(1.3);
+    }
+    .prod-related__photo.is-swapping { opacity: 0; }
     .prod-related__body { padding: 18px 20px 20px; }
     .prod-related__article {
       font-size: 10px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase;

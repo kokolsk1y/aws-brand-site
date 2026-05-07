@@ -220,12 +220,11 @@ function shortName(name) {
     // (браузер кэширует — повторные мгновенные).
     (function () {
       const grid = document.getElementById('catGrid');
-      if (!grid) return;
+      if (!grid || grid.dataset.dotsInit === '1') return;
+      grid.dataset.dotsInit = '1';
       // Пред-грузка: после загрузки страницы тихо подгружаем 2-е фото для всех карточек
-      // у которых есть точки — чтобы первый клик не лагал.
       function preloadSecondaries() {
-        const dots = grid.querySelectorAll('.prod-card__dot[data-photo-idx="1"]');
-        dots.forEach(d => {
+        grid.querySelectorAll('.prod-card__dot[data-photo-idx="1"]').forEach(d => {
           const src = d.dataset.photoSrc;
           if (src) { const im = new Image(); im.decoding = 'async'; im.src = src; }
         });
@@ -233,14 +232,13 @@ function shortName(name) {
       if ('requestIdleCallback' in window) requestIdleCallback(preloadSecondaries, { timeout: 2000 });
       else setTimeout(preloadSecondaries, 1500);
 
-      function handleDot(e) {
+      // ОДИН listener на click в capture phase. Без pointerdown/mousedown —
+      // они только блокировали другие клики (tilt, копирование артикула и т.д.).
+      grid.addEventListener('click', (e) => {
         const dot = e.target.closest('.prod-card__dot');
         if (!dot) return;
-        // Перехват на capture: блокируем переход по <a> ДО того как браузер
-        // начнёт навигацию.
         e.preventDefault();
         e.stopPropagation();
-        if (e.type !== 'click') return; // Логика смены фото — только на click
         const card = dot.closest('.prod-card');
         if (!card) return;
         const img = card.querySelector('.prod-card__photo--main') || card.querySelector('.prod-card__photo');
@@ -249,30 +247,16 @@ function shortName(name) {
         if (!src || img.src.endsWith(src.replace(/^\//, ''))) return;
         img.classList.add('is-swapping');
         const pre = new Image();
-        pre.onload = () => {
-          img.src = src;
-          requestAnimationFrame(() => img.classList.remove('is-swapping'));
-        };
+        pre.onload = () => { img.src = src; requestAnimationFrame(() => img.classList.remove('is-swapping')); };
         pre.onerror = () => img.classList.remove('is-swapping');
         pre.src = src;
         card.querySelectorAll('.prod-card__dot').forEach(d => d.classList.remove('is-active'));
         dot.classList.add('is-active');
-      }
-      // capture: true — наш handler срабатывает ДО bubble-обработки <a>,
-      // preventDefault успевает заблокировать переход.
-      grid.addEventListener('click', handleDot, true);
-      // На pointerdown/mousedown тоже перехватываем — некоторые браузеры
-      // запускают навигацию на pointerdown.
-      grid.addEventListener('pointerdown', handleDot, true);
-      grid.addEventListener('mousedown', handleDot, true);
+      }, true);
 
-      // Клавиатура: точки — через keyboard accessible (Enter / Space)
       grid.addEventListener('keydown', (e) => {
         if (!e.target.classList.contains('prod-card__dot')) return;
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          e.target.click();
-        }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.target.click(); }
       });
     })();
 
@@ -513,18 +497,18 @@ function shortName(name) {
       align-items: center;
     }
     .prod-card__dot {
-      width: 7px; height: 7px;
+      width: 14px; height: 14px;
       border-radius: 50%;
       background: rgba(0,0,0,0.18);
       cursor: pointer;
       transition: background 0.2s ease, transform 0.2s ease;
       display: inline-block;
     }
-    .prod-card__dot:hover { background: rgba(0,0,0,0.4); transform: scale(1.25); }
+    .prod-card__dot:hover { background: rgba(0,0,0,0.4); transform: scale(1.15); }
     .prod-card__dot.is-active {
       background: var(--accent, #8CB86B);
-      transform: scale(1.25);
     }
+    .prod-card__dots { gap: 8px; }
     .prod-card__photo {
       transition: opacity 0.25s ease, transform 0.45s cubic-bezier(.22,1,.36,1), filter 0.45s cubic-bezier(.22,1,.36,1);
     }

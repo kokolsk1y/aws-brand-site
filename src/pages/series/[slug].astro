@@ -206,7 +206,8 @@ const defaultColor = series.colors[0];
     // Точки переключения фото на карточках товаров серии
     (function () {
       const lineup = document.querySelector('.ser-lineup');
-      if (!lineup) return;
+      if (!lineup || lineup.dataset.dotsInit === '1') return;
+      lineup.dataset.dotsInit = '1';
 
       function preloadSecondaries() {
         lineup.querySelectorAll('.prod-card__dot[data-photo-idx="1"]').forEach(d => {
@@ -217,12 +218,11 @@ const defaultColor = series.colors[0];
       if ('requestIdleCallback' in window) requestIdleCallback(preloadSecondaries, { timeout: 2000 });
       else setTimeout(preloadSecondaries, 1500);
 
-      function handleDot(e) {
+      lineup.addEventListener('click', (e) => {
         const dot = e.target.closest('.prod-card__dot');
-        if (!dot || !lineup.contains(dot)) return;
+        if (!dot) return;
         e.preventDefault();
         e.stopPropagation();
-        if (e.type !== 'click') return;
         const card = dot.closest('.ser-lineup__card');
         if (!card) return;
         const img = card.querySelector('.ser-lineup__img--main') || card.querySelector('.ser-lineup__img');
@@ -231,18 +231,13 @@ const defaultColor = series.colors[0];
         if (!src || img.src.endsWith(src.replace(/^\//, ''))) return;
         img.classList.add('is-swapping');
         const pre = new Image();
-        pre.onload = () => {
-          img.src = src;
-          requestAnimationFrame(() => img.classList.remove('is-swapping'));
-        };
+        pre.onload = () => { img.src = src; requestAnimationFrame(() => img.classList.remove('is-swapping')); };
         pre.onerror = () => img.classList.remove('is-swapping');
         pre.src = src;
         card.querySelectorAll('.prod-card__dot').forEach(d => d.classList.remove('is-active'));
         dot.classList.add('is-active');
-      }
-      lineup.addEventListener('click', handleDot, true);
-      lineup.addEventListener('pointerdown', handleDot, true);
-      lineup.addEventListener('mousedown', handleDot, true);
+      }, true);
+
       lineup.addEventListener('keydown', (e) => {
         if (!e.target.classList.contains('prod-card__dot')) return;
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.target.click(); }
@@ -742,19 +737,17 @@ const defaultColor = series.colors[0];
       display: flex; gap: 6px;
       align-items: center;
     }
+    .ser-lineup__dots { gap: 8px; }
     .ser-lineup__dots .prod-card__dot {
-      width: 7px; height: 7px;
+      width: 14px; height: 14px;
       border-radius: 50%;
       background: rgba(0,0,0,0.18);
       cursor: pointer;
       transition: background 0.2s ease, transform 0.2s ease;
       display: inline-block;
     }
-    .ser-lineup__dots .prod-card__dot:hover { background: rgba(0,0,0,0.4); transform: scale(1.25); }
-    .ser-lineup__dots .prod-card__dot.is-active {
-      background: var(--accent, #8CB86B);
-      transform: scale(1.25);
-    }
+    .ser-lineup__dots .prod-card__dot:hover { background: rgba(0,0,0,0.4); transform: scale(1.15); }
+    .ser-lineup__dots .prod-card__dot.is-active { background: var(--accent, #8CB86B); }
     .ser-lineup__img {
       transition: opacity 0.25s ease, transform 0.45s cubic-bezier(.22,1,.36,1), filter 0.45s cubic-bezier(.22,1,.36,1);
     }

@@ -558,10 +558,11 @@ const marketplaceLinks = [
       });
     })();
 
-    // Точки переключения фото на карточках в cross-sell блоке
+    // Точки переключения фото в cross-sell блоке
     (function () {
       const grid = document.querySelector('.prod-related__grid');
-      if (!grid) return;
+      if (!grid || grid.dataset.dotsInit === '1') return;
+      grid.dataset.dotsInit = '1';
       function preloadSecondaries() {
         grid.querySelectorAll('.prod-card__dot[data-photo-idx="1"]').forEach(d => {
           const src = d.dataset.photoSrc;
@@ -571,12 +572,11 @@ const marketplaceLinks = [
       if ('requestIdleCallback' in window) requestIdleCallback(preloadSecondaries, { timeout: 2000 });
       else setTimeout(preloadSecondaries, 1500);
 
-      function handleDot(e) {
+      grid.addEventListener('click', (e) => {
         const dot = e.target.closest('.prod-card__dot');
-        if (!dot || !grid.contains(dot)) return;
+        if (!dot) return;
         e.preventDefault();
         e.stopPropagation();
-        if (e.type !== 'click') return;
         const card = dot.closest('.prod-related__card');
         if (!card) return;
         const img = card.querySelector('.prod-related__photo--main') || card.querySelector('.prod-related__photo');
@@ -590,10 +590,7 @@ const marketplaceLinks = [
         pre.src = src;
         card.querySelectorAll('.prod-card__dot').forEach(d => d.classList.remove('is-active'));
         dot.classList.add('is-active');
-      }
-      grid.addEventListener('click', handleDot, true);
-      grid.addEventListener('pointerdown', handleDot, true);
-      grid.addEventListener('mousedown', handleDot, true);
+      }, true);
     })();
 
     // Галерея фото товара: переключение по клику на миниатюру + ←/→
@@ -1102,23 +1099,20 @@ const marketplaceLinks = [
     .prod-related__dots {
       position: absolute;
       right: 14px; bottom: 14px;
-      display: flex; gap: 5px;
+      display: flex; gap: 8px;
       align-items: center;
       z-index: 2;
     }
     .prod-related__dots .prod-card__dot {
-      width: 6px; height: 6px;
+      width: 12px; height: 12px;
       border-radius: 50%;
       background: rgba(0,0,0,0.18);
       cursor: pointer;
       transition: background 0.2s ease, transform 0.2s ease;
       display: inline-block;
     }
-    .prod-related__dots .prod-card__dot:hover { background: rgba(0,0,0,0.4); transform: scale(1.3); }
-    .prod-related__dots .prod-card__dot.is-active {
-      background: var(--accent, #8CB86B);
-      transform: scale(1.3);
-    }
+    .prod-related__dots .prod-card__dot:hover { background: rgba(0,0,0,0.4); transform: scale(1.15); }
+    .prod-related__dots .prod-card__dot.is-active { background: var(--accent, #8CB86B); }
     .prod-related__photo.is-swapping { opacity: 0; }
     .prod-related__body { padding: 18px 20px 20px; }
     .prod-related__article {

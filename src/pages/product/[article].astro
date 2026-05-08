@@ -542,110 +542,115 @@ const marketplaceLinks = [
   </section>
 
   <script is:inline>
-    // Копирование артикула в буфер при клике
     (function () {
-      const art = document.querySelector('.prod-hero__article');
-      if (!art) return;
-      const textEl = art.querySelector('.prod-hero__article-text');
-      if (!textEl) return;
-      art.addEventListener('click', () => {
-        const text = textEl.textContent.trim();
-        if (!navigator.clipboard) return;
-        navigator.clipboard.writeText(text).then(() => {
-          const orig = textEl.textContent;
-          textEl.textContent = 'Скопировано ✓';
-          art.classList.add('is-copied');
-          setTimeout(() => {
-            textEl.textContent = orig;
-            art.classList.remove('is-copied');
-          }, 1500);
-        });
-      });
-    })();
-
-    // Точки переключения фото в cross-sell блоке
-    (function () {
-      const grid = document.querySelector('.prod-related__grid');
-      if (!grid || grid.dataset.dotsInit === '1') return;
-      grid.dataset.dotsInit = '1';
-      function preloadSecondaries() {
-        grid.querySelectorAll('.prod-card__dot[data-photo-idx="1"]').forEach(d => {
-          const src = d.dataset.photoSrc;
-          if (src) { const im = new Image(); im.decoding = 'async'; im.src = src; }
-        });
-      }
-      if ('requestIdleCallback' in window) requestIdleCallback(preloadSecondaries, { timeout: 2000 });
-      else setTimeout(preloadSecondaries, 1500);
-
-      grid.addEventListener('click', (e) => {
-        const dot = e.target.closest('.prod-card__dot');
-        if (!dot) return;
-        e.preventDefault();
-        e.stopPropagation();
-        const card = dot.closest('.prod-related__card');
-        if (!card) return;
-        const img = card.querySelector('.prod-related__photo--main') || card.querySelector('.prod-related__photo');
-        if (!img) return;
-        const src = dot.dataset.photoSrc;
-        if (!src || img.src.endsWith(src.replace(/^\//, ''))) return;
-        img.classList.add('is-swapping');
-        const pre = new Image();
-        pre.onload = () => { img.src = src; requestAnimationFrame(() => img.classList.remove('is-swapping')); };
-        pre.onerror = () => img.classList.remove('is-swapping');
-        pre.src = src;
-        card.querySelectorAll('.prod-card__dot').forEach(d => d.classList.remove('is-active'));
-        dot.classList.add('is-active');
-      }, true);
-    })();
-
-    // Галерея фото товара: переключение по клику на миниатюру + ←/→
-    (function () {
-      const media = document.querySelector('.prod-hero__media');
-      const thumbs = document.querySelectorAll('.prod-hero__thumb');
-      const photos = document.querySelectorAll('.prod-hero__photo');
-      if (!media) return;
-
-      // Если все фото битые — placeholder (для браузеров без :has)
-      function checkAllBroken() {
-        const alive = [...photos].filter(p => !p.dataset.broken);
-        if (alive.length === 0) media.classList.add('has-no-photo');
-      }
-      photos.forEach((p, i) => {
-        p.addEventListener('error', () => {
-          const t = thumbs[i];
-          if (t) t.style.display = 'none';
-          checkAllBroken();
-        });
-        // Если уже сломалось до подвешивания listener
-        if (p.complete && p.naturalWidth === 0) {
-          p.dataset.broken = '1';
-          p.style.display = 'none';
-          const t = thumbs[i];
-          if (t) t.style.display = 'none';
-          checkAllBroken();
+      function initProductPage() {
+        // Копирование артикула в буфер при клике
+        const art = document.querySelector('.prod-hero__article');
+        if (art && !art._copyInit) {
+          art._copyInit = true;
+          const textEl = art.querySelector('.prod-hero__article-text');
+          if (textEl) {
+            art.addEventListener('click', () => {
+              const text = textEl.textContent.trim();
+              if (!navigator.clipboard) return;
+              navigator.clipboard.writeText(text).then(() => {
+                const orig = textEl.textContent;
+                textEl.textContent = 'Скопировано ✓';
+                art.classList.add('is-copied');
+                setTimeout(() => {
+                  textEl.textContent = orig;
+                  art.classList.remove('is-copied');
+                }, 1500);
+              });
+            });
+          }
         }
-      });
 
-      if (photos.length < 2) return;
+        // Точки переключения фото в cross-sell блоке
+        const grid = document.querySelector('.prod-related__grid');
+        if (grid && grid.dataset.dotsInit !== '1') {
+          grid.dataset.dotsInit = '1';
+          function preloadSecondaries() {
+            grid.querySelectorAll('.prod-card__dot[data-photo-idx="1"]').forEach(d => {
+              const src = d.dataset.photoSrc;
+              if (src) { const im = new Image(); im.decoding = 'async'; im.src = src; }
+            });
+          }
+          if ('requestIdleCallback' in window) requestIdleCallback(preloadSecondaries, { timeout: 2000 });
+          else setTimeout(preloadSecondaries, 1500);
 
-      function setActive(idx) {
-        photos.forEach((p, i) => p.classList.toggle('is-active', i === idx));
-        thumbs.forEach((t, i) => {
-          t.classList.toggle('is-active', i === idx);
-          t.setAttribute('aria-selected', i === idx ? 'true' : 'false');
-        });
+          grid.addEventListener('click', (e) => {
+            const dot = e.target.closest('.prod-card__dot');
+            if (!dot) return;
+            e.preventDefault();
+            e.stopPropagation();
+            const card = dot.closest('.prod-related__card');
+            if (!card) return;
+            const img = card.querySelector('.prod-related__photo--main') || card.querySelector('.prod-related__photo');
+            if (!img) return;
+            const src = dot.dataset.photoSrc;
+            if (!src || img.src.endsWith(src.replace(/^\//, ''))) return;
+            img.classList.add('is-swapping');
+            const pre = new Image();
+            pre.onload = () => { img.src = src; requestAnimationFrame(() => img.classList.remove('is-swapping')); };
+            pre.onerror = () => img.classList.remove('is-swapping');
+            pre.src = src;
+            card.querySelectorAll('.prod-card__dot').forEach(d => d.classList.remove('is-active'));
+            dot.classList.add('is-active');
+          }, true);
+        }
+
+        // Галерея фото товара: переключение по клику на миниатюру + ←/→
+        const media = document.querySelector('.prod-hero__media');
+        const thumbs = document.querySelectorAll('.prod-hero__thumb');
+        const photos = document.querySelectorAll('.prod-hero__photo');
+        if (media && !media._galleryInit) {
+          media._galleryInit = true;
+
+          function checkAllBroken() {
+            const alive = [...photos].filter(p => !p.dataset.broken);
+            if (alive.length === 0) media.classList.add('has-no-photo');
+          }
+          photos.forEach((p, i) => {
+            p.addEventListener('error', () => {
+              const t = thumbs[i];
+              if (t) t.style.display = 'none';
+              checkAllBroken();
+            });
+            if (p.complete && p.naturalWidth === 0) {
+              p.dataset.broken = '1';
+              p.style.display = 'none';
+              const t = thumbs[i];
+              if (t) t.style.display = 'none';
+              checkAllBroken();
+            }
+          });
+
+          if (photos.length >= 2) {
+            function setActive(idx) {
+              photos.forEach((p, i) => p.classList.toggle('is-active', i === idx));
+              thumbs.forEach((t, i) => {
+                t.classList.toggle('is-active', i === idx);
+                t.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+              });
+            }
+            thumbs.forEach((t, i) => t.addEventListener('click', () => setActive(i)));
+
+            // AbortController чтобы не накапливать keydown при SPA-навигации
+            if (window._prodKbdCtrl) window._prodKbdCtrl.abort();
+            window._prodKbdCtrl = new AbortController();
+            document.addEventListener('keydown', (e) => {
+              if (e.target.closest('input, textarea, [contenteditable]')) return;
+              const cur = [...photos].findIndex(p => p.classList.contains('is-active'));
+              if (cur === -1) return;
+              if (e.key === 'ArrowLeft') setActive((cur - 1 + photos.length) % photos.length);
+              if (e.key === 'ArrowRight') setActive((cur + 1) % photos.length);
+            }, { signal: window._prodKbdCtrl.signal });
+          }
+        }
       }
-      thumbs.forEach((t, i) => t.addEventListener('click', () => setActive(i)));
 
-      // Клавиатура: ← / → переключают, только если фокус внутри галереи
-      media.addEventListener('keydown', () => {});
-      document.addEventListener('keydown', (e) => {
-        if (e.target.closest('input, textarea, [contenteditable]')) return;
-        const cur = [...photos].findIndex(p => p.classList.contains('is-active'));
-        if (cur === -1) return;
-        if (e.key === 'ArrowLeft') setActive((cur - 1 + photos.length) % photos.length);
-        if (e.key === 'ArrowRight') setActive((cur + 1) % photos.length);
-      });
+      document.addEventListener('astro:page-load', initProductPage);
     })();
   </script>
 

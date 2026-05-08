@@ -46,7 +46,7 @@
     "title": "Клеммы",
     "subtitle": "0.2 — 4 мм² · 18 моделей",
     "description": "Соединительные клеммы Wago-style: рычажковые и классические. Защёлкивание с первого раза, надёжный контакт без пайки.",
-    "cover": "/img/products/SN-221412.webp",
+    "cover": "/img/products/SN-222415.png",
     "filters": [
       { "key": "all", "label": "Все", "test": "true" },
       { "key": "lever", "label": "Рычажковые", "test": "/рычажк/i.test(i.name)" },

@@ -375,9 +375,9 @@ function shortName(name) {
         const open = head.getAttribute('aria-expanded') !== 'false';
         head.setAttribute('aria-expanded', open ? 'false' : 'true');
         content.dataset.open = open ? 'false' : 'true';
-        // Пересчитать ScrollTrigger после изменения высоты контента
+        // Пересчитать ScrollTrigger после изменения высоты контента (320ms = длина transition)
         if (window.ScrollTrigger) {
-          setTimeout(() => window.ScrollTrigger.refresh(), 450);
+          setTimeout(() => window.ScrollTrigger.refresh(), 320);
         }
       });
     });
@@ -495,7 +495,9 @@ function shortName(name) {
 
     /* Группы (как в сериях) */
     .cat-groups { display: flex; flex-direction: column; gap: 56px; }
-    .cat-group { }
+    .cat-group {
+      scroll-margin-top: 100px;
+    }
     .cat-group__head {
       width: 100%; display: flex; align-items: center; gap: 14px;
       padding: 16px 0; margin-bottom: 32px;
@@ -519,19 +521,25 @@ function shortName(name) {
     }
     .cat-group__head:hover .cat-group__chevron { color: var(--black, #111); }
     .cat-group__head[aria-expanded="false"] .cat-group__chevron { transform: rotate(-90deg); }
+    /* Collapsible content через grid-template-rows (как в сериях) */
     .cat-group__content {
-      overflow: hidden;
-      transition: max-height 0.4s cubic-bezier(.22,1,.36,1);
-      max-height: 6000px;
+      display: grid;
+      grid-template-rows: 1fr;
+      transition: grid-template-rows 320ms cubic-bezier(0.4, 0, 0.2, 1);
     }
     .cat-group__content[data-open="false"] {
-      max-height: 0;
-      pointer-events: none;
+      grid-template-rows: 0fr;
     }
 
     /* Grid карточек */
     .cat-grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+    }
+    /* Grid внутри групп — место под тени hover'а (как в сериях) */
+    .cat-group__content > .cat-grid {
+      overflow: hidden;
+      min-height: 0;
+      padding: 0 0 48px 0;
     }
     .prod-card {
       background: var(--white, #fff);

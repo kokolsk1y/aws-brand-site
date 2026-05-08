@@ -238,6 +238,27 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
       // ============================
       // Per-page init (вызывается на каждой странице)
       // ============================
+
+      // ⚠️ Watchdog: защита от зависшего body.overflow=hidden
+      // Если все модалки закрыты, но body заблокирован — разблокировать.
+      // Решает баг «после многих кликов сайт перестаёт реагировать».
+      if (!window._overflowWatchdog) {
+        window._overflowWatchdog = setInterval(() => {
+          if (document.body.style.overflow !== 'hidden') return;
+          const open = document.querySelector(
+            '.side-menu.open, .buy-modal:not([hidden]), .doc-modal:not([hidden]), .prod-modal:not([hidden])'
+          );
+          if (!open) document.body.style.overflow = '';
+        }, 1500);
+        // ESC — мгновенно снимает любые блокировки + закрывает меню
+        document.addEventListener('keydown', e => {
+          if (e.key !== 'Escape') return;
+          document.body.style.overflow = '';
+          document.querySelectorAll('.side-menu.open').forEach(el => el.classList.remove('open'));
+          document.querySelectorAll('.buy-modal:not([hidden]), .doc-modal:not([hidden])').forEach(el => el.hidden = true);
+        });
+      }
+
       function initPage() {
         // ---- Бургер-меню ----
         const sm = document.getElementById('sideMenu');

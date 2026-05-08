@@ -731,12 +731,17 @@ const defaultColor = series.colors[0];
     .ser-lineup__body {
       padding: 18px 22px 22px;
       position: relative;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 110px;
     }
-    /* Точки переключения фото — справа снизу карточки серии */
+    .ser-lineup__name { flex-grow: 1; }
+    /* Точки — фиксированно в правом нижнем углу карточки, не зависят от текста */
     .ser-lineup__dots {
-      position: absolute;
-      right: 22px; bottom: 22px;
-      display: flex; gap: 6px;
+      align-self: flex-end;
+      margin-top: 12px;
+      display: flex; gap: 8px;
       align-items: center;
     }
     .ser-lineup__dots { gap: 8px; }

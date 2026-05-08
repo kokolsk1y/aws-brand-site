@@ -24,6 +24,25 @@ const slugToKey = {
 const productData = productsAll[slugToKey[slug]] || { items: [] };
 const products = productData.items || [];
 
+// Группировка по подтипам (если задана в category.groups)
+function buildGroups(items, groupDefs) {
+  if (!groupDefs || !groupDefs.length) return null;
+  const used = new Set();
+  const groups = groupDefs.map(g => {
+    const fn = new Function('i', 'return ' + g.test);
+    const matched = items.filter(it => {
+      try { return fn(it); } catch (e) { return false; }
+    });
+    matched.forEach(it => used.add(it.article));
+    return { key: g.key, title: g.title, items: matched };
+  }).filter(g => g.items.length > 0);
+  // Остальные товары — в группу "Прочее"
+  const rest = items.filter(it => !used.has(it.article));
+  if (rest.length) groups.push({ key: 'other', title: 'Прочее', items: rest });
+  return groups;
+}
+const productGroups = buildGroups(products, category.groups);
+
 // Cross-sell: 3 случайные другие категории
 const otherCats = Object.values(categoriesMeta)
   .filter(c => c.slug !== slug)
@@ -115,43 +134,94 @@ function shortName(name) {
         </div>
       )}
 
-      <div class="cat-grid" id="catGrid" data-reveal-grid>
-        {products.map((p, idx) => {
-          const meta = extractMeta(p.name);
-          const photos = getProductPhotos(p.article);
-          const main = photos[0] || p.photo.replace(/^img\//, '/img/');
-          // У каждого товара с 2+ фото — точки переключения.
-          // Hover-ракурс убран (точки понятнее и работают на мобильных).
-          const showDots = photos.length >= 2;
-          return (
-            <a href={`/aws-brand-site/product/${p.article}`} class="prod-card" data-name={p.name} data-tilt data-tilt-max="6" data-reveal="slide" style={`--i: ${idx % 9}`}>
-              <div class="prod-card__img">
-                <img src={main} alt={p.name} class="prod-card__photo prod-card__photo--main" loading="lazy" />
+      {productGroups ? (
+        <div id="catGrid" class="cat-groups">
+          {productGroups.map(group => (
+            <section class="cat-group" data-group={group.key}>
+              <button class="cat-group__head" type="button" aria-expanded="true">
+                <h3 class="cat-group__title">{group.title}</h3>
+                <span class="cat-group__count">{group.items.length}</span>
+                <svg viewBox="0 0 14 14" class="cat-group__chevron" aria-hidden="true">
+                  <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="cat-group__content" data-open="true">
+                <div class="cat-grid" data-reveal-grid>
+                  {group.items.map((p, idx) => {
+                    const meta = extractMeta(p.name);
+                    const photos = getProductPhotos(p.article);
+                    const main = photos[0] || p.photo.replace(/^img\//, '/img/');
+                    const showDots = photos.length >= 2;
+                    return (
+                      <a href={`/aws-brand-site/product/${p.article}`} class="prod-card" data-name={p.name} data-tilt data-tilt-max="6" data-reveal="slide" style={`--i: ${idx % 9}`}>
+                        <div class="prod-card__img">
+                          <img src={main} alt={p.name} class="prod-card__photo prod-card__photo--main" loading="lazy" />
+                        </div>
+                        <div class="prod-card__info">
+                          <span class="prod-card__article">{p.article}</span>
+                          <h3 class="prod-card__name">{shortName(p.name)}</h3>
+                          {(meta.length > 0 || showDots) && (
+                            <div class="prod-card__meta-row">
+                              {meta.length > 0 && (
+                                <div class="prod-card__meta">
+                                  {meta.map(m => <span class="prod-card__chip">{m}</span>)}
+                                </div>
+                              )}
+                              {showDots && (
+                                <div class="prod-card__dots" aria-label="Переключить фото">
+                                  {photos.map((src, i) => (
+                                    <span class={`prod-card__dot${i === 0 ? ' is-active' : ''}`} role="button" tabindex="0" data-photo-idx={i} data-photo-src={src} aria-label={`Фото ${i + 1}`}></span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
-              <div class="prod-card__info">
-                <span class="prod-card__article">{p.article}</span>
-                <h3 class="prod-card__name">{shortName(p.name)}</h3>
-                {(meta.length > 0 || showDots) && (
-                  <div class="prod-card__meta-row">
-                    {meta.length > 0 && (
-                      <div class="prod-card__meta">
-                        {meta.map(m => <span class="prod-card__chip">{m}</span>)}
-                      </div>
-                    )}
-                    {showDots && (
-                      <div class="prod-card__dots" aria-label="Переключить фото">
-                        {photos.map((src, i) => (
-                          <span class={`prod-card__dot${i === 0 ? ' is-active' : ''}`} role="button" tabindex="0" data-photo-idx={i} data-photo-src={src} aria-label={`Фото ${i + 1}`}></span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            </a>
-          );
-        })}
-      </div>
+            </section>
+          ))}
+        </div>
+      ) : (
+        <div class="cat-grid" id="catGrid" data-reveal-grid>
+          {products.map((p, idx) => {
+            const meta = extractMeta(p.name);
+            const photos = getProductPhotos(p.article);
+            const main = photos[0] || p.photo.replace(/^img\//, '/img/');
+            const showDots = photos.length >= 2;
+            return (
+              <a href={`/aws-brand-site/product/${p.article}`} class="prod-card" data-name={p.name} data-tilt data-tilt-max="6" data-reveal="slide" style={`--i: ${idx % 9}`}>
+                <div class="prod-card__img">
+                  <img src={main} alt={p.name} class="prod-card__photo prod-card__photo--main" loading="lazy" />
+                </div>
+                <div class="prod-card__info">
+                  <span class="prod-card__article">{p.article}</span>
+                  <h3 class="prod-card__name">{shortName(p.name)}</h3>
+                  {(meta.length > 0 || showDots) && (
+                    <div class="prod-card__meta-row">
+                      {meta.length > 0 && (
+                        <div class="prod-card__meta">
+                          {meta.map(m => <span class="prod-card__chip">{m}</span>)}
+                        </div>
+                      )}
+                      {showDots && (
+                        <div class="prod-card__dots" aria-label="Переключить фото">
+                          {photos.map((src, i) => (
+                            <span class={`prod-card__dot${i === 0 ? ' is-active' : ''}`} role="button" tabindex="0" data-photo-idx={i} data-photo-src={src} aria-label={`Фото ${i + 1}`}></span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      )}
 
       {products.length === 0 && (
         <div class="cat-empty">Каталог в подготовке. Скоро здесь появятся товары.</div>
@@ -260,12 +330,13 @@ function shortName(name) {
       });
     })();
 
-    // Фильтры товаров — с плавным fade-out / fade-in
+    // Фильтры товаров — с плавным fade-out / fade-in + скрытие пустых групп
     const filtersEl = document.getElementById('catFilters');
     const grid = document.getElementById('catGrid');
     if (filtersEl && grid) {
       filtersEl.querySelectorAll('.cat-filters__chip').forEach(chip => {
         chip.addEventListener('click', () => {
+          window._lastFilterClick = Date.now();
           filtersEl.querySelectorAll('.cat-filters__chip').forEach(c => c.classList.remove('active'));
           chip.classList.add('active');
           const testExpr = chip.dataset.test || 'true';
@@ -284,10 +355,28 @@ function shortName(name) {
                 card.style.display = 'none';
               }
             });
+            // Скрыть пустые группы и пересчитать счётчики
+            grid.querySelectorAll('.cat-group').forEach(g => {
+              const visibleCards = g.querySelectorAll('.prod-card:not([style*="display: none"])');
+              const cnt = g.querySelector('.cat-group__count');
+              if (cnt) cnt.textContent = visibleCards.length;
+              g.style.display = visibleCards.length ? '' : 'none';
+            });
           }, 250);
         });
       });
     }
+
+    // Сворачивание/разворачивание групп
+    document.querySelectorAll('.cat-group__head').forEach(head => {
+      head.addEventListener('click', () => {
+        const group = head.closest('.cat-group');
+        const content = group.querySelector('.cat-group__content');
+        const open = head.getAttribute('aria-expanded') !== 'false';
+        head.setAttribute('aria-expanded', open ? 'false' : 'true');
+        content.dataset.open = open ? 'false' : 'true';
+      });
+    });
 
     // Модалка «Где купить»
     const modal = document.getElementById('buyModal');
@@ -399,6 +488,39 @@ function shortName(name) {
     .cat-filters__chip.active {
       background: var(--black, #111); color: var(--white, #fff); border-color: var(--black, #111);
     }
+
+    /* Группы (как в сериях) */
+    .cat-groups { display: flex; flex-direction: column; gap: 56px; }
+    .cat-group { }
+    .cat-group__head {
+      width: 100%; display: flex; align-items: center; gap: 14px;
+      padding: 16px 0; margin-bottom: 32px;
+      background: none; border: none; border-bottom: 1px solid var(--gray-200, #ddd);
+      text-align: left; cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+    .cat-group__head:hover { border-bottom-color: var(--black, #111); }
+    .cat-group__title {
+      font-size: clamp(20px, 2vw, 26px);
+      font-weight: 700; line-height: 1; letter-spacing: -0.5px;
+      color: var(--black, #111); margin: 0;
+    }
+    .cat-group__count {
+      font-size: 13px; font-weight: 500; color: var(--gray-400, #999);
+      letter-spacing: 0.5px; min-width: 20px;
+    }
+    .cat-group__chevron {
+      width: 14px; height: 14px; margin-left: auto;
+      color: var(--gray-400, #999); transition: transform 0.25s ease, color 0.2s ease;
+    }
+    .cat-group__head:hover .cat-group__chevron { color: var(--black, #111); }
+    .cat-group__head[aria-expanded="false"] .cat-group__chevron { transform: rotate(-90deg); }
+    .cat-group__content {
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(.22,1,.36,1), opacity 0.3s ease;
+      max-height: 6000px; opacity: 1;
+    }
+    .cat-group__content[data-open="false"] { max-height: 0; opacity: 0; }
 
     /* Grid карточек */
     .cat-grid {

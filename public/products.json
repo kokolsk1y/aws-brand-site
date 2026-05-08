@@ -525,52 +525,10 @@
     "sub": "Cat.5e / Cat.6e, 0.5—30 м",
     "items": [
       {
-        "article": "AWS-13003",
-        "name": "Патч-корд 0,5м UTP Cat.5e RJ45 желтый",
-        "photo": "img/products/AWS-13003.webp",
-        "price": 36,
-        "description_raw": "Характеристики Показать все характеристики"
-      },
-      {
-        "article": "AWS-13004",
-        "name": "Патч-корд 0,5м UTP Cat.5e RJ45 зеленый",
-        "photo": "img/products/AWS-13004.webp",
-        "price": 36,
-        "description_raw": "Характеристики Показать все характеристики"
-      },
-      {
-        "article": "AWS-13005",
-        "name": "Патч-корд 0,5м UTP Cat.5e RJ45 красный",
-        "photo": "img/products/AWS-13005.webp",
-        "price": 36,
-        "description_raw": "Характеристики Показать все характеристики"
-      },
-      {
         "article": "AWS-13006",
         "name": "Патч-корд 0,5м UTP Cat.5e RJ45 серый",
         "photo": "img/products/AWS-13006.webp",
         "price": 36,
-        "description_raw": "Характеристики Показать все характеристики"
-      },
-      {
-        "article": "AWS-13007",
-        "name": "Патч-корд 1,0м UTP Cat.5e RJ45 желтый",
-        "photo": "img/products/AWS-13007.webp",
-        "price": 41,
-        "description_raw": "Характеристики Показать все характеристики"
-      },
-      {
-        "article": "AWS-13008",
-        "name": "Патч-корд 1,0м UTP Cat.5e RJ45 зеленый",
-        "photo": "img/products/AWS-13008.webp",
-        "price": 41,
-        "description_raw": "Характеристики Показать все характеристики"
-      },
-      {
-        "article": "AWS-13009",
-        "name": "Патч-корд 1,0м UTP Cat.5e RJ45 красный",
-        "photo": "img/products/AWS-13009.webp",
-        "price": 41,
         "description_raw": "Характеристики Показать все характеристики"
       },
       {
@@ -585,13 +543,6 @@
         "name": "Патч-корд 1,5м UTP Cat.5e RJ45 серый",
         "photo": "img/products/AWS-13011.webp",
         "price": 49,
-        "description_raw": "Характеристики Показать все характеристики"
-      },
-      {
-        "article": "AWS-13012",
-        "name": "Патч-корд 2м UTP Cat.5e RJ45 желтый",
-        "photo": "img/products/AWS-13012.webp",
-        "price": 55,
         "description_raw": "Характеристики Показать все характеристики"
       },
       {
@@ -697,6 +648,55 @@
         "name": "Патч-корд 5м UTP Cat.6e RJ45 Cu синий",
         "photo": "img/products/AWS-13028.webp",
         "price": 261,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13003",
+        "name": "Патч-корд 0,5м UTP Cat.5e RJ45 желтый",
+        "photo": "img/products/AWS-13003.webp",
+        "price": 36,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13007",
+        "name": "Патч-корд 1,0м UTP Cat.5e RJ45 желтый",
+        "photo": "img/products/AWS-13007.webp",
+        "price": 41,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13012",
+        "name": "Патч-корд 2м UTP Cat.5e RJ45 желтый",
+        "photo": "img/products/AWS-13012.webp",
+        "price": 55,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13004",
+        "name": "Патч-корд 0,5м UTP Cat.5e RJ45 зеленый",
+        "photo": "img/products/AWS-13004.webp",
+        "price": 36,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13008",
+        "name": "Патч-корд 1,0м UTP Cat.5e RJ45 зеленый",
+        "photo": "img/products/AWS-13008.webp",
+        "price": 41,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13005",
+        "name": "Патч-корд 0,5м UTP Cat.5e RJ45 красный",
+        "photo": "img/products/AWS-13005.webp",
+        "price": 36,
+        "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "AWS-13009",
+        "name": "Патч-корд 1,0м UTP Cat.5e RJ45 красный",
+        "photo": "img/products/AWS-13009.webp",
+        "price": 41,
         "description_raw": "Характеристики Показать все характеристики"
       }
     ]

@@ -239,23 +239,50 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
       // Per-page init (вызывается на каждой странице)
       // ============================
 
-      // ⚠️ Watchdog: защита от зависшего body.overflow=hidden
-      // Если все модалки закрыты, но body заблокирован — разблокировать.
-      // Решает баг «после многих кликов сайт перестаёт реагировать».
+      // ⚠️ Watchdog: защита от зависших состояний UI
+      // Лечит баг «после многих кликов сайт перестаёт реагировать».
       if (!window._overflowWatchdog) {
         window._overflowWatchdog = setInterval(() => {
-          if (document.body.style.overflow !== 'hidden') return;
-          const open = document.querySelector(
+          const modalOpen = document.querySelector(
             '.side-menu.open, .buy-modal:not([hidden]), .doc-modal:not([hidden]), .prod-modal:not([hidden])'
           );
-          if (!open) document.body.style.overflow = '';
-        }, 1500);
+          // 1) overflow:hidden без открытой модалки — разблокировать
+          if (document.body.style.overflow === 'hidden' && !modalOpen) {
+            document.body.style.overflow = '';
+          }
+          // 2) pointer-events: none случайно навешенный на body/html — снять
+          if (document.body.style.pointerEvents === 'none') {
+            document.body.style.pointerEvents = '';
+          }
+          if (document.documentElement.style.pointerEvents === 'none') {
+            document.documentElement.style.pointerEvents = '';
+          }
+          // 3) Зависшие .is-filter-out на карточках (если фильтр давно не кликали)
+          const stuck = document.querySelectorAll('.prod-card.is-filter-out');
+          if (stuck.length && !window._lastFilterClick) {
+            stuck.forEach(c => c.classList.remove('is-filter-out'));
+          } else if (stuck.length && Date.now() - (window._lastFilterClick || 0) > 1500) {
+            stuck.forEach(c => c.classList.remove('is-filter-out'));
+          }
+          // 4) Зависшие .is-swapping (если onload/onerror не выстрелили)
+          document.querySelectorAll('.prod-card__photo--main.is-swapping, .ser-lineup__img.is-swapping').forEach(im => {
+            const ts = Number(im.dataset.swapStart || 0);
+            if (!ts) { im.dataset.swapStart = String(Date.now()); return; }
+            if (Date.now() - ts > 2000) {
+              im.classList.remove('is-swapping');
+              im.removeAttribute('data-swap-start');
+            }
+          });
+        }, 600);
         // ESC — мгновенно снимает любые блокировки + закрывает меню
         document.addEventListener('keydown', e => {
           if (e.key !== 'Escape') return;
           document.body.style.overflow = '';
+          document.body.style.pointerEvents = '';
+          document.documentElement.style.pointerEvents = '';
           document.querySelectorAll('.side-menu.open').forEach(el => el.classList.remove('open'));
           document.querySelectorAll('.buy-modal:not([hidden]), .doc-modal:not([hidden])').forEach(el => el.hidden = true);
+          document.querySelectorAll('.prod-card.is-filter-out').forEach(c => c.classList.remove('is-filter-out'));
         });
       }
 

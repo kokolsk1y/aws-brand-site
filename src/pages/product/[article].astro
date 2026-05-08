@@ -418,7 +418,13 @@ const marketplaceLinks = [
         </div>
 
         <div class="prod-hero__text">
-          <span class="prod-hero__article" data-reveal="blur" style="--i: 0">{product.article}</span>
+          <button class="prod-hero__article" type="button" data-reveal="blur" style="--i: 0" title="Скопировать артикул">
+            <span class="prod-hero__article-text">{product.article}</span>
+            <svg class="prod-hero__article-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+          </button>
           <h1 class="prod-hero__title" data-reveal="focus" style="--i: 1">{title}</h1>
 
           {meta3.length > 0 && (
@@ -540,21 +546,20 @@ const marketplaceLinks = [
     (function () {
       const art = document.querySelector('.prod-hero__article');
       if (!art) return;
-      art.style.cursor = 'pointer';
-      art.title = 'Скопировать артикул';
+      const textEl = art.querySelector('.prod-hero__article-text');
+      if (!textEl) return;
       art.addEventListener('click', () => {
-        const text = art.textContent.trim();
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(text).then(() => {
-            const orig = art.textContent;
-            art.textContent = 'Скопировано ✓';
-            art.classList.add('is-copied');
-            setTimeout(() => {
-              art.textContent = orig;
-              art.classList.remove('is-copied');
-            }, 1400);
-          });
-        }
+        const text = textEl.textContent.trim();
+        if (!navigator.clipboard) return;
+        navigator.clipboard.writeText(text).then(() => {
+          const orig = textEl.textContent;
+          textEl.textContent = 'Скопировано ✓';
+          art.classList.add('is-copied');
+          setTimeout(() => {
+            textEl.textContent = orig;
+            art.classList.remove('is-copied');
+          }, 1500);
+        });
       });
     })();
 
@@ -756,14 +761,18 @@ const marketplaceLinks = [
     .prod-hero__text { padding: 8px 0; }
 
     .prod-hero__article {
-      display: inline-block;
+      display: inline-flex; align-items: center; gap: 6px;
+      appearance: none; background: transparent; font-family: inherit;
       font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
       color: var(--gray-400, #999); margin-bottom: 18px;
-      padding: 6px 12px; border: 1px solid var(--gray-200, #e5e5e3); border-radius: 100px;
-      transition: all 0.2s ease;
+      padding: 6px 10px 6px 12px; border: 1px solid var(--gray-200, #e5e5e3); border-radius: 100px;
+      cursor: pointer; transition: all 0.2s ease;
     }
     .prod-hero__article:hover { border-color: var(--black); color: var(--black); }
+    .prod-hero__article:hover .prod-hero__article-icon { opacity: 1; }
     .prod-hero__article.is-copied { background: var(--accent, #8CB86B); color: #fff; border-color: var(--accent, #8CB86B); }
+    .prod-hero__article.is-copied .prod-hero__article-icon { display: none; }
+    .prod-hero__article-icon { opacity: 0.45; flex-shrink: 0; transition: opacity 0.2s; }
 
     .prod-hero__title {
       font-size: clamp(36px, 5vw, 64px);

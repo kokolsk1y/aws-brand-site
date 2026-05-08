@@ -112,9 +112,37 @@ function findArtPath(art, file) {
     return null;
 }
 
-// 3. Чистим products.json / series.json от пустых артикулов
+// 3. ЖЁСТКАЯ зачистка — products.json / series.json: оставляем ТОЛЬКО артикулы
+//    у которых ЕСТЬ папка в photos-sorted (с файлами или пустая).
+//    Артикулы без папки = «удалил пользователь» → убрать из каталога + удалить
+//    оставшиеся файлы из public.
 const products = require(path.join(ROOT, 'public', 'products.json'));
 const series = require(path.join(ROOT, 'src', 'data', 'series.json'));
+
+const allArtsInCatalog = new Set();
+for (const k of Object.keys(products)) {
+    for (const it of (products[k].items || [])) allArtsInCatalog.add(it.article);
+}
+for (const sl of Object.keys(series)) {
+    for (const gr of Object.keys(series[sl].groups || {})) {
+        for (const it of (series[sl].groups[gr] || [])) allArtsInCatalog.add(it.article);
+    }
+}
+
+// Артикулы которых в каталоге есть, но папки в photos-sorted НЕТ → удалить
+const orphanArts = [...allArtsInCatalog].filter(a => !articleDirs.has(a));
+let pubExtraRemoved = 0;
+for (const art of orphanArts) {
+    articlesToRemove.add(art);
+    // Удаляем все файлы из public для этого артикула
+    const reAll = new RegExp('^' + escapeRe(art) + '(_\\d+)?\\.(webp|png|jpg|jpeg)$', 'i');
+    for (const f of fs.readdirSync(PUB)) {
+        if (reAll.test(f)) {
+            fs.unlinkSync(path.join(PUB, f));
+            pubExtraRemoved++;
+        }
+    }
+}
 
 let prodRemoved = 0, seriesRemoved = 0;
 for (const k of Object.keys(products)) {
@@ -134,6 +162,12 @@ for (const sl of Object.keys(series)) {
 
 fs.writeFileSync(path.join(ROOT, 'public', 'products.json'), JSON.stringify(products, null, 2));
 fs.writeFileSync(path.join(ROOT, 'src', 'data', 'series.json'), JSON.stringify(series, null, 2));
+
+if (orphanArts.length) {
+    console.log(`\nУдалено товаров без папки в photos-sorted: ${orphanArts.length}`);
+    console.log('  ', orphanArts.slice(0, 30).join(', ') + (orphanArts.length > 30 ? '...' : ''));
+    console.log(`  + удалено файлов в public: ${pubExtraRemoved}`);
+}
 
 console.log(`Артикулов с папкой в photos-sorted: ${articleFiles.size}`);
 console.log(`Удалено старых файлов в public: ${removedFiles}`);

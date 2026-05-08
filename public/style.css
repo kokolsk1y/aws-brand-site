@@ -1204,11 +1204,13 @@ a { text-decoration: none; color: inherit; }
       filter 0.45s cubic-bezier(.22,1,.36,1);
 }
 
-/* Индивидуальная нормализация: вытянутые товары масштабируем побольше */
-.categories__card[data-cat="power"] img,
+/* Индивидуальная нормализация: power масштабируем побольше, patch/cable меньше */
+.categories__card[data-cat="power"] img {
+    transform: scale(1.15);
+}
 .categories__card[data-cat="cable"] img,
 .categories__card[data-cat="patch"] img {
-    transform: scale(1.15);
+    transform: scale(0.92);
 }
 
 .categories__card:hover .categories__card-img img {
@@ -1216,10 +1218,12 @@ a { text-decoration: none; color: inherit; }
     transform: scale(1.1);
     filter: drop-shadow(0 22px 30px rgba(0, 0, 0, 0.22));
 }
-.categories__card[data-cat="power"]:hover .categories__card-img img,
+.categories__card[data-cat="power"]:hover .categories__card-img img {
+    transform: scale(1.25);
+}
 .categories__card[data-cat="cable"]:hover .categories__card-img img,
 .categories__card[data-cat="patch"]:hover .categories__card-img img {
-    transform: scale(1.25);
+    transform: scale(1.0);
 }
 
 .categories__card-placeholder {

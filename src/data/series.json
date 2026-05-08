@@ -38,223 +38,266 @@
     "groups": {
       "switches": [
         {
-          "article": "U1A-001-1",
-          "name": "Выключатель 1-кл. белый",
-          "color": "white"
+          "article": "U1A-001-1 white",
+          "name": "Выключатель 1-кл. белый Софт-тач",
+          "color": "white",
+          "price": 138
         },
         {
-          "article": "U2B-001-1",
-          "name": "Выключатель 1-кл. чёрный",
-          "color": "black"
+          "article": "U1A-001-2 white",
+          "name": "Выключатель проходной 1-кл. белый Софт-тач",
+          "color": "white",
+          "price": 149
         },
         {
-          "article": "U1A-002-1",
-          "name": "Выключатель 2-кл. белый",
-          "color": "white"
+          "article": "U1A-001-3 white",
+          "name": "Выключатель перекрёстный 1-кл. белый Софт-тач",
+          "color": "white",
+          "price": 224
         },
         {
-          "article": "U2B-002-1",
-          "name": "Выключатель 2-кл. чёрный",
-          "color": "black"
+          "article": "U1A-002-1 white",
+          "name": "Выключатель 2-кл. белый Софт-тач",
+          "color": "white",
+          "price": 188
         },
         {
-          "article": "U1A-003",
-          "name": "Выключатель 3-кл. белый",
-          "color": "white"
+          "article": "U1A-002-2 white",
+          "name": "Выключатель проходной 2-кл. белый Софт-тач",
+          "color": "white",
+          "price": 208
         },
         {
-          "article": "U2B-003",
-          "name": "Выключатель 3-кл. чёрный",
-          "color": "black"
+          "article": "U1A-003 white",
+          "name": "Выключатель 3-кл. белый Софт-тач",
+          "color": "white",
+          "price": 239
         },
         {
-          "article": "U1A-019",
-          "name": "Выключатель жалюзи 2-кл. белый",
-          "color": "white"
+          "article": "U1A-007 white",
+          "name": "Выключатель звонка 1-кл. белый Софт-тач",
+          "color": "white",
+          "price": 153
         },
         {
-          "article": "U2B-019",
-          "name": "Выключатель жалюзи 2-кл. чёрный",
-          "color": "black"
+          "article": "U1A-019 white",
+          "name": "Выключатель жалюзи 2-кл. белый Софт-тач",
+          "color": "white",
+          "price": 217
         },
         {
-          "article": "U1A-007",
-          "name": "Выключатель звонка 1-кл. белый",
-          "color": "white"
+          "article": "U2B-001-1 black",
+          "name": "Выключатель 1-кл. чёрный Софт-тач",
+          "color": "black",
+          "price": 166
         },
         {
-          "article": "U1A-001-2",
-          "name": "Выключатель проходной 1-кл. белый",
-          "color": "white"
+          "article": "U2B-001-2 black",
+          "name": "Выключатель проходной 1-кл. чёрный Софт-тач",
+          "color": "black",
+          "price": 179
         },
         {
-          "article": "U2B-001-2",
-          "name": "Выключатель проходной 1-кл. чёрный",
-          "color": "black"
+          "article": "U2B-001-3 black",
+          "name": "Выключатель перекрёстный 1-кл. чёрный Софт-тач",
+          "color": "black",
+          "price": 224
         },
         {
-          "article": "U1A-002-2",
-          "name": "Выключатель проходной 2-кл. белый",
-          "color": "white"
+          "article": "U2B-002-1 black",
+          "name": "Выключатель 2-кл. чёрный Софт-тач",
+          "color": "black",
+          "price": 226
         },
         {
-          "article": "U2B-002-2",
-          "name": "Выключатель проходной 2-кл. чёрный",
-          "color": "black"
+          "article": "U2B-002-2 black",
+          "name": "Выключатель проходной 2-кл. чёрный Софт-тач",
+          "color": "black",
+          "price": 250
         },
         {
-          "article": "U1A-001-3",
-          "name": "Выключатель перекрёстный 1-кл. белый",
-          "color": "white"
+          "article": "U2B-003 black",
+          "name": "Выключатель 3-кл. чёрный Софт-тач",
+          "color": "black",
+          "price": 287
         },
         {
-          "article": "U2B-001-3",
-          "name": "Выключатель перекрёстный 1-кл. чёрный",
-          "color": "black"
+          "article": "U2B-019 black",
+          "name": "Выключатель жалюзи 2-кл. чёрный Софт-тач",
+          "color": "black",
+          "price": 261
         }
       ],
       "sockets": [
         {
-          "article": "U1A-012",
-          "name": "Розетка 1-я с крышкой с/з с шторками белая",
-          "color": "white"
+          "article": "U1A-006 white",
+          "name": "Розетка 1-я с/з со шторками белая Софт-тач",
+          "color": "white",
+          "price": 188
         },
         {
-          "article": "U2B-012",
-          "name": "Розетка 1-я с крышкой с/з с шторками чёрная",
-          "color": "black"
+          "article": "U1A-011 white",
+          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) белая Софт-тач",
+          "color": "white",
+          "price": 789
         },
         {
-          "article": "U1A-006",
-          "name": "Розетка 1-я с/з со шторками белая",
-          "color": "white"
+          "article": "U1A-012 white",
+          "name": "Розетка 1-я с крышкой с/з с шторками белая Софт-тач",
+          "color": "white",
+          "price": 277
         },
         {
-          "article": "U1A-011",
-          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) белая",
-          "color": "white"
+          "article": "U1A-013 white",
+          "name": "Розетка TV 1-я белая Софт-тач",
+          "color": "white",
+          "price": 193
         },
         {
-          "article": "U2B-011",
-          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) чёрная",
-          "color": "black"
+          "article": "U1A-016-1 white",
+          "name": "Розетка R (cat 5e) 1-я белая Софт-тач",
+          "color": "white",
+          "price": 209
         },
         {
-          "article": "U2B-006",
-          "name": "Розетка 1-я с/з с шторками чёрная",
-          "color": "black"
+          "article": "U1A-016-2 white",
+          "name": "Розетка R (cat 5e) 2-я белая Софт-тач",
+          "color": "white",
+          "price": 294
         },
         {
-          "article": "U1A-022",
-          "name": "Розетка 2-я с/з с шторками белая",
-          "color": "white"
+          "article": "U1A-022 white",
+          "name": "Розетка 2-я с/з с шторками белая Софт-тач",
+          "color": "white",
+          "price": 355
         },
         {
-          "article": "U2B-022",
-          "name": "Розетка 2-я с/з с шторками чёрная",
-          "color": "black"
+          "article": "U2B-006 black",
+          "name": "Розетка 1-я с/з с шторками чёрная Софт-тач",
+          "color": "black",
+          "price": 226
         },
         {
-          "article": "U1A-016-1",
-          "name": "Розетка RJ45 (cat 5e) 1-я белая",
-          "color": "white"
+          "article": "U2B-011 black",
+          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) чёрная Софт-тач",
+          "color": "black",
+          "price": 948
         },
         {
-          "article": "U2B-016-1",
-          "name": "Розетка RJ45 (cat 5e) 1-я чёрная",
-          "color": "black"
+          "article": "U2B-012 black",
+          "name": "Розетка 1-я с крышкой с/з с шторками чёрная Софт-тач",
+          "color": "black",
+          "price": 332
         },
         {
-          "article": "U1A-016-2",
-          "name": "Розетка RJ45 (cat 5e) 2-я белая",
-          "color": "white"
+          "article": "U2B-013 black",
+          "name": "Розетка TV 1-я чёрная Софт-тач",
+          "color": "black",
+          "price": 231
         },
         {
-          "article": "U2B-016-2",
-          "name": "Розетка RJ45 (cat 5e) 2-я чёрная",
-          "color": "black"
+          "article": "U2B-016-1 black",
+          "name": "Розетка R (cat 5e) 1-я чёрная Софт-тач",
+          "color": "black",
+          "price": 251
         },
         {
-          "article": "U1A-013",
-          "name": "Розетка TV 1-я белая",
-          "color": "white"
+          "article": "U2B-016-2 black",
+          "name": "Розетка R (cat 5e) 2-я чёрная Софт-тач",
+          "color": "black",
+          "price": 353
         },
         {
-          "article": "U2B-013",
-          "name": "Розетка TV 1-я чёрная",
-          "color": "black"
+          "article": "U2B-022 black",
+          "name": "Розетка 2-я с/з с шторками чёрная Софт-тач",
+          "color": "black",
+          "price": 427
         }
       ],
       "frames": [
         {
-          "article": "U1A-028",
-          "name": "Рамка 1-я белая",
-          "color": "white"
+          "article": "U1A-028 white",
+          "name": "Рамка 1-я белая Софт-тач",
+          "color": "white",
+          "price": 88
         },
         {
-          "article": "U2B-028",
-          "name": "Рамка 1-я чёрная",
-          "color": "black"
+          "article": "U1A-029 white",
+          "name": "Рамка 2-я белая горизонтальная Софт-тач",
+          "color": "white",
+          "price": 176
         },
         {
-          "article": "U1A-029",
-          "name": "Рамка 2-я белая горизонтальная",
-          "color": "white"
+          "article": "U1A-029-2 white",
+          "name": "Рамка 2-я белая вертикальная Софт-тач",
+          "color": "white",
+          "price": 170
         },
         {
-          "article": "U2B-029",
-          "name": "Рамка 2-я чёрная горизонтальная",
-          "color": "black"
+          "article": "U1A-030 white",
+          "name": "Рамка 4-я белая горизонтальная Софт-тач",
+          "color": "white",
+          "price": 352
         },
         {
-          "article": "U1A-031",
-          "name": "Рамка 3-я белая горизонтальная",
-          "color": "white"
+          "article": "U1A-031 white",
+          "name": "Рамка 3-я белая горизонтальная Софт-тач",
+          "color": "white",
+          "price": 253
         },
         {
-          "article": "U2B-031",
-          "name": "Рамка 3-я чёрная горизонтальная",
-          "color": "black"
+          "article": "U1A-031-2 white",
+          "name": "Рамка 3-я белая вертикальная Софт-тач",
+          "color": "white",
+          "price": 253
         },
         {
-          "article": "U1A-030",
-          "name": "Рамка 4-я белая горизонтальная",
-          "color": "white"
+          "article": "U1A-032 white",
+          "name": "Рамка 5-я белая горизонтальная Софт-тач",
+          "color": "white",
+          "price": 422
         },
         {
-          "article": "U2B-030",
-          "name": "Рамка 4-я чёрная горизонтальная",
-          "color": "black"
+          "article": "U2B-028 black",
+          "name": "Рамка 1-я чёрная Софт-тач",
+          "color": "black",
+          "price": 104
         },
         {
-          "article": "U1A-032",
-          "name": "Рамка 5-я белая горизонтальная",
-          "color": "white"
+          "article": "U2B-029 black",
+          "name": "Рамка 2-я чёрная горизонтальная Софт-тач",
+          "color": "black",
+          "price": 207
         },
         {
-          "article": "U2B-032",
-          "name": "Рамка 5-я чёрная горизонтальная",
-          "color": "black"
+          "article": "U2B-029-2 black",
+          "name": "Рамка 2-я чёрная вертикальная Софт-тач",
+          "color": "black",
+          "price": 204
         },
         {
-          "article": "U1A-029-2",
-          "name": "Рамка 2-я белая вертикальная",
-          "color": "white"
+          "article": "U2B-030 black",
+          "name": "Рамка 4-я чёрная горизонтальная Софт-тач",
+          "color": "black",
+          "price": 414
         },
         {
-          "article": "U2B-029-2",
-          "name": "Рамка 2-я чёрная вертикальная",
-          "color": "black"
+          "article": "U2B-031 black",
+          "name": "Рамка 3-я чёрная горизонтальная Софт-тач",
+          "color": "black",
+          "price": 305
         },
         {
-          "article": "U1A-031-2",
-          "name": "Рамка 3-я белая вертикальная",
-          "color": "white"
+          "article": "U2B-031-2 black",
+          "name": "Рамка 3-я чёрная вертикальная Софт-тач",
+          "color": "black",
+          "price": 305
         },
         {
-          "article": "U2B-031-2",
-          "name": "Рамка 3-я чёрная вертикальная",
-          "color": "black"
+          "article": "U2B-032 black",
+          "name": "Рамка 5-я чёрная горизонтальная Софт-тач",
+          "color": "black",
+          "price": 506
         }
       ],
       "accessories": [],
@@ -300,323 +343,404 @@
     "groups": {
       "switches": [
         {
-          "article": "A-001W",
-          "name": "Выключатель 1-кл. белый A-001W",
-          "color": "white"
+          "article": "A-001B",
+          "name": "Выключатель 1-кл. чёрный A-001B",
+          "color": "black",
+          "price": 189
         },
         {
-          "article": "A-002W",
-          "name": "Выключатель 1-кл. с подсветкой белый A-002W",
-          "color": "white"
+          "article": "A-001W",
+          "name": "Выключатель 1-кл. белый A-001W",
+          "color": "white",
+          "price": 173
         },
         {
           "article": "A-002B",
           "name": "Выключатель 1-кл. с подсветкой чёрный A-002B",
-          "color": "black"
+          "color": "black",
+          "price": 244
         },
         {
-          "article": "A-001B",
-          "name": "Выключатель 1-кл. чёрный A-001B",
-          "color": "black"
-        },
-        {
-          "article": "A-009W",
-          "name": "Выключатель 2-кл. белый A-009W",
-          "color": "white"
-        },
-        {
-          "article": "A-011W",
-          "name": "Выключатель 2-кл. с подсветкой белый A-011W",
-          "color": "white"
-        },
-        {
-          "article": "A-011B",
-          "name": "Выключатель 2-кл. с подсветкой чёрный A-011B",
-          "color": "black"
-        },
-        {
-          "article": "A-009B",
-          "name": "Выключатель 2-кл. чёрный A-009B",
-          "color": "black"
-        },
-        {
-          "article": "A-015W",
-          "name": "Выключатель 3-кл. белый A-015W",
-          "color": "white"
-        },
-        {
-          "article": "A-015B",
-          "name": "Выключатель 3-кл. чёрный A-015B",
-          "color": "black"
-        },
-        {
-          "article": "A-013W",
-          "name": "Выключатель жалюзи 2-кл. белый A-013W",
-          "color": "white"
-        },
-        {
-          "article": "A-013B",
-          "name": "Выключатель жалюзи 2-кл. чёрный A-013B",
-          "color": "black"
-        },
-        {
-          "article": "A-005W",
-          "name": "Выключатель звонка 1-кл. белый A-005W",
-          "color": "white"
-        },
-        {
-          "article": "A-005B",
-          "name": "Выключатель звонка 1-кл. чёрный A-005B",
-          "color": "black"
-        },
-        {
-          "article": "A-007W",
-          "name": "Выключатель перекрёстный 1-кл. белый A-007W",
-          "color": "white"
-        },
-        {
-          "article": "A-007B",
-          "name": "Выключатель перекрёстный 1-кл. чёрный A-007B",
-          "color": "black"
-        },
-        {
-          "article": "A-003W",
-          "name": "Выключатель проходной 1-кл. белый A-003W",
-          "color": "white"
-        },
-        {
-          "article": "A-004W",
-          "name": "Выключатель проходной 1-кл. с подсветкой белый A-004W",
-          "color": "white"
-        },
-        {
-          "article": "A-004B",
-          "name": "Выключатель проходной 1-кл. с подсветкой чёрный A-004B",
-          "color": "black"
+          "article": "A-002W",
+          "name": "Выключатель 1-кл. с подсветкой белый A-002W",
+          "color": "white",
+          "price": 227
         },
         {
           "article": "A-003B",
           "name": "Выключатель проходной 1-кл. чёрный A-003B",
-          "color": "black"
+          "color": "black",
+          "price": 210
         },
         {
-          "article": "A-010W",
-          "name": "Выключатель проходной 2-кл. белый A-010W",
-          "color": "white"
+          "article": "A-003W",
+          "name": "Выключатель проходной 1-кл. белый A-003W",
+          "color": "white",
+          "price": 196
         },
         {
-          "article": "A-012W",
-          "name": "Выключатель проходной 2-кл. с подсветкой белый A-012W",
-          "color": "white"
+          "article": "A-004B",
+          "name": "Выключатель проходной 1-кл. с подсветкой чёрный A-004B",
+          "color": "black",
+          "price": 264
         },
         {
-          "article": "A-012B",
-          "name": "Выключатель проходной 2-кл. с подсветкой чёрный A-012B",
-          "color": "black"
+          "article": "A-004W",
+          "name": "Выключатель проходной 1-кл. с подсветкой белый A-004W",
+          "color": "white",
+          "price": 248
+        },
+        {
+          "article": "A-005B",
+          "name": "Выключатель звонка 1-кл. чёрный A-005B",
+          "color": "black",
+          "price": 207
+        },
+        {
+          "article": "A-005W",
+          "name": "Выключатель звонка 1-кл. белый A-005W",
+          "color": "white",
+          "price": 191
+        },
+        {
+          "article": "A-007B",
+          "name": "Выключатель перекрёстный 1-кл. чёрный A-007B",
+          "color": "black",
+          "price": 276
+        },
+        {
+          "article": "A-007W",
+          "name": "Выключатель перекрёстный 1-кл. белый A-007W",
+          "color": "white",
+          "price": 261
+        },
+        {
+          "article": "A-009B",
+          "name": "Выключатель 2-кл. чёрный A-009B",
+          "color": "black",
+          "price": 241
+        },
+        {
+          "article": "A-009W",
+          "name": "Выключатель 2-кл. белый A-009W",
+          "color": "white",
+          "price": 215
         },
         {
           "article": "A-010B",
           "name": "Выключатель проходной 2-кл. чёрный A-010B",
-          "color": "black"
+          "color": "black",
+          "price": 285
+        },
+        {
+          "article": "A-010W",
+          "name": "Выключатель проходной 2-кл. белый A-010W",
+          "color": "white",
+          "price": 257
+        },
+        {
+          "article": "A-011B",
+          "name": "Выключатель 2-кл. с подсветкой чёрный A-011B",
+          "color": "black",
+          "price": 321
+        },
+        {
+          "article": "A-011W",
+          "name": "Выключатель 2-кл. с подсветкой белый A-011W",
+          "color": "white",
+          "price": 296
+        },
+        {
+          "article": "A-012B",
+          "name": "Выключатель проходной 2-кл. с подсветкой чёрный A-012B",
+          "color": "black",
+          "price": 364
+        },
+        {
+          "article": "A-012W",
+          "name": "Выключатель проходной 2-кл. с подсветкой белый A-012W",
+          "color": "white",
+          "price": 338
+        },
+        {
+          "article": "A-013B",
+          "name": "Выключатель жалюзи 2-кл. чёрный A-013B",
+          "color": "black",
+          "price": 291
+        },
+        {
+          "article": "A-013W",
+          "name": "Выключатель жалюзи 2-кл. белый A-013W",
+          "color": "white",
+          "price": 264
+        },
+        {
+          "article": "A-015B",
+          "name": "Выключатель 3-кл. чёрный A-015B",
+          "color": "black",
+          "price": 301
+        },
+        {
+          "article": "A-015W",
+          "name": "Выключатель 3-кл. белый A-015W",
+          "color": "white",
+          "price": 262
         }
       ],
       "sockets": [
         {
-          "article": "A-023W",
-          "name": "Розетка 1-я с крышкой с/з с шторками белая A-023W",
-          "color": "white"
+          "article": "A-022B",
+          "name": "Розетка 1-я с/з с шторками чёрная A-022B",
+          "color": "black",
+          "price": 228
+        },
+        {
+          "article": "A-022W",
+          "name": "Розетка 1-я с/з с шторками белая A-022W",
+          "color": "white",
+          "price": 213
         },
         {
           "article": "A-023B",
           "name": "Розетка 1-я с крышкой с/з с шторками чёрная A-023B",
-          "color": "black"
+          "color": "black",
+          "price": 272
         },
         {
-          "article": "A-026W",
-          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) белая A-026W",
-          "color": "white"
+          "article": "A-023W",
+          "name": "Розетка 1-я с крышкой с/з с шторками белая A-023W",
+          "color": "white",
+          "price": 257
         },
         {
           "article": "A-026B",
           "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) чёрная A-026B",
-          "color": "black"
+          "color": "black",
+          "price": 837
         },
         {
-          "article": "A-022B",
-          "name": "Розетка 1-я с/з с шторками чёрная A-022B",
-          "color": "black"
-        },
-        {
-          "article": "A-041W",
-          "name": "Розетка 2-я с/з с шторками белая A-041W",
-          "color": "white"
-        },
-        {
-          "article": "A-041B",
-          "name": "Розетка 2-я с/з с шторками чёрная A-041B",
-          "color": "black"
-        },
-        {
-          "article": "A-038W",
-          "name": "Розетка RJ45 (cat 5e) + TV белая A-038W",
-          "color": "white"
-        },
-        {
-          "article": "A-038B",
-          "name": "Розетка RJ45 (cat 5e) + TV чёрная A-038B",
-          "color": "black"
-        },
-        {
-          "article": "A-031W",
-          "name": "Розетка RJ45 (cat 5e) 1-я белая A-031W",
-          "color": "white"
+          "article": "A-026W",
+          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) белая A-026W",
+          "color": "white",
+          "price": 817
         },
         {
           "article": "A-031B",
-          "name": "Розетка RJ45 (cat 5e) 1-я чёрная A-031B",
-          "color": "black"
+          "name": "Розетка R (cat 5e) 1-я чёрная A-031B",
+          "color": "black",
+          "price": 271
         },
         {
-          "article": "A-033W",
-          "name": "Розетка RJ45 (cat 5e) 2-я белая A-033W",
-          "color": "white"
+          "article": "A-031W",
+          "name": "Розетка R (cat 5e) 1-я белая A-031W",
+          "color": "white",
+          "price": 251
         },
         {
           "article": "A-033B",
-          "name": "Розетка RJ45 (cat 5e) 2-я чёрная A-033B",
-          "color": "black"
+          "name": "Розетка R (cat 5e) 2-я чёрная A-033B",
+          "color": "black",
+          "price": 376
         },
         {
-          "article": "A-035W",
-          "name": "Розетка TV 1-я белая A-035W",
-          "color": "white"
+          "article": "A-033W",
+          "name": "Розетка R (cat 5e) 2-я белая A-033W",
+          "color": "white",
+          "price": 356
         },
         {
           "article": "A-035B",
           "name": "Розетка TV 1-я чёрная A-035B",
-          "color": "black"
+          "color": "black",
+          "price": 265
+        },
+        {
+          "article": "A-035W",
+          "name": "Розетка TV 1-я белая A-035W",
+          "color": "white",
+          "price": 251
+        },
+        {
+          "article": "A-038B",
+          "name": "Розетка R (cat 5e) + TV чёрная A-038B",
+          "color": "black",
+          "price": 336
+        },
+        {
+          "article": "A-038W",
+          "name": "Розетка R (cat 5e) + TV белая A-038W",
+          "color": "white",
+          "price": 319
+        },
+        {
+          "article": "A-041B",
+          "name": "Розетка 2-я с/з с шторками чёрная A-041B",
+          "color": "black",
+          "price": 396
+        },
+        {
+          "article": "A-041W",
+          "name": "Розетка 2-я с/з с шторками белая A-041W",
+          "color": "white",
+          "price": 356
         }
       ],
       "frames": [
         {
-          "article": "G50-6W",
-          "name": "Рамка для двойной розетки белая (стекло)",
-          "color": "white"
+          "article": "G50-1B",
+          "name": "Рамка 1-я чёрная (стекло)",
+          "color": "black",
+          "price": 398
         },
         {
-          "article": "P50-6W",
-          "name": "Рамка для двойной розетки белая",
-          "color": "white"
-        },
-        {
-          "article": "G50-6B",
-          "name": "Рамка для двойной розетки чёрная (стекло)",
-          "color": "black"
-        },
-        {
-          "article": "P50-6B",
-          "name": "Рамка для двойной розетки чёрная",
-          "color": "black"
-        },
-        {
-          "article": "P50-1W",
-          "name": "Рамка 1-я белая",
-          "color": "white"
-        },
-        {
-          "article": "P50-1B",
-          "name": "Рамка 1-я чёрная",
-          "color": "black"
-        },
-        {
-          "article": "G50-2W",
-          "name": "Рамка 2-я белая горизонтальная (стекло)",
-          "color": "white"
-        },
-        {
-          "article": "P50-2W",
-          "name": "Рамка 2-я белая горизонтальная",
-          "color": "white"
+          "article": "G50-1W",
+          "name": "Рамка 1-я белая (стекло)",
+          "color": "white",
+          "price": 398
         },
         {
           "article": "G50-2B",
           "name": "Рамка 2-я чёрная горизонтальная (стекло)",
-          "color": "black"
+          "color": "black",
+          "price": 799
         },
         {
-          "article": "P50-2B",
-          "name": "Рамка 2-я чёрная горизонтальная",
-          "color": "black"
-        },
-        {
-          "article": "G50-3W",
-          "name": "Рамка 3-я белая горизонтальная (стекло)",
-          "color": "white"
-        },
-        {
-          "article": "P50-3W",
-          "name": "Рамка 3-я белая горизонтальная",
-          "color": "white"
+          "article": "G50-2W",
+          "name": "Рамка 2-я белая горизонтальная (стекло)",
+          "color": "white",
+          "price": 799
         },
         {
           "article": "G50-3B",
           "name": "Рамка 3-я чёрная горизонтальная (стекло)",
-          "color": "black"
+          "color": "black",
+          "price": 1199
         },
         {
-          "article": "P50-3B",
-          "name": "Рамка 3-я чёрная горизонтальная",
-          "color": "black"
-        },
-        {
-          "article": "G50-4W",
-          "name": "Рамка 4-я белая горизонтальная (стекло)",
-          "color": "white"
-        },
-        {
-          "article": "P50-4W",
-          "name": "Рамка 4-я белая горизонтальная",
-          "color": "white"
+          "article": "G50-3W",
+          "name": "Рамка 3-я белая горизонтальная (стекло)",
+          "color": "white",
+          "price": 1199
         },
         {
           "article": "G50-4B",
           "name": "Рамка 4-я чёрная горизонтальная (стекло)",
-          "color": "black"
+          "color": "black",
+          "price": 1886
         },
         {
-          "article": "P50-4B",
-          "name": "Рамка 4-я чёрная горизонтальная",
-          "color": "black"
+          "article": "G50-4W",
+          "name": "Рамка 4-я белая горизонтальная (стекло)",
+          "color": "white",
+          "price": 1910
         },
         {
-          "article": "P50-5W",
-          "name": "Рамка 5-я белая горизонтальная",
-          "color": "white"
+          "article": "G50-6B",
+          "name": "Рамка для двойной розетки чёрная (стекло)",
+          "color": "black",
+          "price": 650
         },
         {
-          "article": "P50-5B",
-          "name": "Рамка 5-я чёрная горизонтальная",
-          "color": "black"
+          "article": "G50-6W",
+          "name": "Рамка для двойной розетки белая (стекло)",
+          "color": "white",
+          "price": 650
         },
         {
-          "article": "P50-2VW",
-          "name": "Рамка 2-я белая вертикальная",
-          "color": "white"
+          "article": "P50-1B",
+          "name": "Рамка 1-я чёрная",
+          "color": "black",
+          "price": 90
+        },
+        {
+          "article": "P50-1W",
+          "name": "Рамка 1-я белая",
+          "color": "white",
+          "price": 72
+        },
+        {
+          "article": "P50-2B",
+          "name": "Рамка 2-я чёрная горизонтальная",
+          "color": "black",
+          "price": 171
         },
         {
           "article": "P50-2VB",
           "name": "Рамка 2-я чёрная вертикальная",
-          "color": "black"
+          "color": "black",
+          "price": 171
         },
         {
-          "article": "P50-3VW",
-          "name": "Рамка 3-я белая вертикальная",
-          "color": "white"
+          "article": "P50-2VW",
+          "name": "Рамка 2-я белая вертикальная",
+          "color": "white",
+          "price": 127
+        },
+        {
+          "article": "P50-2W",
+          "name": "Рамка 2-я белая горизонтальная",
+          "color": "white",
+          "price": 127
+        },
+        {
+          "article": "P50-3B",
+          "name": "Рамка 3-я чёрная горизонтальная",
+          "color": "black",
+          "price": 252
         },
         {
           "article": "P50-3VB",
           "name": "Рамка 3-я чёрная вертикальная",
-          "color": "black"
+          "color": "black",
+          "price": 252
+        },
+        {
+          "article": "P50-3VW",
+          "name": "Рамка 3-я белая вертикальная",
+          "color": "white",
+          "price": 211
+        },
+        {
+          "article": "P50-3W",
+          "name": "Рамка 3-я белая горизонтальная",
+          "color": "white",
+          "price": 211
+        },
+        {
+          "article": "P50-4B",
+          "name": "Рамка 4-я чёрная горизонтальная",
+          "color": "black",
+          "price": 435
+        },
+        {
+          "article": "P50-4W",
+          "name": "Рамка 4-я белая горизонтальная",
+          "color": "white",
+          "price": 290
+        },
+        {
+          "article": "P50-5B",
+          "name": "Рамка 5-я чёрная горизонтальная",
+          "color": "black",
+          "price": 574
+        },
+        {
+          "article": "P50-5W",
+          "name": "Рамка 5-я белая горизонтальная",
+          "color": "white",
+          "price": 369
+        },
+        {
+          "article": "P50-6B",
+          "name": "Рамка для двойной розетки чёрная",
+          "color": "black",
+          "price": 154
+        },
+        {
+          "article": "P50-6W",
+          "name": "Рамка для двойной розетки белая",
+          "color": "white",
+          "price": 95
         }
       ],
       "accessories": [],
@@ -649,8 +773,370 @@
       }
     ],
     "groups": {
-      "switches": [],
-      "sockets": [],
+      "switches": [
+        {
+          "article": "A-D001B",
+          "name": "Выключатель 1-кл. чёрный A- 10A",
+          "color": "black",
+          "price": 195
+        },
+        {
+          "article": "A-D001GR",
+          "name": "Выключатель 1-кл. серый A- 10A",
+          "color": "gray",
+          "price": 195
+        },
+        {
+          "article": "A-D001W",
+          "name": "Выключатель 1-кл. белый A- 10A",
+          "color": "white",
+          "price": 155
+        },
+        {
+          "article": "A-D002B",
+          "name": "Выключатель проходной 1-кл. чёрный A- 10A",
+          "color": "black",
+          "price": 220
+        },
+        {
+          "article": "A-D002GR",
+          "name": "Выключатель проходной 1-кл. серый A- 10A",
+          "color": "gray",
+          "price": 220
+        },
+        {
+          "article": "A-D002W",
+          "name": "Выключатель проходной 1-кл. белый A- 10A",
+          "color": "white",
+          "price": 200
+        },
+        {
+          "article": "A-D003B",
+          "name": "Выключатель 1-кл. с подсветкой чёрный A- 10A",
+          "color": "black",
+          "price": 245
+        },
+        {
+          "article": "A-D003GR",
+          "name": "Выключатель 1-кл. с подсветкой серый A- 10A",
+          "color": "gray",
+          "price": 245
+        },
+        {
+          "article": "A-D003W",
+          "name": "Выключатель 1-кл. с подсветкой белый A- 10A",
+          "color": "white",
+          "price": 231
+        },
+        {
+          "article": "A-D004B",
+          "name": "Выключатель проходной 1-кл. с подсветкой чёрный A- 10A",
+          "color": "black",
+          "price": 275
+        },
+        {
+          "article": "A-D004GR",
+          "name": "Выключатель проходной 1-кл. с подсветкой серый A- 10A",
+          "color": "gray",
+          "price": 275
+        },
+        {
+          "article": "A-D004W",
+          "name": "Выключатель проходной 1-кл. с подсветкой белый A- 10A",
+          "color": "white",
+          "price": 260
+        },
+        {
+          "article": "A-D005B",
+          "name": "Выключатель звонка 1-кл. чёрный A- 10A",
+          "color": "black",
+          "price": 223
+        },
+        {
+          "article": "A-D005GR",
+          "name": "Выключатель звонка 1-кл. серый A- 10A",
+          "color": "gray",
+          "price": 223
+        },
+        {
+          "article": "A-D005W",
+          "name": "Выключатель звонка 1-кл. белый A- 10A",
+          "color": "white",
+          "price": 200
+        },
+        {
+          "article": "A-D007B",
+          "name": "Выключатель перекрёстный 1-кл. чёрный A- 10A",
+          "color": "black",
+          "price": 285
+        },
+        {
+          "article": "A-D007GR",
+          "name": "Выключатель перекрёстный 1-кл. серый A- 10A",
+          "color": "gray",
+          "price": 285
+        },
+        {
+          "article": "A-D007W",
+          "name": "Выключатель перекрёстный 1-кл. белый A- 10A",
+          "color": "white",
+          "price": 268
+        },
+        {
+          "article": "A-D009B",
+          "name": "Выключатель 2-кл. с подсветкой чёрный A- 10A",
+          "color": "black",
+          "price": 325
+        },
+        {
+          "article": "A-D009GR",
+          "name": "Выключатель 2-кл. с подсветкой серый A- 10A",
+          "color": "gray",
+          "price": 325
+        },
+        {
+          "article": "A-D009W",
+          "name": "Выключатель 2-кл. с подсветкой белый A- 10A",
+          "color": "white",
+          "price": 305
+        },
+        {
+          "article": "A-D010B",
+          "name": "Выключатель проходной 2-кл. с подсветкой чёрный A- 10A",
+          "color": "black",
+          "price": 375
+        },
+        {
+          "article": "A-D010GR",
+          "name": "Выключатель проходной 2-кл. с подсветкой серый A- 10A",
+          "color": "gray",
+          "price": 375
+        },
+        {
+          "article": "A-D010W",
+          "name": "Выключатель проходной 2-кл. с подсветкой белый A- 10A",
+          "color": "white",
+          "price": 345
+        },
+        {
+          "article": "A-D011B",
+          "name": "Выключатель 2-кл. чёрный A- 10A",
+          "color": "black",
+          "price": 255
+        },
+        {
+          "article": "A-D011GR",
+          "name": "Выключатель 2-кл. серый A- 10A",
+          "color": "gray",
+          "price": 255
+        },
+        {
+          "article": "A-D011W",
+          "name": "Выключатель 2-кл. белый A- 10A",
+          "color": "white",
+          "price": 225
+        },
+        {
+          "article": "A-D012B",
+          "name": "Выключатель проходной 2-кл. чёрный A- 10A",
+          "color": "black",
+          "price": 298
+        },
+        {
+          "article": "A-D012GR",
+          "name": "Выключатель проходной 2-кл. серый A- 10A",
+          "color": "gray",
+          "price": 298
+        },
+        {
+          "article": "A-D012W",
+          "name": "Выключатель проходной 2-кл. белый A- 10A",
+          "color": "white",
+          "price": 270
+        },
+        {
+          "article": "A-D013B",
+          "name": "Выключатель жалюзи 2-кл. чёрный A- 10A",
+          "color": "black",
+          "price": 350
+        },
+        {
+          "article": "A-D013GR",
+          "name": "Выключатель жалюзи 2-кл. серый A- 10A",
+          "color": "gray",
+          "price": 350
+        },
+        {
+          "article": "A-D013W",
+          "name": "Выключатель жалюзи 2-кл. белый A- 10A",
+          "color": "white",
+          "price": 335
+        },
+        {
+          "article": "A-D015B",
+          "name": "Выключатель 3-кл. чёрный A- 10A",
+          "color": "black",
+          "price": 312
+        },
+        {
+          "article": "A-D015GR",
+          "name": "Выключатель 3-кл. серый A- 10A",
+          "color": "gray",
+          "price": 312
+        },
+        {
+          "article": "A-D015W",
+          "name": "Выключатель 3-кл. белый A- 10A",
+          "color": "white",
+          "price": 270
+        }
+      ],
+      "sockets": [
+        {
+          "article": "A-D021B",
+          "name": "Розетка 1-я с/з с шторками чёрная A- 16A",
+          "color": "black",
+          "price": 230
+        },
+        {
+          "article": "A-D021GR",
+          "name": "Розетка 1-я с/з с шторками серая A- 16A",
+          "color": "gray",
+          "price": 230
+        },
+        {
+          "article": "A-D021W",
+          "name": "Розетка 1-я с/з с шторками белая A- 16A",
+          "color": "white",
+          "price": 188
+        },
+        {
+          "article": "A-D022B",
+          "name": "Розетка 1-я с крышкой с/з с шторками чёрная A- 16A",
+          "color": "black",
+          "price": 275
+        },
+        {
+          "article": "A-D022GR",
+          "name": "Розетка 1-я с крышкой с/з с шторками серая A- 16A",
+          "color": "gray",
+          "price": 275
+        },
+        {
+          "article": "A-D022W",
+          "name": "Розетка 1-я с крышкой с/з с шторками белая A- 16A",
+          "color": "white",
+          "price": 260
+        },
+        {
+          "article": "A-D025B",
+          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) чёрная A- 16A",
+          "color": "black",
+          "price": 730
+        },
+        {
+          "article": "A-D025GR",
+          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) серая A- 16A AWSproduc",
+          "color": "gray",
+          "price": 837
+        },
+        {
+          "article": "A-D025W",
+          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) белая A- 16A",
+          "color": "white",
+          "price": 824
+        },
+        {
+          "article": "A-D030B",
+          "name": "Розетка R (cat 5e) 1-я чёрная A-",
+          "color": "black",
+          "price": 270
+        },
+        {
+          "article": "A-D030GR",
+          "name": "Розетка R (cat 5e) 1-я серая A-",
+          "color": "gray",
+          "price": 270
+        },
+        {
+          "article": "A-D030W",
+          "name": "Розетка R (cat 5e) 1-я белая A-",
+          "color": "white",
+          "price": 250
+        },
+        {
+          "article": "A-D032B",
+          "name": "Розетка R (cat 5e) 2-я чёрная A-",
+          "color": "black",
+          "price": 380
+        },
+        {
+          "article": "A-D032GR",
+          "name": "Розетка R (cat 5e) 2-я серая A-",
+          "color": "gray",
+          "price": 380
+        },
+        {
+          "article": "A-D032W",
+          "name": "Розетка R (cat 5e) 2-я белая A-",
+          "color": "white",
+          "price": 360
+        },
+        {
+          "article": "A-D034B",
+          "name": "Розетка TV 1-я чёрная A-",
+          "color": "black",
+          "price": 221
+        },
+        {
+          "article": "A-D034GR",
+          "name": "Розетка TV 1-я серая A-",
+          "color": "gray",
+          "price": 221
+        },
+        {
+          "article": "A-D034W",
+          "name": "Розетка TV 1-я белая A-",
+          "color": "white",
+          "price": 210
+        },
+        {
+          "article": "A-D037B",
+          "name": "Розетка R (cat 5e) + TV чёрная A-",
+          "color": "black",
+          "price": 405
+        },
+        {
+          "article": "A-D037GR",
+          "name": "Розетка R (cat 5e) + TV серая A-",
+          "color": "gray",
+          "price": 405
+        },
+        {
+          "article": "A-D037W",
+          "name": "Розетка R (cat 5e) + TV белая A-",
+          "color": "white",
+          "price": 382
+        },
+        {
+          "article": "A-D055B",
+          "name": "Розетка 2-я с/з с шторками чёрная A- 16A",
+          "color": "black",
+          "price": 400
+        },
+        {
+          "article": "A-D055GR",
+          "name": "Розетка 2-я с/з с шторками серая A- 16A",
+          "color": "gray",
+          "price": 400
+        },
+        {
+          "article": "A-D055W",
+          "name": "Розетка 2-я с/з с шторками белая A- 16A",
+          "color": "white",
+          "price": 319
+        }
+      ],
       "frames": [],
       "accessories": [],
       "other": []

@@ -6,8 +6,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const tasks = require('c:/tmp/stv-cards-tasks.json');
-const aws = require('c:/tmp/stv-aws.json');
+const tasks = require('c:/Users/ikoko/Projects/aws-brand-site/_pipeline/html-products-tasks.json');
+const aws = require('c:/Users/ikoko/Projects/aws-brand-site/_pipeline/stv-aws.json');
 const artByUrl = new Map(aws.map(x => [x.url.replace(/^http:/, 'https:'), x]));
 
 function decodeHtmlEntities(s) {
@@ -86,7 +86,7 @@ function extractFromHtml(html) {
 
 const out = [];
 for (const t of tasks) {
-    const fp = path.join('c:/tmp', t.file);
+    const fp = path.resolve("c:/Users/ikoko/Projects/aws-brand-site", t.file);
     if (!fs.existsSync(fp)) continue;
     const html = fs.readFileSync(fp, 'utf8');
     if (html.length < 5000) continue;
@@ -106,7 +106,7 @@ for (const t of tasks) {
     });
 }
 
-fs.writeFileSync('c:/tmp/stv-products-v2.json', JSON.stringify(out, null, 2));
+fs.writeFileSync('c:/Users/ikoko/Projects/aws-brand-site/_pipeline/stv-products-v2.json', JSON.stringify(out, null, 2));
 const stats = {
     total: out.length,
     withPhotos: out.filter(x => x.photos.length > 0).length,

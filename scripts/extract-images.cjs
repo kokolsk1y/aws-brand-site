@@ -1,11 +1,11 @@
 // Извлекает из каждой HTML карточки stv39 URL всех фото в галерее.
 // Парсит Битрикс-разметку: ищет блок галереи и берёт оригиналы.
-// Сохраняет в c:/tmp/stv-products.json: [{ slug, razdel, article, name, price, photos:[url], detail_url }]
+// Сохраняет в _pipeline/stv-products.json: [{ slug, razdel, article, name, price, photos:[url], detail_url }]
 const fs = require('fs');
 const path = require('path');
 
-const tasks = require('c:/tmp/stv-cards-tasks.json');
-const aws = require('c:/tmp/stv-aws.json');
+const tasks = require('c:/Users/ikoko/Projects/aws-brand-site/_pipeline/html-products-tasks.json');
+const aws = require('c:/Users/ikoko/Projects/aws-brand-site/_pipeline/stv-aws.json');
 const artByUrl = new Map(aws.map(x => [x.url.replace(/^http:/, 'https:'), x]));
 
 function extractFromHtml(html, url) {
@@ -49,7 +49,7 @@ function extractFromHtml(html, url) {
 const out = [];
 let ok = 0, miss = 0;
 for (const t of tasks) {
-    const fp = path.join('c:/tmp', t.file);
+    const fp = path.resolve("c:/Users/ikoko/Projects/aws-brand-site", t.file);
     if (!fs.existsSync(fp)) { miss++; continue; }
     const html = fs.readFileSync(fp, 'utf8');
     if (html.length < 5000) { miss++; continue; }
@@ -70,7 +70,7 @@ for (const t of tasks) {
     });
     ok++;
 }
-fs.writeFileSync('c:/tmp/stv-products.json', JSON.stringify(out, null, 2));
+fs.writeFileSync('c:/Users/ikoko/Projects/aws-brand-site/_pipeline/stv-products.json', JSON.stringify(out, null, 2));
 console.log(`extracted: ok=${ok}, miss=${miss}, total=${out.length}`);
 console.log(`avg photos per product: ${(out.reduce((s, x) => s + x.photos.length, 0) / out.length).toFixed(1)}`);
 console.log(`без фото: ${out.filter(x => x.photos.length === 0).length}`);

@@ -1,5 +1,5 @@
 // Раскладывает обработанные rembg-фото в /public/img/products/.
-// Источник: c:/tmp/stv-photos-clean/АРТИКУЛ__N.webp
+// Источник: _pipeline/photos-clean/АРТИКУЛ__N.webp
 // Назначение: public/img/products/АРТИКУЛ.webp / АРТИКУЛ_2.webp / АРТИКУЛ_3.webp ...
 //
 // Берёт только «свои» фото по UUID-фильтру (через stv-products-v2.json).
@@ -10,10 +10,10 @@
 const fs = require('fs');
 const path = require('path');
 
-const SRC = 'c:/tmp/stv-photos-clean';
+const SRC = 'c:/Users/ikoko/Projects/aws-brand-site/_pipeline/photos-clean';
 const DST = 'c:/Users/ikoko/Projects/aws-brand-site/public/img/products';
 
-const products = require('c:/tmp/stv-products-v2.json');
+const products = require('c:/Users/ikoko/Projects/aws-brand-site/_pipeline/stv-products-v2.json');
 
 if (!fs.existsSync(SRC)) {
     console.log('Нет папки', SRC);

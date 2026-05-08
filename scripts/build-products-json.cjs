@@ -13,7 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const products = require('c:/tmp/stv-products-v2.json');
+const products = require('c:/Users/ikoko/Projects/aws-brand-site/_pipeline/stv-products-v2.json');
 const oldJson = require('c:/Users/ikoko/Projects/aws-brand-site/public/products.json');
 
 const RAZDEL_MAP = {

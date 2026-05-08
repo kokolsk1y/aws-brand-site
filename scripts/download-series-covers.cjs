@@ -16,8 +16,8 @@ const ITEMS = [
 ];
 
 const PAUSE = 7000;
-const RAW_DIR = 'c:/tmp/stv-photos-raw';
-const CLEAN_DIR = 'c:/tmp/stv-photos-clean';
+const RAW_DIR = 'c:/Users/ikoko/Projects/aws-brand-site/_pipeline/photos-raw';
+const CLEAN_DIR = 'c:/Users/ikoko/Projects/aws-brand-site/_pipeline/photos-clean';
 fs.mkdirSync(RAW_DIR, { recursive: true });
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }

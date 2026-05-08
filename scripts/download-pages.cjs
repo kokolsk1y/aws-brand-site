@@ -8,8 +8,8 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 
-const tasks = require('c:/tmp/stv-cards-tasks.json');
-const OUT = 'c:/tmp/stv-cards';
+const tasks = require('c:/Users/ikoko/Projects/aws-brand-site/_pipeline/html-products-tasks.json');
+const OUT = 'c:/Users/ikoko/Projects/aws-brand-site/_pipeline/html-products';
 fs.mkdirSync(OUT, { recursive: true });
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }

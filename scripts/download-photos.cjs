@@ -1,11 +1,11 @@
-// Скачивает все фото из stv-products.json в c:/tmp/stv-photos-raw/<ARTICLE>__<idx>.webp
+// Скачивает все фото из stv-products.json в _pipeline/photos-raw/<ARTICLE>__<idx>.webp
 // idx = 0 для главного, 1..N для дополнительных
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
 
-const products = require('c:/tmp/stv-products.json');
-const OUT = 'c:/tmp/stv-photos-raw';
+const products = require('c:/Users/ikoko/Projects/aws-brand-site/_pipeline/stv-products.json');
+const OUT = 'c:/Users/ikoko/Projects/aws-brand-site/_pipeline/photos-raw';
 fs.mkdirSync(OUT, { recursive: true });
 
 function safeArt(a) { return String(a).replace(/[^A-Za-z0-9_\-]/g, '_'); }

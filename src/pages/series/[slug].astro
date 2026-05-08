@@ -316,6 +316,7 @@ const defaultColor = series.colors[0];
       if (!panel) return;
       trigger.setAttribute('aria-expanded', String(open));
       panel.dataset.open = String(open);
+      if (window.ScrollTrigger) setTimeout(() => window.ScrollTrigger.refresh(), 320);
     }
 
     function toggleGroup(trigger) {
@@ -674,6 +675,11 @@ const defaultColor = series.colors[0];
       min-height: 0;
       /* Место под тени hover'а карточек (transform:-6px + shadow 40px) */
       padding: 12px 24px 48px;
+      transition: padding 320ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .ser-lineup__group-content[data-open="false"] .ser-lineup__group-inner {
+      padding-top: 0;
+      padding-bottom: 0;
     }
 
     @media (prefers-reduced-motion: reduce) {

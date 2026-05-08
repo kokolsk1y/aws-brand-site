@@ -543,6 +543,11 @@ function shortName(name) {
       min-height: 0;
       /* Место под тени hover'а карточек (transform:-6px + shadow 40px) */
       padding: 4px 16px 48px;
+      transition: padding 320ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .cat-group__content[data-open="false"] .cat-group__inner {
+      padding-top: 0;
+      padding-bottom: 0;
     }
     .prod-card {
       background: var(--white, #fff);

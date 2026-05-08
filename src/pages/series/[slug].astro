@@ -701,6 +701,21 @@ const defaultColor = series.colors[0];
       padding: 28px; overflow: hidden;
       position: relative;
     }
+    /* Shimmer пока изображение загружается */
+    .ser-lineup__photo::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, #d4d4d2 0%, #c4c4c2 50%, #d4d4d2 100%);
+      background-size: 200% 100%;
+      animation: ser-photo-shimmer 1.6s ease-in-out infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+    @keyframes ser-photo-shimmer {
+      0%   { background-position: 200% 0 }
+      100% { background-position: -200% 0 }
+    }
+    .ser-lineup__photo img { position: relative; z-index: 1; }
     .ser-lineup__photo.has-hover .ser-lineup__img {
       position: absolute;
       inset: 28px;

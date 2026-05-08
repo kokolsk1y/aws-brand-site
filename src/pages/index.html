@@ -27,6 +27,9 @@
 </head>
 <body>
 
+    <!-- ========== NAVIGATION PROGRESS BAR ========== -->
+    <div class="nav-progress" id="navProgress" aria-hidden="true"><div class="nav-progress__fill"></div></div>
+
     <!-- ========== HEADER ========== -->
     <header class="header dark" id="header">
         <div class="header__inner">
@@ -86,7 +89,7 @@
                 <div class="swiper-slide" data-swiper-autoplay="8000">
                     <div class="hero-slide hero-slide--right" data-theme="dark">
                         <div class="hero-slide__bg hero-slide__bg--dark">
-                            <video muted playsinline preload="auto" poster="img/hero/hero-1-glass-poster.jpg" class="hero-slide__video">
+                            <video muted playsinline preload="metadata" poster="img/hero/hero-1-glass-poster.jpg" class="hero-slide__video">
                                 <source src="/aws-brand-site/hero-1-glass.mp4" type="video/mp4">
                             </video>
                             <div class="hero-slide__overlay hero-slide__overlay--right"></div>
@@ -698,6 +701,29 @@
 
         </div>
     </footer>
+
+    <!-- Navigation progress bar: показывает загрузку при переходе между страницами -->
+    <script>
+    (function() {
+        var bar = document.getElementById('navProgress');
+        if (!bar) return;
+        var fill = bar.querySelector('.nav-progress__fill');
+        function startProgress() {
+            bar.classList.add('is-active', 'is-animating');
+            bar.classList.remove('is-done');
+        }
+        // Вешаем на все внутренние ссылки (не открывающиеся в новой вкладке)
+        document.addEventListener('click', function(e) {
+            var link = e.target.closest('a[href]');
+            if (!link) return;
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            if (link.target === '_blank') return;
+            var href = link.getAttribute('href');
+            if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+            startProgress();
+        });
+    })();
+    </script>
 
     <!-- Scripts -->
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

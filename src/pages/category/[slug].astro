@@ -599,12 +599,27 @@ function shortName(name) {
       position: relative;
     }
     .prod-card:hover .prod-card__img { background: var(--bg-product, #d4d4d2); }
+    /* Shimmer-анимация пока изображение не загрузилось */
+    .prod-card__img::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, #d4d4d2 0%, #c4c4c2 50%, #d4d4d2 100%);
+      background-size: 200% 100%;
+      animation: prod-card-shimmer 1.6s ease-in-out infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+    @keyframes prod-card-shimmer {
+      0%   { background-position: 200% 0 }
+      100% { background-position: -200% 0 }
+    }
     .prod-card__img img {
       max-width: 100%; max-height: 100%; object-fit: contain;
       filter: drop-shadow(0 8px 14px rgba(0,0,0,0.12));
       transition:
         transform 0.45s cubic-bezier(.22,1,.36,1),
         filter 0.45s cubic-bezier(.22,1,.36,1);
+      position: relative; z-index: 1;
     }
     .prod-card:hover .prod-card__img img {
       transform: translateY(-6px) scale(1.06);

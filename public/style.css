@@ -4066,3 +4066,40 @@ a { text-decoration: none; color: inherit; }
     .adv-ctl { width: 38px; height: 38px; }
     .adv-ctl svg { width: 14px; height: 14px; }
 }
+
+/* ============================
+   NAVIGATION PROGRESS BAR
+   Тонкая полоска вверху при переходе между страницами
+   ============================ */
+.nav-progress {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+.nav-progress.is-active { opacity: 1; }
+.nav-progress__fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #8CB86B 0%, rgba(140, 184, 107, 0.5) 100%);
+    border-radius: 0 2px 2px 0;
+    will-change: width;
+}
+.nav-progress.is-animating .nav-progress__fill {
+    animation: nav-progress-go 10s cubic-bezier(0.05, 0.8, 0.3, 1) forwards;
+}
+.nav-progress.is-done .nav-progress__fill {
+    width: 100% !important;
+    animation: none;
+    transition: width 0.15s ease, opacity 0.3s ease 0.15s;
+}
+@keyframes nav-progress-go {
+    0%   { width: 0% }
+    20%  { width: 38% }
+    50%  { width: 65% }
+    80%  { width: 83% }
+    100% { width: 90% }
+}

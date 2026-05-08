@@ -146,6 +146,7 @@ function shortName(name) {
                 </svg>
               </button>
               <div class="cat-group__content" data-open="true">
+                <div class="cat-group__inner">
                 <div class="cat-grid" data-reveal-grid>
                   {group.items.map((p, idx) => {
                     const meta = extractMeta(p.name);
@@ -180,6 +181,7 @@ function shortName(name) {
                       </a>
                     );
                   })}
+                </div>
                 </div>
               </div>
             </section>
@@ -535,11 +537,12 @@ function shortName(name) {
     .cat-grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
     }
-    /* Grid внутри групп — место под тени hover'а (как в сериях) */
-    .cat-group__content > .cat-grid {
+    /* Wrapper внутри collapsible — overflow:hidden для grid-rows, padding для теней */
+    .cat-group__inner {
       overflow: hidden;
       min-height: 0;
-      padding: 0 0 48px 0;
+      /* Место под тени hover'а карточек (transform:-6px + shadow 40px) */
+      padding: 4px 16px 48px;
     }
     .prod-card {
       background: var(--white, #fff);

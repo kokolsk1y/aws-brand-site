@@ -245,69 +245,36 @@ const defaultColor = series.colors[0];
     })();
 
     // Переключение цвета в hero
-    const colors = document.getElementById('serColors');
-    const heroImg = document.getElementById('serHeroImg');
-    if (colors && heroImg) {
+    (function() {
+      const colors = document.getElementById('serColors');
+      const heroImg = document.getElementById('serHeroImg');
+      if (!colors || !heroImg || colors._colorBtnsInited) return;
+      colors._colorBtnsInited = true;
       colors.querySelectorAll('.ser-hero__color-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           colors.querySelectorAll('.ser-hero__color-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           heroImg.style.opacity = '0';
-          setTimeout(() => {
-            heroImg.src = btn.dataset.img;
-            heroImg.style.opacity = '1';
-          }, 200);
+          setTimeout(() => { heroImg.src = btn.dataset.img; heroImg.style.opacity = '1'; }, 200);
         });
       });
-    }
+    })();
 
     // Модалка «Где купить»
-    const modal = document.getElementById('buyModal');
-    const overlay = document.getElementById('buyModalOverlay');
-    const closeBtn = document.getElementById('buyModalClose');
-    const buyBtn = document.getElementById('serBuyBtn');
-
-    function openBuy() { if (modal) { modal.hidden = false; document.body.style.overflow = 'hidden'; } }
-    function closeBuy() { if (modal) { modal.hidden = true; document.body.style.overflow = ''; } }
-
-    if (buyBtn) buyBtn.addEventListener('click', e => { e.preventDefault(); openBuy(); });
-    if (overlay) overlay.addEventListener('click', closeBuy);
-    if (closeBtn) closeBtn.addEventListener('click', closeBuy);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBuy(); });
-
-    // Фильтр lineup по цвету
-    const filter = document.getElementById('serColorFilter');
-    if (filter) {
-      filter.querySelectorAll('.ser-lineup__chip').forEach(chip => {
-        chip.addEventListener('click', () => {
-          filter.querySelectorAll('.ser-lineup__chip').forEach(c => c.classList.remove('active'));
-          chip.classList.add('active');
-          const color = chip.dataset.color;
-          document.querySelectorAll('.ser-lineup__card').forEach(card => {
-            const c = card.dataset.color;
-            const show = color === 'all' || c === color || c === 'unknown';
-            card.style.display = show ? '' : 'none';
-            // Карточка показывается полностью без reveal-fade
-            // (иначе после фильтра видимые карточки выглядят тусклыми
-            // из-за того что --reveal-progress остаётся 0)
-            if (show) card.style.setProperty('--reveal-progress', '1');
-          });
-          // Пересчёт ScrollTrigger чтобы scrub-движок не возвращал opacity при scroll
-          if (window.ScrollTrigger) ScrollTrigger.refresh();
-          document.querySelectorAll('.ser-lineup__group').forEach(g => {
-            const visible = g.querySelectorAll('.ser-lineup__card:not([style*="none"])').length;
-            g.style.display = visible > 0 ? '' : 'none';
-            // Если группа видима и свёрнута — разворачиваем, чтобы пользователь увидел результат
-            if (visible > 0) {
-              const trigger = g.querySelector('.ser-lineup__group-head');
-              if (trigger && trigger.getAttribute('aria-expanded') === 'false') {
-                setGroupState(trigger, true);
-              }
-            }
-          });
-        });
-      });
-    }
+    (function() {
+      const modal = document.getElementById('buyModal');
+      if (!modal || modal._buyModalInited) return;
+      modal._buyModalInited = true;
+      const overlay = document.getElementById('buyModalOverlay');
+      const closeBtn = document.getElementById('buyModalClose');
+      const buyBtn = document.getElementById('serBuyBtn');
+      function openBuy() { modal.hidden = false; document.body.style.overflow = 'hidden'; }
+      function closeBuy() { modal.hidden = true; document.body.style.overflow = ''; }
+      if (buyBtn) buyBtn.addEventListener('click', e => { e.preventDefault(); openBuy(); });
+      if (overlay) overlay.addEventListener('click', closeBuy);
+      if (closeBtn) closeBtn.addEventListener('click', closeBuy);
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBuy(); });
+    })();
 
     // Collapsible групп
     function setGroupState(trigger, open) {
@@ -318,19 +285,50 @@ const defaultColor = series.colors[0];
       panel.dataset.open = String(open);
       if (window.ScrollTrigger) setTimeout(() => window.ScrollTrigger.refresh(), 320);
     }
-
     function toggleGroup(trigger) {
-      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
-      setGroupState(trigger, !isOpen);
+      setGroupState(trigger, trigger.getAttribute('aria-expanded') !== 'true');
     }
 
     document.querySelectorAll('.ser-lineup__group-head').forEach(head => {
+      if (head._groupHeadInited) return;
+      head._groupHeadInited = true;
       head.addEventListener('click', () => toggleGroup(head));
     });
 
+    // Фильтр lineup по цвету
+    (function() {
+      const filter = document.getElementById('serColorFilter');
+      if (!filter || filter._colorFilterInited) return;
+      filter._colorFilterInited = true;
+      filter.querySelectorAll('.ser-lineup__chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          filter.querySelectorAll('.ser-lineup__chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          const color = chip.dataset.color;
+          document.querySelectorAll('.ser-lineup__card').forEach(card => {
+            const c = card.dataset.color;
+            const show = color === 'all' || c === color || c === 'unknown';
+            card.style.display = show ? '' : 'none';
+            if (show) card.style.setProperty('--reveal-progress', '1');
+          });
+          if (window.ScrollTrigger) ScrollTrigger.refresh();
+          document.querySelectorAll('.ser-lineup__group').forEach(g => {
+            const visible = g.querySelectorAll('.ser-lineup__card:not([style*="none"])').length;
+            g.style.display = visible > 0 ? '' : 'none';
+            if (visible > 0) {
+              const trigger = g.querySelector('.ser-lineup__group-head');
+              if (trigger && trigger.getAttribute('aria-expanded') === 'false') setGroupState(trigger, true);
+            }
+          });
+        });
+      });
+    })();
+
     // Toggle all
-    const toggleAllBtn = document.getElementById('serToggleAll');
-    if (toggleAllBtn) {
+    (function() {
+      const toggleAllBtn = document.getElementById('serToggleAll');
+      if (!toggleAllBtn || toggleAllBtn._toggleAllInited) return;
+      toggleAllBtn._toggleAllInited = true;
       toggleAllBtn.addEventListener('click', () => {
         const heads = Array.from(document.querySelectorAll('.ser-lineup__group-head'));
         const anyOpen = heads.some(h => h.getAttribute('aria-expanded') === 'true');
@@ -340,10 +338,12 @@ const defaultColor = series.colors[0];
         toggleAllBtn.querySelector('.ser-lineup__toggle-all-text').textContent = targetState ? 'Свернуть все' : 'Развернуть все';
         toggleAllBtn.setAttribute('aria-label', targetState ? 'Свернуть все группы' : 'Развернуть все группы');
       });
-    }
+    })();
 
     // Click на счётчик "15 выключателей" → раскрыть группу + скролл
     document.querySelectorAll('.ser-lineup__count-link[data-jump]').forEach(link => {
+      if (link._countLinkInited) return;
+      link._countLinkInited = true;
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const groupId = link.dataset.jump;
@@ -351,24 +351,19 @@ const defaultColor = series.colors[0];
         if (!group) return;
         const trigger = group.querySelector('.ser-lineup__group-head');
         const isOpen = trigger?.getAttribute('aria-expanded') === 'true';
-
         const doScroll = () => {
           const rect = group.getBoundingClientRect();
-          const y = rect.top + window.pageYOffset - 100;
-          window.scrollTo({ top: y, behavior: 'smooth' });
+          window.scrollTo({ top: rect.top + window.pageYOffset - 100, behavior: 'smooth' });
         };
-
         if (!isOpen && trigger) {
           setGroupState(trigger, true);
           const panel = group.querySelector('.ser-lineup__group-content');
-          // Дожидаемся окончания анимации раскрытия, потом скроллим
           const onEnd = (ev) => {
             if (ev.propertyName !== 'grid-template-rows') return;
             panel.removeEventListener('transitionend', onEnd);
             doScroll();
           };
           panel.addEventListener('transitionend', onEnd);
-          // Fallback если transitionend не сработает
           setTimeout(doScroll, 400);
         } else {
           doScroll();

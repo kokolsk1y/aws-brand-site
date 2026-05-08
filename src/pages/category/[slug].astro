@@ -333,9 +333,11 @@ function shortName(name) {
     })();
 
     // Фильтры товаров — с плавным fade-out / fade-in + скрытие пустых групп
-    const filtersEl = document.getElementById('catFilters');
-    const grid = document.getElementById('catGrid');
-    if (filtersEl && grid) {
+    (function() {
+      const filtersEl = document.getElementById('catFilters');
+      const grid = document.getElementById('catGrid');
+      if (!filtersEl || !grid || filtersEl._filtersInited) return;
+      filtersEl._filtersInited = true;
       filtersEl.querySelectorAll('.cat-filters__chip').forEach(chip => {
         chip.addEventListener('click', () => {
           window._lastFilterClick = Date.now();
@@ -367,55 +369,57 @@ function shortName(name) {
           }, 250);
         });
       });
-    }
+    })();
 
     // Сворачивание/разворачивание групп
     document.querySelectorAll('.cat-group__head').forEach(head => {
+      if (head._groupHeadInited) return;
+      head._groupHeadInited = true;
       head.addEventListener('click', () => {
         const group = head.closest('.cat-group');
         const content = group.querySelector('.cat-group__content');
         const open = head.getAttribute('aria-expanded') !== 'false';
         head.setAttribute('aria-expanded', open ? 'false' : 'true');
         content.dataset.open = open ? 'false' : 'true';
-        // Пересчитать ScrollTrigger после изменения высоты контента (320ms = длина transition)
-        if (window.ScrollTrigger) {
-          setTimeout(() => window.ScrollTrigger.refresh(), 320);
-        }
+        if (window.ScrollTrigger) setTimeout(() => window.ScrollTrigger.refresh(), 320);
       });
     });
 
     // Модалка «Где купить»
-    const modal = document.getElementById('buyModal');
-    const overlay = document.getElementById('buyModalOverlay');
-    const closeBtn = document.getElementById('buyModalClose');
-    const titleEl = document.getElementById('buyModalTitle');
-    const articleEl = document.getElementById('buyModalArticle');
+    (function() {
+      const modal = document.getElementById('buyModal');
+      if (!modal || modal._buyModalInited) return;
+      modal._buyModalInited = true;
 
-    function openBuy(article, name) {
-      if (!modal) return;
-      titleEl.textContent = name || article;
-      articleEl.textContent = 'Артикул: ' + article;
-      modal.hidden = false;
-      document.body.style.overflow = 'hidden';
-    }
-    function closeBuy() {
-      if (!modal) return;
-      modal.hidden = true;
-      document.body.style.overflow = '';
-    }
+      const overlay = document.getElementById('buyModalOverlay');
+      const closeBtn = document.getElementById('buyModalClose');
+      const titleEl = document.getElementById('buyModalTitle');
+      const articleEl = document.getElementById('buyModalArticle');
 
-    document.querySelectorAll('.prod-card__cta[data-buy]').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.preventDefault();
-        const card = btn.closest('.prod-card');
-        const name = card?.querySelector('.prod-card__name')?.textContent.trim() || '';
-        openBuy(btn.dataset.buy, name);
+      function openBuy(article, name) {
+        titleEl.textContent = name || article;
+        articleEl.textContent = 'Артикул: ' + article;
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+      }
+      function closeBuy() {
+        modal.hidden = true;
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('.prod-card__cta[data-buy]').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.preventDefault();
+          const card = btn.closest('.prod-card');
+          const name = card?.querySelector('.prod-card__name')?.textContent.trim() || '';
+          openBuy(btn.dataset.buy, name);
+        });
       });
-    });
 
-    if (overlay) overlay.addEventListener('click', closeBuy);
-    if (closeBtn) closeBtn.addEventListener('click', closeBuy);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBuy(); });
+      if (overlay) overlay.addEventListener('click', closeBuy);
+      if (closeBtn) closeBtn.addEventListener('click', closeBuy);
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBuy(); });
+    })();
   </script>
 
   <style is:global>

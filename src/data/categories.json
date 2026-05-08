@@ -29,9 +29,17 @@
   "power-connectors": {
     "slug": "power-connectors",
     "title": "Силовые разъёмы",
-    "subtitle": "IP68 коннекторы · 2 модели",
-    "description": "Промышленные коннекторы IP68 для герметичного соединения кабелей. Выдерживают погружение и устойчивы к пыли.",
-    "cover": "/img/products/SN-33.webp"
+    "subtitle": "IP44 / IP67 · 16-125 А · 42 модели",
+    "description": "Промышленные силовые разъёмы для подключения мощного оборудования. Защита IP44 / IP67, токи 16-125 А, переносные и стационарные.",
+    "cover": "/img/products/SLN-025.webp",
+    "filters": [
+      { "key": "all", "label": "Все", "test": "true" },
+      { "key": "vilka", "label": "Вилки", "test": "/^Вилка/i.test(i.name)" },
+      { "key": "rozetka-per", "label": "Розетки переносные", "test": "/^Розетка переносная/i.test(i.name)" },
+      { "key": "rozetka-stac", "label": "Розетки стационарные", "test": "/^Розетка стационарная/i.test(i.name)" },
+      { "key": "ip44", "label": "IP44", "test": "i.name.includes('IP44')" },
+      { "key": "ip67", "label": "IP67", "test": "i.name.includes('IP67')" }
+    ]
   },
   "clamps": {
     "slug": "clamps",

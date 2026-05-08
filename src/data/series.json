@@ -155,13 +155,13 @@
         },
         {
           "article": "U1A-016-1 white",
-          "name": "Розетка R (cat 5e) 1-я белая Софт-тач",
+          "name": "Розетка RJ45 (cat 5e) 1-я белая Софт-тач",
           "color": "white",
           "price": 209
         },
         {
           "article": "U1A-016-2 white",
-          "name": "Розетка R (cat 5e) 2-я белая Софт-тач",
+          "name": "Розетка RJ45 (cat 5e) 2-я белая Софт-тач",
           "color": "white",
           "price": 294
         },
@@ -197,13 +197,13 @@
         },
         {
           "article": "U2B-016-1 black",
-          "name": "Розетка R (cat 5e) 1-я чёрная Софт-тач",
+          "name": "Розетка RJ45 (cat 5e) 1-я чёрная Софт-тач",
           "color": "black",
           "price": 251
         },
         {
           "article": "U2B-016-2 black",
-          "name": "Розетка R (cat 5e) 2-я чёрная Софт-тач",
+          "name": "Розетка RJ45 (cat 5e) 2-я чёрная Софт-тач",
           "color": "black",
           "price": 353
         },
@@ -502,25 +502,25 @@
         },
         {
           "article": "A-031B",
-          "name": "Розетка R (cat 5e) 1-я чёрная",
+          "name": "Розетка RJ45 (cat 5e) 1-я чёрная",
           "color": "black",
           "price": 271
         },
         {
           "article": "A-031W",
-          "name": "Розетка R (cat 5e) 1-я белая",
+          "name": "Розетка RJ45 (cat 5e) 1-я белая",
           "color": "white",
           "price": 251
         },
         {
           "article": "A-033B",
-          "name": "Розетка R (cat 5e) 2-я чёрная",
+          "name": "Розетка RJ45 (cat 5e) 2-я чёрная",
           "color": "black",
           "price": 376
         },
         {
           "article": "A-033W",
-          "name": "Розетка R (cat 5e) 2-я белая",
+          "name": "Розетка RJ45 (cat 5e) 2-я белая",
           "color": "white",
           "price": 356
         },
@@ -538,13 +538,13 @@
         },
         {
           "article": "A-038B",
-          "name": "Розетка R (cat 5e) + TV чёрная",
+          "name": "Розетка RJ45 (cat 5e) + TV чёрная",
           "color": "black",
           "price": 336
         },
         {
           "article": "A-038W",
-          "name": "Розетка R (cat 5e) + TV белая",
+          "name": "Розетка RJ45 (cat 5e) + TV белая",
           "color": "white",
           "price": 319
         },

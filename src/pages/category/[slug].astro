@@ -375,6 +375,10 @@ function shortName(name) {
         const open = head.getAttribute('aria-expanded') !== 'false';
         head.setAttribute('aria-expanded', open ? 'false' : 'true');
         content.dataset.open = open ? 'false' : 'true';
+        // Пересчитать ScrollTrigger после изменения высоты контента
+        if (window.ScrollTrigger) {
+          setTimeout(() => window.ScrollTrigger.refresh(), 450);
+        }
       });
     });
 
@@ -520,7 +524,10 @@ function shortName(name) {
       transition: max-height 0.4s cubic-bezier(.22,1,.36,1);
       max-height: 6000px;
     }
-    .cat-group__content[data-open="false"] { max-height: 0; }
+    .cat-group__content[data-open="false"] {
+      max-height: 0;
+      pointer-events: none;
+    }
 
     /* Grid карточек */
     .cat-grid {

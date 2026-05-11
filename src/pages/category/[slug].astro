@@ -94,7 +94,7 @@ function shortName(name) {
       const fill = name.match(/(\d+)%/);
       const len = name.match(/по\s*(\d+)\s*м/);
       const otmotka = /отмотка/i.test(name);
-      let s = 'SAT-703 Digital';
+      let s = 'SAT-703';
       if (fill) s += ` · ${fill[1]}%`;
       if (otmotka) s += ' (отмотка)';
       if (len) s += ` · ${len[1]} м`;
@@ -105,15 +105,13 @@ function shortName(name) {
     const outdoor = /OUTDOOR/i.test(name);
     const gel = /GEL/i.test(name);
     const premium = /premium/i.test(name);
-    const blue = /синий/i.test(name);
     const len = name.match(/по\s*(\d+)\s*м/);
     const parts = [];
     if (type) parts.push(type[1].toUpperCase());
     if (cat) parts.push(`Cat.${cat[1].toLowerCase()}`);
-    parts.push(outdoor ? 'Outdoor' : 'Indoor');
+    if (outdoor) parts.push('наружный');
     if (gel) parts.push('GEL');
-    else if (premium) parts.push('Premium');
-    if (blue) parts.push('(синий)');
+    else if (premium) parts.push('Премиум');
     if (len) parts.push(`· ${len[1]} м`);
     return parts.join(' ');
   }

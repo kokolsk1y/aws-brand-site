@@ -104,9 +104,9 @@
       { "key": "outdoor", "label": "Outdoor", "test": "i.name.includes('OUTDOOR')" }
     ],
     "groups": [
-      { "key": "ftp", "title": "Витая пара FTP — экранированная", "test": "/\\bFTP\\b/i.test(i.name)" },
-      { "key": "utp", "title": "Витая пара UTP — без экрана", "test": "/\\bUTP\\b/i.test(i.name)" },
-      { "key": "sat", "title": "ТВ-кабель SAT — коаксиальный", "test": "/SAT[-\\s]\\d+/i.test(i.name)" }
+      { "key": "ftp", "title": "Витая пара FTP — экранированная", "test": "i.name.includes('FTP4')" },
+      { "key": "utp", "title": "Витая пара UTP — без экрана", "test": "i.name.includes('UTP4')" },
+      { "key": "sat", "title": "ТВ-кабель SAT — коаксиальный", "test": "/SAT-\\d+/i.test(i.name)" }
     ]
   }
 }

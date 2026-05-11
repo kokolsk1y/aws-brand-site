@@ -88,32 +88,19 @@ function extractMeta(name) {
 }
 
 function shortName(name) {
-  // Кабели — переформатируем в компактный вид
+  // Кабели — убираем только технический мусор, сохраняем структуру оригинала
   if (/^Кабель/i.test(name)) {
-    if (/SAT-\d+/i.test(name)) {
-      const fill = name.match(/(\d+)%/);
-      const len = name.match(/по\s*(\d+)\s*м/);
-      const otmotka = /отмотка/i.test(name);
-      let s = 'SAT-703';
-      if (fill) s += ` · ${fill[1]}%`;
-      if (otmotka) s += ' (отмотка)';
-      if (len) s += ` · ${len[1]} м`;
-      return s;
-    }
-    const type = name.match(/\b(FTP4|UTP4)\b/i);
-    const cat = name.match(/CAT\.?(\d[A-Z]*)/i);
-    const outdoor = /OUTDOOR/i.test(name);
-    const gel = /GEL/i.test(name);
-    const premium = /premium/i.test(name);
-    const len = name.match(/по\s*(\d+)\s*м/);
-    const parts = [];
-    if (type) parts.push(type[1].toUpperCase());
-    if (cat) parts.push(`Cat.${cat[1].toLowerCase()}`);
-    if (outdoor) parts.push('наружный');
-    if (gel) parts.push('GEL');
-    else if (premium) parts.push('Премиум');
-    if (len) parts.push(`· ${len[1]} м`);
-    return parts.join(' ');
+    return name
+      .replace(/\s+AWS(?=\s)/g, '')           // "AWS SAT-703" → убрать "AWS" перед SAT
+      .replace(/\s*\b0\d{2}\b/g, '')          // убрать коды модели: 046, 051, 056, 058
+      .replace(/\s*\bCU\b/g, '')              // убрать CU (избыточно, ниже есть "(медь)")
+      .replace(/\bINDOOR\b/gi, 'внутренний')
+      .replace(/\bOUTDOOR\b/gi, 'наружный')
+      .replace(/\bpremium\b/gi, 'Премиум')
+      .replace(/\bCAT\.?\s*5E\b/gi, 'Cat.5e')
+      .replace(/\bCAT\.?\s*6\b/gi, 'Cat.6')
+      .replace(/\s{2,}/g, ' ')
+      .trim();
   }
 
   // Клеммы — убираем артикул SN/AWS в имени и упаковочную информацию

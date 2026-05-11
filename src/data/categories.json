@@ -90,20 +90,23 @@
   "cables": {
     "slug": "cables",
     "title": "Кабель",
-    "subtitle": "FTP / UTP / SAT · 19 моделей",
+    "subtitle": "Витая пара FTP / UTP · ТВ-кабель SAT · 19 моделей",
     "description": "Сетевой и ТВ-кабель в бухтах. Медные жилы, варианты для внутренней и наружной прокладки, гелевая защита для премиум-серий.",
     "cover": "/img/products/AWS-12982.webp",
     "filters": [
       { "key": "all", "label": "Все", "test": "true" },
+      { "key": "ftp", "label": "FTP", "test": "/\\bFTP\\b/i.test(i.name)" },
+      { "key": "utp", "label": "UTP", "test": "/\\bUTP\\b/i.test(i.name)" },
+      { "key": "sat", "label": "SAT", "test": "/SAT-\\d+/i.test(i.name)" },
       { "key": "cat5e", "label": "Cat.5e", "test": "i.name.includes('CAT5E')" },
       { "key": "cat6", "label": "Cat.6", "test": "i.name.includes('CAT6')" },
       { "key": "indoor", "label": "Indoor", "test": "i.name.includes('INDOOR')" },
       { "key": "outdoor", "label": "Outdoor", "test": "i.name.includes('OUTDOOR')" }
     ],
     "groups": [
-      { "key": "ftp", "title": "FTP (экранированный)", "test": "/\\bFTP\\b/i.test(i.name)" },
-      { "key": "utp", "title": "UTP (неэкранированный)", "test": "/\\bUTP\\b/i.test(i.name)" },
-      { "key": "sat", "title": "ТВ (SAT)", "test": "/SAT[-\\s]\\d+/i.test(i.name)" }
+      { "key": "ftp", "title": "Витая пара FTP — экранированная", "test": "/\\bFTP\\b/i.test(i.name)" },
+      { "key": "utp", "title": "Витая пара UTP — без экрана", "test": "/\\bUTP\\b/i.test(i.name)" },
+      { "key": "sat", "title": "ТВ-кабель SAT — коаксиальный", "test": "/SAT[-\\s]\\d+/i.test(i.name)" }
     ]
   }
 }

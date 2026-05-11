@@ -88,7 +88,47 @@ function extractMeta(name) {
 }
 
 function shortName(name) {
-  // Убираем суффикс AWSproducts/AWSPRODUCTS, артикул в скобках, лишние характеристики
+  // Кабели — переформатируем в компактный вид
+  if (/^Кабель/i.test(name)) {
+    if (/SAT-\d+/i.test(name)) {
+      const fill = name.match(/(\d+)%/);
+      const len = name.match(/по\s*(\d+)\s*м/);
+      const otmotka = /отмотка/i.test(name);
+      let s = 'SAT-703 Digital';
+      if (fill) s += ` · ${fill[1]}%`;
+      if (otmotka) s += ' (отмотка)';
+      if (len) s += ` · ${len[1]} м`;
+      return s;
+    }
+    const type = name.match(/\b(FTP4|UTP4)\b/i);
+    const cat = name.match(/CAT\.?(\d[A-Z]*)/i);
+    const outdoor = /OUTDOOR/i.test(name);
+    const gel = /GEL/i.test(name);
+    const premium = /premium/i.test(name);
+    const blue = /синий/i.test(name);
+    const len = name.match(/по\s*(\d+)\s*м/);
+    const parts = [];
+    if (type) parts.push(type[1].toUpperCase());
+    if (cat) parts.push(`Cat.${cat[1].toLowerCase()}`);
+    parts.push(outdoor ? 'Outdoor' : 'Indoor');
+    if (gel) parts.push('GEL');
+    else if (premium) parts.push('Premium');
+    if (blue) parts.push('(синий)');
+    if (len) parts.push(`· ${len[1]} м`);
+    return parts.join(' ');
+  }
+
+  // Клеммы — убираем артикул SN/AWS в имени и упаковочную информацию
+  if (/^Клемма|^Коннектор/i.test(name)) {
+    return name
+      .replace(/\s+(?:SN|AWS)-\S+/g, '')
+      .replace(/\s*\(\d+шт\)/g, '')
+      .replace(/\s*\(штуками\)/g, '')
+      .replace(/\s*,\s*уп\.?/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
   return name
     .replace(/\s*\(AWSPRODUCTS\)/gi, '')
     .replace(/AWS-\S+/g, '')

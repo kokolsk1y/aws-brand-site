@@ -12,6 +12,15 @@ const series = seriesData[slug];
 
 const otherSeries = Object.values(seriesData).filter(s => s.slug !== slug);
 const defaultColor = series.colors[0];
+
+function getCardPhotoStyle(article) {
+  const m = article.match(/-0(28|29|30|31|32)\b/);
+  if (!m) return '';
+  const n = parseInt(m[1]);
+  const ar = { 28: '1/1', 29: '2/1', 30: '3/1', 31: '3/1', 32: '4/1' }[n];
+  const pad = { 28: '28px', 29: '18px', 30: '12px', 31: '12px', 32: '8px' }[n];
+  return `--photo-ar: ${ar}; --photo-pad: ${pad}`;
+}
 ---
 <BaseLayout title={`${series.name} — серия AWS Products`} description={series.description}>
 
@@ -114,7 +123,7 @@ const defaultColor = series.colors[0];
                     const showDots = photos.length >= 2;
                     return (
                     <a href={`/aws-brand-site/product/${item.article}`} class="ser-lineup__card" data-color={item.color || 'unknown'} data-tilt data-tilt-max="5" data-reveal="slide" style={`--i: ${idx % 9}`}>
-                      <div class="ser-lineup__photo">
+                      <div class="ser-lineup__photo" style={getCardPhotoStyle(item.article)}>
                         <img src={main} alt={item.name} class="ser-lineup__img ser-lineup__img--main" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.ser-lineup__photo-fallback').style.display='flex'" />
                         <div class="ser-lineup__photo-fallback" style="display:none">
                           <span class={`dot dot--${item.color || 'white'}`}></span>
@@ -695,10 +704,10 @@ const defaultColor = series.colors[0];
     }
     .ser-lineup__card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
     .ser-lineup__photo {
-      aspect-ratio: 1/1;
+      aspect-ratio: var(--photo-ar, 1/1);
       background: var(--bg-product, #d4d4d2);
       display: flex; align-items: center; justify-content: center;
-      padding: 28px; overflow: hidden;
+      padding: var(--photo-pad, 28px); overflow: hidden;
       position: relative;
     }
     .ser-lineup__photo img { position: relative; z-index: 1; }

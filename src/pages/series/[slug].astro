@@ -735,14 +735,20 @@ const defaultColor = series.colors[0];
       position: relative;
       display: flex;
       flex-direction: column;
-      flex: 1;
-      min-height: 110px;
+      height: 120px;
+      overflow: hidden;
     }
-    .ser-lineup__name { flex-grow: 1; }
-    /* Точки — фиксированно в правом нижнем углу карточки, не зависят от текста */
+    .ser-lineup__name {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    /* Точки — фиксированно в правом нижнем углу, не зависят от текста */
     .ser-lineup__dots {
-      align-self: flex-end;
-      margin-top: 12px;
+      position: absolute;
+      bottom: 22px;
+      right: 22px;
       display: flex; gap: 8px;
       align-items: center;
     }

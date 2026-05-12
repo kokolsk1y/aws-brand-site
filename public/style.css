@@ -1989,11 +1989,28 @@ a { text-decoration: none; color: inherit; }
     .advantages__content { padding: 28px 16px; }
     .advantages__title { font-size: clamp(20px, 5.5vw, 28px); letter-spacing: -0.5px; }
 
-    /* === Карточки серий: меньше внутренний отступ === */
-    .series__card-info { padding: 18px; }
+    /* === Серии: горизонтальные карточки (фото слева, текст справа) === */
+    .series__grid { grid-template-columns: 1fr; gap: 12px; margin-bottom: 24px; }
+    .series__card { display: flex; flex-direction: row; align-items: stretch; min-height: 130px; }
+    .series__card-visual {
+        width: 130px;
+        flex-shrink: 0;
+        aspect-ratio: unset;
+        align-self: stretch;
+    }
+    .series__card-info {
+        flex: 1;
+        padding: 16px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 6px;
+    }
+    .series__card-name { font-size: 18px; margin-bottom: 0; }
+    .series__card-desc { font-size: 13px; line-height: 1.5; margin-bottom: 0; }
 
-    /* === Категории === */
-    .categories__grid { grid-template-columns: 1fr; }
+    /* === Категории: 2 колонки сохраняются на мобильном === */
+    .categories__grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
 
     /* === Где купить === */
     .where-buy__card { padding: 28px 20px; }

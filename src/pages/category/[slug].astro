@@ -846,10 +846,24 @@ function shortName(name) {
       .cat-hero__inner, .cat-products__inner, .cat-related__inner { padding: 0 16px; }
       /* Заголовки */
       .cat-hero__title { font-size: clamp(24px, 6.5vw, 36px); letter-spacing: -0.5px; }
+      /* Карточки товаров: уменьшаем фото-паддинг для читаемости на 2 колонках */
+      .prod-card__img { padding: 16px !important; }
+      .prod-card__info { height: auto; min-height: 110px; padding: 12px 14px 38px; }
+      .prod-card__name { font-size: 13px; margin-bottom: 8px; }
+      .prod-card__dots { bottom: 10px; right: 14px; }
+      .prod-card__meta-row { padding-right: 40px; }
     }
     @media (max-width: 560px) {
-      /* Товары: 2 колонки даже на маленьком телефоне */
+      /* Товары: 2 колонки, компактные карточки */
       .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .prod-card__img { padding: 12px !important; }
+      .prod-card__info { padding: 8px 10px 32px; min-height: 90px; }
+      .prod-card__article { font-size: 10px; }
+      .prod-card__name { font-size: 12px; }
+      .prod-card__dots { bottom: 8px; right: 10px; }
+      .prod-card__meta-row { padding-right: 34px; }
+      .prod-card__chip { padding: 3px 8px; font-size: 9px; }
+      /* Секции */
       .cat-hero { padding: 56px 0 36px; }
       .cat-products { padding: 28px 0 48px; }
       .cat-related { padding: 48px 0; }

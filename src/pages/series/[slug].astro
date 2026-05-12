@@ -15,13 +15,17 @@ const otherSeries = Object.values(seriesData).filter(s => s.slug !== slug);
 const defaultColor = series.colors[0];
 
 function getCardPhotoStyle(article) {
-  // Рамки — всегда 1:1 (аксиома: карточки одного размера независимо от числа постов)
-  // Уменьшаем только padding чтобы многопостные рамки не выглядели крошечными
   const m = article.match(/-0(28|29|30|31|32)\b/);
   if (!m) return '';
   const n = parseInt(m[1]);
-  const pad = { 28: '28px', 29: '20px', 30: '14px', 31: '14px', 32: '10px' }[n];
-  return `--photo-pad: ${pad}`;
+  const cfg = {
+    28: { ar: '1/1', pad: '28px' },
+    29: { ar: '2/1', pad: '12px' },
+    30: { ar: '3/1', pad: '8px'  },
+    31: { ar: '3/1', pad: '8px'  },
+    32: { ar: '4/1', pad: '6px'  },
+  }[n];
+  return `--photo-ar: ${cfg.ar}; --photo-pad: ${cfg.pad}`;
 }
 ---
 <BaseLayout title={`${series.name} — серия AWS Products`} description={series.description}>
@@ -696,7 +700,7 @@ function getCardPhotoStyle(article) {
       }
     }
     .ser-lineup__grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: start;
     }
     .ser-lineup__card {
       background: var(--white, #fff); border-radius: 12px; overflow: hidden;
@@ -715,8 +719,8 @@ function getCardPhotoStyle(article) {
     .ser-lineup__photo img { position: relative; z-index: 1; }
     .ser-lineup__photo.has-hover .ser-lineup__img {
       position: absolute;
-      inset: 28px;
-      max-width: calc(100% - 56px); max-height: calc(100% - 56px);
+      inset: var(--photo-pad, 28px);
+      max-width: calc(100% - 2 * var(--photo-pad, 28px)); max-height: calc(100% - 2 * var(--photo-pad, 28px));
       object-fit: contain;
       transition: opacity 0.4s ease, transform 0.45s cubic-bezier(.22,1,.36,1), filter 0.45s cubic-bezier(.22,1,.36,1);
     }
@@ -857,8 +861,15 @@ function getCardPhotoStyle(article) {
     }
     @media (max-width: 560px) {
       .ser-features__grid { grid-template-columns: 1fr; }
-      /* Товары: 2 колонки даже на маленьком телефоне */
+      /* Товары: 2 колонки, компактные карточки */
       .ser-lineup__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .ser-lineup__photo { padding: 12px !important; }
+      .ser-lineup__body { height: auto; min-height: 80px; padding: 8px 10px 36px; }
+      .ser-lineup__article { font-size: 10px; margin-bottom: 2px; }
+      .ser-lineup__name { font-size: 12px; }
+      .ser-lineup__dots { bottom: 10px; right: 10px; gap: 6px; }
+      .ser-lineup__dots .prod-card__dot { width: 11px; height: 11px; }
+      /* Секции */
       .ser-hero { padding: 56px 0 36px; }
       .ser-features { padding: 48px 0; }
       .ser-lineup { padding: 48px 0; }

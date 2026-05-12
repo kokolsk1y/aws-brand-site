@@ -1194,8 +1194,8 @@ a { text-decoration: none; color: inherit; }
 }
 
 .categories__card-img img {
-    max-width: 98%;
-    max-height: 98%;
+    width: 72%;
+    height: 72%;
     object-fit: contain;
     filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.12));
     transition:
@@ -1204,22 +1204,10 @@ a { text-decoration: none; color: inherit; }
       filter 0.45s cubic-bezier(.22,1,.36,1);
 }
 
-/* Уменьшаем масштаб у вытянутых товаров чтобы не вылезали за рамку */
-.categories__card[data-cat="power"] img,
-.categories__card[data-cat="cable"] img,
-.categories__card[data-cat="patch"] img {
-    transform: scale(0.92);
-}
-
 .categories__card:hover .categories__card-img img {
     translate: 0 -6px;
-    transform: scale(1.1);
+    transform: scale(1.08);
     filter: drop-shadow(0 22px 30px rgba(0, 0, 0, 0.22));
-}
-.categories__card[data-cat="power"]:hover .categories__card-img img,
-.categories__card[data-cat="cable"]:hover .categories__card-img img,
-.categories__card[data-cat="patch"]:hover .categories__card-img img {
-    transform: scale(1.0);
 }
 
 .categories__card-placeholder {

@@ -837,9 +837,22 @@ function shortName(name) {
       .cat-related__inner, .cat-cta__inner { padding: 0 24px; }
       .cat-related__grid { grid-template-columns: 1fr; }
     }
+    @media (max-width: 768px) {
+      /* Секции: убираем desktop-отступы */
+      .cat-hero { padding: 72px 0 44px; }
+      .cat-products { padding: 36px 0 60px; }
+      .cat-related { padding: 60px 0; }
+      /* Контейнеры: 16px */
+      .cat-hero__inner, .cat-products__inner, .cat-related__inner { padding: 0 16px; }
+      /* Заголовки */
+      .cat-hero__title { font-size: clamp(24px, 6.5vw, 36px); letter-spacing: -0.5px; }
+    }
     @media (max-width: 560px) {
       .cat-grid { grid-template-columns: 1fr; }
-      .cat-hero { padding: 80px 0 40px; }
+      .cat-hero { padding: 56px 0 36px; }
+      .cat-products { padding: 28px 0 48px; }
+      .cat-related { padding: 48px 0; }
+      .cat-hero__inner, .cat-products__inner, .cat-related__inner { padding: 0 12px; }
     }
   </style>
 </BaseLayout>

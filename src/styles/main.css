@@ -146,6 +146,8 @@ a { text-decoration: none; color: inherit; }
     background: none;
     border: none;
     cursor: pointer;
+    color: inherit;
+    -webkit-text-fill-color: currentColor;
     width: 32px;
     height: 22px;
     position: relative;
@@ -153,6 +155,9 @@ a { text-decoration: none; color: inherit; }
     flex-direction: column;
     justify-content: space-between;
 }
+.header.dark .header__burger span { background: var(--white); }
+.header.light .header__burger span,
+.header.scrolled .header__burger span { background: var(--black); }
 
 .header__burger span {
     display: block;
@@ -1483,22 +1488,54 @@ a { text-decoration: none; color: inherit; }
 }
 
 @media (max-width: 768px) {
-    .hero-slide__content {
-        bottom: 80px;
-        left: 24px;
-        right: 24px;
-    }
+    /* === Секции: компактные отступы вместо desktop 120–160px === */
+    .series { padding: 60px 0 44px; }
+    .categories { padding: 60px 0; }
+    .about { padding: 64px 0; }
+    .where-buy { padding: 60px 0; }
 
-    .hero-slide__title {
-        font-size: clamp(28px, 8vw, 48px);
-    }
+    /* === Контейнеры: 16px на мобильных === */
+    .series__inner,
+    .categories__inner,
+    .about__inner,
+    .where-buy__inner { padding: 0 16px; }
 
+    /* === Заголовки секций: меньше размер и gap === */
+    .series__title { font-size: clamp(24px, 6.5vw, 36px); letter-spacing: -0.5px; }
+    .categories__title { font-size: clamp(22px, 6vw, 32px); letter-spacing: -0.5px; }
+    .about__title { font-size: clamp(24px, 6.5vw, 36px); letter-spacing: -0.5px; }
+    .series__header { margin-bottom: 32px; }
+    .categories__header { margin-bottom: 28px; }
+
+    /* === Hero === */
+    .hero-slide__content { bottom: 80px; left: 24px; right: 24px; }
+    .hero-slide__title { font-size: clamp(28px, 8vw, 48px); }
     .hero-pagination { left: 24px; }
 
+    /* === Карточки серий: меньше внутренний отступ === */
+    .series__card-info { padding: 18px; }
+
+    /* === Преимущества: уже 1fr колонка с 1024px, уменьшаем контент-padding === */
+    .advantages__content { padding: 32px 16px; }
+
+    /* === Категории === */
     .categories__grid { grid-template-columns: 1fr; }
 
-    .where-buy__card { padding: 32px 24px; }
+    /* === Где купить === */
+    .where-buy__card { padding: 28px 20px; }
 
+    /* === CTA секция (Astro) === */
+    .cat-cta { padding: 64px 0 !important; }
+    .cat-cta__title { font-size: clamp(22px, 6.5vw, 32px) !important; letter-spacing: -0.5px !important; }
+    .cat-cta__sub { font-size: 15px !important; margin-bottom: 28px !important; }
+
+    /* === Доп. секции (compare / faq / docs): убираем 160px === */
+    .compare { padding: 64px 0; }
+    .faq { padding: 64px 0; }
+    .docs { padding: 64px 0; }
+    .compare__inner, .faq__inner, .docs__inner { padding: 0 16px; }
+
+    /* === Боковое меню: на весь экран === */
     .side-menu__panel {
         width: 100%;
         max-width: 100%;
@@ -1520,9 +1557,42 @@ a { text-decoration: none; color: inherit; }
 }
 
 @media (max-width: 480px) {
+    /* === Hero === */
     .hero-slide__btn { padding: 12px 24px; }
     .hero-slide__tags { gap: 6px; }
     .hero-slide__tag { font-size: 9px; padding: 6px 12px; }
+
+    /* === Секции: совсем плотно на маленьких экранах === */
+    .series { padding: 48px 0 36px; }
+    .categories { padding: 48px 0; }
+    .about { padding: 52px 0; }
+    .where-buy { padding: 48px 0; }
+
+    /* === Контейнеры: минимум 12px === */
+    .series__inner,
+    .categories__inner,
+    .about__inner,
+    .where-buy__inner { padding: 0 12px; }
+
+    /* === Заголовки: минимальные === */
+    .series__title { font-size: clamp(22px, 6vw, 30px); }
+    .categories__title { font-size: clamp(20px, 5.5vw, 28px); }
+    .about__title { font-size: clamp(22px, 6vw, 30px); }
+    .series__header { margin-bottom: 24px; }
+    .categories__header { margin-bottom: 20px; }
+
+    /* === Карточки === */
+    .series__card-info { padding: 14px; }
+    .series__card-name { font-size: 14px; }
+
+    /* === CTA === */
+    .cat-cta { padding: 48px 0 !important; }
+
+    /* === Доп. секции === */
+    .compare { padding: 48px 0; }
+    .faq { padding: 48px 0; }
+    .docs { padding: 48px 0; }
+    .compare__inner, .faq__inner, .docs__inner { padding: 0 12px; }
 }
 
 /* === GLOBAL CTA section override (для всех Astro страниц) === */

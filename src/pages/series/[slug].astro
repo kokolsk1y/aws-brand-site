@@ -14,12 +14,13 @@ const otherSeries = Object.values(seriesData).filter(s => s.slug !== slug);
 const defaultColor = series.colors[0];
 
 function getCardPhotoStyle(article) {
+  // Рамки — всегда 1:1 (аксиома: карточки одного размера независимо от числа постов)
+  // Уменьшаем только padding чтобы многопостные рамки не выглядели крошечными
   const m = article.match(/-0(28|29|30|31|32)\b/);
   if (!m) return '';
   const n = parseInt(m[1]);
-  const ar = { 28: '1/1', 29: '2/1', 30: '3/1', 31: '3/1', 32: '4/1' }[n];
-  const pad = { 28: '28px', 29: '18px', 30: '12px', 31: '12px', 32: '8px' }[n];
-  return `--photo-ar: ${ar}; --photo-pad: ${pad}`;
+  const pad = { 28: '28px', 29: '20px', 30: '14px', 31: '14px', 32: '10px' }[n];
+  return `--photo-pad: ${pad}`;
 }
 ---
 <BaseLayout title={`${series.name} — серия AWS Products`} description={series.description}>

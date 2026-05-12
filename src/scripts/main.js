@@ -123,6 +123,7 @@ let currentTimeHandler = null;
 function bindVideoEndSync() {
     if (currentTimeHandler) {
         currentTimeHandler.video.removeEventListener('timeupdate', currentTimeHandler.fn);
+        currentTimeHandler.video.removeEventListener('ended', currentTimeHandler.endFn);
         currentTimeHandler = null;
     }
     if (!SYNC_ON_ENDED.has(heroSwiper.realIndex)) return;
@@ -131,17 +132,21 @@ function bindVideoEndSync() {
     if (!activeVideo) return;
 
     let triggered = false;
+    const trigger = () => {
+        if (triggered) return;
+        triggered = true;
+        heroSwiper.slideNext();
+    };
     const fn = () => {
         if (triggered) return;
         if (!activeVideo.duration || isNaN(activeVideo.duration)) return;
         const remaining = activeVideo.duration - activeVideo.currentTime;
-        if (remaining <= SWIPER_SPEED / 1000) {
-            triggered = true;
-            heroSwiper.slideNext();
-        }
+        if (remaining <= SWIPER_SPEED / 1000) trigger();
     };
+    const endFn = () => trigger();
     activeVideo.addEventListener('timeupdate', fn);
-    currentTimeHandler = { video: activeVideo, fn };
+    activeVideo.addEventListener('ended', endFn);
+    currentTimeHandler = { video: activeVideo, fn, endFn };
 }
 
 heroSwiper.on('slideChangeTransitionEnd', bindVideoEndSync);

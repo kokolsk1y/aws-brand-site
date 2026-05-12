@@ -2714,6 +2714,12 @@ a { text-decoration: none; color: inherit; }
     .hero-slide__overlay--right {
         background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 50%, transparent 100%);
     }
+
+    /* Сдвиг видео влево: 16:9 на портрете = 1499px широкое в 390px окне.
+       33% показывает зону 427–926px оригинального кадра — левее центра,
+       где обычно находится выключатель/продукт в интерьерных съёмках. */
+    .hero-slide__video { object-position: 33% center; }
+    .hero-slide__img   { object-position: 33% center; }
 }
 
 /* ============================

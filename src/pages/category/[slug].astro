@@ -848,7 +848,8 @@ function shortName(name) {
       .cat-hero__title { font-size: clamp(24px, 6.5vw, 36px); letter-spacing: -0.5px; }
     }
     @media (max-width: 560px) {
-      .cat-grid { grid-template-columns: 1fr; }
+      /* Товары: 2 колонки даже на маленьком телефоне */
+      .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .cat-hero { padding: 56px 0 36px; }
       .cat-products { padding: 28px 0 48px; }
       .cat-related { padding: 48px 0; }

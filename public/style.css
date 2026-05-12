@@ -1932,15 +1932,15 @@ a { text-decoration: none; color: inherit; }
 
     .categories__grid { grid-template-columns: 1fr 1fr; }
 
-    .about__inner {
-        grid-template-columns: 1fr;
-        gap: 48px;
-    }
+    /* О бренде: уменьшаем gap, но НЕ стекируем */
+    .about__inner { gap: 40px; }
 
-    .advantages__slide { grid-template-columns: 1fr; }
-    .advantages__slide--reverse { direction: ltr; }
-    .advantages__media { min-height: 40svh; }
-    .advantages__content { padding: 48px 24px; }
+    /* Преимущества: горизонтально с меньшим соотношением медиа */
+    .advantages__slide { grid-template-columns: 2fr 3fr; min-height: 60svh; min-height: 60svh; }
+    .advantages__slide--reverse { direction: rtl; }
+    .advantages__slide--reverse > * { direction: ltr; }
+    .advantages__media { min-height: 60svh; }
+    .advantages__content { padding: 40px 28px; }
     .advantages__gradient { display: none; }
 
     .where-buy__grid { grid-template-columns: 1fr; }
@@ -1978,11 +1978,19 @@ a { text-decoration: none; color: inherit; }
     .hero-slide__title { font-size: clamp(28px, 8vw, 48px); }
     .hero-pagination { left: 24px; }
 
+    /* === О бренде: тесный gap, title чуть меньше === */
+    .about__inner { gap: 16px; }
+    .about__title { font-size: clamp(20px, 5vw, 28px); letter-spacing: -0.5px; }
+    .about__desc { font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
+
+    /* === Преимущества: горизонтально, меньше высота и padding === */
+    .advantages__slide { min-height: 55svh; }
+    .advantages__media { min-height: 55svh; }
+    .advantages__content { padding: 28px 16px; }
+    .advantages__title { font-size: clamp(20px, 5.5vw, 28px); letter-spacing: -0.5px; }
+
     /* === Карточки серий: меньше внутренний отступ === */
     .series__card-info { padding: 18px; }
-
-    /* === Преимущества: уже 1fr колонка с 1024px, уменьшаем контент-padding === */
-    .advantages__content { padding: 32px 16px; }
 
     /* === Категории === */
     .categories__grid { grid-template-columns: 1fr; }
@@ -2033,6 +2041,16 @@ a { text-decoration: none; color: inherit; }
     .categories { padding: 48px 0; }
     .about { padding: 52px 0; }
     .where-buy { padding: 48px 0; }
+
+    /* === О бренде: на очень узких стекируем === */
+    .about__inner { grid-template-columns: 1fr; gap: 24px; }
+    .about__image-placeholder { aspect-ratio: 3/2; }
+
+    /* === Преимущества: стекируем, медиа как баннер === */
+    .advantages__slide { grid-template-columns: 1fr; min-height: auto; }
+    .advantages__slide--reverse { direction: ltr; }
+    .advantages__media { min-height: 45vw; }
+    .advantages__content { padding: 24px 12px; }
 
     /* === Контейнеры: минимум 12px === */
     .series__inner,

@@ -95,8 +95,8 @@
     "cover": "/img/products/AWS-12982.webp",
     "filters": [
       { "key": "all", "label": "Все", "test": "true" },
-      { "key": "ftp", "label": "FTP", "test": "/\\bFTP\\b/i.test(i.name)" },
-      { "key": "utp", "label": "UTP", "test": "/\\bUTP\\b/i.test(i.name)" },
+      { "key": "ftp", "label": "FTP", "test": "i.name.includes('FTP4')" },
+      { "key": "utp", "label": "UTP", "test": "i.name.includes('UTP4')" },
       { "key": "sat", "label": "SAT", "test": "/SAT-\\d+/i.test(i.name)" },
       { "key": "cat5e", "label": "Cat.5e", "test": "i.name.includes('CAT5E')" },
       { "key": "cat6", "label": "Cat.6", "test": "i.name.includes('CAT6')" },

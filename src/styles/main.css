@@ -1554,7 +1554,7 @@ a { text-decoration: none; color: inherit; }
     /* === Категории: компактный padding для 2 колонок на 173px ширине === */
     .categories__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .categories__card-name { font-size: 14px; padding: 12px 12px 4px; }
-    .categories__card-sub { font-size: 11px; padding: 0 12px 12px; }
+    .categories__card-sub { font-size: 12px; padding: 0 12px 12px; color: var(--gray-600); }
 
     /* === Где купить === */
     .where-buy__card { padding: 24px 16px; }
@@ -1637,13 +1637,22 @@ a { text-decoration: none; color: inherit; }
 
     /* === Серии: на 480px → вертикальный layout (фото сверху) === */
     .series__card { flex-direction: column; min-height: auto; }
-    .series__card-visual { width: 100%; height: 150px; flex-shrink: 0; }
+    .series__card-visual { width: 100%; height: 180px; flex-shrink: 0; }
+    .series__grid { gap: 14px; }
     .series__card-info { padding: 14px 16px 18px; gap: 4px; }
     .series__card-name { font-size: 16px; }
     .series__card-desc { font-size: 12px; }
 
-    /* === Категории: subtitle 1 строка === */
-    .categories__card-sub { -webkit-line-clamp: 1; }
+    /* === Категории: subtitle 1 строка — полный набор для Safari === */
+    .categories__card-sub {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* === Преимущества: декоративная цифра 64px убирается === */
+    .advantages__num { display: none; }
 
     /* === CTA === */
     .cat-cta { padding: 44px 0 !important; }

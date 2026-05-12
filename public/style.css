@@ -1204,6 +1204,14 @@ a { text-decoration: none; color: inherit; }
       filter 0.45s cubic-bezier(.22,1,.36,1);
 }
 
+/* Визуально мелкие из-за вытянутой формы — компенсируем масштабом */
+.categories__card[data-cat="power"] img,
+.categories__card[data-cat="patch"] img,
+.categories__card[data-cat="cable"] img {
+    width: 95%;
+    height: 95%;
+}
+
 .categories__card:hover .categories__card-img img {
     translate: 0 -6px;
     transform: scale(1.08);

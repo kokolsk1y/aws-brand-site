@@ -267,7 +267,8 @@ const HOLD_START_MS = 2000;
 const SLIDE_MODES = {
     0: { holdStart: HOLD_START_MS },
     1: {},
-    2: {}
+    2: {},
+    3: { crossfadeAt: 2.5 }  // hero-softtouch: 7с видео, последние ~2с фриз — уходим раньше
 };
 let currentTimeHandler = null;
 let holdStartTimer = null;
@@ -349,11 +350,12 @@ function bindVideoEndSync() {
 
     let triggered = false;
     const attachCrossfadeSync = () => {
+        const threshold = (cfg.crossfadeAt !== undefined) ? cfg.crossfadeAt : SWIPER_SPEED / 1000;
         const fn = () => {
             if (triggered) return;
             if (!activeVideo.duration || isNaN(activeVideo.duration)) return;
             const remaining = activeVideo.duration - activeVideo.currentTime;
-            if (remaining <= SWIPER_SPEED / 1000) {
+            if (remaining <= threshold) {
                 triggered = true;
                 heroSwiper.slideNext();
             }

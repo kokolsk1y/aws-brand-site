@@ -328,6 +328,7 @@ a { text-decoration: none; color: inherit; }
 .hero {
     width: 100%;
     height: 100vh;
+    height: 100svh;    /* iOS 15.4+: не включает адресную строку */
     min-height: 600px;
 }
 
@@ -419,6 +420,7 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     gap: 16px;
     width: max-content;
+    will-change: transform;
 }
 .hero-marquee__row--left .hero-marquee__track {
     animation: marqueeLeft 45s linear infinite;
@@ -1913,7 +1915,7 @@ a { text-decoration: none; color: inherit; }
     .where-buy__inner,
     .footer__inner { padding: 0 24px; }
 
-    .series__grid { grid-template-columns: 1fr; gap: 16px; }
+    .series__grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
     .constructor__inner { grid-template-columns: 1fr; }
     .constructor__preview { min-height: 240px; }
 
@@ -1962,6 +1964,19 @@ a { text-decoration: none; color: inherit; }
         max-width: 100%;
         padding: 80px 24px 24px;
     }
+}
+
+@media (max-width: 600px) {
+    /* Серии: 1 колонка на телефонах */
+    .series__grid { grid-template-columns: 1fr; }
+
+    /* Конструктор: меньше padding в узком пространстве */
+    .constructor__controls { padding: 24px; }
+    .constructor__title { font-size: 20px; margin-bottom: 20px; }
+
+    /* Модалка «Где купить» */
+    .buy-modal__panel { padding: 28px 20px; }
+    .buy-modal__title { font-size: 20px; }
 }
 
 @media (max-width: 480px) {
@@ -3671,6 +3686,13 @@ a { text-decoration: none; color: inherit; }
     .hero-showcase__desc { font-size: 11px; }
     .hero-showcase__center { padding: 20px 22px; }
 }
+@media (max-width: 380px) {
+    /* На самых маленьких экранах — 1 колонка плиток */
+    .hero-showcase__row { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .hero-showcase { padding: 80px 12px 48px; gap: 8px; }
+    .hero-showcase__desc { display: none; }
+    .hero-showcase__arrow { display: none; }
+}
 
 @media (prefers-reduced-motion: reduce) {
     .hero-showcase__tile,
@@ -4062,7 +4084,7 @@ a { text-decoration: none; color: inherit; }
 .adv-ctl[data-state="pause"] .adv-ctl__play { display: none; }
 @media (max-width: 720px) {
     .advantages-controls { bottom: 20px; right: 16px; gap: 8px; }
-    .adv-ctl { width: 38px; height: 38px; }
+    .adv-ctl { width: 44px; height: 44px; }
     .adv-ctl svg { width: 14px; height: 14px; }
 }
 
@@ -4101,4 +4123,90 @@ a { text-decoration: none; color: inherit; }
     50%  { width: 65% }
     80%  { width: 83% }
     100% { width: 90% }
+}
+
+/* ============================
+   МОБИЛЬНЫЙ: сброс transform-hover
+   На iOS Safari hover «залипает» при тапе — убираем смещения
+   ============================ */
+@media (hover: none), (pointer: coarse) {
+    .series__card:hover { transform: none; box-shadow: none; }
+    .series__card[data-series="uno"]:hover { box-shadow: 0 0 0 2px var(--accent); }
+    .series__card:hover .series__photo-img {
+        translate: none;
+        transform: none;
+        filter: drop-shadow(0 14px 22px rgba(0,0,0,0.14));
+    }
+    .categories__card:hover { transform: none; box-shadow: none; }
+    .categories__card:hover .categories__card-img img,
+    .categories__card[data-cat="power"]:hover .categories__card-img img,
+    .categories__card[data-cat="cable"]:hover .categories__card-img img,
+    .categories__card[data-cat="patch"]:hover .categories__card-img img {
+        translate: none;
+        transform: none;
+        filter: drop-shadow(0 12px 20px rgba(0,0,0,0.12));
+    }
+    .hero-slide__btn:hover,
+    .btn-switch:hover,
+    .hero-slide__btn--dark:hover,
+    .btn-switch--dark:hover { transform: none; }
+    .dot:hover { transform: none; }
+    .about-stat:hover { transform: none; box-shadow: none; }
+    .doc-card:hover { transform: none; box-shadow: none; border-color: rgba(0,0,0,0.06); }
+    .advantages__media--cover:hover .advantages__cover-img { transform: none; }
+    .where-buy__card:hover .where-buy__card-arrow { transform: none; }
+    .buy-modal__link:hover { transform: none; }
+    .buy-modal__link:hover .buy-modal__link-arrow { transform: none; }
+    .adv-ctl:hover { transform: none; }
+    .footer-v2__email:hover .footer-v2__email-arrow { transform: none; }
+    .hero-showcase__tile:hover { transform: none; }
+    .hero-showcase__center:hover { transform: none; }
+}
+
+/* ============================
+   МОБИЛЬНЫЙ: touch-цели минимум 44×44px
+   ============================ */
+@media (pointer: coarse) {
+    /* Бургер: невидимая зона касания через псевдоэлемент */
+    .header__burger { position: relative; touch-action: manipulation; }
+    .header__burger::after {
+        content: '';
+        position: absolute;
+        inset: -11px -8px;
+    }
+
+    /* Цветовые точки: невидимая зона */
+    .dot { position: relative; }
+    .dot::after {
+        content: '';
+        position: absolute;
+        inset: -12px;
+    }
+
+    /* Hero пагинация: dot-стиль (легче тапать, чем линии 2px) */
+    .hero-pagination { bottom: 40px; left: 24px; gap: 10px; }
+    .hero-pagination .swiper-pagination-bullet {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.4);
+        opacity: 1;
+    }
+    .hero-pagination .swiper-pagination-bullet-active {
+        width: 24px;
+        height: 8px;
+        border-radius: 4px;
+        background: #fff;
+    }
+
+    /* Чипы конструктора */
+    .constructor__chip { padding: 12px 20px; touch-action: manipulation; }
+
+    /* Пункты бокового меню */
+    .side-menu__item { padding: 20px 0; }
+    .side-menu__toggle { padding: 20px 0; }
+    .side-menu__sub { padding: 14px 0 14px 16px; }
+
+    /* Кнопки — убираем 300ms задержку старых браузеров */
+    button, .hero-slide__btn, .btn-switch, .hero-slide__tag { touch-action: manipulation; }
 }

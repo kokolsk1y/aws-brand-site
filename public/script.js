@@ -78,7 +78,8 @@ if (typeof Lenis !== 'undefined') {
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
-        touchMultiplier: 1  // 1 вместо 2 — на iOS не дублирует native momentum
+        smoothTouch: false,   // нативный momentum на iOS, не перехватываем тач
+        touchMultiplier: 2    // стандартное значение (1 создавало ощущение «залипания»)
     });
 
     if (typeof ScrollTrigger !== 'undefined') {
@@ -336,6 +337,9 @@ function bindVideoEndSync() {
     clearSyncHandlers();
     const cfg = SLIDE_MODES[heroSwiper.realIndex];
 
+    // При prefers-reduced-motion — видео не играем, используем стандартный autoplay
+    if (prefersReducedMotion) { heroSwiper.autoplay && heroSwiper.autoplay.start(); return; }
+
     if (!cfg) { heroSwiper.autoplay && heroSwiper.autoplay.start(); return; }
 
     const activeVideo = getActiveVideo();
@@ -373,10 +377,17 @@ function bindVideoEndSync() {
 heroSwiper.on('slideChangeTransitionEnd', bindVideoEndSync);
 
 // На холодном заходе: сразу замораживаем ВСЕ hero-видео, запускаем логику.
+// При prefers-reduced-motion: видео паузируем навсегда, показываем poster.
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 (function initHeroVideos() {
     document.querySelectorAll('.hero-slide__video').forEach(v => {
         v.pause();
         try { v.currentTime = 0; } catch (e) {}
+        if (prefersReducedMotion) {
+            v.removeAttribute('autoplay');
+            v.preload = 'none';
+        }
     });
     // дождёмся готовности метаданных первого видео чтобы currentTime=0 точно применился
     const firstVideo = getActiveVideo();

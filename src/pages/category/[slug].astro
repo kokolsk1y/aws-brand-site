@@ -374,12 +374,19 @@ function shortName(name) {
           chip.classList.add('active');
           const testExpr = chip.dataset.test || 'true';
           const cards = grid.querySelectorAll('.prod-card');
-          cards.forEach(card => card.classList.add('is-filter-out'));
+          // Заранее вычисляем видимость, чтобы is-filter-out (pointer-events:none)
+          // навешивался ТОЛЬКО на скрываемые карточки — видимые остаются кликабельными
+          const visibility = new Map();
+          cards.forEach(card => {
+            const i = { name: card.dataset.name || '' };
+            let show = true;
+            try { show = new Function('i', 'return ' + testExpr)(i); } catch (e) { show = true; }
+            visibility.set(card, show);
+          });
+          cards.forEach(card => { if (!visibility.get(card)) card.classList.add('is-filter-out'); });
           setTimeout(() => {
             cards.forEach(card => {
-              const i = { name: card.dataset.name || '' };
-              let show = true;
-              try { show = new Function('i', 'return ' + testExpr)(i); } catch (e) { show = true; }
+              const show = visibility.get(card);
               card.classList.remove('is-filter-out', 'is-filter-in');
               if (show) {
                 card.style.display = '';
@@ -395,6 +402,9 @@ function shortName(name) {
               if (cnt) cnt.textContent = visibleCards.length;
               g.style.display = visibleCards.length ? '' : 'none';
             });
+            // Layout изменился — пересчитать позиции ScrollTrigger,
+            // иначе секции ниже (cat-related, cat-cta) остаются в тумане
+            if (window.ScrollTrigger) setTimeout(() => ScrollTrigger.refresh(), 50);
           }, 250);
         });
       });
@@ -592,6 +602,7 @@ function shortName(name) {
       outline-offset: -1px;
       position: relative;
     }
+    .prod-card__info { position: relative; }
     .prod-card::after {
       content: '';
       position: absolute; inset: 0;
@@ -679,12 +690,19 @@ function shortName(name) {
       padding: 4px 10px; border: 1px solid var(--gray-200, #ddd); border-radius: 100px;
       color: var(--gray-600, #666);
     }
-    /* Точки переключения фото — всегда в правом нижнем углу */
+    /* Точки переключения фото — абсолютно в правом нижнем углу info-секции,
+       не зависят от переноса чипов на новую строку */
     .prod-card__dots {
-      display: flex; gap: 6px; flex-shrink: 0;
+      position: absolute;
+      bottom: 16px;
+      right: 24px;
+      display: flex; gap: 6px;
       align-items: center;
-      margin-left: auto;
+      z-index: 2;
+      pointer-events: auto;
     }
+    /* Отступ справа в meta-row, чтобы чипы не налезали на точки */
+    .prod-card__meta-row { padding-right: 56px; }
     .prod-card__dot {
       width: 14px; height: 14px;
       border-radius: 50%;
@@ -697,7 +715,7 @@ function shortName(name) {
     .prod-card__dot.is-active {
       background: var(--accent, #8CB86B);
     }
-    .prod-card__dots { gap: 8px; }
+    .prod-card__dots { gap: 8px; } /* override 6px → 8px */
     .prod-card__photo {
       transition: opacity 0.25s ease, transform 0.45s cubic-bezier(.22,1,.36,1), filter 0.45s cubic-bezier(.22,1,.36,1);
     }

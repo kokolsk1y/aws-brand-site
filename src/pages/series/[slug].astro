@@ -9,6 +9,7 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 const series = seriesData[slug];
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const otherSeries = Object.values(seriesData).filter(s => s.slug !== slug);
 const defaultColor = series.colors[0];
@@ -48,7 +49,7 @@ function getCardPhotoStyle(article) {
               {series.colors.map((c, i) => (
                 <button
                   class={`ser-hero__color-btn ${i === 0 ? 'active' : ''}`}
-                  data-img={c.img}
+                  data-img={`${BASE}${c.img}`}
                   data-color={c.key}
                 >
                   <span class={`dot dot--${c.key}`}></span>
@@ -61,7 +62,7 @@ function getCardPhotoStyle(article) {
 
         <div class="ser-hero__media" data-reveal="zoom">
           {defaultColor ? (
-            <img id="serHeroImg" src={defaultColor.img} alt={series.name} style={`view-transition-name: series-${slug}-image`} />
+            <img id="serHeroImg" src={`${BASE}${defaultColor.img}`} alt={series.name} style={`view-transition-name: series-${slug}-image`} />
           ) : (
             <div class="ser-hero__placeholder">Скоро</div>
           )}

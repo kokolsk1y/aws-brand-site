@@ -83,7 +83,7 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
                         <a href="/aws-brand-site/category/extensions-home" class="side-menu__sub" data-preview="/aws-brand-site/img/products/AWS-H03-1,5.webp" data-preview-title="Удлинители бытовые">Удлинители бытовые</a>
                         <a href="/aws-brand-site/category/extensions-garden" class="side-menu__sub" data-preview="/aws-brand-site/img/products/AWS-HZ2-01-15.webp" data-preview-title="Удлинители садовые">Удлинители садовые</a>
                         <a href="/aws-brand-site/category/power-connectors" class="side-menu__sub" data-preview="/aws-brand-site/img/products/SN-33.webp" data-preview-title="Силовые разъёмы">Силовые разъёмы</a>
-                        <a href="/aws-brand-site/category/clamps" class="side-menu__sub" data-preview="/aws-brand-site/img/products/SN-222415.webp" data-preview-title="Клеммы">Клеммы</a>
+                        <a href="/aws-brand-site/category/clamps" class="side-menu__sub" data-preview="/aws-brand-site/img/products/SN-222415.png" data-preview-title="Клеммы">Клеммы</a>
                         <a href="/aws-brand-site/category/patch-cords" class="side-menu__sub" data-preview="/aws-brand-site/img/products/AWS-13010.webp" data-preview-title="Патч-корды">Патч-корды</a>
                         <a href="/aws-brand-site/category/cables" class="side-menu__sub" data-preview="/aws-brand-site/img/products/AWS-12982.webp" data-preview-title="Кабель">Кабель</a>
                     </div>
@@ -392,7 +392,11 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
                 end: `top ${70 - startOffset * 0.5}%`,
                 scrub: 0.5,
                 invalidateOnRefresh: true,
-                onUpdate: self => el.style.setProperty('--reveal-progress', self.progress.toFixed(3))
+                onUpdate: self => {
+                  const cur = parseFloat(el.style.getPropertyValue('--reveal-progress') || '0');
+                  const next = parseFloat(self.progress.toFixed(3));
+                  if (next > cur) el.style.setProperty('--reveal-progress', self.progress.toFixed(3));
+                }
               });
             });
 

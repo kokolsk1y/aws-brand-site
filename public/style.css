@@ -3900,7 +3900,7 @@ a { text-decoration: none; color: inherit; }
 
 [data-reveal] {
     --p: var(--reveal-progress, 0);
-    will-change: translate, scale, opacity, filter;
+    will-change: translate, scale, opacity;
 }
 
 /* focus — наводка объектива: blur+scale → чёткость. Глаз притягивается к буквам.

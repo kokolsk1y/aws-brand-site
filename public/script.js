@@ -102,7 +102,7 @@ function scrollToHashTarget() {
         const rect = target.getBoundingClientRect();
         const y = rect.top + window.pageYOffset - 80;
         window.scrollTo(0, y);
-        if (lenis && lenis.scrollTo) lenis.scrollTo(target, { duration: 0.1, immediate: true });
+        if (lenis && lenis.scrollTo) lenis.scrollTo(target, { duration: 0.1, immediate: true, offset: -80 });
     };
 
     // 3 попытки: сразу, через 300мс, через 800мс — чтобы накрыть все сценарии (видео ещё грузится,
@@ -144,8 +144,11 @@ document.querySelectorAll('a[href^="/#"], a[href^="#"], a.header__logo').forEach
         history.pushState(null, '', hash);
 
         const scroll = () => {
-            if (lenis && lenis.scrollTo) lenis.scrollTo(target, { duration: 1.1 });
-            else target.scrollIntoView({ behavior: 'smooth' });
+            if (lenis && lenis.scrollTo) lenis.scrollTo(target, { duration: 1.1, offset: -80 });
+            else {
+                const r = target.getBoundingClientRect();
+                window.scrollTo({ top: r.top + window.pageYOffset - 80, behavior: 'smooth' });
+            }
         };
 
         const isInSideMenu = a.closest('.side-menu');
@@ -177,6 +180,7 @@ function closeMenu() {
     sideMenu.classList.remove('open');
     if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
     if (lenis) lenis.start();
+    if (window.ScrollTrigger) setTimeout(() => ScrollTrigger.refresh(), 50);
 }
 
 if (menuToggle) menuToggle.addEventListener('click', openMenu);
@@ -696,8 +700,11 @@ window.addEventListener('resize', () => {
         if (advantagesSwiper && advantagesSwiper.slideToLoop) {
             advantagesSwiper.slideToLoop(idx, 0);
         }
-        if (lenis && lenis.scrollTo) lenis.scrollTo(section, { duration: 1.1 });
-        else section.scrollIntoView({ behavior: 'smooth' });
+        if (lenis && lenis.scrollTo) lenis.scrollTo(section, { duration: 1.1, offset: -80 });
+        else {
+            const r = section.getBoundingClientRect();
+            window.scrollTo({ top: r.top + window.pageYOffset - 80, behavior: 'smooth' });
+        }
     });
 })();
 
@@ -772,7 +779,8 @@ document.querySelectorAll('.series__card-visual, .categories__card-img').forEach
         '.faq .label', '.faq__title',
         '.faq .faq-item'
     ];
-    const els = document.querySelectorAll(autoTargets.join(','));
+    const els = Array.from(document.querySelectorAll(autoTargets.join(',')))
+        .filter(el => !el.hasAttribute('data-reveal'));
     if (!els.length) return;
     els.forEach((el, i) => {
         el.classList.add('js-reveal');
@@ -1124,7 +1132,11 @@ document.querySelectorAll('.series__card-visual, .categories__card-img').forEach
             start: 'top 95%',
             end: 'top 70%',
             scrub: 0.5,
-            onUpdate: self => el.style.setProperty('--reveal-progress', self.progress.toFixed(3))
+            onUpdate: self => {
+                const cur = parseFloat(el.style.getPropertyValue('--reveal-progress') || '0');
+                const next = parseFloat(self.progress.toFixed(3));
+                if (next > cur) el.style.setProperty('--reveal-progress', self.progress.toFixed(3));
+            }
         });
     });
 })();

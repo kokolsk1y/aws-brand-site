@@ -1990,47 +1990,56 @@ a { text-decoration: none; color: inherit; }
     .advantages__title { font-size: clamp(20px, 5.5vw, 28px); letter-spacing: -0.5px; }
 
     /* === Серии: горизонтальные карточки (фото слева, текст справа) === */
-    .series__grid { grid-template-columns: 1fr; gap: 12px; margin-bottom: 24px; }
-    .series__card { display: flex; flex-direction: row; align-items: stretch; min-height: 130px; }
+    .series__grid { grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
+    .series__card { display: flex; flex-direction: row; align-items: stretch; min-height: 110px; }
     .series__card-visual {
-        width: 130px;
+        width: 120px;
         flex-shrink: 0;
         aspect-ratio: unset;
         align-self: stretch;
     }
     .series__card-info {
         flex: 1;
-        padding: 16px 20px;
+        padding: 14px 18px;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 6px;
+        gap: 5px;
     }
-    .series__card-name { font-size: 18px; margin-bottom: 0; }
-    .series__card-desc { font-size: 13px; line-height: 1.5; margin-bottom: 0; }
+    .series__card-name { font-size: 17px; margin-bottom: 0; }
+    .series__card-desc { font-size: 12px; line-height: 1.45; margin-bottom: 0; }
 
-    /* === Категории: 2 колонки сохраняются на мобильном === */
-    .categories__grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    /* === Конструктор: aspect-ratio 1/1 убивает мобильный — квадрат 360×360px === */
+    .constructor__preview { aspect-ratio: unset; max-height: 200px; min-height: unset !important; }
+    .constructor__inner { min-height: auto; }
+    .constructor__controls { padding: 24px 20px; }
+    .constructor__title { font-size: 18px; margin-bottom: 16px; }
+
+    /* === Категории: компактный padding для 2 колонок на 173px ширине === */
+    .categories__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .categories__card-name { font-size: 14px; padding: 12px 12px 4px; }
+    .categories__card-sub { font-size: 11px; padding: 0 12px 12px; }
 
     /* === Где купить === */
-    .where-buy__card { padding: 28px 20px; }
+    .where-buy__card { padding: 24px 16px; }
+    .where-buy__grid { gap: 10px; }
 
     /* === CTA секция (Astro) === */
-    .cat-cta { padding: 64px 0 !important; }
+    .cat-cta { padding: 56px 0 !important; }
     .cat-cta__title { font-size: clamp(22px, 6.5vw, 32px) !important; letter-spacing: -0.5px !important; }
-    .cat-cta__sub { font-size: 15px !important; margin-bottom: 28px !important; }
+    .cat-cta__sub { font-size: 15px !important; margin-bottom: 24px !important; }
 
     /* === Доп. секции (compare / faq / docs): убираем 160px === */
-    .compare { padding: 64px 0; }
-    .faq { padding: 64px 0; }
-    .docs { padding: 64px 0; }
+    .compare { padding: 56px 0; }
+    .faq { padding: 56px 0; }
+    .docs { padding: 56px 0; }
     .compare__inner, .faq__inner, .docs__inner { padding: 0 16px; }
 
     /* === Боковое меню: на весь экран === */
     .side-menu__panel {
         width: 100%;
         max-width: 100%;
-        padding: 80px 24px 24px;
+        padding: 80px 20px 20px;
     }
 }
 
@@ -2059,15 +2068,19 @@ a { text-decoration: none; color: inherit; }
     .about { padding: 52px 0; }
     .where-buy { padding: 48px 0; }
 
-    /* === О бренде: на очень узких стекируем === */
-    .about__inner { grid-template-columns: 1fr; gap: 24px; }
-    .about__image-placeholder { aspect-ratio: 3/2; }
+    /* === О бренде: на 480px стекируем, скрываем placeholder === */
+    .about__inner { grid-template-columns: 1fr; gap: 20px; }
+    .about__image-placeholder { display: none; }
 
     /* === Преимущества: стекируем, медиа как баннер === */
     .advantages__slide { grid-template-columns: 1fr; min-height: auto; }
     .advantages__slide--reverse { direction: ltr; }
-    .advantages__media { min-height: 45vw; }
-    .advantages__content { padding: 24px 12px; }
+    .advantages__media { min-height: 40vw; }
+    .advantages__content { padding: 20px 12px; }
+
+    /* === Конструктор: ещё компактнее === */
+    .constructor__preview { max-height: 150px; }
+    .constructor__controls { padding: 20px 16px; }
 
     /* === Контейнеры: минимум 12px === */
     .series__inner,
@@ -2076,23 +2089,27 @@ a { text-decoration: none; color: inherit; }
     .where-buy__inner { padding: 0 12px; }
 
     /* === Заголовки: минимальные === */
-    .series__title { font-size: clamp(22px, 6vw, 30px); }
-    .categories__title { font-size: clamp(20px, 5.5vw, 28px); }
-    .about__title { font-size: clamp(22px, 6vw, 30px); }
-    .series__header { margin-bottom: 24px; }
-    .categories__header { margin-bottom: 20px; }
+    .series__title { font-size: clamp(20px, 5.5vw, 28px); }
+    .categories__title { font-size: clamp(18px, 5vw, 24px); }
+    .about__title { font-size: clamp(20px, 5.5vw, 28px); }
+    .series__header { margin-bottom: 20px; }
+    .categories__header { margin-bottom: 16px; }
 
-    /* === Карточки === */
-    .series__card-info { padding: 14px; }
-    .series__card-name { font-size: 14px; }
+    /* === Серии: ещё компактнее на узких === */
+    .series__card { min-height: 96px; }
+    .series__card-visual { width: 100px; }
+    .series__card-info { padding: 12px 14px; }
+    .series__card-name { font-size: 15px; }
+    .series__card-desc { font-size: 11px; }
 
     /* === CTA === */
-    .cat-cta { padding: 48px 0 !important; }
+    .cat-cta { padding: 44px 0 !important; }
+    .cat-cta__title { font-size: clamp(20px, 6vw, 28px) !important; }
 
     /* === Доп. секции === */
-    .compare { padding: 48px 0; }
-    .faq { padding: 48px 0; }
-    .docs { padding: 48px 0; }
+    .compare { padding: 44px 0; }
+    .faq { padding: 44px 0; }
+    .docs { padding: 44px 0; }
     .compare__inner, .faq__inner, .docs__inner { padding: 0 12px; }
 }
 

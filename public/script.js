@@ -330,7 +330,8 @@ heroSwiper.on('slideChangeTransitionStart', () => {
         freezeFirstFrame(active);
     } else {
         try { active.currentTime = 0; } catch (e) {}
-        active.play();
+        const pp = active.play();
+        if (pp) pp.catch(() => {}); // mobile: play() returns Promise, may be blocked
     }
 });
 
@@ -368,7 +369,8 @@ function bindVideoEndSync() {
         freezeFirstFrame(activeVideo);
         holdStartTimer = setTimeout(() => {
             releaseFreeze(activeVideo);
-            activeVideo.play();
+            const pp2 = activeVideo.play();
+            if (pp2) pp2.catch(() => {});
             attachCrossfadeSync();
         }, cfg.holdStart);
     } else {

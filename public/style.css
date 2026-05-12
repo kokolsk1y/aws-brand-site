@@ -1332,6 +1332,7 @@ a { text-decoration: none; color: inherit; }
     display: grid;
     grid-template-columns: 1fr 1fr;
     min-height: 80vh;
+    min-height: 80svh;
     position: relative;
 }
 
@@ -1368,6 +1369,7 @@ a { text-decoration: none; color: inherit; }
 /* Слайд 01/04: полноразмерное фото */
 .advantages__media--cover {
     min-height: 55vh;
+    min-height: 55svh;
     overflow: hidden;
 }
 .advantages__cover-img {
@@ -1392,6 +1394,7 @@ a { text-decoration: none; color: inherit; }
 .advantages__media--color-switch {
     background: radial-gradient(circle at 50% 45%, #ffffff 0%, #d4d4d2 65%, #bcbcba 100%);
     min-height: 55vh;
+    min-height: 55svh;
     overflow: hidden;
     position: relative;
 }
@@ -1425,6 +1428,7 @@ a { text-decoration: none; color: inherit; }
 .advantages__media--exploded {
     background: radial-gradient(ellipse at 35% 45%, #f1f1f0 0%, #d4d4d2 55%, #bcbcba 100%);
     min-height: 55vh;
+    min-height: 55svh;
     overflow: hidden;
     position: relative;
 }
@@ -1528,6 +1532,7 @@ a { text-decoration: none; color: inherit; }
 .advantages__media--lever {
     background: radial-gradient(ellipse at 50% 45%, #ffffff 0%, #d4d4d2 65%, #bcbcba 100%);
     min-height: 55vh;
+    min-height: 55svh;
     overflow: hidden;
     position: relative;
     padding: 40px 48px;
@@ -1928,7 +1933,7 @@ a { text-decoration: none; color: inherit; }
 
     .advantages__slide { grid-template-columns: 1fr; }
     .advantages__slide--reverse { direction: ltr; }
-    .advantages__media { min-height: 40vh; }
+    .advantages__media { min-height: 40svh; }
     .advantages__content { padding: 48px 24px; }
     .advantages__gradient { display: none; }
 
@@ -4161,6 +4166,8 @@ a { text-decoration: none; color: inherit; }
     .footer-v2__email:hover .footer-v2__email-arrow { transform: none; }
     .hero-showcase__tile:hover { transform: none; }
     .hero-showcase__center:hover { transform: none; }
+    /* Callout-выноски всегда видны на тач (hover-диммирование не работает) */
+    .advantages__decomp:has(.adv-callout:hover) .adv-callout { opacity: 1; }
 }
 
 /* ============================
@@ -4206,6 +4213,15 @@ a { text-decoration: none; color: inherit; }
     .side-menu__item { padding: 20px 0; }
     .side-menu__toggle { padding: 20px 0; }
     .side-menu__sub { padding: 14px 0 14px 16px; }
+
+    /* Кнопка закрытия меню: минимум 44×44 */
+    .side-menu__close {
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
     /* Кнопки — убираем 300ms задержку старых браузеров */
     button, .hero-slide__btn, .btn-switch, .hero-slide__tag { touch-action: manipulation; }

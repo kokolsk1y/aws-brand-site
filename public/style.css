@@ -1194,8 +1194,8 @@ a { text-decoration: none; color: inherit; }
 }
 
 .categories__card-img img {
-    width: 72%;
-    height: 72%;
+    width: 85%;
+    height: 85%;
     object-fit: contain;
     filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.12));
     transition:

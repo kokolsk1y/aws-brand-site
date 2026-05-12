@@ -114,9 +114,9 @@ heroSwiper.on('slideChangeTransitionStart', () => {
     }
 });
 
-// Автопереход слайдов 2 и 3 — запускаем crossfade ЗА `SWIPER_SPEED` до окончания видео,
+// Автопереход слайдов 2, 3 и 4 — запускаем crossfade ЗА `SWIPER_SPEED` до окончания видео,
 // чтобы переход закончился ровно к концу видео и стоп-кадр не был виден.
-const SYNC_ON_ENDED = new Set([1, 2]);
+const SYNC_ON_ENDED = new Set([1, 2, 3]);
 const SWIPER_SPEED = 1000; // мс crossfade (должно совпадать с конфигом выше)
 let currentTimeHandler = null;
 

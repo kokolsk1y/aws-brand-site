@@ -61,7 +61,9 @@
                 <div class="side-menu__group">
                     <button class="side-menu__toggle">Ассортимент <span class="side-menu__arrow">&#9662;</span></button>
                     <div class="side-menu__dropdown">
-                        <a href="#series" class="side-menu__sub">Розетки и выключатели</a>
+                        <a href="/aws-brand-site/series/uno" class="side-menu__sub">Серия УНО</a>
+                        <a href="/aws-brand-site/series/aura" class="side-menu__sub">Серия АУРА</a>
+                        <a href="/aws-brand-site/series/design" class="side-menu__sub">Серия ДИЗАЙН</a>
                         <a href="/aws-brand-site/category/extensions-home" class="side-menu__sub">Удлинители бытовые</a>
                         <a href="/aws-brand-site/category/extensions-garden" class="side-menu__sub">Удлинители садовые</a>
                         <a href="/aws-brand-site/category/power-connectors" class="side-menu__sub">Силовые разъёмы</a>
@@ -138,15 +140,13 @@
                     </div>
                 </div>
 
-                <!-- Слайд 4: Soft-touch — velvet-ассоциация (заглушка под будущий ролик с прикосновением) -->
-                <div class="swiper-slide">
+                <!-- Слайд 4: Soft-touch — ролик с прикосновением -->
+                <div class="swiper-slide" data-swiper-autoplay="9000">
                     <div class="hero-slide hero-slide--right" data-theme="dark">
-                        <div class="hero-slide__bg hero-slide__bg--velvet">
-                            <div class="hero-velvet" aria-hidden="true">
-                                <span class="hero-velvet__glow hero-velvet__glow--a"></span>
-                                <span class="hero-velvet__glow hero-velvet__glow--b"></span>
-                                <span class="hero-velvet__weave"></span>
-                            </div>
+                        <div class="hero-slide__bg">
+                            <video muted playsinline preload="none" class="hero-slide__video">
+                                <source src="/aws-brand-site/hero-softtouch.mp4" type="video/mp4">
+                            </video>
                             <div class="hero-slide__overlay hero-slide__overlay--right"></div>
                         </div>
                         <div class="hero-slide__content hero-slide__content--right">

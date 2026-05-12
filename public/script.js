@@ -268,7 +268,7 @@ const SLIDE_MODES = {
     0: { holdStart: HOLD_START_MS },
     1: {},
     2: {},
-    3: { crossfadeAt: 2.5 }  // hero-softtouch: 7с видео, последние ~2с фриз — уходим раньше
+    3: { crossfadeAt: 2.0 }  // hero-softtouch: 12с видео, уходим за 2с до конца
 };
 let currentTimeHandler = null;
 let holdStartTimer = null;

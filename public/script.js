@@ -268,7 +268,7 @@ const SLIDE_MODES = {
     0: { holdStart: HOLD_START_MS },
     1: {},
     2: {},
-    3: { crossfadeAt: 1.2 }   // hero-softtouch: 5с видео, crossfade на 3.8с
+    3: { crossfadeAt: 1.2, playbackRate: 0.714 }   // hero-softtouch: 5с видео × 1.4 замедление → crossfade на wall-time 5.32с
 };
 let currentTimeHandler = null;
 let holdStartTimer = null;
@@ -331,7 +331,8 @@ heroSwiper.on('slideChangeTransitionStart', () => {
     } else {
         try { active.currentTime = 0; } catch (e) {}
         const pp = active.play();
-        if (pp) pp.catch(() => {}); // mobile: play() returns Promise, may be blocked
+        if (pp) pp.catch(() => {});
+        if (cfg && cfg.playbackRate) active.playbackRate = cfg.playbackRate;
     }
 });
 
@@ -371,6 +372,7 @@ function bindVideoEndSync() {
             releaseFreeze(activeVideo);
             const pp2 = activeVideo.play();
             if (pp2) pp2.catch(() => {});
+            if (cfg.playbackRate) activeVideo.playbackRate = cfg.playbackRate;
             attachCrossfadeSync();
         }, cfg.holdStart);
     } else {

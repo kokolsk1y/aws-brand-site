@@ -4307,6 +4307,116 @@ a { text-decoration: none; color: inherit; }
     .hero-velvet__glow--a, .hero-velvet__glow--b { animation: none; }
 }
 
+/* --- Hero 4: плавающий выключатель АУРА --- */
+.hero-product-float {
+    position: absolute;
+    z-index: 3;
+    right: 60px;
+    top: 80px;      /* под хедером */
+    bottom: 340px;  /* над блоком текста */
+    width: 480px;
+    pointer-events: none;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* правый край img = правый край враппера = right: 60px */
+}
+.hero-product-float__glow {
+    position: absolute;
+    inset: -30px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.10) 0%, transparent 68%);
+    pointer-events: none;
+}
+.hero-product-float__img {
+    flex: 0 1 auto;
+    min-height: 0;
+    height: 100%;
+    width: auto;
+    max-height: 480px;
+    max-width: 100%;
+    display: block;
+}
+.hero-product-float__shadow {
+    flex-shrink: 0;
+    align-self: center;
+    width: 52%;
+    height: 18px;
+    background: rgba(0,0,0,0.28);
+    border-radius: 50%;
+    filter: blur(14px);
+    margin: 8px 0 0;
+    transform-origin: center;
+}
+
+/* Всё стартует одновременно: вход (0.85s) → loop (5.4s infinite) */
+.hero-product-float--active { opacity: 1; }
+
+.hero-product-float--active .hero-product-float__img {
+    animation:
+        heroProductEnter   0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+        heroProductFloat   5.4s  ease-in-out 0.85s infinite;
+}
+.hero-product-float--active .hero-product-float__shadow {
+    animation:
+        heroProductShadowEnter 0.85s ease-out forwards,
+        heroProductShadow      5.4s ease-in-out 0.85s infinite;
+}
+.hero-product-float--active .hero-product-float__glow {
+    animation:
+        heroProductGlowEnter 0.85s ease-out forwards,
+        heroProductGlow      5.4s ease-in-out 0.85s infinite;
+}
+
+/* Вход */
+@keyframes heroProductEnter {
+    from { transform: translateY(26px); opacity: 0; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25)); }
+    to   { transform: translateY(0);    opacity: 1; filter: drop-shadow(0 16px 22px rgba(0,0,0,0.52)) drop-shadow(0 5px 10px rgba(0,0,0,0.28)); }
+}
+@keyframes heroProductShadowEnter {
+    from { transform: scaleX(0.3); opacity: 0;    filter: blur(6px); }
+    to   { transform: scaleX(1);   opacity: 0.28; filter: blur(14px); }
+}
+@keyframes heroProductGlowEnter {
+    from { opacity: 0;   transform: scale(0.85); }
+    to   { opacity: 0.5; transform: scale(0.94); }
+}
+
+/* Loop */
+@keyframes heroProductFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        filter: drop-shadow(0 16px 22px rgba(0,0,0,0.52)) drop-shadow(0 5px 10px rgba(0,0,0,0.28));
+    }
+    38% {
+        transform: translateY(-14px) rotate(1.1deg);
+        filter: drop-shadow(0 30px 42px rgba(0,0,0,0.22)) drop-shadow(0 14px 22px rgba(0,0,0,0.11));
+    }
+    68% {
+        transform: translateY(-8px) rotate(-0.6deg);
+        filter: drop-shadow(0 22px 30px rgba(0,0,0,0.30)) drop-shadow(0 8px 14px rgba(0,0,0,0.16));
+    }
+}
+@keyframes heroProductShadow {
+    0%, 100% { transform: scaleX(1);     opacity: 0.28; filter: blur(14px); }
+    38%       { transform: scaleX(0.60); opacity: 0.11; filter: blur(22px); }
+    68%       { transform: scaleX(0.75); opacity: 0.17; filter: blur(17px); }
+}
+@keyframes heroProductGlow {
+    0%, 100% { opacity: 0.5; transform: scale(0.94); }
+    50%       { opacity: 1;   transform: scale(1.07); }
+}
+
+@media (max-width: 720px) {
+    .hero-product-float { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero-product-float--active .hero-product-float__img,
+    .hero-product-float--active .hero-product-float__shadow,
+    .hero-product-float--active .hero-product-float__glow { animation: none; opacity: 1; }
+    .hero-product-float--active { opacity: 1; }
+}
+
 /* --- Advantages: панель навигации (next + pause) --- */
 .advantages-controls {
     position: absolute;

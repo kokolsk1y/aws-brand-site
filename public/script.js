@@ -407,6 +407,36 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 // Начальная анимация
 setTimeout(animateSlideContent, 300);
 
+// ─── Hero 4: плавающий выключатель АУРА ───
+const auraFloat = document.getElementById('heroAuraFloat');
+const AURA_SLIDE = 3;
+
+function auraFloatEnter() {
+    if (!auraFloat || heroSwiper.realIndex !== AURA_SLIDE) return;
+    gsap.killTweensOf(auraFloat);
+    gsap.set(auraFloat, { clearProps: 'opacity' }); // убираем inline от предыдущего leave
+    auraFloat.classList.remove('hero-product-float--active');
+    void auraFloat.offsetWidth; // reflow → перезапускает @keyframes
+    auraFloat.classList.add('hero-product-float--active');
+}
+function auraFloatLeave() {
+    if (!auraFloat) return;
+    gsap.killTweensOf(auraFloat);
+    // Тает вместе со слайдом (~1s crossfade)
+    gsap.to(auraFloat, {
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power2.out',
+        onComplete: () => auraFloat.classList.remove('hero-product-float--active')
+    });
+}
+
+heroSwiper.on('slideChangeTransitionStart', () => {
+    if (heroSwiper.realIndex === AURA_SLIDE) auraFloatEnter();
+    else auraFloatLeave();
+});
+
+
 
 // ─── HEADER: scrolled state ───
 
@@ -534,25 +564,16 @@ function updateConstructorPreview() {
     const src = constructorMap[key];
     if (!constructorPreview || !constructorPlaceholder) return;
 
-    const apply = () => {
+    constructorPreview.classList.add('fade-out');
+    setTimeout(() => {
         if (src) {
             constructorPreview.src = src;
             showConstructorImage();
         } else {
             showConstructorPlaceholder();
         }
-    };
-
-    if (document.startViewTransition) {
-        constructorPreview.style.viewTransitionName = 'constructor-product';
-        document.startViewTransition(() => apply());
-    } else {
-        constructorPreview.classList.add('fade-out');
-        requestAnimationFrame(() => {
-            apply();
-            requestAnimationFrame(() => constructorPreview.classList.remove('fade-out'));
-        });
-    }
+        requestAnimationFrame(() => constructorPreview.classList.remove('fade-out'));
+    }, 180);
 }
 
 document.querySelectorAll('.constructor__option').forEach(option => {

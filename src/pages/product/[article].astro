@@ -648,6 +648,19 @@ const marketplaceLinks = [
             }, { signal: window._prodKbdCtrl.signal });
           }
         }
+
+        // Маркетплейсы: на мобиле открываем в том же окне (Universal Links / App Links перехватят)
+        document.querySelectorAll('.prod-buy-btn').forEach(btn => {
+          if (btn._marketplaceInit) return;
+          btn._marketplaceInit = true;
+          btn.addEventListener('click', function(e) {
+            const isMobile = /iphone|ipad|ipod|android/i.test(navigator.userAgent);
+            if (isMobile) {
+              e.preventDefault();
+              window.location.href = this.href;
+            }
+          });
+        });
       }
 
       document.addEventListener('astro:page-load', initProductPage);

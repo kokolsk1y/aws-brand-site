@@ -90,11 +90,11 @@ function getCardPhotoStyle(article) {
             <button class="ser-lineup__chip" data-color="white">Белые</button>
             <button class="ser-lineup__chip" data-color="black">Чёрные</button>
           </div>
-          <button class="ser-lineup__toggle-all" id="serToggleAll" type="button" aria-label="Свернуть все группы">
-            <span class="ser-lineup__toggle-all-text">Свернуть все</span>
-            <svg viewBox="0 0 12 12" class="ser-lineup__toggle-all-icon" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
         </div>
+        <button class="ser-lineup__toggle-all" id="serToggleAll" type="button" aria-label="Свернуть все группы">
+          <span class="ser-lineup__toggle-all-text">Свернуть все</span>
+          <svg viewBox="0 0 12 12" class="ser-lineup__toggle-all-icon" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
 
         {[
           { key: 'switches', title: 'Выключатели', items: series.groups.switches },
@@ -598,9 +598,9 @@ function getCardPhotoStyle(article) {
     .ser-lineup__dot { opacity: 0.4; }
 
     .ser-lineup__controls {
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex; align-items: center;
       gap: 16px; flex-wrap: wrap;
-      margin-bottom: 48px;
+      margin-bottom: 16px;
     }
     .ser-lineup__filter {
       display: flex; gap: 10px; flex-wrap: wrap;
@@ -613,6 +613,7 @@ function getCardPhotoStyle(article) {
       border-radius: 100px;
       color: var(--gray-600, #666); cursor: pointer;
       transition: all 0.2s ease;
+      margin-top: 20px; margin-bottom: 32px;
     }
     .ser-lineup__toggle-all:hover {
       border-color: var(--black, #111);
@@ -793,7 +794,7 @@ function getCardPhotoStyle(article) {
 
     /* Cross-sell */
     .ser-related { background: var(--warm-100, #f7f4ef); padding: 100px 0; }
-    .ser-related__inner { max-width: 880px; margin: 0 auto; padding: 0 60px; }
+    .ser-related__inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
     .ser-related .label { margin-bottom: 16px; }
     .ser-related__title {
       font-size: clamp(36px, 4vw, 64px);
@@ -802,6 +803,7 @@ function getCardPhotoStyle(article) {
     }
     .ser-related__grid {
       display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+      max-width: 760px;
     }
     .ser-related__card {
       text-decoration: none; color: inherit;
@@ -859,10 +861,15 @@ function getCardPhotoStyle(article) {
       .ser-hero__inner, .ser-features__inner, .ser-lineup__inner, .ser-related__inner { padding: 0 16px; }
       /* Заголовки */
       .ser-features__title, .ser-lineup__title, .ser-related__title { font-size: clamp(24px, 6.5vw, 36px); letter-spacing: -0.5px; }
-      /* Фильтр чипы: горизонтальный скролл в одну строку */
-      .ser-lineup__controls { gap: 10px; margin-bottom: 28px; align-items: center; flex-wrap: nowrap; }
-      .ser-lineup__filter { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex: 1; min-width: 0; }
-      .ser-lineup__filter::-webkit-scrollbar { display: none; }
+      /* Фильтр на мобиле: sticky к хедеру, полупрозрачный фон как у хедера */
+      .ser-lineup__controls {
+        position: sticky; top: 80px; z-index: 5;
+        background: rgba(255, 255, 255, 0.55); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+        flex-wrap: nowrap; gap: 8px; margin-bottom: 0;
+        margin-left: -16px; padding: 10px 16px 8px; width: calc(100% + 32px);
+      }
+      .ser-lineup__toggle-all { margin-top: 16px; margin-bottom: 20px; }
       .ser-lineup__chip { font-size: 10px; padding: 7px 16px; }
     }
     @media (max-width: 560px) {
@@ -881,6 +888,9 @@ function getCardPhotoStyle(article) {
       .ser-lineup { padding: 48px 0; }
       .ser-related { padding: 48px 0; }
       .ser-hero__inner, .ser-features__inner, .ser-lineup__inner, .ser-related__inner { padding: 0 12px; }
+    }
+    @media (max-width: 480px) {
+      .ser-lineup__controls { top: 56px; margin-left: -12px; padding: 10px 12px 8px; width: calc(100% + 24px); }
     }
   </style>
 </BaseLayout>

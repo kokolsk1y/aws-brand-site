@@ -43,10 +43,9 @@ function buildGroups(items, groupDefs) {
 }
 const productGroups = buildGroups(products, category.groups);
 
-// Cross-sell: 3 случайные другие категории
+// Cross-sell: все остальные категории (до 5 на странице)
 const otherCats = Object.values(categoriesMeta)
-  .filter(c => c.slug !== slug)
-  .slice(0, 3);
+  .filter(c => c.slug !== slug);
 
 // Парсинг характеристик — универсально для всех категорий
 function extractMeta(name) {
@@ -157,9 +156,11 @@ function shortName(name) {
     <div class="cat-products__inner">
       {category.filters && (
         <div class="cat-filters" id="catFilters">
-          {category.filters.map(f => (
-            <button class={`cat-filters__chip ${f.key === 'all' ? 'active' : ''}`} data-filter={f.key} data-test={f.test}>{f.label}</button>
-          ))}
+          <div class="cat-filters__scroll">
+            {category.filters.map(f => (
+              <button class={`cat-filters__chip ${f.key === 'all' ? 'active' : ''}`} data-filter={f.key} data-test={f.test}>{f.label}</button>
+            ))}
+          </div>
         </div>
       )}
 
@@ -554,9 +555,13 @@ function shortName(name) {
     .cat-products__inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
 
     .cat-filters {
-      display: flex; gap: 10px; flex-wrap: wrap;
       margin-bottom: 48px; position: sticky; top: 80px; z-index: 5;
-      background: var(--white, #fff); padding: 16px 0; border-bottom: 1px solid var(--gray-100, #f0eee9);
+      background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .cat-filters__scroll {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      padding: 16px 0;
     }
     .cat-filters__chip {
       font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
@@ -777,7 +782,7 @@ function shortName(name) {
       margin-bottom: 56px; color: var(--black, #111);
     }
     .cat-related__grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px;
     }
     .cat-related__card {
       text-decoration: none; color: inherit;
@@ -788,7 +793,7 @@ function shortName(name) {
     .cat-related__img {
       aspect-ratio: 1/1; background: var(--bg-product, #d4d4d2);
       display: flex; align-items: center; justify-content: center;
-      padding: 36px; overflow: hidden;
+      padding: 24px; overflow: hidden;
     }
     .cat-related__img img {
       max-width: 100%; max-height: 100%; object-fit: contain;
@@ -802,12 +807,12 @@ function shortName(name) {
       filter: drop-shadow(0 18px 26px rgba(0,0,0,0.22));
     }
     .cat-related__name {
-      padding: 20px 20px 4px;
-      font-size: 16px; font-weight: 700; color: var(--black, #111);
+      padding: 14px 14px 4px;
+      font-size: 14px; font-weight: 700; color: var(--black, #111);
     }
     .cat-related__sub {
-      padding: 0 20px 20px; display: block;
-      font-size: 12px; color: var(--gray-600, #666);
+      padding: 0 14px 14px; display: block;
+      font-size: 11px; color: var(--gray-600, #666);
     }
 
     /* CTA */
@@ -872,10 +877,10 @@ function shortName(name) {
       .cat-products__inner { padding: 0 24px; }
       .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
       .cat-related__inner, .cat-cta__inner { padding: 0 24px; }
-      .cat-related__grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-      .cat-related__img { padding: 20px; }
-      .cat-related__name { padding: 14px 14px 4px; font-size: 14px; }
-      .cat-related__sub { padding: 0 14px 14px; font-size: 11px; }
+      .cat-related__grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .cat-related__img { padding: 18px; }
+      .cat-related__name { padding: 12px 12px 3px; font-size: 13px; }
+      .cat-related__sub { padding: 0 12px 12px; font-size: 10px; }
     }
     /* === Кнопка "Свернуть все" === */
     .cat-controls-bar { display: flex; justify-content: flex-start; margin-bottom: 28px; }
@@ -891,9 +896,22 @@ function shortName(name) {
 
     @media (max-width: 768px) {
       /* Фильтры: горизонтальный скролл в одну строку */
-      .cat-filters { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 12px 0 8px; gap: 8px; }
-      .cat-filters::-webkit-scrollbar { display: none; }
-      .cat-filters__chip { font-size: 10px; padding: 7px 16px; }
+      /* Sticky фильтр: прозрачный как мобильный хедер */
+      .cat-filters {
+        background: rgba(255, 255, 255, 0.55); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+      }
+      /* Скроллируемая строка чипов — overflow на child, sticky на parent */
+      .cat-filters__scroll {
+        overflow-x: auto; flex-wrap: nowrap; gap: 8px;
+        padding: 10px 0 8px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        touch-action: pan-x;
+        overscroll-behavior-x: contain;
+      }
+      .cat-filters__scroll::-webkit-scrollbar { display: none; }
+      .cat-filters__chip { font-size: 9px; padding: 6px 11px; letter-spacing: 0.5px; }
       /* Секции: убираем desktop-отступы */
       .cat-hero { padding: 88px 0 44px; }
       .cat-products { padding: 36px 0 60px; }
@@ -924,6 +942,13 @@ function shortName(name) {
       .cat-products { padding: 28px 0 48px; }
       .cat-related { padding: 48px 0; }
       .cat-hero__inner, .cat-products__inner, .cat-related__inner { padding: 0 12px; }
+      .cat-related__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .cat-related__img { padding: 14px; }
+      .cat-related__name { padding: 10px 10px 3px; font-size: 12px; }
+      .cat-related__sub { padding: 0 10px 10px; font-size: 10px; }
+    }
+    @media (max-width: 480px) {
+      .cat-filters { top: 56px; }
     }
   </style>
 </BaseLayout>

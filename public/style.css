@@ -1340,7 +1340,8 @@ a { text-decoration: none; color: inherit; }
 .advantages__slide {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 65svh;
+    min-height: 80vh;
+    min-height: 80svh;
     position: relative;
 }
 
@@ -1410,8 +1411,8 @@ a { text-decoration: none; color: inherit; }
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 60%;
-    max-width: 440px;
+    width: 76%;
+    max-width: 560px;
     transform: translate(-50%, -50%);
     object-fit: contain;
     filter: drop-shadow(0 20px 32px rgba(0, 0, 0, 0.16));
@@ -1557,8 +1558,8 @@ a { text-decoration: none; color: inherit; }
 .advantages__lever-img {
     flex: 1 1 auto;
     width: auto;
-    max-width: 62%;
-    max-height: 72%;
+    max-width: 68%;
+    max-height: 82%;
     object-fit: contain;
     filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.22));
 }

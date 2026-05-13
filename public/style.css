@@ -4408,7 +4408,18 @@ a { text-decoration: none; color: inherit; }
 }
 
 @media (max-width: 720px) {
-    .hero-product-float { display: none; }
+    .hero-product-float {
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 80px;
+        bottom: 300px;
+        width: 220px;
+        align-items: center;
+        justify-content: center;
+    }
+    .hero-product-float__img { max-height: 240px; }
+    .hero-product-float__shadow { width: 60%; height: 14px; }
 }
 @media (prefers-reduced-motion: reduce) {
     .hero-product-float--active .hero-product-float__img,

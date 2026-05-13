@@ -1491,6 +1491,9 @@ a { text-decoration: none; color: inherit; }
 }
 
 @media (max-width: 768px) {
+    /* === Header: frosted glass как на главной === */
+    .header.scrolled { background: rgba(255, 255, 255, 0.55); }
+
     /* === Секции: компактные отступы вместо desktop 120–160px === */
     .series { padding: 60px 0 44px; }
     .categories { padding: 60px 0; }
@@ -1594,6 +1597,11 @@ a { text-decoration: none; color: inherit; }
 }
 
 @media (max-width: 480px) {
+    /* === Header: компактный как на главной === */
+    .header__inner { padding: 8px 16px; }
+    .header.scrolled .header__inner { padding: 6px 16px; }
+    .header__logo-img { height: 40px; padding: 6px 14px; }
+
     /* === Hero === */
     .hero-slide__btn { padding: 12px 24px; }
     .hero-slide__tags { gap: 6px; }

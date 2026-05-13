@@ -163,6 +163,15 @@ function shortName(name) {
         </div>
       )}
 
+      {productGroups && (
+        <div class="cat-controls-bar">
+          <button class="cat-toggle-all" id="catToggleAll" type="button">
+            <span class="cat-toggle-all__text">Свернуть все</span>
+            <svg viewBox="0 0 12 12" class="cat-toggle-all__icon" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      )}
+
       {productGroups ? (
         <div id="catGrid" class="cat-groups">
           {productGroups.map(group => (
@@ -424,6 +433,28 @@ function shortName(name) {
       });
     });
 
+    // "Свернуть все" группы
+    (function() {
+      const btn = document.getElementById('catToggleAll');
+      if (!btn || btn._inited) return;
+      btn._inited = true;
+      let allOpen = true;
+      btn.addEventListener('click', () => {
+        allOpen = !allOpen;
+        document.querySelectorAll('.cat-group__head').forEach(head => {
+          const group = head.closest('.cat-group');
+          const content = group.querySelector('.cat-group__content');
+          head.setAttribute('aria-expanded', String(allOpen));
+          content.dataset.open = String(allOpen);
+        });
+        const textEl = btn.querySelector('.cat-toggle-all__text');
+        if (textEl) textEl.textContent = allOpen ? 'Свернуть все' : 'Развернуть все';
+        const icon = btn.querySelector('.cat-toggle-all__icon');
+        if (icon) icon.style.transform = allOpen ? '' : 'rotate(-90deg)';
+        if (window.ScrollTrigger) setTimeout(() => window.ScrollTrigger.refresh(), 320);
+      });
+    })();
+
     // Модалка «Где купить»
     (function() {
       const modal = document.getElementById('buyModal');
@@ -532,6 +563,7 @@ function shortName(name) {
       padding: 10px 22px; border: 1px solid var(--gray-200, #ddd);
       border-radius: 100px; background: var(--gray-100, #f0eee9); color: var(--gray-600, #666);
       cursor: pointer; transition: all 0.2s ease;
+      display: inline-flex; align-items: center; line-height: 1; flex-shrink: 0;
     }
     .cat-filters__chip:hover { border-color: var(--black, #111); color: var(--black, #111); background: var(--white, #fff); }
     .cat-filters__chip.active {
@@ -665,7 +697,10 @@ function shortName(name) {
     .prod-card__info {
       padding: 20px 24px 16px;
       display: flex; flex-direction: column;
-      height: 145px; overflow: hidden;
+      flex: 1;
+      position: relative;
+      overflow: visible;
+      min-height: 120px;
     }
     .prod-card__article {
       font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
@@ -689,6 +724,8 @@ function shortName(name) {
       font-size: 10px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase;
       padding: 4px 10px; border: 1px solid var(--gray-200, #ddd); border-radius: 100px;
       color: var(--gray-600, #666);
+      display: inline-flex; align-items: center; line-height: 1;
+      white-space: nowrap; overflow: hidden; flex-shrink: 0;
     }
     /* Точки переключения фото — абсолютно в правом нижнем углу info-секции,
        не зависят от переноса чипов на новую строку */
@@ -835,9 +872,28 @@ function shortName(name) {
       .cat-products__inner { padding: 0 24px; }
       .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
       .cat-related__inner, .cat-cta__inner { padding: 0 24px; }
-      .cat-related__grid { grid-template-columns: 1fr; }
+      .cat-related__grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .cat-related__img { padding: 20px; }
+      .cat-related__name { padding: 14px 14px 4px; font-size: 14px; }
+      .cat-related__sub { padding: 0 14px 14px; font-size: 11px; }
     }
+    /* === Кнопка "Свернуть все" === */
+    .cat-controls-bar { display: flex; justify-content: flex-start; margin-bottom: 28px; }
+    .cat-toggle-all {
+      display: inline-flex; align-items: center; gap: 8px; line-height: 1;
+      font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      padding: 10px 20px; background: none;
+      border: 1px solid var(--gray-200, #ddd); border-radius: 100px;
+      color: var(--gray-600, #666); cursor: pointer; transition: all 0.2s ease;
+    }
+    .cat-toggle-all:hover { border-color: var(--black, #111); color: var(--black, #111); }
+    .cat-toggle-all__icon { width: 10px; height: 10px; transition: transform 0.25s ease; flex-shrink: 0; }
+
     @media (max-width: 768px) {
+      /* Фильтры: горизонтальный скролл в одну строку */
+      .cat-filters { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 12px 0 8px; gap: 8px; }
+      .cat-filters::-webkit-scrollbar { display: none; }
+      .cat-filters__chip { font-size: 10px; padding: 7px 16px; }
       /* Секции: убираем desktop-отступы */
       .cat-hero { padding: 72px 0 44px; }
       .cat-products { padding: 36px 0 60px; }
@@ -845,10 +901,10 @@ function shortName(name) {
       /* Контейнеры: 16px */
       .cat-hero__inner, .cat-products__inner, .cat-related__inner { padding: 0 16px; }
       /* Заголовки */
-      .cat-hero__title { font-size: clamp(24px, 6.5vw, 36px); letter-spacing: -0.5px; }
+      .cat-hero__title { font-size: clamp(40px, 10vw, 56px); letter-spacing: -1px; }
       /* Карточки товаров: уменьшаем фото-паддинг для читаемости на 2 колонках */
       .prod-card__img { padding: 16px !important; }
-      .prod-card__info { height: auto; min-height: 110px; padding: 12px 14px 38px; }
+      .prod-card__info { flex: 1; height: auto; min-height: 110px; padding: 12px 14px 38px; overflow: visible; }
       .prod-card__name { font-size: 13px; margin-bottom: 8px; }
       .prod-card__dots { bottom: 10px; right: 14px; }
       .prod-card__meta-row { padding-right: 40px; }
@@ -857,7 +913,7 @@ function shortName(name) {
       /* Товары: 2 колонки, компактные карточки */
       .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .prod-card__img { padding: 12px !important; }
-      .prod-card__info { padding: 8px 10px 32px; min-height: 90px; }
+      .prod-card__info { flex: 1; padding: 8px 10px 32px; min-height: 90px; overflow: visible; }
       .prod-card__article { font-size: 10px; }
       .prod-card__name { font-size: 12px; }
       .prod-card__dots { bottom: 8px; right: 10px; }

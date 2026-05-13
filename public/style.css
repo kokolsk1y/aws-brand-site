@@ -1999,7 +1999,9 @@ a { text-decoration: none; color: inherit; }
 
     /* === Категории: компактный padding для 2 колонок на 173px ширине === */
     .categories__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .categories__card-name { font-size: 14px; padding: 12px 12px 4px; }
+    .categories__card { display: flex; flex-direction: column; }
+    .categories__card-img { flex-shrink: 0; }
+    .categories__card-name { font-size: 14px; padding: 12px 12px 4px; flex: 1; display: flex; align-items: center; }
     .categories__card-sub { font-size: 12px; padding: 0 12px 12px; color: var(--gray-600); }
 
     /* === Где купить === */
@@ -2112,12 +2114,12 @@ a { text-decoration: none; color: inherit; }
     .review-card__text { -webkit-line-clamp: 3; font-size: 13px; }
     .review-card__source img { height: 28px; }
 
-    /* === Категории: скрываем subtitle, фиксируем высоту плашки с именем === */
+    /* === Категории: скрываем subtitle, выравниваем текст по высоте через flex === */
     .categories__card-sub { display: none; }
     .categories__card-name {
         font-size: 14px;
         padding: 8px 12px 10px;
-        min-height: 52px;
+        flex: 1;
         display: flex;
         align-items: center;
     }

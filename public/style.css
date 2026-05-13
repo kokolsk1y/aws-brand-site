@@ -1013,6 +1013,8 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* Конструктор цветов */
+.constructor__label-mobile { display: none; }
+
 .constructor {
     background: var(--white);
     border-radius: 16px;
@@ -1042,30 +1044,7 @@ a { text-decoration: none; color: inherit; }
     height: 95%;
     object-fit: contain;
     filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.14));
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    view-transition-name: constructor-product;
-}
-
-/* View Transitions API — настройка анимации для конструктора */
-@supports (view-transition-name: none) {
-    ::view-transition-old(constructor-product),
-    ::view-transition-new(constructor-product) {
-        animation-duration: 180ms;
-        animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
-    }
-    ::view-transition-old(constructor-product) {
-        animation-name: product-fade-out;
-    }
-    ::view-transition-new(constructor-product) {
-        animation-name: product-fade-in;
-    }
-}
-
-@keyframes product-fade-out {
-    to { opacity: 0; transform: scale(0.94); }
-}
-@keyframes product-fade-in {
-    from { opacity: 0; transform: scale(0.94); }
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 .constructor__preview-img.fade-out {
     opacity: 0;
@@ -2066,8 +2045,9 @@ a { text-decoration: none; color: inherit; }
     .hero-slide__tag { font-size: 9px; padding: 6px 12px; }
 
     /* === Header: компактнее на 390px === */
-    .header__inner { padding: 12px 16px; }
-    .header.scrolled .header__inner { padding: 10px 16px; }
+    .header__inner { padding: 8px 16px; }
+    .header.scrolled .header__inner { padding: 6px 16px; }
+    .header__logo-img { height: 40px; padding: 6px 14px; }
 
     /* === Секции: совсем плотно на маленьких экранах === */
     .series { padding: 48px 0 36px; }
@@ -2093,30 +2073,121 @@ a { text-decoration: none; color: inherit; }
     /* === Конструктор: ещё компактнее === */
     .constructor__preview { max-height: 220px; }
     .constructor__controls { padding: 20px 16px; }
+    .constructor__title { font-size: 16px; margin-bottom: 12px; }
+    /* Внешний лейбл "Конструктор" скрываем — заголовок внутри блока уже есть */
+    .constructor__label-mobile { display: none; }
 
-    /* === Серии: на 480px → вертикальный layout (фото сверху, текст снизу) === */
+    /* === Серии: на 480px → компактный вертикальный layout === */
     .series__card { flex-direction: column; min-height: auto; }
     .series__card-visual { width: 100%; height: 180px; flex-shrink: 0; }
-    .series__grid { gap: 14px; }
-    .series__card-info { padding: 14px 16px 18px; gap: 4px; }
-    .series__card-name { font-size: 16px; }
-    .series__card-desc { font-size: 12px; }
+    .series__grid { gap: 8px; }
+    /* Точки цвета — вправо, текст занимает левую колонку */
+    .series__card-info {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 2px 12px;
+        padding: 10px 14px 12px;
+        align-items: center;
+    }
+    .series__card-name { grid-column: 1; grid-row: 1; font-size: 20px; margin-bottom: 0; align-self: center; }
+    /* Описание серии скрываем — экономим высоту карточки */
+    .series__card-desc { display: none; }
+    .series__card-colors {
+        grid-column: 2;
+        grid-row: 1;
+        flex-direction: column;
+        gap: 6px;
+        align-self: center;
+    }
+    /* Hover-подъём карточек на мобильном отключаем — карточки перекрывают друг друга */
+    .series__card:hover,
+    .series__card[data-series="uno"]:hover { transform: none !important; }
+    /* Скрываем подпись "Розетки и выключатели" — экономим место */
+    .series__header .label { display: none; }
+    /* Показываем лейбл "Конструктор" над блоком */
+    .constructor__label-mobile { display: block; margin-top: 28px; margin-bottom: 8px; }
 
     /* === Отзывы: карточки уже → больше видно === */
     .review-card { width: 220px; min-height: 145px; padding: 14px 16px; }
     .review-card__text { -webkit-line-clamp: 3; font-size: 13px; }
     .review-card__source img { height: 28px; }
 
-    /* === Категории: subtitle 1 строка — полный набор свойств для Safari === */
-    .categories__card-sub {
+    /* === Категории: скрываем subtitle, фиксируем высоту плашки с именем === */
+    .categories__card-sub { display: none; }
+    .categories__card-name {
+        font-size: 14px;
+        padding: 8px 12px 10px;
+        min-height: 52px;
+        display: flex;
+        align-items: center;
+    }
+
+    /* === О бренде: кнопка убрана, описание читабельнее, место под фото === */
+    .about__link { display: none; }
+    .about__desc { font-size: 15px; }
+    .about__image-placeholder { display: flex !important; min-height: 200px; }
+
+    /* === Преимущества: полная переработка для 480px === */
+    .advantages__num { display: none; }
+    /* Слайды 1–3: медиа крупнее текста, без обрезки */
+    .advantages__media { min-height: 68vw; max-height: none; overflow: hidden; }
+    /* Пагинация не перекрывает текст */
+    .advantages__content { padding-bottom: 56px !important; }
+
+    /* Слайд 2 (клемма): горизонтальное расположение — изображение слева, селектор справа */
+    .advantages__media--lever { min-height: 68vw; }
+    .advantages__lever-wrap { flex-direction: row !important; gap: 10px; padding: 14px; align-items: center; }
+    .advantages__lever-img { max-width: 40%; max-height: 100%; flex-shrink: 0; flex: none; }
+    .lever-selector { flex: 1; min-width: 0; max-width: none; width: auto; }
+    .lever-selector__val { font-size: 28px; }
+    .lever-gauges { display: none; }
+
+    /* Слайд 4 (тикер с ценами): один тикер на всю ширину, карточки не обрезаются */
+    .advantages__media--prices { flex-direction: column; min-height: 64vw; max-height: 64vw; padding: 0; overflow: hidden; }
+    .adv-ticker--down { display: none; }
+    .adv-ticker { padding: 4px 0; }
+    .adv-ticker__track { padding: 8px 14px; gap: 8px; }
+    .adv-price-card { min-width: unset; width: 100%; padding: 10px 14px; gap: 10px; flex-shrink: 0; }
+    .adv-price-card__series { display: none; }
+    .adv-price-card__img { width: 56px; height: 56px; padding: 4px; flex-shrink: 0; }
+    .adv-price-card__info { flex: 1; min-width: 0; }
+    .adv-price-card__name { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .adv-price-card__price { font-size: 14px; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+
+    /* === Отзывы: фиксированная высота — линия и автор всегда на одном уровне === */
+    .review-card {
+        width: 210px;
+        height: 250px;
+        padding: 14px 16px;
+        gap: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .review-card__head { flex-shrink: 0; margin-bottom: 8px; }
+    .review-card__text {
+        flex: 1;
+        font-size: 12px;
+        line-height: 1.5;
         display: -webkit-box;
-        -webkit-line-clamp: 1;
+        -webkit-line-clamp: 6;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
+    .review-card__author {
+        flex-shrink: 0;
+        padding-top: 8px;
+        margin-top: 8px;
+    }
+    .review-card__source img { height: 26px; }
+    .review-card__source { height: 26px; }
+    .review-card__name { font-size: 12px; }
+    .review-card__product { font-size: 10px; }
 
-    /* === Преимущества: декоративная цифра 64px убирается — не для мобильного === */
-    .advantages__num { display: none; }
+    /* === FAQ: компактные элементы === */
+    .faq__list { gap: 6px; }
+    .faq-item__q { padding: 12px 16px; font-size: 14px; gap: 12px; }
+    .faq-item__q::after { font-size: 22px; }
+    .faq-item__a { padding: 0 16px 12px; font-size: 13px; line-height: 1.55; }
 
     /* === Контейнеры: минимум 12px === */
     .series__inner,
@@ -2125,7 +2196,7 @@ a { text-decoration: none; color: inherit; }
     .where-buy__inner { padding: 0 12px; }
 
     /* === Заголовки: минимальные === */
-    .series__title { font-size: clamp(20px, 5.5vw, 28px); }
+    .series__title { font-size: clamp(26px, 7.5vw, 36px); }
     .categories__title { font-size: clamp(18px, 5vw, 24px); }
     .about__title { font-size: clamp(20px, 5.5vw, 28px); }
     .series__header { margin-bottom: 20px; }
@@ -2744,15 +2815,32 @@ a { text-decoration: none; color: inherit; }
     .hero-slide__content--right .hero-slide__btn {
         align-self: flex-start;
     }
+    /* Теги выравниваем влево вместе с текстом */
+    .hero-slide__content--right .hero-slide__tags {
+        justify-content: flex-start;
+        align-self: auto;
+    }
     .hero-slide__overlay--right {
         background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 50%, transparent 100%);
     }
 
-    /* Сдвиг видео влево: 16:9 на портрете = 1499px широкое в 390px окне.
-       33% показывает зону 427–926px оригинального кадра — левее центра,
-       где обычно находится выключатель/продукт в интерьерных съёмках. */
+    /* Слайд 1 и 4: 33% (выключатель в центре-левее) */
     .hero-slide__video { object-position: 33% center; }
     .hero-slide__img   { object-position: 33% center; }
+
+    /* Слайды 2 и 3 (интерьерные): чуть правее левого края — пропускаем пустую стену */
+    .swiper-slide:nth-child(2) .hero-slide__video,
+    .swiper-slide:nth-child(3) .hero-slide__video {
+        object-position: 12% center;
+    }
+
+    /* Слайд 4: убираем принудительный <br> в субтитре — тире не уходит на отдельную строку */
+    .swiper-slide:nth-child(4) .hero-slide__subtitle br { display: none; }
+
+    /* Header: при скролле — прозрачный frosted glass вместо плотного белого */
+    .header.scrolled {
+        background: rgba(255, 255, 255, 0.55);
+    }
 }
 
 /* ============================

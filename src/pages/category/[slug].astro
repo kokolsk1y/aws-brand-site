@@ -189,8 +189,9 @@ function shortName(name) {
                 <div class="cat-grid" data-reveal-grid>
                   {group.items.map((p, idx) => {
                     const meta = extractMeta(p.name);
-                    const photos = getProductPhotos(p.article);
-                    const main = photos[0] || p.photo.replace(/^img\//, '/img/');
+                    const hasOverride = p.photo && p.photo !== `img/products/${p.article}.webp`;
+                    const photos = hasOverride ? [] : getProductPhotos(p.article);
+                    const main = hasOverride ? p.photo.replace(/^img\//, '/img/') : (photos[0] || p.photo?.replace(/^img\//, '/img/'));
                     const showDots = photos.length >= 2;
                     return (
                       <a href={`/product/${p.article}`} class="prod-card" data-name={p.name} data-tilt data-tilt-max="6" data-reveal="slide" style={`--i: ${idx % 9}`}>
@@ -230,8 +231,9 @@ function shortName(name) {
         <div class="cat-grid" id="catGrid" data-reveal-grid>
           {products.map((p, idx) => {
             const meta = extractMeta(p.name);
-            const photos = getProductPhotos(p.article);
-            const main = photos[0] || p.photo.replace(/^img\//, '/img/');
+            const hasOverride = p.photo && p.photo !== `img/products/${p.article}.webp`;
+            const photos = hasOverride ? [] : getProductPhotos(p.article);
+            const main = hasOverride ? p.photo.replace(/^img\//, '/img/') : (photos[0] || p.photo?.replace(/^img\//, '/img/'));
             const showDots = photos.length >= 2;
             return (
               <a href={`/product/${p.article}`} class="prod-card" data-name={p.name} data-tilt data-tilt-max="6" data-reveal="slide" style={`--i: ${idx % 9}`}>

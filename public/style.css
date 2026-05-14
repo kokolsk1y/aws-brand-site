@@ -1390,6 +1390,24 @@ a { text-decoration: none; color: inherit; }
     width: 100%;
     mix-blend-mode: multiply;
     animation: aws-logo-breathe 5s ease-in-out 1.8s infinite;
+    position: relative;
+    z-index: 1;
+}
+
+/* Зелёный glow-ореол позади логотипа — дышит в такт */
+.about__logo-anim::before {
+    content: '';
+    position: absolute;
+    inset: 18%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(94, 140, 58, 0.18) 0%, transparent 68%);
+    animation: aws-glow-breathe 5s ease-in-out 1.8s infinite;
+    pointer-events: none;
+}
+
+@keyframes aws-glow-breathe {
+    0%, 100% { opacity: 0;   scale: 0.75; }
+    50%       { opacity: 1;   scale: 1.15; }
 }
 
 /* Shimmer — полоса света слева направо при появлении */
@@ -1415,7 +1433,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 @keyframes aws-logo-breathe {
-    0%, 100% { scale: 1.0; }
+    0%, 100% { scale: 1.0;   }
     50%       { scale: 1.025; }
 }
 
@@ -2038,10 +2056,10 @@ a { text-decoration: none; color: inherit; }
     .constructor__controls { padding: 24px 20px; }
     .constructor__title { font-size: 18px; margin-bottom: 16px; }
 
-    /* === Категории: фиксированная высота текстового блока — все карточки одинаковые === */
+    /* === Категории: block-layout + явная ширина img-блока гарантируют одинаковый aspect-ratio === */
     .categories__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; align-items: start; }
-    .categories__card { display: flex; flex-direction: column; }
-    .categories__card-img { flex-shrink: 0; }
+    .categories__card { display: block; }
+    .categories__card-img { width: 100%; }
     .categories__card-name { font-size: 14px; padding: 0 12px; height: 52px; display: flex; align-items: center; }
     .categories__card-sub { font-size: 12px; padding: 0 12px 12px; color: var(--gray-600); }
 
@@ -2155,15 +2173,8 @@ a { text-decoration: none; color: inherit; }
     .review-card__text { -webkit-line-clamp: 3; font-size: 13px; }
     .review-card__source img { height: 28px; }
 
-    /* === Категории: скрываем subtitle, фиксированная высота текстового блока === */
+    /* === Категории: скрываем subtitle === */
     .categories__card-sub { display: none; }
-    .categories__card-name {
-        font-size: 14px;
-        padding: 0 12px;
-        height: 52px;
-        display: flex;
-        align-items: center;
-    }
 
     /* === О бренде: кнопка убрана, описание читабельнее, место под фото === */
     .about__link { display: none; }

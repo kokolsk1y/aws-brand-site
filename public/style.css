@@ -1370,7 +1370,7 @@ a { text-decoration: none; color: inherit; }
     transform: scale(1.05);
 }
 
-/* About: анимированный логотип */
+/* About: анимированный логотип — 3D тилт + аврора + шeen */
 .about__logo-anim {
     width: 100%;
     aspect-ratio: 4/5;
@@ -1384,6 +1384,22 @@ a { text-decoration: none; color: inherit; }
     background: var(--white);
     box-shadow: 0 24px 48px rgba(0,0,0,0.04);
     position: relative;
+    will-change: transform;
+    /* hover: плавное следование за курсором */
+    transition: transform 0.09s ease-out, box-shadow 0.12s ease-out;
+}
+
+.about__logo-anim.is-returning {
+    transition: transform 0.65s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.5s ease-out;
+}
+
+/* Шeen: пятно белого света следует за курсором */
+.about__logo-anim.is-hovering {
+    background:
+        radial-gradient(circle at var(--sheen-x, 50%) var(--sheen-y, 50%),
+            rgba(255,255,255,0.30) 0%, transparent 54%),
+        var(--white);
 }
 
 .about__logo-img {
@@ -1394,23 +1410,35 @@ a { text-decoration: none; color: inherit; }
     z-index: 1;
 }
 
-/* Зелёный glow-ореол позади логотипа — дышит в такт */
+/* Аврора — два плавающих зелёных пятна позади логотипа */
 .about__logo-anim::before {
     content: '';
     position: absolute;
-    inset: 18%;
-    border-radius: 50%;
-    background: radial-gradient(ellipse, rgba(94, 140, 58, 0.18) 0%, transparent 68%);
-    animation: aws-glow-breathe 5s ease-in-out 1.8s infinite;
+    inset: 0;
+    animation: aws-aurora 12s ease-in-out infinite;
     pointer-events: none;
+    z-index: 0;
 }
 
-@keyframes aws-glow-breathe {
-    0%, 100% { opacity: 0;   scale: 0.75; }
-    50%       { opacity: 1;   scale: 1.15; }
+@keyframes aws-aurora {
+    0%, 100% {
+        background:
+            radial-gradient(ellipse 75% 65% at 22% 28%, rgba(94,140,58,0.20) 0%, transparent 62%),
+            radial-gradient(ellipse 60% 52% at 78% 70%, rgba(140,184,107,0.15) 0%, transparent 62%);
+    }
+    33% {
+        background:
+            radial-gradient(ellipse 75% 65% at 66% 18%, rgba(94,140,58,0.17) 0%, transparent 62%),
+            radial-gradient(ellipse 60% 52% at 24% 78%, rgba(140,184,107,0.19) 0%, transparent 62%);
+    }
+    66% {
+        background:
+            radial-gradient(ellipse 75% 65% at 80% 62%, rgba(94,140,58,0.22) 0%, transparent 62%),
+            radial-gradient(ellipse 60% 52% at 32% 32%, rgba(140,184,107,0.13) 0%, transparent 62%);
+    }
 }
 
-/* Shimmer — полоса света слева направо при появлении */
+/* Shimmer — полоса света при первом появлении */
 .about__logo-anim::after {
     content: '';
     position: absolute;
@@ -1418,9 +1446,10 @@ a { text-decoration: none; color: inherit; }
     left: 0;
     width: 45%;
     height: 100%;
-    background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%);
+    background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.58) 50%, transparent 100%);
     transform: skewX(-12deg) translateX(-200%);
     pointer-events: none;
+    z-index: 2;
 }
 
 .about__logo-anim.is-shimmer::after {
@@ -1434,7 +1463,7 @@ a { text-decoration: none; color: inherit; }
 
 @keyframes aws-logo-breathe {
     0%, 100% { scale: 1.0;   }
-    50%       { scale: 1.025; }
+    50%       { scale: 1.022; }
 }
 
 /* Слайд 03: премиум-переключение цвета через sweep reveal */
@@ -2109,6 +2138,10 @@ a { text-decoration: none; color: inherit; }
     .header__inner { padding: 8px 16px; }
     .header.scrolled .header__inner { padding: 6px 16px; }
     .header__logo-img { height: 40px; padding: 6px 14px; }
+
+    /* === Категории: явная высота img-блока через calc — aspect-ratio нестабилен в iOS Safari === */
+    /* Формула: (100vw - padding×2 - gap) / 2 × 0.75 = (100vw - 42px) × 0.375 */
+    .categories__card-img { height: calc((100vw - 42px) * 0.375); }
 
     /* === Секции: совсем плотно на маленьких экранах === */
     .series { padding: 48px 0 36px; }

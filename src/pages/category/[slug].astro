@@ -343,13 +343,7 @@ function shortName(name) {
       if ('requestIdleCallback' in window) requestIdleCallback(preloadSecondaries, { timeout: 2000 });
       else setTimeout(preloadSecondaries, 1500);
 
-      // ОДИН listener на click в capture phase. Без pointerdown/mousedown —
-      // они только блокировали другие клики (tilt, копирование артикула и т.д.).
-      grid.addEventListener('click', (e) => {
-        const dot = e.target.closest('.prod-card__dot');
-        if (!dot) return;
-        e.preventDefault();
-        e.stopPropagation();
+      function switchDotPhoto(dot) {
         const card = dot.closest('.prod-card');
         if (!card) return;
         const img = card.querySelector('.prod-card__photo--main') || card.querySelector('.prod-card__photo');
@@ -363,6 +357,23 @@ function shortName(name) {
         pre.src = src;
         card.querySelectorAll('.prod-card__dot').forEach(d => d.classList.remove('is-active'));
         dot.classList.add('is-active');
+      }
+
+      // touchend — для iOS Safari, где e.preventDefault() на click не блокирует навигацию
+      grid.addEventListener('touchend', (e) => {
+        const dot = e.target.closest('.prod-card__dot');
+        if (!dot) return;
+        e.preventDefault();
+        e.stopPropagation();
+        switchDotPhoto(dot);
+      }, true);
+
+      grid.addEventListener('click', (e) => {
+        const dot = e.target.closest('.prod-card__dot');
+        if (!dot) return;
+        e.preventDefault();
+        e.stopPropagation();
+        switchDotPhoto(dot);
       }, true);
 
       grid.addEventListener('keydown', (e) => {

@@ -276,7 +276,7 @@ a { text-decoration: none; color: inherit; }
 .side-menu__toggle:hover { color: var(--gray-400); }
 
 .side-menu__arrow {
-    font-size: 12px;
+    font-size: 18px;
     transition: transform 0.3s;
 }
 
@@ -1998,8 +1998,8 @@ a { text-decoration: none; color: inherit; }
     .constructor__title { font-size: 18px; margin-bottom: 16px; }
 
     /* === Категории: компактный padding для 2 колонок на 173px ширине === */
-    .categories__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .categories__card { display: flex; flex-direction: column; }
+    .categories__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; align-items: stretch; }
+    .categories__card { display: flex; flex-direction: column; height: 100%; }
     .categories__card-img { flex-shrink: 0; }
     .categories__card-name { font-size: 14px; padding: 12px 12px 4px; flex: 1; display: flex; align-items: center; }
     .categories__card-sub { font-size: 12px; padding: 0 12px 12px; color: var(--gray-600); }
@@ -2134,7 +2134,7 @@ a { text-decoration: none; color: inherit; }
     /* Слайды 1–3: медиа крупнее текста, без обрезки */
     .advantages__media { min-height: 68vw; max-height: none; overflow: hidden; }
     /* Пагинация не перекрывает текст */
-    .advantages__content { padding-bottom: 56px !important; }
+    .advantages__content { padding-bottom: 72px !important; }
 
     /* Слайд 2 (клемма): горизонтальное расположение — изображение слева, селектор справа */
     .advantages__media--lever { min-height: 68vw; }
@@ -4461,9 +4461,9 @@ a { text-decoration: none; color: inherit; }
 .adv-ctl[data-state="play"] .adv-ctl__pause,
 .adv-ctl[data-state="pause"] .adv-ctl__play { display: none; }
 @media (max-width: 720px) {
-    .advantages-controls { bottom: 20px; right: 16px; gap: 8px; }
-    .adv-ctl { width: 44px; height: 44px; }
-    .adv-ctl svg { width: 14px; height: 14px; }
+    .advantages-controls { bottom: 20px; right: 16px; gap: 6px; }
+    .adv-ctl { width: 36px; height: 36px; }
+    .adv-ctl svg { width: 12px; height: 12px; }
 }
 
 /* ============================

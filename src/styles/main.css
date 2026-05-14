@@ -264,7 +264,7 @@ a { text-decoration: none; color: inherit; }
 .side-menu__toggle:hover { color: var(--gray-400); }
 
 .side-menu__arrow {
-    font-size: 12px;
+    font-size: 18px;
     transition: transform 0.3s;
 }
 

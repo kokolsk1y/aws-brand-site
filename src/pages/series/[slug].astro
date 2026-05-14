@@ -229,11 +229,7 @@ function getCardPhotoStyle(article) {
       if ('requestIdleCallback' in window) requestIdleCallback(preloadSecondaries, { timeout: 2000 });
       else setTimeout(preloadSecondaries, 1500);
 
-      lineup.addEventListener('click', (e) => {
-        const dot = e.target.closest('.prod-card__dot');
-        if (!dot) return;
-        e.preventDefault();
-        e.stopPropagation();
+      function switchLineupDotPhoto(dot) {
         const card = dot.closest('.ser-lineup__card');
         if (!card) return;
         const img = card.querySelector('.ser-lineup__img--main') || card.querySelector('.ser-lineup__img');
@@ -247,6 +243,23 @@ function getCardPhotoStyle(article) {
         pre.src = src;
         card.querySelectorAll('.prod-card__dot').forEach(d => d.classList.remove('is-active'));
         dot.classList.add('is-active');
+      }
+
+      // touchend — для iOS Safari
+      lineup.addEventListener('touchend', (e) => {
+        const dot = e.target.closest('.prod-card__dot');
+        if (!dot) return;
+        e.preventDefault();
+        e.stopPropagation();
+        switchLineupDotPhoto(dot);
+      }, true);
+
+      lineup.addEventListener('click', (e) => {
+        const dot = e.target.closest('.prod-card__dot');
+        if (!dot) return;
+        e.preventDefault();
+        e.stopPropagation();
+        switchLineupDotPhoto(dot);
       }, true);
 
       lineup.addEventListener('keydown', (e) => {

@@ -1210,14 +1210,58 @@ document.querySelectorAll('.series__card-visual, .categories__card-img').forEach
 })();
 
 
-// ─── ABOUT: logo shimmer on scroll enter ───
-(function initLogoShimmer() {
-    const anim = document.querySelector('.about__logo-anim');
-    if (!anim || typeof ScrollTrigger === 'undefined') return;
-    ScrollTrigger.create({
-        trigger: anim,
-        start: 'top 68%',
-        once: true,
-        onEnter: () => setTimeout(() => anim.classList.add('is-shimmer'), 500)
+// ─── ABOUT: logo 3D тилт + шeen + аврора + shimmer ───
+(function initLogoEffect() {
+    const card = document.querySelector('.about__logo-anim');
+    if (!card) return;
+
+    // Shimmer при первом скролле к секции
+    if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.create({
+            trigger: card,
+            start: 'top 68%',
+            once: true,
+            onEnter: () => setTimeout(() => card.classList.add('is-shimmer'), 500)
+        });
+    }
+
+    // 3D тилт + шeen — только на устройствах с мышью
+    if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    let rafId = null;
+
+    card.addEventListener('mouseenter', () => {
+        card.classList.add('is-hovering');
+        card.classList.remove('is-returning');
     });
+
+    card.addEventListener('mouseleave', () => {
+        card.classList.remove('is-hovering');
+        card.classList.add('is-returning');
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+        setTimeout(() => {
+            card.classList.remove('is-returning');
+            card.style.transform = '';
+        }, 680);
+    });
+
+    card.addEventListener('mousemove', e => {
+        if (rafId) return;
+        rafId = requestAnimationFrame(() => {
+            const r  = card.getBoundingClientRect();
+            const x  = (e.clientX - r.left) / r.width;
+            const y  = (e.clientY - r.top)  / r.height;
+
+            // 3D тилт
+            card.style.transform =
+                `perspective(900px) rotateX(${(y - 0.5) * -12}deg) rotateY(${(x - 0.5) * 12}deg)`;
+
+            // Spotlight: позиция светового круга точно под курсором
+            card.style.setProperty('--mx', `${x * 100}%`);
+            card.style.setProperty('--my', `${y * 100}%`);
+
+            rafId = null;
+        });
+    }, { passive: true });
 })();

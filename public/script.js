@@ -268,7 +268,7 @@ const SLIDE_MODES = {
     0: { holdStart: HOLD_START_MS },
     1: {},
     2: {},
-    3: { crossfadeAt: 1.2, playbackRate: 0.714 }   // hero-softtouch: 5с видео × 1.4 замедление → crossfade на wall-time 5.32с
+    3: { crossfadeAt: 0.714, playbackRate: 0.714 }  // hero-softtouch: 5с видео × 1.4 = 7с реал.; crossfade за 0.714 media-сек до конца = 1с wall-time
 };
 let currentTimeHandler = null;
 let holdStartTimer = null;
@@ -1206,5 +1206,18 @@ document.querySelectorAll('.series__card-visual, .categories__card-img').forEach
         // background не задаём — connector прозрачный, backdrop-filter размывает
         // нижние 40px верхней секции и верхние 40px нижней
         sec.after(conn);
+    });
+})();
+
+
+// ─── ABOUT: logo shimmer on scroll enter ───
+(function initLogoShimmer() {
+    const anim = document.querySelector('.about__logo-anim');
+    if (!anim || typeof ScrollTrigger === 'undefined') return;
+    ScrollTrigger.create({
+        trigger: anim,
+        start: 'top 68%',
+        once: true,
+        onEnter: () => setTimeout(() => anim.classList.add('is-shimmer'), 500)
     });
 })();

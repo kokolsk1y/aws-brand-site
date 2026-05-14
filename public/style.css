@@ -1370,12 +1370,53 @@ a { text-decoration: none; color: inherit; }
     transform: scale(1.05);
 }
 
-/* About: фото с лого */
-.about__image-img {
+/* About: анимированный логотип */
+.about__logo-anim {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    aspect-ratio: 4/5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15%;
+    box-sizing: border-box;
+    overflow: hidden;
     border-radius: 12px;
+    background: var(--white);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.04);
+    position: relative;
+}
+
+.about__logo-img {
+    width: 100%;
+    mix-blend-mode: multiply;
+    animation: aws-logo-breathe 5s ease-in-out 1.8s infinite;
+}
+
+/* Shimmer — полоса света слева направо при появлении */
+.about__logo-anim::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%);
+    transform: skewX(-12deg) translateX(-200%);
+    pointer-events: none;
+}
+
+.about__logo-anim.is-shimmer::after {
+    animation: aws-logo-shimmer 1.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes aws-logo-shimmer {
+    from { transform: skewX(-12deg) translateX(-200%); }
+    to   { transform: skewX(-12deg) translateX(500%); }
+}
+
+@keyframes aws-logo-breathe {
+    0%, 100% { scale: 1.0; }
+    50%       { scale: 1.025; }
 }
 
 /* Слайд 03: премиум-переключение цвета через sweep reveal */
@@ -1997,11 +2038,11 @@ a { text-decoration: none; color: inherit; }
     .constructor__controls { padding: 24px 20px; }
     .constructor__title { font-size: 18px; margin-bottom: 16px; }
 
-    /* === Категории: компактный padding для 2 колонок на 173px ширине === */
-    .categories__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; align-items: stretch; }
-    .categories__card { display: flex; flex-direction: column; height: 100%; }
+    /* === Категории: фиксированная высота текстового блока — все карточки одинаковые === */
+    .categories__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; align-items: start; }
+    .categories__card { display: flex; flex-direction: column; }
     .categories__card-img { flex-shrink: 0; }
-    .categories__card-name { font-size: 14px; padding: 12px 12px 4px; flex: 1; display: flex; align-items: center; }
+    .categories__card-name { font-size: 14px; padding: 0 12px; height: 52px; display: flex; align-items: center; }
     .categories__card-sub { font-size: 12px; padding: 0 12px 12px; color: var(--gray-600); }
 
     /* === Где купить === */
@@ -2114,12 +2155,12 @@ a { text-decoration: none; color: inherit; }
     .review-card__text { -webkit-line-clamp: 3; font-size: 13px; }
     .review-card__source img { height: 28px; }
 
-    /* === Категории: скрываем subtitle, выравниваем текст по высоте через flex === */
+    /* === Категории: скрываем subtitle, фиксированная высота текстового блока === */
     .categories__card-sub { display: none; }
     .categories__card-name {
         font-size: 14px;
-        padding: 8px 12px 10px;
-        flex: 1;
+        padding: 0 12px;
+        height: 52px;
         display: flex;
         align-items: center;
     }

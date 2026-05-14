@@ -30,7 +30,7 @@ window.addEventListener('resize', () => {
         const s = document.createElement('div');
         s.id = 'splash';
         s.className = 'splash';
-        s.innerHTML = '<div class="splash__logo-wrap"><img src="/aws-brand-site/logo/AWS.png" alt="AWS" class="splash__logo"><div class="splash__line"></div></div>';
+        s.innerHTML = '<div class="splash__logo-wrap"><img src="/logo/AWS.png" alt="AWS" class="splash__logo"><div class="splash__line"></div></div>';
         document.documentElement.appendChild(s);
     }
     const splash = document.getElementById('splash');
@@ -130,7 +130,7 @@ document.querySelectorAll('a[href^="/#"], a[href^="#"], a.header__logo').forEach
     a.addEventListener('click', e => {
         const href = a.getAttribute('href') || '';
         // Спец-случай: header logo или href="#" → плавный скролл наверх
-        if (a.classList.contains('header__logo') || href === '#' || href === '/aws-brand-site/' || href === '/') {
+        if (a.classList.contains('header__logo') || href === '#' || href === '/') {
             e.preventDefault();
             if (lenis && lenis.scrollTo) lenis.scrollTo(0, { duration: 1.1 });
             else window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -474,7 +474,7 @@ document.querySelectorAll('.series__card[data-series]').forEach(card => {
         // Принудительный reflow, чтобы стили гарантированно успели до snapshot
         void document.body.offsetHeight;
 
-        window.location.href = '/aws-brand-site/series/' + slug;
+        window.location.href = '/series/' + slug;
     });
 });
 
@@ -537,10 +537,10 @@ const constructorPlaceholder = document.getElementById('constructorPlaceholder')
 
 const IMG_VERSION = 'v=20260507';
 const constructorMap = {
-    'УНО|Белый|Пластик':   `/aws-brand-site/img/series/uno-1kl-w.webp?${IMG_VERSION}`,
-    'УНО|Чёрный|Пластик':  `/aws-brand-site/img/series/uno-1kl-b.webp?${IMG_VERSION}`,
-    'АУРА|Белый|Пластик':  `/aws-brand-site/img/series/aura-1kl-w.webp?${IMG_VERSION}`,
-    'АУРА|Чёрный|Пластик': `/aws-brand-site/img/series/aura-1kl-b.webp?${IMG_VERSION}`
+    'УНО|Белый|Пластик':   `/img/series/uno-1kl-w.webp?${IMG_VERSION}`,
+    'УНО|Чёрный|Пластик':  `/img/series/uno-1kl-b.webp?${IMG_VERSION}`,
+    'АУРА|Белый|Пластик':  `/img/series/aura-1kl-w.webp?${IMG_VERSION}`,
+    'АУРА|Чёрный|Пластик': `/img/series/aura-1kl-b.webp?${IMG_VERSION}`
 };
 
 Object.values(constructorMap).forEach(url => {

@@ -131,9 +131,9 @@ function shortName(name) {
   <section class="cat-hero">
     <div class="cat-hero__inner">
       <nav class="cat-hero__crumbs">
-        <a href="/aws-brand-site/">Главная</a>
+        <a href="/">Главная</a>
         <span>/</span>
-        <a href="/aws-brand-site/#categories">Ассортимент</a>
+        <a href="/#categories">Ассортимент</a>
         <span>/</span>
         <span class="cat-hero__crumbs-current">{category.title}</span>
       </nav>
@@ -193,7 +193,7 @@ function shortName(name) {
                     const main = photos[0] || p.photo.replace(/^img\//, '/img/');
                     const showDots = photos.length >= 2;
                     return (
-                      <a href={`/aws-brand-site/product/${p.article}`} class="prod-card" data-name={p.name} data-tilt data-tilt-max="6" data-reveal="slide" style={`--i: ${idx % 9}`}>
+                      <a href={`/product/${p.article}`} class="prod-card" data-name={p.name} data-tilt data-tilt-max="6" data-reveal="slide" style={`--i: ${idx % 9}`}>
                         <div class="prod-card__img">
                           <img src={main} alt={p.name} class="prod-card__photo prod-card__photo--main" loading="lazy" />
                         </div>
@@ -234,7 +234,7 @@ function shortName(name) {
             const main = photos[0] || p.photo.replace(/^img\//, '/img/');
             const showDots = photos.length >= 2;
             return (
-              <a href={`/aws-brand-site/product/${p.article}`} class="prod-card" data-name={p.name} data-tilt data-tilt-max="6" data-reveal="slide" style={`--i: ${idx % 9}`}>
+              <a href={`/product/${p.article}`} class="prod-card" data-name={p.name} data-tilt data-tilt-max="6" data-reveal="slide" style={`--i: ${idx % 9}`}>
                 <div class="prod-card__img">
                   <img src={main} alt={p.name} class="prod-card__photo prod-card__photo--main" loading="lazy" />
                 </div>
@@ -276,7 +276,7 @@ function shortName(name) {
       <h2 class="cat-related__title" data-reveal="focus">Возможно вас<br>заинтересует</h2>
       <div class="cat-related__grid" data-reveal-grid>
         {otherCats.map((c, idx) => (
-          <a href={`/aws-brand-site/category/${c.slug}`} class="cat-related__card" data-astro-reload data-tilt data-tilt-max="5" data-reveal="slide" style={`--i: ${idx}`}>
+          <a href={`/category/${c.slug}`} class="cat-related__card" data-astro-reload data-tilt data-tilt-max="5" data-reveal="slide" style={`--i: ${idx}`}>
             <div class="cat-related__img">
               <img src={c.cover} alt={c.title} loading="lazy" />
             </div>

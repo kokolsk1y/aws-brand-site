@@ -4399,6 +4399,8 @@ a { text-decoration: none; color: inherit; }
     max-height: 480px;
     max-width: 100%;
     display: block;
+    will-change: transform, opacity;
+    filter: drop-shadow(0 16px 22px rgba(0,0,0,0.52)) drop-shadow(0 5px 10px rgba(0,0,0,0.28));
 }
 .hero-product-float__shadow {
     flex-shrink: 0;
@@ -4433,8 +4435,8 @@ a { text-decoration: none; color: inherit; }
 
 /* Вход */
 @keyframes heroProductEnter {
-    from { transform: translateY(26px); opacity: 0; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25)); }
-    to   { transform: translateY(0);    opacity: 1; filter: drop-shadow(0 16px 22px rgba(0,0,0,0.52)) drop-shadow(0 5px 10px rgba(0,0,0,0.28)); }
+    from { transform: translateY(26px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
 }
 @keyframes heroProductShadowEnter {
     from { transform: scaleX(0.3); opacity: 0;    filter: blur(6px); }
@@ -4447,23 +4449,14 @@ a { text-decoration: none; color: inherit; }
 
 /* Loop */
 @keyframes heroProductFloat {
-    0%, 100% {
-        transform: translateY(0) rotate(0deg);
-        filter: drop-shadow(0 16px 22px rgba(0,0,0,0.52)) drop-shadow(0 5px 10px rgba(0,0,0,0.28));
-    }
-    38% {
-        transform: translateY(-14px) rotate(1.1deg);
-        filter: drop-shadow(0 30px 42px rgba(0,0,0,0.22)) drop-shadow(0 14px 22px rgba(0,0,0,0.11));
-    }
-    68% {
-        transform: translateY(-8px) rotate(-0.6deg);
-        filter: drop-shadow(0 22px 30px rgba(0,0,0,0.30)) drop-shadow(0 8px 14px rgba(0,0,0,0.16));
-    }
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    38%       { transform: translateY(-14px) rotate(1.1deg); }
+    68%       { transform: translateY(-8px) rotate(-0.6deg); }
 }
 @keyframes heroProductShadow {
-    0%, 100% { transform: scaleX(1);     opacity: 0.28; filter: blur(14px); }
-    38%       { transform: scaleX(0.60); opacity: 0.11; filter: blur(22px); }
-    68%       { transform: scaleX(0.75); opacity: 0.17; filter: blur(17px); }
+    0%, 100% { transform: scaleX(1);    opacity: 0.28; }
+    38%       { transform: scaleX(0.60); opacity: 0.11; }
+    68%       { transform: scaleX(0.75); opacity: 0.17; }
 }
 @keyframes heroProductGlow {
     0%, 100% { opacity: 0.5; transform: scale(0.94); }

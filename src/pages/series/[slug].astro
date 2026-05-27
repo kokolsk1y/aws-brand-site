@@ -124,7 +124,7 @@ function getCardPhotoStyle(article) {
                     const main = photos[0] || `/img/products/${item.article}.webp`;
                     const showDots = photos.length >= 2;
                     return (
-                    <a href={`/product/${item.article}`} class="ser-lineup__card" data-color={item.color || 'unknown'} data-tilt data-tilt-max="5" data-reveal="slide" style={`--i: ${idx % 9}`}>
+                    <a href={`/product/${encodeURIComponent(item.article)}`} class="ser-lineup__card" data-color={item.color || 'unknown'} data-tilt data-tilt-max="5" data-reveal="slide" style={`--i: ${idx % 9}`}>
                       <div class="ser-lineup__photo" style={getCardPhotoStyle(item.article)}>
                         <img src={main} alt={item.name} class="ser-lineup__img ser-lineup__img--main" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.ser-lineup__photo-fallback').style.display='flex'" />
                         <div class="ser-lineup__photo-fallback" style="display:none">

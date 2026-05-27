@@ -4293,7 +4293,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ============================
-   ПРАВКИ 2026-05-07: фон карточек, hero pagination, soft-touch velvet, advantages controls
+   ПРАВКИ 2026-05-07: фон карточек, hero pagination, Софт-тач velvet, advantages controls
    ============================ */
 
 /* (фон карточек серий + конструктор обновлён прямо в базовых правилах — бежевые тона
@@ -4320,7 +4320,7 @@ a { text-decoration: none; color: inherit; }
     .hero-pagination .swiper-pagination-bullet-active { width: 60px; }
 }
 
-/* --- Hero 4 — Soft-touch velvet-фон (заглушка под будущий ролик) --- */
+/* --- Hero 4 — Софт-тач velvet-фон --- */
 .hero-slide__bg--velvet {
     background:
         radial-gradient(ellipse 70% 90% at 32% 55%, rgba(120, 96, 84, 0.55) 0%, rgba(60, 48, 42, 0.25) 40%, transparent 70%),

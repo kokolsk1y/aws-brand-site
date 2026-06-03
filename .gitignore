@@ -21,3 +21,32 @@ npm-debug.log*
 photos-sorted/
 _pipeline/
 preview-ticker/
+
+# Catalog audit (recreated by scripts/audit_catalog.py)
+scripts/cache/
+scripts/audit/our_data.json
+scripts/audit/stv_data.json
+
+# Сырьё от поставщика (распаковывается из архивов скриптами — не для сайта)
+*.zip
+scripts/audit/photos_from_supplier/
+
+# Python кэш
+__pycache__/
+*.pyc
+
+# Бэкапы данных (история есть в git)
+*.bak
+*.bak2
+*.bak3
+
+# Office-заметки (не часть сайта)
+*.docx
+*.docm
+
+# Исходники AI-видео генерации
+kling_ai_finish/
+
+# Временные отчёты агентов (одноразовая аналитика)
+audit-report-*.md
+integration-plan.md

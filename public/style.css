@@ -993,8 +993,10 @@ a { text-decoration: none; color: inherit; }
     transition:
       translate 0.45s cubic-bezier(.22,1,.36,1),
       transform 0.45s cubic-bezier(.22,1,.36,1),
-      filter 0.45s cubic-bezier(.22,1,.36,1);
+      filter 0.45s cubic-bezier(.22,1,.36,1),
+      opacity 0.18s ease;
 }
+.series__photo-img.is-swap { opacity: 0; }
 .series__card:hover .series__photo-img {
     translate: 0 -6px;
     transform: scale(1.06);
@@ -1039,17 +1041,22 @@ a { text-decoration: none; color: inherit; }
     overflow: visible;
 }
 
+/* Два слоя превью лежат друг на друге — плавный crossfade без дёрганья и сдвигов */
 .constructor__preview-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 95%;
     height: 95%;
     object-fit: contain;
     filter: drop-shadow(0 18px 26px rgba(0, 0, 0, 0.14));
-    transition: opacity 0.2s ease, transform 0.2s ease;
-}
-.constructor__preview-img.fade-out {
     opacity: 0;
-    transform: scale(0.96);
+    pointer-events: none;
+    will-change: opacity;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
+.constructor__preview-img.is-active { opacity: 1; }
 
 .constructor__preview-placeholder {
     font-size: 12px;
@@ -1118,6 +1125,43 @@ a { text-decoration: none; color: inherit; }
     background: var(--black);
     color: var(--white);
     border-color: var(--black);
+}
+
+/* Свотчи цвета в конструкторе — тот же визуальный язык, что .dot, крупнее под тап. */
+.constructor__swatches { gap: 10px; }
+.cst-swatch {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1.5px solid transparent;
+    padding: 0;
+    cursor: pointer;
+    background-clip: padding-box;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    touch-action: manipulation;
+    transition: transform 0.3s, outline-color 0.2s;
+}
+.cst-swatch::after { content: ''; position: absolute; inset: -7px; border-radius: 50%; } /* зона тапа ~44px */
+.cst-swatch--light { border-color: var(--gray-200); }
+.cst-swatch:hover { transform: scale(1.12); }
+.cst-swatch.active { outline-color: var(--accent, #8CB86B); }
+@media (hover: none) {
+    .cst-swatch:hover { transform: none; }
+}
+
+/* Светлые точки (белый/серебро) в блоке «Три серии» — обводка на белом */
+.dot--light { border: 1.5px solid var(--gray-200); }
+
+/* Живая подпись собранной конфигурации: «АУРА · Золото · Стекло» */
+.constructor__summary {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    color: var(--gray-400);
+    margin: -16px 0 26px;
+    min-height: 18px;
 }
 
 /* ============================

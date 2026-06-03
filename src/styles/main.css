@@ -735,6 +735,7 @@ a { text-decoration: none; color: inherit; }
 .dot:hover { transform: scale(1.2); }
 .dot--white { background: #fff; border: 1.5px solid var(--gray-200); }
 .dot--black { background: #1a1a1a; }
+.dot--light { border: 1.5px solid var(--gray-200); }   /* обводка для светлых свотчей (inline-цвет) */
 .dot.active {
     outline: 2px solid var(--accent, #8CB86B);
     outline-offset: 2px;

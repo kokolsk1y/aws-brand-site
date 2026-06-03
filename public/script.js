@@ -480,119 +480,224 @@ document.querySelectorAll('.series__card[data-series]').forEach(card => {
 
 // ─── SERIES: появление перенесено в REVEAL ENGINE (data-reveal в HTML) ───
 
-// ─── SERIES CARDS: Переключатель цвета (статичное фото) ───
+// ─── «ТРИ СЕРИИ» + КОНСТРУКТОР: data-driven из /constructor-data.json ───
+// Кнопки (цвета/материалы рамок) строятся по сериям и адаптируются:
+// при смене серии набор цветов и материалов перестраивается под реально
+// существующие фото. Источник — scripts/build_constructor_data.cjs.
 
-document.querySelectorAll('.series__card').forEach(card => {
-    const photo = card.querySelector('.series__photo');
-    if (!photo) return;
-    const img = photo.querySelector('.series__photo-img');
-    const ph = photo.querySelector('.series__photo-placeholder');
-    const sources = {
-        white: photo.dataset.white || '',
-        black: photo.dataset.black || ''
-    };
-    const dots = card.querySelectorAll('.dot[data-color]');
-
-    function showPlaceholder() {
-        if (img) img.style.display = 'none';
-        if (ph) ph.style.display = '';
+(async function constructorAndSeries() {
+    let DATA;
+    try {
+        DATA = await fetch('/constructor-data.json').then(r => r.json());
+    } catch (e) {
+        return; // нет данных — статичная разметка остаётся как фолбэк
     }
-    function showImage() {
-        if (img) img.style.display = '';
-        if (ph) ph.style.display = 'none';
-    }
+    const SERIES = DATA.series || {};
+    const matLabel = DATA.materialLabels || {};
 
-    if (img) {
-        img.addEventListener('error', showPlaceholder);
-        img.addEventListener('load', showImage);
+    const preloaded = new Set();
+    function preload(src) {
+        if (!src || preloaded.has(src)) return;
+        preloaded.add(src);
+        const im = new Image();
+        im.src = src;
     }
 
-    function setColor(color) {
-        const src = sources[color];
-        if (src) {
-            img.src = src;
+    // ===== Блок «Три серии»: точки цвета = полный набор серии (плавная смена обложки) =====
+    document.querySelectorAll('.series__card').forEach(card => {
+        const s = SERIES[card.dataset.series];
+        if (!s) return;
+        const photo = card.querySelector('.series__photo');
+        const img = photo && photo.querySelector('.series__photo-img');
+        const ph = photo && photo.querySelector('.series__photo-placeholder');
+        const wrap = card.querySelector('.series__card-colors');
+        if (!img || !wrap) return;
+        const cols = s.colors.filter(c => c.cover);
+        if (!cols.length) return;
+
+        img.addEventListener('error', () => { img.style.display = 'none'; if (ph) ph.style.display = ''; });
+        img.addEventListener('load', () => { img.style.display = ''; if (ph) ph.style.display = 'none'; });
+
+        let token = 0;
+        function setCover(src) {
+            if (img.getAttribute('src') === src) return;
+            const my = ++token;
+            const pre = new Image();          // грузим заранее → нет вспышки фона
+            pre.onload = () => {
+                if (my !== token) return;
+                img.classList.add('is-swap');
+                setTimeout(() => {
+                    if (my !== token) return;
+                    img.src = src;
+                    img.classList.remove('is-swap');
+                }, 160);
+            };
+            pre.src = src;
+        }
+
+        wrap.innerHTML = '';
+        cols.forEach((c, i) => {
+            preload(c.cover);
+            const dot = document.createElement('span');
+            dot.className = 'dot' + (c.light ? ' dot--light' : '') + (i === 0 ? ' active' : '');
+            dot.style.background = c.swatch;
+            dot.dataset.color = c.key;
+            dot.title = c.label;
+            dot.addEventListener('click', () => {
+                if (dot.classList.contains('active')) return;
+                wrap.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+                dot.classList.add('active');
+                setCover(c.cover);
+            });
+            wrap.appendChild(dot);
+        });
+        img.src = cols[0].cover;
+    });
+
+    // ===== Конструктор: двухслойный crossfade превью =====
+    const layers = [document.getElementById('cstPrevA'), document.getElementById('cstPrevB')];
+    const previewPh = document.getElementById('constructorPlaceholder');
+    const elSeries = document.getElementById('cstSeries');
+    const elColor = document.getElementById('cstColor');
+    const elMatOpt = document.getElementById('cstMaterialOption');
+    const elMat = document.getElementById('cstMaterial');
+    const elSummary = document.getElementById('cstSummary');
+    if (!layers[0] || !layers[1] || !elSeries) return;
+
+    const order = ['uno', 'aura', 'design'].filter(k => SERIES[k]);
+    if (!order.length) return;
+    const state = { series: order[0], color: null, material: null };
+
+    let activeLayer = 1;      // первый показ ляжет в layers[0] (fetchpriority high)
+    let imgToken = 0;
+    function showImage(src) {
+        if (!src) {
+            layers.forEach(l => l.classList.remove('is-active'));
+            if (previewPh) previewPh.style.display = '';
+            return;
+        }
+        const cur = layers[activeLayer];
+        if (cur.getAttribute('src') === src && cur.classList.contains('is-active')) return;
+        const next = layers[1 - activeLayer];
+        const my = ++imgToken;
+        const reveal = () => {
+            if (my !== imgToken) return;       // пришёл более новый клик — отменяем
+            if (previewPh) previewPh.style.display = 'none';
+            next.classList.add('is-active');
+            cur.classList.remove('is-active');
+            activeLayer = 1 - activeLayer;
+        };
+        next.onerror = () => {
+            if (my !== imgToken) return;
+            layers.forEach(l => l.classList.remove('is-active'));
+            if (previewPh) previewPh.style.display = '';
+        };
+        if (next.getAttribute('src') === src && next.complete) {
+            reveal();                          // уже загружено в этом слое
         } else {
-            showPlaceholder();
+            next.onload = reveal;
+            next.src = src;                    // грузим в скрытый слой, проявим по onload
         }
     }
 
-    // Инициализация по активной точке
-    const activeDot = card.querySelector('.dot[data-color].active');
-    if (activeDot) setColor(activeDot.dataset.color);
+    const curSeries = () => SERIES[state.series];
+    const curColor = () => curSeries().colors.find(c => c.key === state.color);
 
-    dots.forEach(dot => {
-        dot.addEventListener('click', () => {
-            dots.forEach(d => d.classList.remove('active'));
-            dot.classList.add('active');
-            setColor(dot.dataset.color);
+    function updateSummary() {
+        if (!elSummary) return;
+        const s = curSeries();
+        const c = curColor();
+        const tail = (s.hasFrames && state.material) ? matLabel[state.material] : null;
+        elSummary.textContent = [s.label, c && c.label, tail].filter(Boolean).join(' · ');
+    }
+    function setPreview() {
+        const c = curColor();
+        const src = c && (curSeries().hasFrames ? (c.img[state.material] || c.img[c.materials[0]]) : c.img['']);
+        updateSummary();
+        showImage(src);
+    }
+
+    function chip(label, active, onClick) {
+        const b = document.createElement('button');
+        b.className = 'constructor__chip' + (active ? ' active' : '');
+        b.textContent = label;
+        b.addEventListener('click', onClick);
+        return b;
+    }
+
+    function renderMaterials() {
+        const s = curSeries();
+        const c = curColor();
+        const mats = (s.hasFrames && c && c.materials) || [];
+        if (!mats.length) { elMatOpt.hidden = true; elMat.innerHTML = ''; return; }
+        if (!mats.includes(state.material)) state.material = mats[0];
+        elMatOpt.hidden = false;
+        elMat.innerHTML = '';
+        mats.forEach(m => {
+            const b = chip(matLabel[m] || m, m === state.material, () => {
+                if (state.material === m) return;
+                state.material = m;
+                elMat.querySelectorAll('.constructor__chip').forEach(x => x.classList.remove('active'));
+                b.classList.add('active');
+                setPreview();
+            });
+            elMat.appendChild(b);
         });
-    });
-});
+    }
 
-// ─── CONSTRUCTOR: Chip toggle + обновление превью ───
-
-const constructorState = { series: 'УНО', color: 'Белый', frame: 'Пластик' };
-const constructorPreview = document.getElementById('constructorPreview');
-const constructorPlaceholder = document.getElementById('constructorPlaceholder');
-
-const IMG_VERSION = 'v=20260507';
-const constructorMap = {
-    'УНО|Белый|Пластик':   `/img/series/uno-1kl-w.webp?${IMG_VERSION}`,
-    'УНО|Чёрный|Пластик':  `/img/series/uno-1kl-b.webp?${IMG_VERSION}`,
-    'АУРА|Белый|Пластик':  `/img/series/aura-1kl-w.webp?${IMG_VERSION}`,
-    'АУРА|Чёрный|Пластик': `/img/series/aura-1kl-b.webp?${IMG_VERSION}`
-};
-
-Object.values(constructorMap).forEach(url => {
-    const img = new Image();
-    img.src = url;
-});
-
-function showConstructorPlaceholder() {
-    if (constructorPreview) constructorPreview.style.display = 'none';
-    if (constructorPlaceholder) constructorPlaceholder.style.display = '';
-}
-function showConstructorImage() {
-    if (constructorPreview) constructorPreview.style.display = '';
-    if (constructorPlaceholder) constructorPlaceholder.style.display = 'none';
-}
-if (constructorPreview) {
-    constructorPreview.addEventListener('error', showConstructorPlaceholder);
-    constructorPreview.addEventListener('load', showConstructorImage);
-}
-
-function updateConstructorPreview() {
-    const key = constructorState.series + '|' + constructorState.color + '|' + constructorState.frame;
-    const src = constructorMap[key];
-    if (!constructorPreview || !constructorPlaceholder) return;
-
-    constructorPreview.classList.add('fade-out');
-    setTimeout(() => {
-        if (src) {
-            constructorPreview.src = src;
-            showConstructorImage();
-        } else {
-            showConstructorPlaceholder();
-        }
-        requestAnimationFrame(() => constructorPreview.classList.remove('fade-out'));
-    }, 180);
-}
-
-document.querySelectorAll('.constructor__option').forEach(option => {
-    const label = option.querySelector('.constructor__option-label')?.textContent.trim();
-    const chips = option.querySelectorAll('.constructor__chip');
-    chips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            chips.forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-            const value = chip.textContent.trim();
-            if (label === 'Серия') constructorState.series = value;
-            else if (label === 'Цвет') constructorState.color = value;
-            else if (label === 'Рамка') constructorState.frame = value;
-            updateConstructorPreview();
+    function renderColors() {
+        const cols = curSeries().colors.filter(c => c.hasCombo);
+        if (!cols.find(c => c.key === state.color)) state.color = cols[0] && cols[0].key;
+        elColor.innerHTML = '';
+        cols.forEach(c => {
+            const b = document.createElement('button');
+            b.className = 'cst-swatch' + (c.light ? ' cst-swatch--light' : '') + (c.key === state.color ? ' active' : '');
+            b.style.background = c.swatch;
+            b.title = c.label;
+            b.setAttribute('aria-label', c.label);
+            b.addEventListener('click', () => {
+                if (state.color === c.key) return;
+                state.color = c.key;
+                elColor.querySelectorAll('.cst-swatch').forEach(x => x.classList.remove('active'));
+                b.classList.add('active');
+                renderMaterials();   // набор материалов зависит от цвета
+                setPreview();
+            });
+            elColor.appendChild(b);
         });
-    });
-});
+    }
+
+    function preloadSeries(slug) {
+        const s = SERIES[slug];
+        if (!s) return;
+        s.colors.forEach(c => Object.values(c.img || {}).forEach(preload));
+    }
+
+    function renderSeries() {
+        elSeries.innerHTML = '';
+        order.forEach(k => {
+            const b = chip(SERIES[k].label, k === state.series, () => {
+                if (state.series === k) return;
+                state.series = k;
+                state.color = null;
+                state.material = null;
+                elSeries.querySelectorAll('.constructor__chip').forEach(x => x.classList.remove('active'));
+                b.classList.add('active');
+                renderColors();
+                renderMaterials();
+                preloadSeries(k);
+                setPreview();
+            });
+            elSeries.appendChild(b);
+        });
+    }
+
+    renderSeries();
+    renderColors();
+    renderMaterials();
+    preloadSeries(state.series);
+    setPreview();
+})();
 
 // ─── CONSTRUCTOR / CATEGORIES: появление перенесено в REVEAL ENGINE ───
 

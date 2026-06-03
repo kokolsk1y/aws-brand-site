@@ -9,12 +9,38 @@
       {
         "key": "white",
         "label": "Белый",
-        "img": "/img/series/uno-1kl-w.webp"
+        "img": "/img/series/uno-1kl-w.webp",
+        "swatch": "#dbdad6"
       },
       {
         "key": "black",
         "label": "Чёрный",
-        "img": "/img/series/uno-1kl-b.webp"
+        "img": "/img/series/uno-1kl-b.webp",
+        "swatch": "#232121"
+      },
+      {
+        "key": "grey",
+        "label": "Серый",
+        "img": "/img/series/uno-1kl-grey.webp",
+        "swatch": "#a89d95"
+      },
+      {
+        "key": "dark_grey",
+        "label": "Тёмно-серый",
+        "img": "/img/series/uno-1kl-dark_grey.webp",
+        "swatch": "#3a3736"
+      },
+      {
+        "key": "silver",
+        "label": "Серебро",
+        "img": "/img/series/uno-1kl-silver.webp",
+        "swatch": "#c3beb6"
+      },
+      {
+        "key": "matte_black",
+        "label": "Чёрный матовый",
+        "img": "/img/series/uno-1kl-matte_black.webp",
+        "swatch": "#2a2826"
       }
     ],
     "features": [
@@ -126,6 +152,204 @@
           "name": "Выключатель жалюзи 2-кл. чёрный Софт-тач",
           "color": "black",
           "price": 261
+        },
+        {
+          "article": "U2B-001-1 matte black",
+          "name": "Выключатель 1-кл. чёрный матовый",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-001-1 silver",
+          "name": "Выключатель 1-кл. серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-001-1 grey",
+          "name": "Выключатель 1-кл. серый Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-001-1 dark grey",
+          "name": "Выключатель 1-кл. тёмн. серый Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U2B-002-1 matte black",
+          "name": "Выключатель 2-кл. чёрный матовый",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-002-1 silver",
+          "name": "Выключатель 2-кл. серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-002-1 grey",
+          "name": "Выключатель 2-кл. серый Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-002-1 dark grey",
+          "name": "Выключатель 2-кл. тёмн. серый Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U2B-003 matte black",
+          "name": "Выключатель 3-кл. чёрный матовый",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-003 silver",
+          "name": "Выключатель 3-кл. серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-003 grey",
+          "name": "Выключатель 3-кл. серый Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-003 dark grey",
+          "name": "Выключатель 3-кл. тёмн. серый Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U2B-001-3 matte black",
+          "name": "Выключатель перекрёстный 1-кл. чёрный матовый",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-001-3 silver",
+          "name": "Выключатель перекрёстный 1-кл. серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-001-3 grey",
+          "name": "Выключатель перекрёстный 1-кл. серый Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-001-3 dark grey",
+          "name": "Выключатель перекрёстный 1-кл. тёмн. серый Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U2B-001-2 matte black",
+          "name": "Выключатель проходной 1-кл. чёрный матовый",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-001-2 silver",
+          "name": "Выключатель проходной 1-кл. серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-001-2 grey",
+          "name": "Выключатель проходной 1-кл. серый Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-001-2 dark grey",
+          "name": "Выключатель проходной 1-кл. тёмн. серый Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U2B-002-2 matte black",
+          "name": "Выключатель проходной 2-кл. чёрный матовый",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-002-2 silver",
+          "name": "Выключатель проходной 2-кл. серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-002-2 grey",
+          "name": "Выключатель проходной 2-кл. серый Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-002-2 dark grey",
+          "name": "Выключатель проходной 2-кл. тёмн. серый Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U2B-019 matte black",
+          "name": "Выключатель жалюзи 2-кл. чёрный матовый",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-019 silver",
+          "name": "Выключатель жалюзи 2-кл. серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-019 grey",
+          "name": "Выключатель жалюзи 2-кл. серый Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-019 dark grey",
+          "name": "Выключатель жалюзи 2-кл. тёмн. серый Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U2B-007 matte black",
+          "name": "Выключатель звонка 1-кл. чёрный матовый",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U2B-007 black",
+          "name": "Выключатель звонка 1-кл. чёрный Софт-тач",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "U1A-007 silver",
+          "name": "Выключатель звонка 1-кл. серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-007 grey",
+          "name": "Выключатель звонка 1-кл. серый Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-007 dark grey",
+          "name": "Выключатель звонка 1-кл. тёмн. серый Софт-тач",
+          "color": "dark_grey",
+          "price": null
         }
       ],
       "sockets": [
@@ -212,6 +436,174 @@
           "name": "Розетка 2-я с/з с шторками чёрная Софт-тач",
           "color": "black",
           "price": 427
+        },
+        {
+          "article": "U2B-012 matte black",
+          "name": "Розетка 1-я с крышкой с/з с шторками чёрная матовая",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-012 grey",
+          "name": "Розетка 1-я с крышкой с/з с шторками серая Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-012 silver",
+          "name": "Розетка 1-я с крышкой с/з с шторками серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-012 dark grey",
+          "name": "Розетка 1-я с крышкой с/з с шторками тёмн. серая Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U2B-006 matte black",
+          "name": "Розетка 1-я с/з с шторками чёрная матовая",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U2B-011 matte black",
+          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) чёрная матовая",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-011 grey",
+          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) серая Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-011 silver",
+          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-011 dark grey",
+          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) тёмн. серая Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U1A-006 grey",
+          "name": "Розетка 1-я с/з со шторками серая Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-006 silver",
+          "name": "Розетка 1-я с/з со шторками серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-006 dark grey",
+          "name": "Розетка 1-я с/з со шторками тёмн. серая Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U2B-022 matte black",
+          "name": "Розетка 2-я с/з с шторками чёрная матовая",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-022 grey",
+          "name": "Розетка 2-я с/з с шторками серая Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-022 silver",
+          "name": "Розетка 2-я с/з с шторками серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-022 dark grey",
+          "name": "Розетка 2-я с/з с шторками тёмн. серая Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U2B-016-1 matte black",
+          "name": "Розетка RJ45 (cat 5e) 1-я чёрная матовая",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-016-1 grey",
+          "name": "Розетка RJ45 (cat 5e) 1-я серая Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-016-1 silver",
+          "name": "Розетка RJ45 (cat 5e) 1-я серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-016-1 dark grey",
+          "name": "Розетка RJ45 (cat 5e) 1-я тёмн. серая Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U2B-016-2 matte black",
+          "name": "Розетка RJ45 (cat 5e) 2-я чёрная матовая",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-016-2 grey",
+          "name": "Розетка RJ45 (cat 5e) 2-я серая Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-016-2 silver",
+          "name": "Розетка RJ45 (cat 5e) 2-я серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-016-2 dark grey",
+          "name": "Розетка RJ45 (cat 5e) 2-я тёмн. серая Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U2B-013 matte black",
+          "name": "Розетка TV 1-я чёрная матовая",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-013 grey",
+          "name": "Розетка TV 1-я серая Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-013 silver",
+          "name": "Розетка TV 1-я серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-013 dark grey",
+          "name": "Розетка TV 1-я тёмн. серая Софт-тач",
+          "color": "dark_grey",
+          "price": null
         }
       ],
       "frames": [
@@ -274,6 +666,150 @@
           "name": "Рамка 5-я чёрная горизонтальная Софт-тач",
           "color": "black",
           "price": 506
+        },
+        {
+          "article": "U2B-028 matte black",
+          "name": "Рамка 1-я чёрная матовая",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-028 grey",
+          "name": "Рамка 1-я серая Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-028 silver",
+          "name": "Рамка 1-я серебро Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-028 dark grey",
+          "name": "Рамка 1-я тёмн. серая Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U1A-029-2 white",
+          "name": "Рамка 2-я белая вертикальная Софт-тач",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "U2B-029 matte black",
+          "name": "Рамка 2-я чёрная матовая горизонтальная",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U2B-029-2 black",
+          "name": "Рамка 2-я чёрная вертикальная Софт-тач",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "U1A-029 grey",
+          "name": "Рамка 2-я серая горизонтальная Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-029 silver",
+          "name": "Рамка 2-я серебро горизонтальная Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-029 dark grey",
+          "name": "Рамка 2-я тёмн. серая горизонтальная Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U1A-031-2 white",
+          "name": "Рамка 3-я белая вертикальная Софт-тач",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "U2B-031 matte black",
+          "name": "Рамка 3-я чёрная матовая горизонтальная",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U2B-031-2 black",
+          "name": "Рамка 3-я чёрная вертикальная Софт-тач",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "U1A-031 grey",
+          "name": "Рамка 3-я серая горизонтальная Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-031 silver",
+          "name": "Рамка 3-я серебро горизонтальная Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-031 dark grey",
+          "name": "Рамка 3-я тёмн. серая горизонтальная Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U2B-030 matte black",
+          "name": "Рамка 4-я чёрная матовая горизонтальная",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-030 grey",
+          "name": "Рамка 4-я серая горизонтальная Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-030 silver",
+          "name": "Рамка 4-я серебро горизонтальная Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-030 dark grey",
+          "name": "Рамка 4-я тёмн. серая горизонтальная Софт-тач",
+          "color": "dark_grey",
+          "price": null
+        },
+        {
+          "article": "U2B-032 matte black",
+          "name": "Рамка 5-я чёрная матовая горизонтальная",
+          "color": "matte_black",
+          "price": null
+        },
+        {
+          "article": "U1A-032 grey",
+          "name": "Рамка 5-я серая горизонтальная Софт-тач",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "U1A-032 silver",
+          "name": "Рамка 5-я серебро горизонтальная Софт-тач",
+          "color": "silver",
+          "price": null
+        },
+        {
+          "article": "U1A-032 dark grey",
+          "name": "Рамка 5-я тёмн. серая горизонтальная Софт-тач",
+          "color": "dark_grey",
+          "price": null
         }
       ],
       "accessories": [],
@@ -290,12 +826,32 @@
       {
         "key": "white",
         "label": "Белый",
-        "img": "/img/series/aura-1kl-w.webp"
+        "img": "/img/series/aura-1kl-w.webp",
+        "swatch": "#e2dfdb"
       },
       {
         "key": "black",
         "label": "Чёрный",
-        "img": "/img/series/aura-1kl-b.webp"
+        "img": "/img/series/aura-1kl-b.webp",
+        "swatch": "#1c1a1a"
+      },
+      {
+        "key": "grey",
+        "label": "Серый",
+        "img": "/img/series/aura-1kl-grey.webp",
+        "swatch": "#8d877f"
+      },
+      {
+        "key": "gold",
+        "label": "Золото",
+        "img": "/img/series/aura-1kl-gold.webp",
+        "swatch": "#c7ab96"
+      },
+      {
+        "key": "mahogany",
+        "label": "Махагон",
+        "img": "",
+        "swatch": "#6e4636"
       }
     ],
     "features": [
@@ -443,6 +999,168 @@
           "name": "Выключатель 3-кл. чёрный",
           "color": "black",
           "price": 301
+        },
+        {
+          "article": "A-001B",
+          "name": "Выключатель 1-кл. чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-002W",
+          "name": "Выключатель 1-кл. с подсветкой белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-002B",
+          "name": "Выключатель 1-кл. с подсветкой чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-002GR",
+          "name": "Выключатель 1-кл. с подсветкой серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-002G",
+          "name": "Выключатель 1-кл. с подсветкой золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-001GR",
+          "name": "Выключатель 1-кл. серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-001G",
+          "name": "Выключатель 1-кл. золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-011GR",
+          "name": "Выключатель 2-кл. с подсветкой серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-011G",
+          "name": "Выключатель 2-кл. с подсветкой золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-009GR",
+          "name": "Выключатель 2-кл. серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-009G",
+          "name": "Выключатель 2-кл. золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-015GR",
+          "name": "Выключатель 3-кл. серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-015G",
+          "name": "Выключатель 3-кл. золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-007GR",
+          "name": "Выключатель перекрёстный 1-кл. серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-007G",
+          "name": "Выключатель перекрёстный 1-кл. золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-004GR",
+          "name": "Выключатель проходной 1-кл. с подсветкой серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-004G",
+          "name": "Выключатель проходной 1-кл. с подсветкой золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-003GR",
+          "name": "Выключатель проходной 1-кл. серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-003G",
+          "name": "Выключатель проходной 1-кл. золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-012GR",
+          "name": "Выключатель проходной 2-кл. с подсветкой серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-012G",
+          "name": "Выключатель проходной 2-кл. с подсветкой золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-010GR",
+          "name": "Выключатель проходной 2-кл. серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-010G",
+          "name": "Выключатель проходной 2-кл. золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-013GR",
+          "name": "Выключатель жалюзи 2-кл. серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-013G",
+          "name": "Выключатель жалюзи 2-кл. золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-005GR",
+          "name": "Выключатель звонка 1-кл. серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-005G",
+          "name": "Выключатель звонка 1-кл. золото",
+          "color": "gold",
+          "price": null
         }
       ],
       "sockets": [
@@ -535,6 +1253,174 @@
           "name": "Розетка 2-я с/з с шторками чёрная",
           "color": "black",
           "price": 396
+        },
+        {
+          "article": "B30-6B",
+          "name": "Рамка для двойной розетки алюминий чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "B30-6GR",
+          "name": "Рамка для двойной розетки алюминий серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "B30-6G",
+          "name": "Рамка для двойной розетки алюминий золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "PG51-6W",
+          "name": "Рамка для двойной розетки белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "PG51-6B",
+          "name": "Рамка для двойной розетки чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "P50-6GR",
+          "name": "Рамка для двойной розетки серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "PG51-6GR",
+          "name": "Рамка для двойной розетки серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "G50-6GR",
+          "name": "Рамка для двойной розетки серая (стекло)",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "P50-6G",
+          "name": "Рамка для двойной розетки золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "PG51-6G",
+          "name": "Рамка для двойной розетки золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "G50-6G",
+          "name": "Рамка для двойной розетки золото (стекло)",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-023GR",
+          "name": "Розетка 1-я с крышкой с/з с шторками серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-023G",
+          "name": "Розетка 1-я с крышкой с/з с шторками золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-022W",
+          "name": "Розетка 1-я с/з с шторками белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-026GR",
+          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-026G",
+          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-022GR",
+          "name": "Розетка 1-я с/з с шторками серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-022G",
+          "name": "Розетка 1-я с/з с шторками золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-041GR",
+          "name": "Розетка 2-я с/з с шторками серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-041G",
+          "name": "Розетка 2-я с/з с шторками золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-031GR",
+          "name": "Розетка RJ45 (cat 5e) 1-я серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-031G",
+          "name": "Розетка RJ45 (cat 5e) 1-я золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-033GR",
+          "name": "Розетка RJ45 (cat 5e) 2-я серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-033G",
+          "name": "Розетка RJ45 (cat 5e) 2-я золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-038GR",
+          "name": "Розетка RJ45 (cat 5e) + TV серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-038G",
+          "name": "Розетка RJ45 (cat 5e) + TV золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-035GR",
+          "name": "Розетка TV 1-я серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-035G",
+          "name": "Розетка TV 1-я золото",
+          "color": "gold",
+          "price": null
         }
       ],
       "frames": [
@@ -657,19 +1543,573 @@
           "name": "Рамка для двойной розетки чёрная",
           "color": "black",
           "price": 154
+        },
+        {
+          "article": "B30-1B",
+          "name": "Рамка 1-я алюминий чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "B30-1GR",
+          "name": "Рамка 1-я алюминий серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "B30-1G",
+          "name": "Рамка 1-я алюминий золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "PG51-1W",
+          "name": "Рамка 1-я белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "G50-1W",
+          "name": "Рамка 1-я белая (стекло)",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "G51-1W",
+          "name": "Рамка 1-я белая (стекло)",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "PG51-1B",
+          "name": "Рамка 1-я чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "G50-1B",
+          "name": "Рамка 1-я чёрная (стекло)",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "G51-1B",
+          "name": "Рамка 1-я чёрная (стекло)",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "W30-1",
+          "name": "Рамка 1-я махогон",
+          "color": "mahogany",
+          "price": null
+        },
+        {
+          "article": "P50-1GR",
+          "name": "Рамка 1-я серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "PG51-1GR",
+          "name": "Рамка 1-я серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "G50-1GR",
+          "name": "Рамка 1-я серая (стекло)",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "G51-1GR",
+          "name": "Рамка 1-я серая (стекло)",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "P50-1G",
+          "name": "Рамка 1-я золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "PG51-1G",
+          "name": "Рамка 1-я золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "G50-1G",
+          "name": "Рамка 1-я золото (стекло)",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "B30-2B",
+          "name": "Рамка 2-я алюминий чёрная горизонтальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "B30-7VB",
+          "name": "Рамка 2-я алюминий чёрная вертикальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "B30-2GR",
+          "name": "Рамка 2-я алюминий серая горизонтальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "B30-7VGR",
+          "name": "Рамка 2-я алюминий серая вертикальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "B30-2G",
+          "name": "Рамка 2-я алюминий золото горизонтальная",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "B30-7VG",
+          "name": "Рамка 2-я алюминий золото вертикальная",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "PG51-2W",
+          "name": "Рамка 2-я белая горизонтальная",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "G51-2W",
+          "name": "Рамка 2-я белая горизонтальная (стекло)",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "P50-2VW",
+          "name": "Рамка 2-я белая вертикальная",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "PG51-2B",
+          "name": "Рамка 2-я чёрная горизонтальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "G51-2B",
+          "name": "Рамка 2-я чёрная горизонтальная (стекло)",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "P50-2VB",
+          "name": "Рамка 2-я чёрная вертикальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "W30-2",
+          "name": "Рамка 2-я махогон горизонтальная",
+          "color": "mahogany",
+          "price": null
+        },
+        {
+          "article": "P50-2GR",
+          "name": "Рамка 2-я серая горизонтальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "PG51-2GR",
+          "name": "Рамка 2-я серая горизонтальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "G50-2GR",
+          "name": "Рамка 2-я серая горизонтальная (стекло)",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "G51-2GR",
+          "name": "Рамка 2-я серая горизонтальная (стекло)",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "P50-2VGR",
+          "name": "Рамка 2-я серая вертикальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "P50-2G",
+          "name": "Рамка 2-я золото горизонтальная",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "PG51-2G",
+          "name": "Рамка 2-я золото горизонтальная",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "G50-2G",
+          "name": "Рамка 2-я золото горизонтальная (стекло)",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "P50-2VG",
+          "name": "Рамка 2-я золото вертикальная",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "B30-3B",
+          "name": "Рамка 3-я алюминий чёрная горизонтальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "B30-8VB",
+          "name": "Рамка 3-я алюминий чёрная вертикальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "B30-3GR",
+          "name": "Рамка 3-я алюминий серая горизонтальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "B30-8VGR",
+          "name": "Рамка 3-я алюминий серая вертикальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "B30-3G",
+          "name": "Рамка 3-я алюминий золото горизонтальная",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "B30-8VG",
+          "name": "Рамка 3-я алюминий золото вертикальная",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "PG51-3W",
+          "name": "Рамка 3-я белая горизонтальная",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "G51-3W",
+          "name": "Рамка 3-я белая горизонтальная (стекло)",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "P50-3VW",
+          "name": "Рамка 3-я белая вертикальная",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "PG51-3B",
+          "name": "Рамка 3-я чёрная горизонтальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "G51-3B",
+          "name": "Рамка 3-я чёрная горизонтальная (стекло)",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "P50-3VB",
+          "name": "Рамка 3-я чёрная вертикальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "W30-3",
+          "name": "Рамка 3-я махогон горизонтальная",
+          "color": "mahogany",
+          "price": null
+        },
+        {
+          "article": "P50-3GR",
+          "name": "Рамка 3-я серая горизонтальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "PG51-3GR",
+          "name": "Рамка 3-я серая горизонтальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "G50-3GR",
+          "name": "Рамка 3-я серая горизонтальная (стекло)",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "G51-3GR",
+          "name": "Рамка 3-я серая горизонтальная (стекло)",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "P50-3VGR",
+          "name": "Рамка 3-я серая вертикальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "P50-3G",
+          "name": "Рамка 3-я золото горизонтальная",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "PG51-3G",
+          "name": "Рамка 3-я золото горизонтальная",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "G50-3G",
+          "name": "Рамка 3-я золото горизонтальная (стекло)",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "P50-3VG",
+          "name": "Рамка 3-я золото вертикальная",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "B30-4B",
+          "name": "Рамка 4-я алюминий чёрная горизонтальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "PG51-4W",
+          "name": "Рамка 4-я белая горизонтальная",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "G51-4W",
+          "name": "Рамка 4-я белая горизонтальная (стекло)",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "PG51-4B",
+          "name": "Рамка 4-я чёрная горизонтальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "G51-4B",
+          "name": "Рамка 4-я чёрная горизонтальная (стекло)",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "P50-4GR",
+          "name": "Рамка 4-я серая горизонтальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "PG51-4GR",
+          "name": "Рамка 4-я серая горизонтальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "G50-4GR",
+          "name": "Рамка 4-я серая горизонтальная (стекло)",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "G51-4GR",
+          "name": "Рамка 4-я серая горизонтальная (стекло)",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "P50-4G",
+          "name": "Рамка 4-я золото горизонтальная",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "PG51-4G",
+          "name": "Рамка 4-я золото горизонтальная",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "G50-4G",
+          "name": "Рамка 4-я золото горизонтальная (стекло)",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "B30-5B",
+          "name": "Рамка 5-я алюминий чёрная горизонтальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "B30-5GR",
+          "name": "Рамка 5-я алюминий серая горизонтальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "B30-5G",
+          "name": "Рамка 5-я алюминий золото горизонтальная",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "G51-5W",
+          "name": "Рамка 5-я белая горизонтальная (стекло)",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "G51-5B",
+          "name": "Рамка 5-я чёрная горизонтальная (стекло)",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "P50-5GR",
+          "name": "Рамка 5-я серая горизонтальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "G51-5GR",
+          "name": "Рамка 5-я серая горизонтальная (стекло)",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "P50-5G",
+          "name": "Рамка 5-я золото горизонтальная",
+          "color": "gold",
+          "price": null
         }
       ],
       "accessories": [],
-      "other": []
+      "other": [
+        {
+          "article": "A-039W",
+          "name": "Вывод для кабеля белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-039B",
+          "name": "Вывод для кабеля чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-039GR",
+          "name": "Вывод для кабеля серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-039G",
+          "name": "Вывод для кабеля золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "A-040W",
+          "name": "Заглушка белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-040B",
+          "name": "Заглушка чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-040GR",
+          "name": "Заглушка серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-040G",
+          "name": "Заглушка золото",
+          "color": "gold",
+          "price": null
+        }
+      ]
     }
   },
   "design": {
     "slug": "design",
     "name": "ДИЗАЙН",
-    "tagline": "Серия в разработке.",
-    "badge": "Скоро",
-    "description": "Дизайнерская серия для выразительных интерьеров. Сейчас находится в финальной стадии разработки — материалы, формы и палитра отрабатываются совместно с приглашёнными дизайнерами. Подпишитесь, чтобы первыми узнать о выходе.",
-    "colors": [],
+    "tagline": "Геометрия и контраст.",
+    "badge": "Новинка",
+    "description": "Серия ДИЗАЙН — выразительная геометрия для современных интерьеров. Чёткие линии, контрастная палитра и расширенная функциональность: подсветка, перекрёстные и проходные выключатели, телевизионные и компьютерные розетки. Подходит для тех, кто строит интерьер на акцентах.",
+    "colors": [
+      {
+        "key": "white",
+        "label": "Белый",
+        "img": "/img/series/design-1kl-w.webp",
+        "swatch": "#e9e8e5"
+      },
+      {
+        "key": "black",
+        "label": "Чёрный",
+        "img": "/img/series/design-1kl-b.webp",
+        "swatch": "#211e1e"
+      },
+      {
+        "key": "grey",
+        "label": "Серый",
+        "img": "/img/series/design-1kl-grey.webp",
+        "swatch": "#c7bfb8"
+      }
+    ],
     "features": [
       {
         "title": "Авторский дизайн",
@@ -689,11 +2129,549 @@
       }
     ],
     "groups": {
-      "switches": [],
-      "sockets": [],
-      "frames": [],
+      "switches": [
+        {
+          "article": "A-D001W",
+          "name": "Выключатель 1-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D001B",
+          "name": "Выключатель 1-кл. чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D003W",
+          "name": "Выключатель 1-кл. с подсветкой белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D003B",
+          "name": "Выключатель 1-кл. с подсветкой чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D003GR",
+          "name": "Выключатель 1-кл. с подсветкой серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D001GR",
+          "name": "Выключатель 1-кл. серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D011W",
+          "name": "Выключатель 2-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D011B",
+          "name": "Выключатель 2-кл. чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D009W",
+          "name": "Выключатель 2-кл. с подсветкой белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D009B",
+          "name": "Выключатель 2-кл. с подсветкой чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D009GR",
+          "name": "Выключатель 2-кл. с подсветкой серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D011GR",
+          "name": "Выключатель 2-кл. серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D015W",
+          "name": "Выключатель 3-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D015B",
+          "name": "Выключатель 3-кл. чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D015GR",
+          "name": "Выключатель 3-кл. серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D007W",
+          "name": "Выключатель перекрёстный 1-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D007B",
+          "name": "Выключатель перекрёстный 1-кл. чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D007GR",
+          "name": "Выключатель перекрёстный 1-кл. серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D002W",
+          "name": "Выключатель проходной 1-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D002B",
+          "name": "Выключатель проходной 1-кл. чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D004W",
+          "name": "Выключатель проходной 1-кл. с подсветкой белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D004B",
+          "name": "Выключатель проходной 1-кл. с подсветкой чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D004GR",
+          "name": "Выключатель проходной 1-кл. с подсветкой серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D002GR",
+          "name": "Выключатель проходной 1-кл. серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D012W",
+          "name": "Выключатель проходной 2-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D012B",
+          "name": "Выключатель проходной 2-кл. чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D010W",
+          "name": "Выключатель проходной 2-кл. с подсветкой белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D010B",
+          "name": "Выключатель проходной 2-кл. с подсветкой чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D010GR",
+          "name": "Выключатель проходной 2-кл. с подсветкой серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D012GR",
+          "name": "Выключатель проходной 2-кл. серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D013W",
+          "name": "Выключатель жалюзи 2-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D013B",
+          "name": "Выключатель жалюзи 2-кл. чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D013GR",
+          "name": "Выключатель жалюзи 2-кл. серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D005W",
+          "name": "Выключатель звонка 1-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D005B",
+          "name": "Выключатель звонка 1-кл. чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D005GR",
+          "name": "Выключатель звонка 1-кл. серый",
+          "color": "grey",
+          "price": null
+        }
+      ],
+      "sockets": [
+        {
+          "article": "PD80-6W",
+          "name": "Рамка для двойной розетки белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "PD80-6B",
+          "name": "Рамка для двойной розетки чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "PD80-6GR",
+          "name": "Рамка для двойной розетки серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D022W",
+          "name": "Розетка 1-я с крышкой с/з с шторками белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D022B",
+          "name": "Розетка 1-я с крышкой с/з с шторками чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D022GR",
+          "name": "Розетка 1-я с крышкой с/з с шторками серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D021W",
+          "name": "Розетка 1-я с/з с шторками белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D021B",
+          "name": "Розетка 1-я с/з с шторками чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D025W",
+          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D025B",
+          "name": "Розетка 1-я с/з с шторками с USB и TYPE C (5В, 2.1А) чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D021GR",
+          "name": "Розетка 1-я с/з с шторками серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D055W",
+          "name": "Розетка 2-я с/з с шторками белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D055B",
+          "name": "Розетка 2-я с/з с шторками чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D055GR",
+          "name": "Розетка 2-я с/з с шторками серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D030W",
+          "name": "Розетка RJ45 (cat 5e) 1-я белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D030B",
+          "name": "Розетка RJ45 (cat 5e) 1-я чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D030GR",
+          "name": "Розетка RJ45 (cat 5e) 1-я серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D032W",
+          "name": "Розетка RJ45 (cat 5e) 2-я белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D032B",
+          "name": "Розетка RJ45 (cat 5e) 2-я чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D032GR",
+          "name": "Розетка RJ45 (cat 5e) 2-я серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D037W",
+          "name": "Розетка RJ45 (cat 5e) + TV белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D037B",
+          "name": "Розетка RJ45 (cat 5e) + TV чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D037GR",
+          "name": "Розетка RJ45 (cat 5e) + TV серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D034W",
+          "name": "Розетка TV 1-я белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D034B",
+          "name": "Розетка TV 1-я чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D034GR",
+          "name": "Розетка TV 1-я серая",
+          "color": "grey",
+          "price": null
+        }
+      ],
+      "frames": [
+        {
+          "article": "PD80-1W",
+          "name": "Рамка 1-я белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "PD80-1B",
+          "name": "Рамка 1-я чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "PD80-1GR",
+          "name": "Рамка 1-я серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "PD80-2W",
+          "name": "Рамка 2-я белая горизонтальная",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "PD80-7VW",
+          "name": "Рамка 2-я белая вертикальная",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "PD80-2B",
+          "name": "Рамка 2-я чёрная горизонтальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "PD80-7VB",
+          "name": "Рамка 2-я чёрная вертикальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "PD80-2GR",
+          "name": "Рамка 2-я серая горизонтальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "PD80-7VGR",
+          "name": "Рамка 2-я серая вертикальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "PD80-3W",
+          "name": "Рамка 3-я белая горизонтальная",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "PD80-8VW",
+          "name": "Рамка 3-я белая вертикальная",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "PD80-3B",
+          "name": "Рамка 3-я чёрная горизонтальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "PD80-8VB",
+          "name": "Рамка 3-я чёрная вертикальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "PD80-3GR",
+          "name": "Рамка 3-я серая горизонтальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "PD80-8VGR",
+          "name": "Рамка 3-я серая вертикальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "PD80-4W",
+          "name": "Рамка 4-я белая горизонтальная",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "PD80-4B",
+          "name": "Рамка 4-я чёрная горизонтальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "PD80-4GR",
+          "name": "Рамка 4-я серая горизонтальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "PD80-5W",
+          "name": "Рамка 5-я белая горизонтальная",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "PD80-5B",
+          "name": "Рамка 5-я чёрная горизонтальная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "PD80-5GR",
+          "name": "Рамка 5-я серая горизонтальная",
+          "color": "grey",
+          "price": null
+        }
+      ],
       "accessories": [],
-      "other": []
+      "other": [
+        {
+          "article": "A-D038W",
+          "name": "Вывод для кабеля белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D038B",
+          "name": "Вывод для кабеля чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D038GR",
+          "name": "Вывод для кабеля серый",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "A-D039W",
+          "name": "Заглушка белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "A-D039B",
+          "name": "Заглушка чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "A-D039GR",
+          "name": "Заглушка серая",
+          "color": "grey",
+          "price": null
+        }
+      ]
     }
   }
 }

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getProductPhotos } from '../../utils/photos.js';
+import { visibleItems, visibleColors, colorOrderOf } from '../../utils/catalog.js';
 import seriesData from '../../data/series.json';
 
 export async function getStaticPaths() {
@@ -12,7 +13,26 @@ const series = seriesData[slug];
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const otherSeries = Object.values(seriesData).filter(s => s.slug !== slug);
-const defaultColor = series.colors[0];
+
+// Нормализованный каталог: только товары с фото, отсортированы (тип → цвет).
+const colorOrder = colorOrderOf(series);
+const groupsDef = [
+  { key: 'switches', title: 'Выключатели', items: visibleItems(series.groups?.switches, 'switches', colorOrder) },
+  { key: 'sockets',  title: 'Розетки',     items: visibleItems(series.groups?.sockets,  'sockets',  colorOrder) },
+  { key: 'frames',   title: 'Рамки',       items: visibleItems(series.groups?.frames,   'frames',   colorOrder) },
+];
+const cnt = Object.fromEntries(groupsDef.map(g => [g.key, g.items.length]));
+const cntTotal = groupsDef.reduce((s, g) => s + g.items.length, 0);
+
+// Палитра — только цвета, у которых есть хотя бы один видимый товар (махагон
+// без фото уходит сам). Порядок и swatch — из series.json.
+const palette = visibleColors(series);
+// defaultColor берём ТОЛЬКО из палитры: иначе hero мог бы показать цвет
+// (напр. махагон без фото), которого нет в переключателе → рассинхрон.
+const defaultColor = palette[0] || null;
+
+// Цвет кружка по ключу цвета (из series.json colors[].swatch, подобрано по фото)
+const swatchByColor = Object.fromEntries((series.colors || []).map(c => [c.key, c.swatch]).filter(([, v]) => v));
 
 function getCardPhotoStyle(article) {
   // Рамки — всегда 1:1 (аксиома: карточки одного размера независимо от числа постов)
@@ -44,15 +64,15 @@ function getCardPhotoStyle(article) {
           <p class="ser-hero__tagline" data-reveal="blur">{series.tagline}</p>
           <p class="ser-hero__desc" data-reveal="blur">{series.description}</p>
 
-          {series.colors.length > 0 && (
+          {palette.length > 0 && (
             <div class="ser-hero__colors" id="serColors" data-reveal="slide">
-              {series.colors.map((c, i) => (
+              {palette.map((c, i) => (
                 <button
                   class={`ser-hero__color-btn ${i === 0 ? 'active' : ''}`}
                   data-img={`${BASE}${c.img}`}
                   data-color={c.key}
                 >
-                  <span class={`dot dot--${c.key}`}></span>
+                  <span class={`dot${['white', 'silver'].includes(c.key) ? ' dot--light' : ''}`} style={c.swatch ? `background:${c.swatch}` : undefined}></span>
                   {c.label}
                 </button>
               ))}
@@ -72,23 +92,24 @@ function getCardPhotoStyle(article) {
   </section>
 
   <!-- LINEUP — все 3 группы -->
-  {series.groups && (series.groups.switches.length + series.groups.sockets.length + series.groups.frames.length) > 0 && (
+  {cntTotal > 0 && (
     <section class="ser-lineup">
       <div class="ser-lineup__inner">
         <h2 class="ser-lineup__title" data-reveal="focus">Что входит в серию</h2>
         <p class="ser-lineup__subtitle" data-reveal="blur">
-          <a href="#ser-group-switches" class="ser-lineup__count-link" data-jump="ser-group-switches">{series.groups.switches.length} выключателей</a>
+          <a href="#ser-group-switches" class="ser-lineup__count-link" data-jump="ser-group-switches">{cnt.switches} выключателей</a>
           <span class="ser-lineup__dot">·</span>
-          <a href="#ser-group-sockets" class="ser-lineup__count-link" data-jump="ser-group-sockets">{series.groups.sockets.length} розеток</a>
+          <a href="#ser-group-sockets" class="ser-lineup__count-link" data-jump="ser-group-sockets">{cnt.sockets} розеток</a>
           <span class="ser-lineup__dot">·</span>
-          <a href="#ser-group-frames" class="ser-lineup__count-link" data-jump="ser-group-frames">{series.groups.frames.length} рамок</a>
+          <a href="#ser-group-frames" class="ser-lineup__count-link" data-jump="ser-group-frames">{cnt.frames} рамок</a>
         </p>
 
         <div class="ser-lineup__controls">
           <div class="ser-lineup__filter" id="serColorFilter">
-            <button class="ser-lineup__chip active" data-color="all">Все ({series.groups.switches.length + series.groups.sockets.length + series.groups.frames.length})</button>
-            <button class="ser-lineup__chip" data-color="white">Белые</button>
-            <button class="ser-lineup__chip" data-color="black">Чёрные</button>
+            <button class="ser-lineup__chip active" data-color="all">Все ({cntTotal})</button>
+            {palette.map(c => (
+              <button class="ser-lineup__chip" data-color={c.key}>{c.label}</button>
+            ))}
           </div>
         </div>
         <button class="ser-lineup__toggle-all" id="serToggleAll" type="button" aria-label="Свернуть все группы">
@@ -96,11 +117,7 @@ function getCardPhotoStyle(article) {
           <svg viewBox="0 0 12 12" class="ser-lineup__toggle-all-icon" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
 
-        {[
-          { key: 'switches', title: 'Выключатели', items: series.groups.switches },
-          { key: 'sockets',  title: 'Розетки',     items: series.groups.sockets  },
-          { key: 'frames',   title: 'Рамки',       items: series.groups.frames   }
-        ].filter(g => g.items.length > 0).map(group => (
+        {groupsDef.filter(g => g.items.length > 0).map(group => (
           <div class="ser-lineup__group" data-group={group.key} id={`ser-group-${group.key}`}>
             <button class="ser-lineup__group-head" type="button"
                     aria-expanded="true"
@@ -128,7 +145,7 @@ function getCardPhotoStyle(article) {
                       <div class="ser-lineup__photo" style={getCardPhotoStyle(item.article)}>
                         <img src={main} alt={item.name} class="ser-lineup__img ser-lineup__img--main" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.ser-lineup__photo-fallback').style.display='flex'" />
                         <div class="ser-lineup__photo-fallback" style="display:none">
-                          <span class={`dot dot--${item.color || 'white'}`}></span>
+                          <span class={`dot${['white', 'silver'].includes(item.color) ? ' dot--light' : ''}`} style={swatchByColor[item.color] ? `background:${swatchByColor[item.color]}` : undefined}></span>
                         </div>
                       </div>
                       <div class="ser-lineup__body">
@@ -458,21 +475,22 @@ function getCardPhotoStyle(article) {
       max-width: 480px; margin-bottom: 36px;
     }
     .ser-hero__colors {
-      display: flex; gap: 12px;
+      display: flex; gap: 8px; flex-wrap: wrap;
     }
     .ser-hero__color-btn {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 12px 22px; border: 1px solid var(--gray-200, #ddd);
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 7px 14px; border: 1px solid var(--gray-200, #ddd);
       border-radius: 100px; background: transparent;
-      font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+      font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
       color: var(--gray-600, #666); cursor: pointer;
+      white-space: nowrap;
       transition: all 0.2s ease;
     }
     .ser-hero__color-btn:hover { border-color: var(--black, #111); color: var(--black, #111); }
     .ser-hero__color-btn.active {
       background: var(--black, #111); color: var(--white, #fff); border-color: var(--black, #111);
     }
-    .ser-hero__color-btn .dot { width: 16px; height: 16px; border-radius: 50%; pointer-events: none; }
+    .ser-hero__color-btn .dot { width: 12px; height: 12px; border-radius: 50%; pointer-events: none; }
 
     .ser-hero__media {
       aspect-ratio: 4/3; background: var(--bg-product, #d4d4d2);

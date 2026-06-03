@@ -1,0 +1,232 @@
+{
+  "generatedFrom": "series.json + public/img/constructor",
+  "materialLabels": {
+    "plain": "Матовая",
+    "glossy": "Глянцевая",
+    "glass": "Стекло",
+    "glass_relief": "Стекло рельеф",
+    "aluminum": "Алюминий"
+  },
+  "materialOrder": [
+    "plain",
+    "glossy",
+    "glass",
+    "glass_relief",
+    "aluminum"
+  ],
+  "series": {
+    "uno": {
+      "slug": "uno",
+      "label": "УНО",
+      "hasFrames": false,
+      "colors": [
+        {
+          "key": "white",
+          "label": "Белый",
+          "swatch": "#dbdad6",
+          "light": true,
+          "cover": "/img/series/uno-1kl-w.webp",
+          "materials": [],
+          "img": {
+            "": "/img/constructor/uno/white.webp"
+          },
+          "hasCombo": true
+        },
+        {
+          "key": "black",
+          "label": "Чёрный",
+          "swatch": "#232121",
+          "light": false,
+          "cover": "/img/series/uno-1kl-b.webp",
+          "materials": [],
+          "img": {
+            "": "/img/constructor/uno/black.webp"
+          },
+          "hasCombo": true
+        },
+        {
+          "key": "grey",
+          "label": "Серый",
+          "swatch": "#a89d95",
+          "light": false,
+          "cover": "/img/series/uno-1kl-grey.webp",
+          "materials": [],
+          "img": {
+            "": "/img/constructor/uno/grey.webp"
+          },
+          "hasCombo": true
+        },
+        {
+          "key": "dark_grey",
+          "label": "Тёмно-серый",
+          "swatch": "#3a3736",
+          "light": false,
+          "cover": "/img/series/uno-1kl-dark_grey.webp",
+          "materials": [],
+          "img": {
+            "": "/img/constructor/uno/dark_grey.webp"
+          },
+          "hasCombo": true
+        },
+        {
+          "key": "silver",
+          "label": "Серебро",
+          "swatch": "#c3beb6",
+          "light": true,
+          "cover": "/img/series/uno-1kl-silver.webp",
+          "materials": [],
+          "img": {
+            "": "/img/constructor/uno/silver.webp"
+          },
+          "hasCombo": true
+        },
+        {
+          "key": "matte_black",
+          "label": "Чёрный матовый",
+          "swatch": "#2a2826",
+          "light": false,
+          "cover": "/img/series/uno-1kl-matte_black.webp",
+          "materials": [],
+          "img": {
+            "": "/img/constructor/uno/matte_black.webp"
+          },
+          "hasCombo": true
+        }
+      ]
+    },
+    "aura": {
+      "slug": "aura",
+      "label": "АУРА",
+      "hasFrames": true,
+      "colors": [
+        {
+          "key": "white",
+          "label": "Белый",
+          "swatch": "#e2dfdb",
+          "light": true,
+          "cover": "/img/series/aura-1kl-w.webp",
+          "materials": [
+            "plain",
+            "glossy",
+            "glass",
+            "glass_relief"
+          ],
+          "img": {
+            "glass": "/img/constructor/aura/white-glass.webp",
+            "glass_relief": "/img/constructor/aura/white-glass_relief.webp",
+            "glossy": "/img/constructor/aura/white-glossy.webp",
+            "plain": "/img/constructor/aura/white-plain.webp"
+          },
+          "hasCombo": true
+        },
+        {
+          "key": "black",
+          "label": "Чёрный",
+          "swatch": "#1c1a1a",
+          "light": false,
+          "cover": "/img/series/aura-1kl-b.webp",
+          "materials": [
+            "plain",
+            "glossy",
+            "glass",
+            "glass_relief",
+            "aluminum"
+          ],
+          "img": {
+            "aluminum": "/img/constructor/aura/black-aluminum.webp",
+            "glass": "/img/constructor/aura/black-glass.webp",
+            "glass_relief": "/img/constructor/aura/black-glass_relief.webp",
+            "glossy": "/img/constructor/aura/black-glossy.webp",
+            "plain": "/img/constructor/aura/black-plain.webp"
+          },
+          "hasCombo": true
+        },
+        {
+          "key": "grey",
+          "label": "Серый",
+          "swatch": "#8d877f",
+          "light": false,
+          "cover": "/img/series/aura-1kl-grey.webp",
+          "materials": [
+            "plain",
+            "glossy",
+            "glass",
+            "glass_relief",
+            "aluminum"
+          ],
+          "img": {
+            "aluminum": "/img/constructor/aura/grey-aluminum.webp",
+            "glass": "/img/constructor/aura/grey-glass.webp",
+            "glass_relief": "/img/constructor/aura/grey-glass_relief.webp",
+            "glossy": "/img/constructor/aura/grey-glossy.webp",
+            "plain": "/img/constructor/aura/grey-plain.webp"
+          },
+          "hasCombo": true
+        },
+        {
+          "key": "gold",
+          "label": "Золото",
+          "swatch": "#c7ab96",
+          "light": false,
+          "cover": "/img/series/aura-1kl-gold.webp",
+          "materials": [
+            "plain",
+            "glossy",
+            "glass",
+            "aluminum"
+          ],
+          "img": {
+            "aluminum": "/img/constructor/aura/gold-aluminum.webp",
+            "glass": "/img/constructor/aura/gold-glass.webp",
+            "glossy": "/img/constructor/aura/gold-glossy.webp",
+            "plain": "/img/constructor/aura/gold-plain.webp"
+          },
+          "hasCombo": true
+        }
+      ]
+    },
+    "design": {
+      "slug": "design",
+      "label": "ДИЗАЙН",
+      "hasFrames": false,
+      "colors": [
+        {
+          "key": "white",
+          "label": "Белый",
+          "swatch": "#e9e8e5",
+          "light": true,
+          "cover": "/img/series/design-1kl-w.webp",
+          "materials": [],
+          "img": {
+            "": "/img/constructor/design/white.webp"
+          },
+          "hasCombo": true
+        },
+        {
+          "key": "black",
+          "label": "Чёрный",
+          "swatch": "#211e1e",
+          "light": false,
+          "cover": "/img/series/design-1kl-b.webp",
+          "materials": [],
+          "img": {
+            "": "/img/constructor/design/black.webp"
+          },
+          "hasCombo": true
+        },
+        {
+          "key": "grey",
+          "label": "Серый",
+          "swatch": "#c7bfb8",
+          "light": false,
+          "cover": "/img/series/design-1kl-grey.webp",
+          "materials": [],
+          "img": {
+            "": "/img/constructor/design/grey.webp"
+          },
+          "hasCombo": true
+        }
+      ]
+    }
+  }
+}

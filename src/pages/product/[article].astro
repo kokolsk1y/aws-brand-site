@@ -114,6 +114,7 @@ function cleanTitle(name) {
     .replace(/\bCAT\.?\s*\d[a-zA-Z]*\b/gi, '')
     .replace(/\b(?:FTP|UTP|SAT-?\d+)\b/gi, '')
     .replace(/\b(?:Indoor|Outdoor)\b/gi, '')
+    .replace(/\(\s*\)/g, '')
     .replace(/[,;]\s*[,;]/g, ',')
     .replace(/^[,.\s]+|[,.\s]+$/g, '')
     .replace(/\s+/g, ' ')

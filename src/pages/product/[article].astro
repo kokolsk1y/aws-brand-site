@@ -260,7 +260,7 @@ function buildSpecs(p) {
   }
 
   rows.push(['Сертификация', 'EAC, ГОСТ']);
-  rows.push(['Бренд', 'AWS Products']);
+  rows.push(['Бренд', 'AWSProducts']);
 
   return rows;
 }
@@ -347,7 +347,7 @@ function buildDescription() {
   if (/рамк/i.test(product.name)) {
     return 'Рамка для монтажа выключателей и розеток одной серии. Точная геометрия, ровные линии и выверенные пропорции. ABS-пластик устойчив к ультрафиолету и сохраняет цвет годами. Совместима только с механизмами своей серии — не подходит к Werkel, Schneider или Legrand.';
   }
-  return 'Изделие бренда AWS Products. Качественные материалы, надёжная сборка и контроль на производстве. Совместимо со стандартными подрозетниками 68 мм. Сертифицировано EAC и ГОСТ.';
+  return 'Изделие бренда AWSProducts. Качественные материалы, надёжная сборка и контроль на производстве. Совместимо со стандартными подрозетниками 68 мм. Сертифицировано EAC и ГОСТ.';
 }
 
 const description = buildDescription();
@@ -378,7 +378,7 @@ const marketplaceLinks = [
 ];
 
 ---
-<BaseLayout title={`${title || product.article} — AWS Products`} description={description.slice(0, 160)}>
+<BaseLayout title={`${title || product.article} — AWSProducts`} description={description.slice(0, 160)}>
 
   <!-- HERO ТОВАРА -->
   <section class="prod-hero">

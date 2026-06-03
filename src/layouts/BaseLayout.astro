@@ -1,5 +1,5 @@
 ---
-const { title = 'AWS Products — Электрика нового стандарта', description = 'Бренд электрики с вниманием к деталям', ogImage } = Astro.props;
+const { title = 'AWSProducts — Электрика нового стандарта', description = 'Бренд электрики с вниманием к деталям', ogImage } = Astro.props;
 import '../styles/main.css';
 import { ClientRouter } from 'astro:transitions';
 
@@ -44,7 +44,7 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
     <!-- LOADING SPLASH — показывается только при первом заходе -->
     <div class="splash" id="splash" aria-hidden="true">
         <div class="splash__logo-wrap">
-            <img src={`${BASE}/logo/AWS.png`} alt="AWS Products" class="splash__logo" />
+            <img src={`${BASE}/logo/AWS.png`} alt="AWSProducts" class="splash__logo" />
             <div class="splash__line"></div>
         </div>
     </div>
@@ -58,7 +58,7 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
             </div>
             <div class="header__center">
                 <a href="/" class="header__logo" data-astro-reload>
-                    <img src={`${BASE}/logo/AWS.png`} alt="AWS Products" class="header__logo-img" />
+                    <img src={`${BASE}/logo/AWS.png`} alt="AWSProducts" class="header__logo-img" />
                 </a>
             </div>
             <div class="header__right">
@@ -149,7 +149,7 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
                     <img src={`${BASE}/logo/AWS.png`} alt="" class="footer-v2__logo" />
                 </div>
                 <div class="footer-v2__legal">
-                    <span>&copy; 2026 AWS Products</span>
+                    <span>&copy; 2026 AWSProducts</span>
                     <span class="footer-v2__sep">·</span>
                     <span class="footer-v2__legal-soon" title="Появится скоро">Политика конфиденциальности</span>
                     <span class="footer-v2__sep">·</span>

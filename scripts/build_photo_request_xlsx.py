@@ -16,7 +16,8 @@ from openpyxl.utils import get_column_letter
 ROOT = Path(__file__).resolve().parent.parent
 SERIES_JSON = ROOT / "src" / "data" / "series.json"
 STV_JSON = ROOT / "scripts" / "audit" / "stv_data.json"
-OUT_XLSX = ROOT / "scripts" / "audit" / "photo_request.xlsx"
+OUT_XLSX = ROOT / "scripts" / "audit" / "photo_request2.xlsx"
+PRODUCTS_DIR = ROOT / "public" / "img" / "products"
 
 SERIES_RU = {"uno": "УНО", "aura": "АУРА", "design": "ДИЗАЙН"}
 GROUP_RU = {
@@ -77,29 +78,32 @@ def style_data(cell, is_alt: bool = False):
         cell.fill = PatternFill("solid", fgColor="FFF9F9F9")
 
 
-def _covered_articles() -> set:
-    """Артикулы, на которые фото уже получены (есть в раскладке поставщика)."""
-    try:
-        from verify_photos import build_matches
-        matched, *_ = build_matches()
-        return {article for (_skey, article) in matched}
-    except Exception as e:
-        print(f"[warn] не удалось получить покрытые артикулы: {e}")
-        return set()
+def _has_photo(article: str) -> bool:
+    """Есть ли у артикула фото в public/img/products (то же, что определяет
+    видимость товара на сайте). Источник правды — реальные файлы, НЕ сырьё
+    поставщика (оно может быть удалено после раскладки)."""
+    import re
+    safe = re.escape(article)
+    rx = re.compile("^" + safe + r"\.(webp|png|jpg|jpeg)$", re.I)
+    return any(rx.match(f) for f in _PRODUCT_FILES)
+
+
+_PRODUCT_FILES = [f.name for f in PRODUCTS_DIR.iterdir()] if PRODUCTS_DIR.exists() else []
 
 
 def collect_rows() -> list[dict]:
     series = json.loads(SERIES_JSON.read_text(encoding="utf-8"))
-    stv = json.loads(STV_JSON.read_text(encoding="utf-8"))
-    url_map = {it["article"]: it.get("url", "") for sk in stv for it in stv[sk]["items"]}
-    covered = _covered_articles()
+    url_map = {}
+    if STV_JSON.exists():
+        stv = json.loads(STV_JSON.read_text(encoding="utf-8"))
+        url_map = {it["article"]: it.get("url", "") for sk in stv for it in stv[sk]["items"]}
 
     rows = []
     for skey in ("uno", "aura", "design"):
         for gkey in GROUP_ORDER:
             for it in series[skey]["groups"].get(gkey, []):
-                # новый товар без фото: price=null И фото ещё НЕ прислали
-                if it.get("price") is None and it["article"] not in covered:
+                # товар попадает в запрос, если у него НЕТ фото на сайте
+                if not _has_photo(it["article"]):
                     rows.append({
                         "series": SERIES_RU[skey],
                         "group": GROUP_RU[gkey],
@@ -162,9 +166,9 @@ def fill_summary(ws, rows: list[dict]) -> None:
     ws.column_dimensions["B"].width = 50
 
     info = [
-        ("Файл", "Запрос фотографий — новые артикулы AWS"),
-        ("Дата", "2026-05-28"),
-        ("Источник артикулов", "stv39.ru (Электроцентр)"),
+        ("Файл", "Запрос фотографий — артикулы AWS без фото"),
+        ("Дата", "2026-06-03"),
+        ("Критерий", "нет файла в public/img/products (не показывается на сайте)"),
         ("Всего артикулов", len(rows)),
         ("", ""),
         ("Серия УНО", sum(1 for r in rows if r["series"] == "УНО")),

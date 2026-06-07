@@ -1255,72 +1255,6 @@
           "price": 396
         },
         {
-          "article": "B30-6B",
-          "name": "Рамка для двойной розетки алюминий чёрная",
-          "color": "black",
-          "price": null
-        },
-        {
-          "article": "B30-6GR",
-          "name": "Рамка для двойной розетки алюминий серая",
-          "color": "grey",
-          "price": null
-        },
-        {
-          "article": "B30-6G",
-          "name": "Рамка для двойной розетки алюминий золото",
-          "color": "gold",
-          "price": null
-        },
-        {
-          "article": "PG51-6W",
-          "name": "Рамка для двойной розетки белая",
-          "color": "white",
-          "price": null
-        },
-        {
-          "article": "PG51-6B",
-          "name": "Рамка для двойной розетки чёрная",
-          "color": "black",
-          "price": null
-        },
-        {
-          "article": "P50-6GR",
-          "name": "Рамка для двойной розетки серая",
-          "color": "grey",
-          "price": null
-        },
-        {
-          "article": "PG51-6GR",
-          "name": "Рамка для двойной розетки серая",
-          "color": "grey",
-          "price": null
-        },
-        {
-          "article": "G50-6GR",
-          "name": "Рамка для двойной розетки серая (стекло)",
-          "color": "grey",
-          "price": null
-        },
-        {
-          "article": "P50-6G",
-          "name": "Рамка для двойной розетки золото",
-          "color": "gold",
-          "price": null
-        },
-        {
-          "article": "PG51-6G",
-          "name": "Рамка для двойной розетки золото",
-          "color": "gold",
-          "price": null
-        },
-        {
-          "article": "G50-6G",
-          "name": "Рамка для двойной розетки золото (стекло)",
-          "color": "gold",
-          "price": null
-        },
-        {
           "article": "A-023GR",
           "name": "Розетка 1-я с крышкой с/з с шторками серая",
           "color": "grey",
@@ -2029,6 +1963,72 @@
           "name": "Рамка 5-я золото горизонтальная",
           "color": "gold",
           "price": null
+        },
+        {
+          "article": "B30-6B",
+          "name": "Рамка для двойной розетки алюминий чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "B30-6GR",
+          "name": "Рамка для двойной розетки алюминий серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "B30-6G",
+          "name": "Рамка для двойной розетки алюминий золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "PG51-6W",
+          "name": "Рамка для двойной розетки белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "PG51-6B",
+          "name": "Рамка для двойной розетки чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "P50-6GR",
+          "name": "Рамка для двойной розетки серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "PG51-6GR",
+          "name": "Рамка для двойной розетки серая",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "G50-6GR",
+          "name": "Рамка для двойной розетки серая (стекло)",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "P50-6G",
+          "name": "Рамка для двойной розетки золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "PG51-6G",
+          "name": "Рамка для двойной розетки золото",
+          "color": "gold",
+          "price": null
+        },
+        {
+          "article": "G50-6G",
+          "name": "Рамка для двойной розетки золото (стекло)",
+          "color": "gold",
+          "price": null
         }
       ],
       "accessories": [],
@@ -2349,24 +2349,6 @@
       ],
       "sockets": [
         {
-          "article": "PD80-6W",
-          "name": "Рамка для двойной розетки белая",
-          "color": "white",
-          "price": null
-        },
-        {
-          "article": "PD80-6B",
-          "name": "Рамка для двойной розетки чёрная",
-          "color": "black",
-          "price": null
-        },
-        {
-          "article": "PD80-6GR",
-          "name": "Рамка для двойной розетки серая",
-          "color": "grey",
-          "price": null
-        },
-        {
           "article": "A-D022W",
           "name": "Розетка 1-я с крышкой с/з с шторками белая",
           "color": "white",
@@ -2629,6 +2611,24 @@
         {
           "article": "PD80-5GR",
           "name": "Рамка 5-я серая горизонтальная",
+          "color": "grey",
+          "price": null
+        },
+        {
+          "article": "PD80-6W",
+          "name": "Рамка для двойной розетки белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "PD80-6B",
+          "name": "Рамка для двойной розетки чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "PD80-6GR",
+          "name": "Рамка для двойной розетки серая",
           "color": "grey",
           "price": null
         }

@@ -279,6 +279,29 @@
       "approved": true,
       "created": "2026-06-08",
       "completed": "2026-06-08"
+    },
+    {
+      "id": 38,
+      "text": "STV-парсинг: собраны описания+характеристики для всех 460 артикулов (scripts/extract_stv_specs.py → scripts/audit/stv_specs.json). Описания 460/460, характеристики 289/460. Сырьё, стиль не переписан.",
+      "status": "done",
+      "approved": true,
+      "created": "2026-06-08",
+      "completed": "2026-06-08"
+    },
+    {
+      "id": 39,
+      "text": "STV: дотянуты характеристики цветовых вариантов от базы (+96, 289→385/460) + нормализатор scripts/normalize_stv_specs.py привёл 52 грязных ключа к канону AWS (specs_norm в stv_specs.json). Серия заглавными, единицы nbsp, Есть/Нет, IP без скобок.",
+      "status": "done",
+      "approved": false,
+      "created": "2026-06-08",
+      "completed": "2026-06-08"
+    },
+    {
+      "id": 40,
+      "text": "Переписать описания STV в свой стиль по промту пользователя + развести цветовые варианты (заменить «белого цвета» на нужный). Источник: stv_specs.json. Потом вшить description+specs в карточки сайта (отдельная UI-задача, схема series.json пока минимальна).",
+      "status": "pending",
+      "approved": false,
+      "created": "2026-06-08"
     }
   ]
 }

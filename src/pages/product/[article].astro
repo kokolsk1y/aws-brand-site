@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import categoriesMeta from '../../data/categories.json';
 import seriesData from '../../data/series.json';
 import productsAll from '../../../public/products.json';
+import productContent from '../../data/product_content.json';
 import { getProductPhotos } from '../../utils/photos.js';
 
 // Маппинг: ключ в products.json → slug категории на сайте
@@ -269,7 +270,11 @@ const meta3 = extractMeta(product.name);
 const title = cleanTitle(product.name);
 const teaser = buildTeaser(meta3);
 const highlights = buildHighlights(product.name, product.seriesName);
-const specs = buildSpecs(product);
+
+// Данные из STV (product_content.json). Характеристики — если их больше «рамки»
+// (Артикул+Гарантия+Сертификация+Бренд = 4 строки), иначе старый фолбэк по названию.
+const pc = productContent[product.article];
+const specs = (pc && pc.specs.length > 4) ? pc.specs : buildSpecs(product);
 
 // Связанные товары
 function findRelated() {
@@ -350,7 +355,8 @@ function buildDescription() {
   return 'Изделие бренда AWSProducts. Качественные материалы, надёжная сборка и контроль на производстве. Совместимо со стандартными подрозетниками 68 мм. Сертифицировано EAC и ГОСТ.';
 }
 
-const description = buildDescription();
+// Описание из STV-переписанного (если готово), иначе шаблонный фолбэк по типу.
+const description = (pc && pc.description) ? pc.description : buildDescription();
 
 // Маркетплейсы — стиль как у блока "Где купить" на главной
 const marketplaceLinks = [
@@ -962,10 +968,11 @@ const marketplaceLinks = [
       position: relative; z-index: 1;
     }
 
-    /* === Двухколонночный grid === */
+    /* === Описание сверху, характеристики ниже на всю ширину === */
     .prod-details__grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      display: grid; grid-template-columns: 1fr; gap: 56px;
     }
+    .prod-details__col--text { max-width: 820px; }
     .prod-details__col .label { display: block; margin-bottom: 16px; }
     .prod-details__title {
       font-size: clamp(26px, 3vw, 40px);
@@ -978,17 +985,18 @@ const marketplaceLinks = [
       margin: 0;
     }
 
-    /* Specs list */
+    /* Specs list — в 2 столбца (column-count), строки не рвутся */
     .prod-specs__list {
-      display: grid; grid-template-columns: 1fr;
-      gap: 0; margin: 0;
+      column-count: 2; column-gap: 56px;
+      margin: 0;
     }
     .prod-specs__row {
       display: grid;
-      grid-template-columns: minmax(140px, 180px) 1fr;
-      gap: 20px;
-      padding: 16px 14px;
-      margin: 0 -14px;
+      grid-template-columns: minmax(120px, 160px) 1fr;
+      gap: 16px;
+      padding: 14px 12px;
+      margin: 0;
+      break-inside: avoid;
       border-bottom: 1px solid rgba(0,0,0,0.06);
       align-items: center;
       border-radius: 8px;
@@ -1179,6 +1187,8 @@ const marketplaceLinks = [
       .prod-hero__inner, .prod-details__inner, .prod-related__inner { padding: 0 16px; }
       /* Заголовок */
       .prod-hero__name { font-size: clamp(22px, 6vw, 32px); }
+      /* Характеристики — в один столбец на узких экранах */
+      .prod-specs__list { column-count: 1; }
     }
     @media (max-width: 560px) {
       .prod-hero { padding: 76px 0 40px; }

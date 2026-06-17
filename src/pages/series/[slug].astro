@@ -20,6 +20,7 @@ const groupsDef = [
   { key: 'switches', title: 'Выключатели', items: visibleItems(series.groups?.switches, 'switches', colorOrder) },
   { key: 'sockets',  title: 'Розетки',     items: visibleItems(series.groups?.sockets,  'sockets',  colorOrder) },
   { key: 'frames',   title: 'Рамки',       items: visibleItems(series.groups?.frames,   'frames',   colorOrder) },
+  { key: 'other',    title: 'Прочие',      items: visibleItems(series.groups?.other,    'other',    colorOrder) },
 ];
 const cnt = Object.fromEntries(groupsDef.map(g => [g.key, g.items.length]));
 const cntTotal = groupsDef.reduce((s, g) => s + g.items.length, 0);
@@ -102,6 +103,12 @@ function getCardPhotoStyle(article) {
           <a href="#ser-group-sockets" class="ser-lineup__count-link" data-jump="ser-group-sockets">{cnt.sockets} розеток</a>
           <span class="ser-lineup__dot">·</span>
           <a href="#ser-group-frames" class="ser-lineup__count-link" data-jump="ser-group-frames">{cnt.frames} рамок</a>
+          {cnt.other > 0 && (
+            <>
+              <span class="ser-lineup__dot">·</span>
+              <a href="#ser-group-other" class="ser-lineup__count-link" data-jump="ser-group-other">{cnt.other} прочих</a>
+            </>
+          )}
         </p>
 
         <div class="ser-lineup__controls">

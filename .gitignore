@@ -22,10 +22,12 @@ photos-sorted/
 _pipeline/
 preview-ticker/
 
-# Catalog audit (recreated by scripts/audit_catalog.py)
+# Catalog audit (recreated by scripts/audit_catalog.py / reaudit_aws.py)
 scripts/cache/
 scripts/audit/our_data.json
 scripts/audit/stv_data.json
+scripts/audit/reaudit_stv.json
+scripts/audit/reaudit_report.md
 
 # Сырьё от поставщика (распаковывается из архивов скриптами — не для сайта)
 *.zip

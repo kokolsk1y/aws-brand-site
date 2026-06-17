@@ -341,6 +341,22 @@
       "approved": true,
       "created": "2026-06-17",
       "completed": "2026-06-17"
+    },
+    {
+      "id": 46,
+      "text": "Свежий аудит бренд-каталога AWS на STV (scripts/reaudit_aws.py, q=awsproducts 500 карточек). Серии сверены (цвета white/black/grey/matte_black/silver; gold/dark_grey/mahogany в эту выдачу STV не попадают — наши добавленные цвета). НАЙДЕНО недостающее (отчёт scripts/audit/reaudit_missing.md): серия «Стандарт» SD-* (~57) — ОТКЛОНЕНО пользователем, не делаем. Реально к рассмотрению: силовые SLN 11 (SLN-415/425/515/525/615/625, тройники 1015/1025, 124K, 2342, 0132), клеммы SN 11 (SN-221413/414(+N), SN-222411/412/413(+D), SN-224101/103), удлинители 5 (AWS-G03-1.5/3, G03K-3, H03-5, H03K-3). Решение по добавлению — за пользователем (нужны фото/данные).",
+      "status": "done",
+      "approved": true,
+      "created": "2026-06-18",
+      "completed": "2026-06-18"
+    },
+    {
+      "id": 47,
+      "text": "Чистка репозитория: удалены 51 одноразовый скрипт (старые .cjs-скраперы download/extract/clean/cleanup/import/place/migrate/sort/sync, применённые .py-фиксы rembg/remove/uno7/fix_*/recut025/apply_gaps/replace_with_anfas и др.) + старые отчёты (gaps_report 114КБ, photo_request*, photos_coverage, photo_intake). Локально снесены кэш STV (~500МБ/741 файл), __pycache__, логи, устаревшие our_data/stv_data. Оставлен рабочий пайплайн (build_product_content/extract_stv_specs/normalize/audit/compare/reaudit/конструктор/verify_photos/cutout) + текущие данные + photo_request2.xlsx. Сборка сайта (astro build) скрипты не использует — не затронута.",
+      "status": "done",
+      "approved": true,
+      "created": "2026-06-18",
+      "completed": "2026-06-18"
     }
   ]
 }

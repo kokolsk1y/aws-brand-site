@@ -184,6 +184,11 @@ def main() -> None:
         specs = borrow_specs(art, v)
         if slug and "Серия" in specs:
             specs["Серия"] = series_name.get(slug, specs["Серия"])
+        # ДИЗАЙН: покрытие строго по цвету (STV-проверено: белый — глянцевое,
+        # чёрный и серый — матовое). Дотяжка цветовых вариантов от белого донора
+        # копировала «глянцевое» и на чёрный/серый — здесь переопределяем.
+        if slug == "design" and "Покрытие" in specs:
+            specs["Покрытие"] = "Глянцевое" if article_color.get(art) == "white" else "Матовое"
         rows = [["Артикул", art]]
         rows += [[k, val] for k, val in specs.items()]
         rows.append(["Гарантия", warranty_for(v["our_name"])])
@@ -195,6 +200,13 @@ def main() -> None:
             src = best_desc.get(desc_key(art))
             if src:
                 desc = clean_description(src[1], src[0]) or None
+        # ДИЗАЙН-рамки (PD80): покрытие у белого/чёрного/серого разное, а описание
+        # общее на базу — убираем упоминание поверхности, чтобы текст не противоречил
+        # таблице. + правка опечатки STV «однин».
+        if slug == "design" and desc and re.search(r"рамк", v["our_name"], re.I):
+            desc = re.sub(r"\s*с\s+(?:глянцевой|матовой)\s+поверхностью", "", desc, flags=re.I)
+            desc = desc.replace("однин", "один").replace("подрозетник..", "подрозетник.")
+            desc = re.sub(r"\s{2,}", " ", desc).replace(" .", ".").strip()
         content[art] = {"specs": rows, "description": desc}
 
     for slug, sv in series.items():

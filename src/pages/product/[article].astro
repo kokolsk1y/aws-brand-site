@@ -87,7 +87,7 @@ function extractMeta(name) {
   else if (/б\/з/.test(name)) m.push('без заземления');
   const ip = name.match(/IP\s*(\d{2})/i);
   if (ip) m.push(`IP${ip[1]}`);
-  const amp = name.match(/(\d+)\s*А(?![a-z])/);
+  const amp = name.match(/(?<![\d.,])(\d+)\s*А(?![a-z])/);
   if (amp) m.push(`${amp[1]} А`);
   if (/рычажк/i.test(name)) m.push('рычажковая');
   const cat = name.match(/CAT\.?\s*(\d[a-zA-Z]*)/i);
@@ -235,7 +235,7 @@ function buildSpecs(p) {
   const ip = n.match(/IP\s*(\d{2})/i);
   if (ip) rows.push(['Класс защиты', `IP${ip[1]}`]);
 
-  const amp = n.match(/(\d+)\s*А(?![a-z])/);
+  const amp = n.match(/(?<![\d.,])(\d+)\s*А(?![a-z])/);
   if (amp) rows.push(['Номинальный ток', `${amp[1]} А`]);
 
   const cat = n.match(/CAT\.?\s*(\d[a-zA-Z]*)/i);

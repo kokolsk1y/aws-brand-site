@@ -87,13 +87,13 @@ function extractMeta(name) {
   else if (/б\/з/.test(name)) m.push('без заземления');
   const ip = name.match(/IP\s*(\d{2})/i);
   if (ip) m.push(`IP${ip[1]}`);
-  const amp = name.match(/(?<![\d.,])(\d+)\s*А(?![a-z])/);
+  const amp = name.match(/(?<![\d.,])(\d+)\s*[АA](?![a-zA-Zа-яё])/);
   if (amp) m.push(`${amp[1]} А`);
   if (/рычажк/i.test(name)) m.push('рычажковая');
   const cat = name.match(/CAT\.?\s*(\d[a-zA-Z]*)/i);
   if (cat) m.push(`Cat.${cat[1]}`);
   if (/FTP/i.test(name)) m.push('FTP');
-  else if (/\bUTP\b/i.test(name)) m.push('UTP');
+  else if (/\bUTP/i.test(name)) m.push('UTP');
   if (/OUTDOOR/i.test(name)) m.push('Outdoor');
   else if (/INDOOR/i.test(name)) m.push('Indoor');
   return m;
@@ -226,7 +226,7 @@ function buildSpecs(p) {
   if (/с\/з/.test(n)) rows.push(['Заземление', 'Да']);
   else if (/б\/з/.test(n)) rows.push(['Заземление', 'Нет']);
 
-  const wire = n.match(/(\d+(?:[,.]\d+)?)[xх](\d+(?:[,.]\d+)?)\s*(?:мм²?|mm2)?/);
+  const wire = n.match(/(\d+(?:[,.]\d+)?)[xх](\d+(?:[,.]\d+)?)\s*(?:мм²?|mm2)/);
   if (wire) rows.push(['Сечение жилы', `${wire[1]}×${wire[2]} мм²`]);
 
   if (/\bПВС\b/i.test(n)) rows.push(['Тип кабеля', 'ПВС']);
@@ -235,14 +235,14 @@ function buildSpecs(p) {
   const ip = n.match(/IP\s*(\d{2})/i);
   if (ip) rows.push(['Класс защиты', `IP${ip[1]}`]);
 
-  const amp = n.match(/(?<![\d.,])(\d+)\s*А(?![a-z])/);
+  const amp = n.match(/(?<![\d.,])(\d+)\s*[АA](?![a-zA-Zа-яё])/);
   if (amp) rows.push(['Номинальный ток', `${amp[1]} А`]);
 
   const cat = n.match(/CAT\.?\s*(\d[a-zA-Z]*)/i);
   if (cat) rows.push(['Категория', `Cat.${cat[1]}`]);
 
   if (/FTP/i.test(n)) rows.push(['Экран', 'FTP (фольгированный)']);
-  else if (/\bUTP\b/i.test(n)) rows.push(['Экран', 'UTP (без экрана)']);
+  else if (/\bUTP/i.test(n)) rows.push(['Экран', 'UTP (без экрана)']);
 
   if (/OUTDOOR/i.test(n)) rows.push(['Применение', 'Outdoor — для улицы']);
   else if (/INDOOR/i.test(n)) rows.push(['Применение', 'Indoor — для помещений']);

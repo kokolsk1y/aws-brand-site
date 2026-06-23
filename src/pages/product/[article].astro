@@ -1110,8 +1110,9 @@ const marketplaceLinks = [
     }
     .prod-related__card:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(0,0,0,0.07); }
     .prod-related__img {
+      --rel-pad: 28px;
       aspect-ratio: 1/1; background: #e5e5e4;
-      display: flex; align-items: center; justify-content: center; padding: 28px;
+      display: flex; align-items: center; justify-content: center; padding: var(--rel-pad);
       position: relative;
     }
     .prod-related__img img {
@@ -1129,8 +1130,10 @@ const marketplaceLinks = [
     /* Hover-ракурс */
     .prod-related__img.has-hover .prod-related__photo {
       position: absolute;
-      inset: 28px;
-      max-width: calc(100% - 56px); max-height: calc(100% - 56px);
+      inset: var(--rel-pad);
+      margin: auto; /* центрирует absolute-картинку по обеим осям (без него <img> прижимается к верх-лево) */
+      max-width: calc(100% - var(--rel-pad) * 2);
+      max-height: calc(100% - var(--rel-pad) * 2);
     }
     .prod-related__img.has-hover .prod-related__photo--hover { opacity: 0; }
     .prod-related__card:hover .prod-related__img.has-hover .prod-related__photo--main { opacity: 0; }
@@ -1197,7 +1200,7 @@ const marketplaceLinks = [
       .prod-buy-btn { min-height: 100px; padding: 22px 24px; }
       .prod-docs__grid { grid-template-columns: 1fr; }
       .prod-related__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .prod-related__img { padding: 14px; }
+      .prod-related__img { --rel-pad: 14px; }
       .prod-related__body { padding: 12px 12px 14px; }
       .prod-related__name { font-size: 12px; margin-bottom: 6px; }
       .prod-related__chip { font-size: 8px; padding: 3px 7px; display: inline-flex; align-items: center; line-height: 1; }

@@ -564,7 +564,7 @@ document.querySelectorAll('.series__card[data-series]').forEach(card => {
     const elSummary = document.getElementById('cstSummary');
     if (!layers[0] || !layers[1] || !elSeries) return;
 
-    const order = ['uno', 'aura', 'design'].filter(k => SERIES[k]);
+    const order = ['design', 'uno', 'aura'].filter(k => SERIES[k]);
     if (!order.length) return;
     const state = { series: order[0], color: null, material: null };
 

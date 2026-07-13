@@ -12,6 +12,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import backOrder from '../data/uno_photo_order.json' with { type: 'json' };
 
 const PRODUCTS_DIR = path.resolve('public/img/products');
 const PRODUCTS_FILES = fs.existsSync(PRODUCTS_DIR) ? fs.readdirSync(PRODUCTS_DIR) : [];
@@ -43,8 +44,27 @@ export function getProductPhotos(article) {
     if (!byIdx.has(idx)) byIdx.set(idx, []);
     byIdx.get(idx).push(f);
   }
-  const extras = [...byIdx.entries()]
-    .sort((a, b) => a[0] - b[0])
-    .map(([, files]) => pickByFormat(files));
-  return [main, ...extras].filter(Boolean).map(f => `/img/products/${f}`);
+  // Последовательность (индекс, файл).
+  // Индекс _1 — канонический ¾-ракурс АУРА («ракурс 3х4»): он ГЕРОЙСКИЙ,
+  // ставим его ПЕРВЫМ — перед лицом/main (плоское лицо АУРА невыразительно).
+  // У золото/серых main-файла нет; у чёрных/белых main = лицо → ¾ всё равно впереди.
+  // У остальных серий файлов _1 нет — поведение не меняется.
+  const HERO = 1;
+  const seq = [];
+  if (byIdx.has(HERO)) seq.push([HERO, pickByFormat(byIdx.get(HERO))]);
+  if (main) seq.push([1, main]);
+  for (const idx of [...byIdx.keys()].sort((a, b) => a - b)) {
+    if (idx === HERO) continue;
+    seq.push([idx, pickByFormat(byIdx.get(idx))]);
+  }
+
+  // Тыльная сторона — всегда в конец (первое фото не трогаем).
+  // Карта src/data/uno_photo_order.json: артикул → индекс тыльного ракурса (УНО).
+  const backIdx = backOrder[article];
+  if (backIdx != null && seq.length > 1) {
+    const pos = seq.findIndex(([i]) => i === backIdx);
+    if (pos > 0) seq.push(seq.splice(pos, 1)[0]);
+  }
+
+  return seq.map(([, f]) => f).filter(Boolean).map(f => `/img/products/${f}`);
 }

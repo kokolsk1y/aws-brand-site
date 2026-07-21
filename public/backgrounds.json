@@ -1,0 +1,38 @@
+{
+  "_comment": "Единый источник фонов для превью товара (hero серии + конструктор). Читается public/bg-switch.js. Чтобы заменить процедурную текстуру реальным фото заказчика — положите файл в /img/backgrounds/ и поправьте src/thumb здесь; структуру менять не нужно.",
+  "default": "light",
+  "backgrounds": [
+    {
+      "key": "light",
+      "label": "Светлый",
+      "type": "css",
+      "value": "radial-gradient(circle at 50% 42%, #ffffff 0%, #ececea 76%, #dcdad6 100%)",
+      "swatch": "radial-gradient(circle at 38% 32%, #ffffff, #d9d7d2)",
+      "dark": false
+    },
+    {
+      "key": "travertine",
+      "label": "Травертин",
+      "type": "image",
+      "src": "/img/backgrounds/travertine.webp",
+      "thumb": "/img/backgrounds/travertine-thumb.webp",
+      "dark": false
+    },
+    {
+      "key": "oak",
+      "label": "Дуб",
+      "type": "image",
+      "src": "/img/backgrounds/oak.webp",
+      "thumb": "/img/backgrounds/oak-thumb.webp",
+      "dark": false
+    },
+    {
+      "key": "graphite",
+      "label": "Графит",
+      "type": "css",
+      "value": "radial-gradient(circle at 50% 40%, #3d3d40 0%, #232326 68%, #161618 100%)",
+      "swatch": "radial-gradient(circle at 38% 32%, #4a4a4f, #202023)",
+      "dark": true
+    }
+  ]
+}

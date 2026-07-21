@@ -6,15 +6,43 @@
     "description": "Надёжные удлинители для дома. Качественный кабель ПВС, защёлкивающиеся гнёзда без усилия, корпус из ABS-пластика устойчивого к нагреву.",
     "cover": "/img/products/AWS-H03-1,5.webp",
     "filters": [
-      { "key": "all", "label": "Все", "test": "true" },
-      { "key": "1.5m", "label": "1.5 м", "test": "i.name.includes('1,5м')" },
-      { "key": "3m", "label": "3 м", "test": "i.name.includes('3м')" },
-      { "key": "5m", "label": "5 м", "test": "i.name.includes('5м')" },
-      { "key": "earth", "label": "С заземлением", "test": "i.name.includes('с/з')" }
+      {
+        "key": "all",
+        "label": "Все",
+        "test": "true"
+      },
+      {
+        "key": "1.5m",
+        "label": "1.5 м",
+        "test": "i.name.includes('1,5м')"
+      },
+      {
+        "key": "3m",
+        "label": "3 м",
+        "test": "i.name.includes('3м')"
+      },
+      {
+        "key": "5m",
+        "label": "5 м",
+        "test": "i.name.includes('5м')"
+      },
+      {
+        "key": "earth",
+        "label": "С заземлением",
+        "test": "i.name.includes('с/з')"
+      }
     ],
     "groups": [
-      { "key": "g3", "title": "3 гнезда", "test": "i.name.includes('3гн')" },
-      { "key": "g5", "title": "5 гнёзд", "test": "i.name.includes('5гн')" }
+      {
+        "key": "g3",
+        "title": "3 гнезда",
+        "test": "i.name.includes('3гн')"
+      },
+      {
+        "key": "g5",
+        "title": "5 гнёзд",
+        "test": "i.name.includes('5гн')"
+      }
     ]
   },
   "extensions-garden": {
@@ -24,10 +52,26 @@
     "description": "Садовые удлинители для работы вне помещения. Морозостойкая оранжевая изоляция, повышенная заметность, прочный кабель ПВС.",
     "cover": "/img/products/AWS-HZ2-01-15.webp",
     "filters": [
-      { "key": "all", "label": "Все", "test": "true" },
-      { "key": "10m", "label": "10 м", "test": "i.name.includes('10м')" },
-      { "key": "15m", "label": "15 м", "test": "i.name.includes('15м')" },
-      { "key": "25m", "label": "25 м", "test": "i.name.includes('25м')" }
+      {
+        "key": "all",
+        "label": "Все",
+        "test": "true"
+      },
+      {
+        "key": "10m",
+        "label": "10 м",
+        "test": "i.name.includes('10м')"
+      },
+      {
+        "key": "15m",
+        "label": "15 м",
+        "test": "i.name.includes('15м')"
+      },
+      {
+        "key": "25m",
+        "label": "25 м",
+        "test": "i.name.includes('25м')"
+      }
     ]
   },
   "power-connectors": {
@@ -37,18 +81,63 @@
     "description": "Промышленные силовые разъёмы для подключения мощного оборудования. Защита IP44 / IP67, токи 16-125 А, переносные и стационарные.",
     "cover": "/img/products/SLN-025.webp",
     "filters": [
-      { "key": "all", "label": "Все", "test": "true" },
-      { "key": "ip44", "label": "IP44", "test": "i.name.includes('IP44')" },
-      { "key": "ip67", "label": "IP67", "test": "i.name.includes('IP67')" },
-      { "key": "16a", "label": "16 А", "test": "/\\b16A\\b/i.test(i.name)" },
-      { "key": "32a", "label": "32 А", "test": "/\\b32A\\b/i.test(i.name)" },
-      { "key": "63a", "label": "63 А", "test": "/\\b63A\\b/i.test(i.name)" },
-      { "key": "125a", "label": "125 А", "test": "/\\b125A\\b/i.test(i.name)" }
+      {
+        "key": "all",
+        "label": "Все",
+        "test": "true"
+      },
+      {
+        "key": "ip44",
+        "label": "IP44",
+        "test": "i.name.includes('IP44')"
+      },
+      {
+        "key": "ip67",
+        "label": "IP67",
+        "test": "i.name.includes('IP67')"
+      },
+      {
+        "key": "16a",
+        "label": "16 А",
+        "test": "/\\b16A\\b/i.test(i.name)"
+      },
+      {
+        "key": "32a",
+        "label": "32 А",
+        "test": "/\\b32A\\b/i.test(i.name)"
+      },
+      {
+        "key": "63a",
+        "label": "63 А",
+        "test": "/\\b63A\\b/i.test(i.name)"
+      },
+      {
+        "key": "125a",
+        "label": "125 А",
+        "test": "/\\b125A\\b/i.test(i.name)"
+      }
     ],
     "groups": [
-      { "key": "vilka", "title": "Вилки", "test": "/^Вилка/i.test(i.name)" },
-      { "key": "rozetka-per", "title": "Розетки переносные", "test": "/^Розетка переносная/i.test(i.name)" },
-      { "key": "rozetka-stac", "title": "Розетки стационарные", "test": "/^Розетка стационарная/i.test(i.name)" }
+      {
+        "key": "vilka",
+        "title": "Вилки",
+        "test": "/^Вилка/i.test(i.name)"
+      },
+      {
+        "key": "rozetka-per",
+        "title": "Розетки переносные",
+        "test": "/^Розетка переносная/i.test(i.name)"
+      },
+      {
+        "key": "rozetka-stac",
+        "title": "Розетки стационарные",
+        "test": "/^Розетка стационарная/i.test(i.name)"
+      },
+      {
+        "key": "razvetvitel",
+        "title": "Разветвители",
+        "test": "/^Разветвитель/i.test(i.name)"
+      }
     ]
   },
   "clamps": {
@@ -58,14 +147,38 @@
     "description": "Соединительные клеммы Wago-style: рычажковые и классические. Защёлкивание с первого раза, надёжный контакт без пайки.",
     "cover": "/img/products/SN-222415.png",
     "filters": [
-      { "key": "all", "label": "Все", "test": "true" },
-      { "key": "32a", "label": "32 А", "test": "i.name.includes('32А')" },
-      { "key": "24a", "label": "24 А", "test": "i.name.includes('24А')" }
+      {
+        "key": "all",
+        "label": "Все",
+        "test": "true"
+      },
+      {
+        "key": "32a",
+        "label": "32 А",
+        "test": "i.name.includes('32А')"
+      },
+      {
+        "key": "24a",
+        "label": "24 А",
+        "test": "i.name.includes('24А')"
+      }
     ],
     "groups": [
-      { "key": "lever", "title": "Рычажковые", "test": "/рычажк/i.test(i.name)" },
-      { "key": "classic", "title": "Классические", "test": "/^Клемма \\d/i.test(i.name) && !/рычажк/i.test(i.name)" },
-      { "key": "waterproof", "title": "Водонепроницаемые коннекторы", "test": "/Коннектор/i.test(i.name)" }
+      {
+        "key": "lever",
+        "title": "Рычажковые",
+        "test": "/рычажк/i.test(i.name)"
+      },
+      {
+        "key": "classic",
+        "title": "Классические",
+        "test": "/^Клемма \\d/i.test(i.name) && !/рычажк/i.test(i.name)"
+      },
+      {
+        "key": "waterproof",
+        "title": "Водонепроницаемые коннекторы",
+        "test": "/Коннектор/i.test(i.name)"
+      }
     ]
   },
   "patch-cords": {
@@ -75,16 +188,48 @@
     "description": "Патч-корды для сетевого оборудования. Литые коннекторы RJ45, разные длины и цвета для удобной маркировки.",
     "cover": "/img/products/AWS-13010.webp",
     "filters": [
-      { "key": "all", "label": "Все", "test": "true" },
-      { "key": "cat5e", "label": "Cat.5e", "test": "i.name.includes('Cat.5e')" },
-      { "key": "cat6e", "label": "Cat.6e", "test": "i.name.includes('Cat.6e')" }
+      {
+        "key": "all",
+        "label": "Все",
+        "test": "true"
+      },
+      {
+        "key": "cat5e",
+        "label": "Cat.5e",
+        "test": "i.name.includes('Cat.5e')"
+      },
+      {
+        "key": "cat6e",
+        "label": "Cat.6e",
+        "test": "i.name.includes('Cat.6e')"
+      }
     ],
     "groups": [
-      { "key": "gray", "title": "Серый", "test": "/сер(ый|ого|ому|ым|ом)/i.test(i.name)" },
-      { "key": "blue", "title": "Синий", "test": "/син(ий|его|ему|им|ем)/i.test(i.name)" },
-      { "key": "yellow", "title": "Жёлтый", "test": "/жёлт|желт/i.test(i.name)" },
-      { "key": "green", "title": "Зелёный", "test": "/зелён|зелен/i.test(i.name)" },
-      { "key": "red", "title": "Красный", "test": "/красн/i.test(i.name)" }
+      {
+        "key": "gray",
+        "title": "Серый",
+        "test": "/сер(ый|ого|ому|ым|ом)/i.test(i.name)"
+      },
+      {
+        "key": "blue",
+        "title": "Синий",
+        "test": "/син(ий|его|ему|им|ем)/i.test(i.name)"
+      },
+      {
+        "key": "yellow",
+        "title": "Жёлтый",
+        "test": "/жёлт|желт/i.test(i.name)"
+      },
+      {
+        "key": "green",
+        "title": "Зелёный",
+        "test": "/зелён|зелен/i.test(i.name)"
+      },
+      {
+        "key": "red",
+        "title": "Красный",
+        "test": "/красн/i.test(i.name)"
+      }
     ]
   },
   "cables": {
@@ -94,19 +239,63 @@
     "description": "Сетевой и ТВ-кабель в бухтах. Медные жилы, варианты для внутренней и наружной прокладки, гелевая защита для премиум-серий.",
     "cover": "/img/products/AWS-12982.webp",
     "filters": [
-      { "key": "all", "label": "Все", "test": "true" },
-      { "key": "ftp", "label": "FTP", "test": "i.name.includes('FTP4')" },
-      { "key": "utp", "label": "UTP", "test": "i.name.includes('UTP4')" },
-      { "key": "sat", "label": "SAT", "test": "/SAT-\\d+/i.test(i.name)" },
-      { "key": "cat5e", "label": "Cat.5e", "test": "i.name.includes('CAT5E')" },
-      { "key": "cat6", "label": "Cat.6", "test": "i.name.includes('CAT6')" },
-      { "key": "indoor", "label": "Indoor", "test": "i.name.includes('INDOOR')" },
-      { "key": "outdoor", "label": "Outdoor", "test": "i.name.includes('OUTDOOR')" }
+      {
+        "key": "all",
+        "label": "Все",
+        "test": "true"
+      },
+      {
+        "key": "ftp",
+        "label": "FTP",
+        "test": "i.name.includes('FTP4')"
+      },
+      {
+        "key": "utp",
+        "label": "UTP",
+        "test": "i.name.includes('UTP4')"
+      },
+      {
+        "key": "sat",
+        "label": "SAT",
+        "test": "/SAT-\\d+/i.test(i.name)"
+      },
+      {
+        "key": "cat5e",
+        "label": "Cat.5e",
+        "test": "i.name.includes('CAT5E')"
+      },
+      {
+        "key": "cat6",
+        "label": "Cat.6",
+        "test": "i.name.includes('CAT6')"
+      },
+      {
+        "key": "indoor",
+        "label": "Indoor",
+        "test": "i.name.includes('INDOOR')"
+      },
+      {
+        "key": "outdoor",
+        "label": "Outdoor",
+        "test": "i.name.includes('OUTDOOR')"
+      }
     ],
     "groups": [
-      { "key": "ftp", "title": "Витая пара FTP — экранированная", "test": "i.name.includes('FTP4')" },
-      { "key": "utp", "title": "Витая пара UTP — без экрана", "test": "i.name.includes('UTP4')" },
-      { "key": "sat", "title": "ТВ-кабель SAT — коаксиальный", "test": "/SAT-\\d+/i.test(i.name)" }
+      {
+        "key": "ftp",
+        "title": "Витая пара FTP — экранированная",
+        "test": "i.name.includes('FTP4')"
+      },
+      {
+        "key": "utp",
+        "title": "Витая пара UTP — без экрана",
+        "test": "i.name.includes('UTP4')"
+      },
+      {
+        "key": "sat",
+        "title": "ТВ-кабель SAT — коаксиальный",
+        "test": "/SAT-\\d+/i.test(i.name)"
+      }
     ]
   }
 }

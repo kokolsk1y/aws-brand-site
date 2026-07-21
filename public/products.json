@@ -399,6 +399,69 @@
         "photo": "img/products/SLN-2452.webp",
         "price": 7141,
         "description_raw": "Характеристики Показать все характеристики"
+      },
+      {
+        "article": "SLN-415",
+        "name": "Розетка встраиваемая 16A 5П (3P+PE+N) IP44, 380В",
+        "photo": "img/products/SLN-415.webp",
+        "price": null,
+        "description_raw": "Промышленный силовой разъём AWSPRODUCTS"
+      },
+      {
+        "article": "SLN-425",
+        "name": "Розетка встраиваемая 32A 5П (3P+PE+N) IP44, 380В",
+        "photo": "img/products/SLN-425.webp",
+        "price": null,
+        "description_raw": "Промышленный силовой разъём AWSPRODUCTS"
+      },
+      {
+        "article": "SLN-515",
+        "name": "Вилка настенная 16A 5П (3P+PE+N) IP44, 380В",
+        "photo": "img/products/SLN-515.webp",
+        "price": null,
+        "description_raw": "Промышленный силовой разъём AWSPRODUCTS"
+      },
+      {
+        "article": "SLN-525",
+        "name": "Вилка настенная 32A 5П (3P+PE+N) IP44, 380В",
+        "photo": "img/products/SLN-525.webp",
+        "price": null,
+        "description_raw": "Промышленный силовой разъём AWSPRODUCTS"
+      },
+      {
+        "article": "SLN-615",
+        "name": "Вилка панельная 16A 5П (3P+PE+N) IP44, 380В",
+        "photo": "img/products/SLN-615.webp",
+        "price": null,
+        "description_raw": "Промышленный силовой разъём AWSPRODUCTS"
+      },
+      {
+        "article": "SLN-625",
+        "name": "Вилка панельная 32A 5П (3P+PE+N) IP44, 380В",
+        "photo": "img/products/SLN-625.webp",
+        "price": null,
+        "description_raw": "Промышленный силовой разъём AWSPRODUCTS"
+      },
+      {
+        "article": "SLN-1012_215",
+        "name": "Розетка кабельная 16A 5П (3P+PE+N) IP44, 380В",
+        "photo": "img/products/SLN-1012_215.webp",
+        "price": null,
+        "description_raw": "Промышленный силовой разъём AWSPRODUCTS"
+      },
+      {
+        "article": "SLN-1015-215",
+        "name": "Разветвитель 16A 5П (3P+PE+N) IP44, 380В",
+        "photo": "img/products/SLN-1015-215.webp",
+        "price": null,
+        "description_raw": "Промышленный силовой разъём AWSPRODUCTS"
+      },
+      {
+        "article": "SLN-1025_225",
+        "name": "Разветвитель 32A 5П (3P+PE+N) IP44, 380В",
+        "photo": "img/products/SLN-1025_225.webp",
+        "price": null,
+        "description_raw": "Промышленный силовой разъём AWSPRODUCTS"
       }
     ]
   },

@@ -52,3 +52,6 @@ kling_ai_finish/
 # Временные отчёты агентов (одноразовая аналитика)
 audit-report-*.md
 integration-plan.md
+
+# SLN staging (вырез/нормализация фото разъёмов) — рабочее, не в git
+_incoming_sln/

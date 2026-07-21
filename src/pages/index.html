@@ -22,6 +22,7 @@
     <link rel="prefetch" as="image" href="/img/series/aura-1kl-w.webp?v=20260507">
     <link rel="prefetch" as="image" href="/img/series/aura-1kl-b.webp?v=20260507">
     <link rel="stylesheet" href="/style.css?v=20260512">
+    <link rel="stylesheet" href="/bg-switch.css?v=20260714">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
 </head>
@@ -247,10 +248,11 @@
             <!-- Конструктор цветов -->
             <div class="constructor" id="constructor">
                 <div class="constructor__inner">
-                    <div class="constructor__preview">
+                    <div class="constructor__preview" data-bg-stage data-bg-shadow>
                         <img src="" alt="Превью выбранной конфигурации" class="constructor__preview-img" id="cstPrevA" width="800" height="800" decoding="async" fetchpriority="high">
                         <img src="" alt="" aria-hidden="true" class="constructor__preview-img" id="cstPrevB" width="800" height="800" decoding="async">
                         <div class="constructor__preview-placeholder" id="constructorPlaceholder" style="display:none">Фото скоро</div>
+                        <div data-bg-control></div>
                     </div>
                     <div class="constructor__controls">
                         <p class="label" data-reveal="blur">Конструктор</p>
@@ -745,5 +747,6 @@
     <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script defer src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
     <script defer src="/script.js"></script>
+    <script defer src="/bg-switch.js?v=20260714"></script>
 </body>
 </html>

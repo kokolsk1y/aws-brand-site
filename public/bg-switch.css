@@ -1,0 +1,106 @@
+/* ============================================================
+   Переключатель фона превью товара (единый компонент).
+   Данные: /backgrounds.json · Логика: /bg-switch.js
+   ============================================================ */
+
+/* Сцена (контейнер, получающий фон) */
+[data-bg-stage] {
+  position: relative;
+  transition: background-color 0.45s ease;
+}
+
+/* Адаптивная тень товара — ТОЛЬКО на тёмном фоне и ТОЛЬКО на крупных одиночных
+   фото (сцены с data-bg-shadow: hero серии/товара, конструктор). На светлых фонах
+   каждая страница сохраняет свою родную тень; на мелких карточках не трогаем вовсе.
+   Не задаём transition — анимация идёт родным переходом фото (или мгновенно там,
+   где его нет), поэтому hover-лифт/кроссфейд страниц не ломается.
+   Свотчи в пульте — <button>, под img не попадают. */
+[data-bg-shadow].is-dark-bg img {
+  filter: drop-shadow(0 22px 32px rgba(0, 0, 0, 0.5));
+}
+
+/* ---- Пульт: панель свотчей ---- */
+.bg-switch {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 10px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: auto;
+}
+.bg-switch.is-ready { opacity: 1; }
+
+/* Плавающий пульт — поверх крупного фото по центру снизу */
+.bg-switch--float {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  z-index: 4;
+}
+
+/* Инлайн-пульт — в панели управления каталога/серии */
+.bg-switch--bar {
+  position: static;
+  transform: none;
+}
+
+/* Тёмное стекло на тёмном фоне */
+.bg-switch.is-dark {
+  background: rgba(28, 28, 30, 0.5);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+.bg-switch__label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gray-600, #666);
+  padding: 0 4px 0 2px;
+}
+.bg-switch.is-dark .bg-switch__label { color: rgba(255, 255, 255, 0.75); }
+
+.bg-switch__swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.14);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.bg-switch__swatch:hover { transform: scale(1.14); }
+.bg-switch__swatch:focus-visible {
+  outline: 2px solid var(--accent, #8CB86B);
+  outline-offset: 2px;
+}
+.bg-switch__swatch.is-active {
+  box-shadow: 0 0 0 2px var(--accent, #8CB86B), inset 0 0 0 1px rgba(0, 0, 0, 0.14);
+}
+.bg-switch.is-dark .bg-switch__swatch {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+}
+.bg-switch.is-dark .bg-switch__swatch.is-active {
+  box-shadow: 0 0 0 2px var(--accent, #8CB86B), inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-bg-stage], [data-bg-shadow] img, .bg-switch, .bg-switch__swatch {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .bg-switch--float { bottom: 10px; gap: 7px; padding: 6px 8px; }
+  .bg-switch__swatch { width: 20px; height: 20px; }
+}

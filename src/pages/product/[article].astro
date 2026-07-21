@@ -44,6 +44,9 @@ export async function getStaticPaths() {
 const { article } = Astro.params;
 const { meta } = Astro.props;
 
+// Товары серий УНО/ДИЗАЙН/АУРА — все 4 фона; прочие товары — только белый+тёмный.
+const isSeriesProduct = meta.source === 'series';
+
 let product;
 if (meta.source === 'cat') {
   const catSlug = keyToCategory[meta.key];
@@ -386,6 +389,11 @@ const marketplaceLinks = [
 ---
 <BaseLayout title={`${title || product.article} — AWSProducts`} description={description.slice(0, 160)}>
 
+  <!-- Переключатель фона превью (единый компонент, см. public/bg-switch.*) -->
+  <link rel="stylesheet" href="/bg-switch.css?v=20260714" />
+  <script is:inline defer src="/bg-switch.js?v=20260714"></script>
+
+
   <!-- HERO ТОВАРА -->
   <section class="prod-hero">
     <div class="prod-hero__inner">
@@ -411,11 +419,12 @@ const marketplaceLinks = [
 
       <div class="prod-hero__grid">
         <div class="prod-hero__media-wrap">
-          <div class="prod-hero__media" data-reveal="zoom">
+          <div class="prod-hero__media" data-reveal="zoom" data-bg-stage data-bg-shadow>
             {product.photos.map((src, i) => (
               <img src={src} alt={title} class={`prod-hero__photo${i === 0 ? ' is-active' : ''}`} data-photo-index={i} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" onerror="this.dataset.broken='1';this.style.display='none';this.parentElement.classList.add('has-broken');" />
             ))}
             <div class="prod-hero__placeholder">Фото готовится</div>
+            <div data-bg-control data-bg-set={isSeriesProduct ? undefined : 'light,graphite'}></div>
           </div>
           {product.photos.length > 1 && (
             <div class="prod-hero__thumbs" role="tablist" aria-label="Дополнительные фото">

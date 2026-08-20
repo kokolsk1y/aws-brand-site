@@ -1,0 +1,249 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Рандомайзер чисел — AWS Products"
+  description="Простой и точный генератор случайных целых чисел от AWS Products"
+>
+  <section class="random-page" aria-labelledby="random-title">
+    <div class="random-page__glow" aria-hidden="true"></div>
+
+    <div class="random-page__inner">
+      <header class="random-intro">
+        <div>
+          <p class="label">Цифровой инструмент</p>
+          <h1 id="random-title">Число.<br />Без лишнего.</h1>
+        </div>
+        <p class="random-intro__copy">
+          Задайте границы и получите случайное целое число. Расчёт выполняется
+          только на вашем устройстве.
+        </p>
+      </header>
+
+      <div class="random-layout">
+        <article class="random-tool" aria-label="Генератор случайного числа">
+          <div class="random-tool__topline">
+            <span>Генератор</span>
+            <span class="random-tool__signal"><i aria-hidden="true"></i> Готов</span>
+          </div>
+
+          <div class="random-result" id="randomResult" role="status" aria-live="polite" aria-atomic="true">
+            <span class="random-result__eyebrow">Ваше число</span>
+            <strong class="random-result__number" id="randomNumber">—</strong>
+          </div>
+
+          <form class="random-form" id="randomForm" novalidate>
+            <div class="random-form__fields">
+              <label class="random-field">
+                <span>От</span>
+                <input
+                  id="randomMin"
+                  name="min"
+                  type="number"
+                  value="1"
+                  min="-1000000000"
+                  max="1000000000"
+                  step="1"
+                  inputmode="numeric"
+                  required
+                  aria-describedby="randomError"
+                />
+              </label>
+
+              <span class="random-form__divider" aria-hidden="true"></span>
+
+              <label class="random-field">
+                <span>До</span>
+                <input
+                  id="randomMax"
+                  name="max"
+                  type="number"
+                  value="100"
+                  min="-1000000000"
+                  max="1000000000"
+                  step="1"
+                  inputmode="numeric"
+                  required
+                  aria-describedby="randomError"
+                />
+              </label>
+            </div>
+
+            <div class="random-presets" aria-label="Готовые диапазоны">
+              <button type="button" data-range="10">1—10</button>
+              <button type="button" data-range="100" class="is-active">1—100</button>
+              <button type="button" data-range="1000">1—1000</button>
+            </div>
+
+            <p class="random-form__error" id="randomError" aria-live="assertive"></p>
+
+            <button class="random-submit" id="randomSubmit" type="submit">
+              <span>Получить число</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14M14 7l5 5-5 5" />
+              </svg>
+            </button>
+          </form>
+
+          <div class="random-history" id="randomHistory" hidden>
+            <span class="random-history__title">Последние результаты</span>
+            <ol id="randomHistoryList"></ol>
+          </div>
+
+          <p class="random-tool__privacy">
+            <span aria-hidden="true">●</span> Без регистрации и сохранения данных
+          </p>
+        </article>
+
+        <aside class="random-ad random-ad--portrait" aria-label="Рекламный блок AWS Products">
+          <span class="random-ad__label">AWS Products</span>
+          <div class="random-ad__content">
+            <span>Рекламный блок</span>
+            <strong>Ваш баннер<br />будет здесь</strong>
+            <small>Рекомендуемый формат 4:5</small>
+          </div>
+        </aside>
+      </div>
+
+      <aside class="random-ad random-ad--wide" aria-label="Рекламный блок AWS Products">
+        <span class="random-ad__label">AWS Products</span>
+        <div class="random-ad__content">
+          <span>Рекламный блок</span>
+          <strong>Широкий баннер</strong>
+          <small>Рекомендуемый формат 4:1</small>
+        </div>
+      </aside>
+
+      <div class="random-note">
+        <span>01</span>
+        <p>Каждое значение создаётся заново. Все числа внутри выбранного диапазона имеют равный шанс.</p>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    function initRandomizer() {
+      const form = document.getElementById('randomForm');
+      if (!form || form.dataset.ready === 'true') return;
+      form.dataset.ready = 'true';
+
+      const minInput = document.getElementById('randomMin');
+      const maxInput = document.getElementById('randomMax');
+      const number = document.getElementById('randomNumber');
+      const result = document.getElementById('randomResult');
+      const error = document.getElementById('randomError');
+      const submit = document.getElementById('randomSubmit');
+      const history = document.getElementById('randomHistory');
+      const historyList = document.getElementById('randomHistoryList');
+      const presets = [...document.querySelectorAll('[data-range]')];
+      const recent = [];
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const setInvalid = (message) => {
+        error.textContent = message;
+        [minInput, maxInput].forEach((input) => input.setAttribute('aria-invalid', message ? 'true' : 'false'));
+      };
+
+      const readRange = () => {
+        const min = Number(minInput.value);
+        const max = Number(maxInput.value);
+
+        if (!Number.isInteger(min) || !Number.isInteger(max)) {
+          setInvalid('Введите два целых числа.');
+          return null;
+        }
+        if (min < -1000000000 || max > 1000000000) {
+          setInvalid('Допустимы значения от −1 000 000 000 до 1 000 000 000.');
+          return null;
+        }
+        if (min > max) {
+          setInvalid('Начало диапазона должно быть меньше или равно концу.');
+          return null;
+        }
+
+        setInvalid('');
+        return { min, max };
+      };
+
+      const secureInteger = (min, max) => {
+        const size = max - min + 1;
+        const uint32Size = 0x100000000;
+        const limit = Math.floor(uint32Size / size) * size;
+        const buffer = new Uint32Array(1);
+        let value;
+
+        do {
+          crypto.getRandomValues(buffer);
+          value = buffer[0];
+        } while (value >= limit);
+
+        return min + (value % size);
+      };
+
+      const renderHistory = (value) => {
+        recent.unshift(value);
+        recent.splice(5);
+        history.hidden = false;
+        historyList.replaceChildren(...recent.map((item) => {
+          const entry = document.createElement('li');
+          entry.textContent = item.toLocaleString('ru-RU');
+          return entry;
+        }));
+      };
+
+      const showFinal = (value) => {
+        number.textContent = value.toLocaleString('ru-RU');
+        result.classList.remove('is-rolling');
+        result.classList.add('is-ready');
+        submit.disabled = false;
+        submit.removeAttribute('aria-busy');
+        renderHistory(value);
+      };
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const range = readRange();
+        if (!range) return;
+
+        const finalValue = secureInteger(range.min, range.max);
+        result.classList.remove('is-ready');
+        result.classList.add('is-rolling');
+        submit.disabled = true;
+        submit.setAttribute('aria-busy', 'true');
+
+        if (reducedMotion) {
+          showFinal(finalValue);
+          return;
+        }
+
+        const started = performance.now();
+        const roll = (now) => {
+          number.textContent = secureInteger(range.min, range.max).toLocaleString('ru-RU');
+          if (now - started < 480) requestAnimationFrame(roll);
+          else showFinal(finalValue);
+        };
+        requestAnimationFrame(roll);
+      });
+
+      presets.forEach((preset) => {
+        preset.addEventListener('click', () => {
+          minInput.value = '1';
+          maxInput.value = preset.dataset.range;
+          presets.forEach((item) => item.classList.toggle('is-active', item === preset));
+          setInvalid('');
+        });
+      });
+
+      [minInput, maxInput].forEach((input) => {
+        input.addEventListener('input', () => {
+          presets.forEach((item) => item.classList.remove('is-active'));
+          if (error.textContent) readRange();
+        });
+      });
+    }
+
+    initRandomizer();
+    document.addEventListener('astro:page-load', initRandomizer);
+  </script>
+</BaseLayout>

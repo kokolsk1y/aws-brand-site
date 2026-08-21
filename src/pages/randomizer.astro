@@ -66,12 +66,6 @@ const canonicalUrl = `${SITE}${BASE}${Astro.url.pathname}`;
         </button>
       </div>
 
-      <div class="ec-promo__controls" aria-label="Выбор рекламного баннера">
-        <button type="button" class="is-active" data-promo-dot aria-label="Показать баннер 1"></button>
-        <button type="button" data-promo-dot aria-label="Показать баннер 2"></button>
-        <button type="button" data-promo-dot aria-label="Показать баннер 3"></button>
-      </div>
-      <div class="ec-promo__progress" aria-hidden="true"><i></i></div>
     </section>
 
     <section class="ec-randomizer" aria-labelledby="ec-random-title">
@@ -368,10 +362,8 @@ const canonicalUrl = `${SITE}${BASE}${Astro.url.pathname}`;
       if (!promo || promo.dataset.ready === 'true') return;
       promo.dataset.ready = 'true';
       const slides = [...promo.querySelectorAll('[data-promo-slide]')];
-      const dots = [...promo.querySelectorAll('[data-promo-dot]')];
       const prev = promo.querySelector('[data-promo-prev]');
       const next = promo.querySelector('[data-promo-next]');
-      const progress = promo.querySelector('.ec-promo__progress i');
       let active = 0;
       let timer;
 
@@ -382,23 +374,12 @@ const canonicalUrl = `${SITE}${BASE}${Astro.url.pathname}`;
           slide.classList.toggle('is-active', selected);
           slide.setAttribute('aria-hidden', selected ? 'false' : 'true');
         });
-        dots.forEach((dot, dotIndex) => dot.classList.toggle('is-active', dotIndex === active));
       };
 
       const start = () => {
         clearInterval(timer);
-        progress.classList.remove('is-running');
-        void progress.offsetWidth;
-        progress.classList.add('is-running');
         timer = setInterval(() => show(active + 1), 10000);
       };
-
-      dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-          show(index);
-          start();
-        });
-      });
 
       prev.addEventListener('click', () => {
         show(active - 1);

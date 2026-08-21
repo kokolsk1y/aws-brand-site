@@ -1,169 +1,242 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/main.css';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const SITE = 'https://awsproducts.ru';
+const canonicalUrl = `${SITE}${BASE}${Astro.url.pathname}`;
 ---
 
-<BaseLayout
-  title="Рандомайзер чисел — AWS Products"
-  description="Простой и точный генератор случайных целых чисел от AWS Products"
->
-  <section class="random-page" aria-labelledby="random-title">
-    <div class="random-page__glow" aria-hidden="true"></div>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Случайное число — Электроцентр</title>
+  <meta name="description" content="Генератор случайных чисел Электроцентра с настройкой диапазона и исключениями" />
+  <link rel="canonical" href={canonicalUrl} />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="icon" type="image/jpeg" href={`${BASE}/img/randomizer/electrocenter-mark.jpg`} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
 
-    <div class="random-page__inner">
-      <header class="random-intro">
-        <div>
-          <p class="label">Цифровой инструмент</p>
-          <h1 id="random-title">Число.<br />Без лишнего.</h1>
-        </div>
-        <p class="random-intro__copy">
-          Задайте границы и получите случайное целое число. Расчёт выполняется
-          только на вашем устройстве.
-        </p>
-      </header>
+<body class="ec-page">
+  <header class="ec-header">
+    <a class="ec-header__logo" href="/" aria-label="Электроцентр — на главную">
+      <img src={`${BASE}/img/randomizer/electrocenter-logo.png`} alt="Электроцентр" width="1100" height="177" />
+    </a>
+  </header>
 
-      <div class="random-layout">
-        <article class="random-tool" aria-label="Генератор случайного числа">
-          <div class="random-tool__topline">
-            <span>Генератор</span>
-            <span class="random-tool__signal"><i aria-hidden="true"></i> Готов</span>
+  <main class="ec-main">
+    <section class="ec-promo" aria-label="Акции месяца">
+      <div class="ec-promo__viewport">
+        <article class="ec-promo__slide ec-promo__slide--orange is-active" data-promo-slide aria-hidden="false">
+          <div class="ec-promo__copy">
+            <span>Акции месяца</span>
+            <strong>Место для рекламного баннера</strong>
+            <p>Изображение акции будет добавлено после согласования.</p>
           </div>
-
-          <div class="random-result" id="randomResult" role="status" aria-live="polite" aria-atomic="true">
-            <span class="random-result__eyebrow">Ваше число</span>
-            <strong class="random-result__number" id="randomNumber">—</strong>
-          </div>
-
-          <form class="random-form" id="randomForm" novalidate>
-            <div class="random-form__fields">
-              <label class="random-field">
-                <span>От</span>
-                <input
-                  id="randomMin"
-                  name="min"
-                  type="number"
-                  value="1"
-                  min="-1000000000"
-                  max="1000000000"
-                  step="1"
-                  inputmode="numeric"
-                  required
-                  aria-describedby="randomError"
-                />
-              </label>
-
-              <span class="random-form__divider" aria-hidden="true"></span>
-
-              <label class="random-field">
-                <span>До</span>
-                <input
-                  id="randomMax"
-                  name="max"
-                  type="number"
-                  value="100"
-                  min="-1000000000"
-                  max="1000000000"
-                  step="1"
-                  inputmode="numeric"
-                  required
-                  aria-describedby="randomError"
-                />
-              </label>
-            </div>
-
-            <div class="random-presets" aria-label="Готовые диапазоны">
-              <button type="button" data-range="10">1—10</button>
-              <button type="button" data-range="100" class="is-active">1—100</button>
-              <button type="button" data-range="1000">1—1000</button>
-            </div>
-
-            <p class="random-form__error" id="randomError" aria-live="assertive"></p>
-
-            <button class="random-submit" id="randomSubmit" type="submit">
-              <span>Получить число</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 12h14M14 7l5 5-5 5" />
-              </svg>
-            </button>
-          </form>
-
-          <div class="random-history" id="randomHistory" hidden>
-            <span class="random-history__title">Последние результаты</span>
-            <ol id="randomHistoryList"></ol>
-          </div>
-
-          <p class="random-tool__privacy">
-            <span aria-hidden="true">●</span> Без регистрации и сохранения данных
-          </p>
+          <img src={`${BASE}/img/randomizer/electrocenter-mark.jpg`} alt="" aria-hidden="true" />
         </article>
 
-        <aside class="random-ad random-ad--portrait" aria-label="Рекламный блок AWS Products">
-          <span class="random-ad__label">AWS Products</span>
-          <div class="random-ad__content">
-            <span>Рекламный блок</span>
-            <strong>Ваш баннер<br />будет здесь</strong>
-            <small>Рекомендуемый формат 4:5</small>
+        <article class="ec-promo__slide ec-promo__slide--blue" data-promo-slide aria-hidden="true">
+          <div class="ec-promo__copy">
+            <span>Предложение месяца</span>
+            <strong>Второй рекламный баннер</strong>
+            <p>Слайдер автоматически переключает акции каждые 10 секунд.</p>
           </div>
-        </aside>
+          <img src={`${BASE}/img/randomizer/electrocenter-mark.jpg`} alt="" aria-hidden="true" />
+        </article>
+
+        <article class="ec-promo__slide ec-promo__slide--split" data-promo-slide aria-hidden="true">
+          <div class="ec-promo__copy">
+            <span>Электроцентр</span>
+            <strong>Третий рекламный баннер</strong>
+            <p>Блок подготовлен для изображений разных пропорций.</p>
+          </div>
+          <img src={`${BASE}/img/randomizer/electrocenter-mark.jpg`} alt="" aria-hidden="true" />
+        </article>
+
+        <button class="ec-promo__arrow ec-promo__arrow--prev" type="button" data-promo-prev aria-label="Предыдущий баннер">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6" /></svg>
+        </button>
+        <button class="ec-promo__arrow ec-promo__arrow--next" type="button" data-promo-next aria-label="Следующий баннер">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
+        </button>
       </div>
 
-      <aside class="random-ad random-ad--wide" aria-label="Рекламный блок AWS Products">
-        <span class="random-ad__label">AWS Products</span>
-        <div class="random-ad__content">
-          <span>Рекламный блок</span>
-          <strong>Широкий баннер</strong>
-          <small>Рекомендуемый формат 4:1</small>
+      <div class="ec-promo__controls" aria-label="Выбор рекламного баннера">
+        <button type="button" class="is-active" data-promo-dot aria-label="Показать баннер 1"></button>
+        <button type="button" data-promo-dot aria-label="Показать баннер 2"></button>
+        <button type="button" data-promo-dot aria-label="Показать баннер 3"></button>
+      </div>
+      <div class="ec-promo__progress" aria-hidden="true"><i></i></div>
+    </section>
+
+    <section class="ec-randomizer" aria-labelledby="ec-random-title">
+      <img class="ec-randomizer__mark" src={`${BASE}/img/randomizer/electrocenter-mark.jpg`} alt="" aria-hidden="true" />
+
+      <form class="ec-randomizer__form" id="ecRandomForm" novalidate>
+        <h1 id="ec-random-title">Случайное число</h1>
+
+        <div class="ec-result" id="ecResult" role="status" aria-live="polite" aria-atomic="true">
+          <strong id="ecRandomNumber">—</strong>
+          <span id="ecResultCaption">Задайте диапазон и нажмите кнопку</span>
         </div>
-      </aside>
 
-      <div class="random-note">
-        <span>01</span>
-        <p>Каждое значение создаётся заново. Все числа внутри выбранного диапазона имеют равный шанс.</p>
-      </div>
-    </div>
-  </section>
+        <button class="ec-generate" id="ecGenerate" type="submit">
+          <span>Сгенерировать</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" /></svg>
+        </button>
+
+        <fieldset class="ec-range">
+          <legend>Диапазон</legend>
+          <div class="ec-range__fields">
+            <label>
+              <span>От</span>
+              <input id="ecMin" name="min" type="number" value="1" min="-1000000000" max="1000000000" step="1" inputmode="numeric" required aria-describedby="ecFormError ecAvailability" />
+            </label>
+            <span class="ec-range__dash" aria-hidden="true">—</span>
+            <label>
+              <span>До</span>
+              <input id="ecMax" name="max" type="number" value="100" min="-1000000000" max="1000000000" step="1" inputmode="numeric" required aria-describedby="ecFormError ecAvailability" />
+            </label>
+          </div>
+          <div class="ec-presets" aria-label="Быстрый выбор диапазона">
+            <span>Быстрый выбор</span>
+            <button type="button" data-ec-range="10">1–10</button>
+            <button type="button" class="is-active" data-ec-range="100">1–100</button>
+            <button type="button" data-ec-range="1000">1–1000</button>
+          </div>
+        </fieldset>
+
+        <label class="ec-exclude" for="ecExclude">
+          <span>Исключить:</span>
+          <textarea id="ecExclude" name="exclude" rows="4" placeholder="Например: 3, 7, 12" aria-describedby="ecExcludeHint ecFormError ecAvailability"></textarea>
+        </label>
+
+        <div class="ec-exclude__actions">
+          <button type="button" id="ecAddResult" disabled>Добавить результат</button>
+          <button type="button" id="ecClearExclude">Очистить исключения</button>
+        </div>
+
+        <label class="ec-auto-exclude" for="ecAutoExclude">
+          <span>
+            <strong>Исключать выпавшие числа автоматически</strong>
+            <small>Удобно для розыгрышей без повторов</small>
+          </span>
+          <input id="ecAutoExclude" type="checkbox" />
+          <i aria-hidden="true"></i>
+        </label>
+
+        <div class="ec-form__meta">
+          <p id="ecExcludeHint">Введите сыгравшие числа через пробел, запятую или с новой строки.</p>
+          <p id="ecAvailability" aria-live="polite">Доступно чисел: 100</p>
+        </div>
+        <p class="ec-form__error" id="ecFormError" aria-live="assertive"></p>
+
+        <section class="ec-history" id="ecHistory" aria-labelledby="ecHistoryTitle" hidden>
+          <div class="ec-history__head">
+            <h2 id="ecHistoryTitle">История розыгрыша</h2>
+            <button type="button" id="ecClearHistory">Очистить</button>
+          </div>
+          <ol id="ecHistoryList"></ol>
+        </section>
+      </form>
+    </section>
+
+    <section class="ec-bottom-ad" aria-label="Место для дополнительного рекламного блока">
+      <span>Рекламный блок</span>
+      <strong>Место зарезервировано</strong>
+      <p>Содержимое добавим после согласования.</p>
+    </section>
+  </main>
+
+  <footer class="ec-footer">
+    <img src={`${BASE}/img/randomizer/electrocenter-logo.png`} alt="Электроцентр" />
+  </footer>
 
   <script is:inline>
-    function initRandomizer() {
-      const form = document.getElementById('randomForm');
+    function initElectrocenterRandomizer() {
+      const form = document.getElementById('ecRandomForm');
       if (!form || form.dataset.ready === 'true') return;
       form.dataset.ready = 'true';
 
-      const minInput = document.getElementById('randomMin');
-      const maxInput = document.getElementById('randomMax');
-      const number = document.getElementById('randomNumber');
-      const result = document.getElementById('randomResult');
-      const error = document.getElementById('randomError');
-      const submit = document.getElementById('randomSubmit');
-      const history = document.getElementById('randomHistory');
-      const historyList = document.getElementById('randomHistoryList');
-      const presets = [...document.querySelectorAll('[data-range]')];
-      const recent = [];
+      const minInput = document.getElementById('ecMin');
+      const maxInput = document.getElementById('ecMax');
+      const excludeInput = document.getElementById('ecExclude');
+      const number = document.getElementById('ecRandomNumber');
+      const result = document.getElementById('ecResult');
+      const resultCaption = document.getElementById('ecResultCaption');
+      const error = document.getElementById('ecFormError');
+      const availability = document.getElementById('ecAvailability');
+      const submit = document.getElementById('ecGenerate');
+      const addResult = document.getElementById('ecAddResult');
+      const clearExclude = document.getElementById('ecClearExclude');
+      const autoExclude = document.getElementById('ecAutoExclude');
+      const history = document.getElementById('ecHistory');
+      const historyList = document.getElementById('ecHistoryList');
+      const clearHistory = document.getElementById('ecClearHistory');
+      const presets = [...form.querySelectorAll('[data-ec-range]')];
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let lastResult = null;
+      let recentResults = [];
 
-      const setInvalid = (message) => {
+      const formatNumber = (value) => value.toLocaleString('ru-RU');
+
+      const setInvalid = (message, inputs = []) => {
         error.textContent = message;
-        [minInput, maxInput].forEach((input) => input.setAttribute('aria-invalid', message ? 'true' : 'false'));
+        [minInput, maxInput, excludeInput].forEach((input) => {
+          input.setAttribute('aria-invalid', inputs.includes(input) ? 'true' : 'false');
+        });
       };
 
-      const readRange = () => {
+      const readState = (showErrors = true) => {
         const min = Number(minInput.value);
         const max = Number(maxInput.value);
 
         if (!Number.isInteger(min) || !Number.isInteger(max)) {
-          setInvalid('Введите два целых числа.');
+          if (showErrors) setInvalid('Введите целые числа в оба поля диапазона.', [minInput, maxInput]);
           return null;
         }
         if (min < -1000000000 || max > 1000000000) {
-          setInvalid('Допустимы значения от −1 000 000 000 до 1 000 000 000.');
+          if (showErrors) setInvalid('Допустимы значения от −1 000 000 000 до 1 000 000 000.', [minInput, maxInput]);
           return null;
         }
         if (min > max) {
-          setInvalid('Начало диапазона должно быть меньше или равно концу.');
+          if (showErrors) setInvalid('Начало диапазона должно быть меньше или равно концу.', [minInput, maxInput]);
+          return null;
+        }
+
+        const raw = excludeInput.value.trim();
+        const tokens = raw ? raw.split(/[\s,;]+/).filter(Boolean) : [];
+        const invalidToken = tokens.find((token) => !/^[+-]?\d+$/.test(token));
+        if (invalidToken) {
+          if (showErrors) setInvalid(`Не удалось распознать «${invalidToken}». Вводите только целые числа.`, [excludeInput]);
+          return null;
+        }
+
+        const excluded = new Set();
+        for (const token of tokens) {
+          const value = Number(token);
+          if (!Number.isSafeInteger(value)) {
+            if (showErrors) setInvalid(`Число «${token}» слишком большое.`, [excludeInput]);
+            return null;
+          }
+          if (value >= min && value <= max) excluded.add(value);
+        }
+
+        const span = max - min + 1;
+        const available = span - excluded.size;
+        availability.textContent = `Доступно чисел: ${formatNumber(Math.max(available, 0))}`;
+        if (available < 1) {
+          if (showErrors) setInvalid('Все числа этого диапазона исключены. Удалите хотя бы одно исключение.', [excludeInput]);
           return null;
         }
 
         setInvalid('');
-        return { min, max };
+        return { min, max, span, available, excluded };
       };
 
       const secureInteger = (min, max) => {
@@ -172,78 +245,180 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         const limit = Math.floor(uint32Size / size) * size;
         const buffer = new Uint32Array(1);
         let value;
-
         do {
           crypto.getRandomValues(buffer);
           value = buffer[0];
         } while (value >= limit);
-
         return min + (value % size);
       };
 
-      const renderHistory = (value) => {
-        recent.unshift(value);
-        recent.splice(5);
-        history.hidden = false;
-        historyList.replaceChildren(...recent.map((item) => {
-          const entry = document.createElement('li');
-          entry.textContent = item.toLocaleString('ru-RU');
-          return entry;
+      const updatePresetState = () => {
+        presets.forEach((button) => {
+          button.classList.toggle('is-active', minInput.value === '1' && maxInput.value === button.dataset.ecRange);
+        });
+      };
+
+      const addToExclusions = (value) => {
+        if (!Number.isSafeInteger(value)) return;
+        const tokens = excludeInput.value.trim().split(/[\s,;]+/).filter(Boolean);
+        if (!tokens.includes(String(value))) tokens.push(String(value));
+        excludeInput.value = tokens.join(', ');
+        readState(false);
+      };
+
+      const renderHistory = () => {
+        history.hidden = recentResults.length === 0;
+        historyList.replaceChildren(...recentResults.map((value, index) => {
+          const item = document.createElement('li');
+          item.textContent = formatNumber(value);
+          item.title = `Результат №${recentResults.length - index}`;
+          return item;
         }));
       };
 
-      const showFinal = (value) => {
-        number.textContent = value.toLocaleString('ru-RU');
+      const pickAvailable = (state) => {
+        if (state.span <= 200000 && state.excluded.size > state.span / 3) {
+          const values = [];
+          for (let value = state.min; value <= state.max; value += 1) {
+            if (!state.excluded.has(value)) values.push(value);
+          }
+          return values[secureInteger(0, values.length - 1)];
+        }
+        let value;
+        do value = secureInteger(state.min, state.max);
+        while (state.excluded.has(value));
+        return value;
+      };
+
+      const showFinal = (value, state) => {
+        number.textContent = formatNumber(value);
+        resultCaption.textContent = `Из ${formatNumber(state.available)} доступных чисел`;
         result.classList.remove('is-rolling');
         result.classList.add('is-ready');
         submit.disabled = false;
         submit.removeAttribute('aria-busy');
-        renderHistory(value);
+        lastResult = value;
+        addResult.disabled = false;
+        recentResults = [value, ...recentResults].slice(0, 12);
+        renderHistory();
+        if (autoExclude.checked) addToExclusions(value);
       };
 
       form.addEventListener('submit', (event) => {
         event.preventDefault();
-        const range = readRange();
-        if (!range) return;
-
-        const finalValue = secureInteger(range.min, range.max);
+        const state = readState(true);
+        if (!state) return;
+        const finalValue = pickAvailable(state);
         result.classList.remove('is-ready');
         result.classList.add('is-rolling');
         submit.disabled = true;
         submit.setAttribute('aria-busy', 'true');
 
         if (reducedMotion) {
-          showFinal(finalValue);
+          showFinal(finalValue, state);
           return;
         }
 
         const started = performance.now();
         const roll = (now) => {
-          number.textContent = secureInteger(range.min, range.max).toLocaleString('ru-RU');
+          number.textContent = formatNumber(pickAvailable(state));
           if (now - started < 480) requestAnimationFrame(roll);
-          else showFinal(finalValue);
+          else showFinal(finalValue, state);
         };
         requestAnimationFrame(roll);
       });
 
-      presets.forEach((preset) => {
-        preset.addEventListener('click', () => {
-          minInput.value = '1';
-          maxInput.value = preset.dataset.range;
-          presets.forEach((item) => item.classList.toggle('is-active', item === preset));
-          setInvalid('');
+      [minInput, maxInput, excludeInput].forEach((input) => {
+        input.addEventListener('input', () => {
+          const state = readState(false);
+          if (!state) availability.textContent = 'Проверьте введённые значения';
+          updatePresetState();
         });
       });
 
-      [minInput, maxInput].forEach((input) => {
-        input.addEventListener('input', () => {
-          presets.forEach((item) => item.classList.remove('is-active'));
-          if (error.textContent) readRange();
+      presets.forEach((button) => {
+        button.addEventListener('click', () => {
+          minInput.value = '1';
+          maxInput.value = button.dataset.ecRange;
+          readState(false);
+          updatePresetState();
         });
+      });
+
+      addResult.addEventListener('click', () => {
+        addToExclusions(lastResult);
+        addResult.disabled = true;
+      });
+
+      clearExclude.addEventListener('click', () => {
+        excludeInput.value = '';
+        readState(false);
+        addResult.disabled = lastResult === null;
+        excludeInput.focus();
+      });
+
+      clearHistory.addEventListener('click', () => {
+        recentResults = [];
+        renderHistory();
       });
     }
 
-    initRandomizer();
-    document.addEventListener('astro:page-load', initRandomizer);
+    function initElectrocenterPromo() {
+      const promo = document.querySelector('.ec-promo');
+      if (!promo || promo.dataset.ready === 'true') return;
+      promo.dataset.ready = 'true';
+      const slides = [...promo.querySelectorAll('[data-promo-slide]')];
+      const dots = [...promo.querySelectorAll('[data-promo-dot]')];
+      const prev = promo.querySelector('[data-promo-prev]');
+      const next = promo.querySelector('[data-promo-next]');
+      const progress = promo.querySelector('.ec-promo__progress i');
+      let active = 0;
+      let timer;
+
+      const show = (index) => {
+        active = (index + slides.length) % slides.length;
+        slides.forEach((slide, slideIndex) => {
+          const selected = slideIndex === active;
+          slide.classList.toggle('is-active', selected);
+          slide.setAttribute('aria-hidden', selected ? 'false' : 'true');
+        });
+        dots.forEach((dot, dotIndex) => dot.classList.toggle('is-active', dotIndex === active));
+      };
+
+      const start = () => {
+        clearInterval(timer);
+        progress.classList.remove('is-running');
+        void progress.offsetWidth;
+        progress.classList.add('is-running');
+        timer = setInterval(() => show(active + 1), 10000);
+      };
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          show(index);
+          start();
+        });
+      });
+
+      prev.addEventListener('click', () => {
+        show(active - 1);
+        start();
+      });
+
+      next.addEventListener('click', () => {
+        show(active + 1);
+        start();
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) clearInterval(timer);
+        else start();
+      });
+      start();
+    }
+
+    initElectrocenterRandomizer();
+    initElectrocenterPromo();
   </script>
-</BaseLayout>
+</body>
+</html>

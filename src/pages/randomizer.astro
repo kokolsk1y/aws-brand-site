@@ -4,6 +4,16 @@ import '../styles/main.css';
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const SITE = 'https://awsproducts.ru';
 const canonicalUrl = `${SITE}${BASE}${Astro.url.pathname}`;
+const promoBanners = [
+  { file: 'promo-01-lighting.webp', alt: 'Светильник ЖКХ в подарок к панели ДБО' },
+  { file: 'promo-02-cable-ties.webp', alt: 'Хомуты LSON в подарок к самоклеящимся площадкам Haupa' },
+  { file: 'promo-03-mixer.webp', alt: 'Насадка в подарок к сетевому миксеру' },
+  { file: 'promo-04-bonus-outlet.webp', alt: 'Розетка ОУ бонусом к изделиям AWS Products' },
+  { file: 'promo-05-terminal-blocks.webp', alt: 'Отвёртка в подарок при покупке клемм КПИ' },
+  { file: 'promo-06-gifts.webp', alt: 'Фирменные подарки к продукции AWS Products' },
+  { file: 'promo-07-tblock.webp', alt: 'Новинка — перфорированные короба T-Block' },
+  { file: 'promo-08-pencil.webp', alt: 'Вечный карандаш AWS Products в подарок' },
+];
 ---
 
 <!DOCTYPE html>
@@ -31,32 +41,19 @@ const canonicalUrl = `${SITE}${BASE}${Astro.url.pathname}`;
   <main class="ec-main">
     <section class="ec-promo" aria-label="Акции месяца">
       <div class="ec-promo__viewport">
-        <article class="ec-promo__slide ec-promo__slide--orange is-active" data-promo-slide aria-hidden="false">
-          <div class="ec-promo__copy">
-            <span>Акции месяца</span>
-            <strong>Место для рекламного баннера</strong>
-            <p>Изображение акции будет добавлено после согласования.</p>
-          </div>
-          <img src={`${BASE}/img/randomizer/electrocenter-mark.jpg`} alt="" aria-hidden="true" />
-        </article>
-
-        <article class="ec-promo__slide ec-promo__slide--blue" data-promo-slide aria-hidden="true">
-          <div class="ec-promo__copy">
-            <span>Предложение месяца</span>
-            <strong>Второй рекламный баннер</strong>
-            <p>Слайдер автоматически переключает акции каждые 10 секунд.</p>
-          </div>
-          <img src={`${BASE}/img/randomizer/electrocenter-mark.jpg`} alt="" aria-hidden="true" />
-        </article>
-
-        <article class="ec-promo__slide ec-promo__slide--split" data-promo-slide aria-hidden="true">
-          <div class="ec-promo__copy">
-            <span>Электроцентр</span>
-            <strong>Третий рекламный баннер</strong>
-            <p>Блок подготовлен для изображений разных пропорций.</p>
-          </div>
-          <img src={`${BASE}/img/randomizer/electrocenter-mark.jpg`} alt="" aria-hidden="true" />
-        </article>
+        {promoBanners.map((banner, index) => (
+          <article class:list={['ec-promo__slide', { 'is-active': index === 0 }]} data-promo-slide aria-hidden={index === 0 ? 'false' : 'true'}>
+            <img
+              class="ec-promo__image"
+              src={`${BASE}/img/randomizer/banners/${banner.file}`}
+              alt={banner.alt}
+              width="1600"
+              height={index < 6 ? '465' : '454'}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          </article>
+        ))}
 
         <button class="ec-promo__arrow ec-promo__arrow--prev" type="button" data-promo-prev aria-label="Предыдущий баннер">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6" /></svg>

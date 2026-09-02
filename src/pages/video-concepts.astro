@@ -1,0 +1,460 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const videos = [
+  {
+    id: 'review-01',
+    title: 'Как выбрать выключатель',
+    eyebrow: 'Гид по выбору',
+    duration: '1:09',
+    description: 'Разбираем серии AWS вживую и показываем, на какие детали смотреть перед покупкой.',
+  },
+  {
+    id: 'review-02',
+    title: 'Стеклянные рамки',
+    eyebrow: 'Деталь крупным планом',
+    duration: '0:11',
+    description: 'Короткий визуальный акцент для анонса полной коллекции.',
+  },
+  {
+    id: 'review-03',
+    title: 'Механизм в деталях',
+    eyebrow: 'Обзор продукта',
+    duration: '2:02',
+    description: 'Спокойный предметный обзор конструкции и поверхности выключателя.',
+  },
+  {
+    id: 'review-04',
+    title: 'Электрика в интерьере',
+    eyebrow: 'Советы перед ремонтом',
+    duration: '1:25',
+    description: 'Практический рассказ о выборе электрики ещё до чистовой отделки.',
+  },
+  {
+    id: 'review-05',
+    title: 'Цвет и фактура',
+    eyebrow: 'Коллекция AWS',
+    duration: '1:44',
+    description: 'Сравниваем оттенки и показываем, как выключатель выглядит при разном свете.',
+  },
+].map((video) => ({
+  ...video,
+  src: `${BASE}/video-reviews/web/${video.id}.mp4`,
+  poster: `${BASE}/video-reviews/web/${video.id}-poster.jpg`,
+}));
+
+const concepts = [
+  ['01', 'Редакционный экран', 'Лучший баланс бренда и понятного выбора'],
+  ['02', 'Видеоистории', 'Быстрый просмотр нескольких сюжетов'],
+  ['03', 'Киноэкран', 'Самый эмоциональный и премиальный вариант'],
+  ['04', 'Гид по продукту', 'Видео связано с этапами выбора'],
+  ['05', 'Видеожурнал', 'Компактная сетка для растущей библиотеки'],
+];
+const showLegacyConcepts = false;
+---
+
+<BaseLayout
+  title="Видео AWS Products — качество в каждой детали"
+  description="Истории о выборе, дизайне и устройстве электрики AWS Products"
+>
+  <div class="vc-page">
+    <section class="vs-hero">
+      <div class="vs-shell">
+        <p class="label">Истории AWS Products</p>
+        <h1>Увидеть качество<br /><em>в каждой детали</em></h1>
+        <p class="vs-hero__lead">Показываем материалы, механизмы и решения в пространстве — спокойно и по существу.</p>
+        <a class="vs-hero__scroll" href="#video-stories"><span>Смотреть истории</span><i aria-hidden="true">↓</i></a>
+      </div>
+    </section>
+
+    <section class="vs-stories" id="video-stories" data-scroll-stories>
+      <div class="vs-shell vs-stories__grid">
+        <div class="vs-stage">
+          <div class="vs-stage__ambient" style={`background-image:url(${videos[0].poster})`} aria-hidden="true"></div>
+          <div class="vs-stage__frame">
+            <video
+              muted
+              playsinline
+              preload="metadata"
+              poster={videos[0].poster}
+              data-scroll-player
+            >
+              <source src={videos[0].src} type="video/mp4" />
+            </video>
+            <div class="vs-stage__veil" aria-hidden="true"></div>
+            <div class="vs-stage__meta">
+              <span data-stage-eyebrow>{videos[0].eyebrow}</span>
+              <strong data-stage-title>{videos[0].title}</strong>
+            </div>
+            <div class="vs-stage__progress"><i data-video-progress></i></div>
+          </div>
+          <div class="vs-stage__controls" aria-label="Управление видео">
+            <button class="vs-stage__sound is-muted" type="button" data-sound-toggle aria-label="Включить звук" title="Включить звук">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 9v6h4l5 4V5L9 9H5Z"></path>
+                <path d="M17 9.5c.7.7 1 1.5 1 2.5s-.3 1.8-1 2.5"></path>
+              </svg>
+              <span class="vs-sr-only" data-sound-label>Включить звук</span>
+            </button>
+            <button class="vs-stage__play" type="button" data-play-toggle aria-label="Пауза" title="Пауза">
+              <span data-play-icon>Ⅱ</span>
+            </button>
+          </div>
+          <div class="vs-stage__index" aria-hidden="true">
+            <span data-stage-index>01</span>
+            <i></i>
+            <span>05</span>
+          </div>
+          <div class="vs-scroll-hint" aria-hidden="true">
+            <span>Прокручивайте вниз</span>
+            <i><b></b></i>
+            <strong>↓</strong>
+          </div>
+        </div>
+
+        <div class="vs-chapters">
+          {videos.map((video, index) => (
+            <article
+              class:list={['vs-chapter', { 'is-active': index === 0 }]}
+              data-scroll-chapter={video.id}
+              data-index={index}
+            >
+              <div class="vs-chapter__number">0{index + 1}</div>
+              <p>{video.eyebrow}</p>
+              <h2>{video.title}</h2>
+              <div class="vs-chapter__description">{video.description}</div>
+              <button type="button" data-chapter-play={video.id}>Смотреть с начала <span>▶</span></button>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="vs-outro">
+      <div class="vs-shell">
+        <p class="label">Продолжить знакомство</p>
+        <h2>Выберите свою<br /><em>серию AWS</em></h2>
+        <div class="vs-outro__links">
+          <a href="/series/uno">УНО <span>↗</span></a>
+          <a href="/series/aura">АУРА <span>↗</span></a>
+          <a href="/series/design">ДИЗАЙН <span>↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    {showLegacyConcepts && <Fragment>
+    <section class="vc-intro">
+      <div class="vc-shell">
+        <p class="label">Дизайн-лаборатория · не опубликовано</p>
+        <div class="vc-intro__row">
+          <div>
+            <h1>Пять способов<br />рассказать <em>в видео</em></h1>
+            <p>Все концепции используют реальные ролики и рассчитаны на вертикальный формат 9:16.</p>
+          </div>
+          <div class="vc-intro__note">
+            <span>5 роликов</span>
+            <span>до 2:02</span>
+            <span>звук по клику</span>
+          </div>
+        </div>
+
+        <div class="vc-tabs" role="tablist" aria-label="Выбор дизайн-концепции">
+          {concepts.map(([number, name, note], index) => (
+            <button
+              class:list={['vc-tab', { 'is-active': index === 0 }]}
+              type="button"
+              role="tab"
+              aria-selected={index === 0 ? 'true' : 'false'}
+              data-concept-tab={index + 1}
+            >
+              <span class="vc-tab__number">{number}</span>
+              <span class="vc-tab__copy"><strong>{name}</strong><small>{note}</small></span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <div class="vc-concepts">
+      <section class="vc-concept vc-concept--editorial is-active" data-concept="1">
+        <div class="vc-shell vc-editorial">
+          <div class="vc-editorial__copy">
+            <p class="label">Смотреть · выбирать · сравнивать</p>
+            <h2>Электрика,<br />которую видно<br /><em>в деталях</em></h2>
+            <p>Главный выпуск получает пространство и контекст, остальные остаются рядом — как главы одного спокойного рассказа.</p>
+            <button class="vc-link" type="button" data-play-video="review-01">Смотреть выпуск <span>↗</span></button>
+          </div>
+          <div class="vc-phone vc-editorial__player">
+            <video controls playsinline preload="metadata" poster={videos[0].poster}>
+              <source src={videos[0].src} type="video/mp4" />
+            </video>
+          </div>
+          <div class="vc-editorial__list">
+            {videos.slice(1).map((video, index) => (
+              <button class="vc-episode" type="button" data-play-video={video.id}>
+                <span class="vc-episode__index">0{index + 2}</span>
+                <span class="vc-episode__text"><strong>{video.title}</strong><small>{video.eyebrow}</small></span>
+                <span class="vc-episode__duration">{video.duration}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="vc-concept vc-concept--stories" data-concept="2">
+        <div class="vc-shell">
+          <div class="vc-section-head">
+            <div><p class="label">Видеоистории</p><h2>Посмотрите,<br /><em>как это работает</em></h2></div>
+            <p>Лента привычна после Reels и Stories, но карточки остаются сдержанными и фирменными.</p>
+          </div>
+          <div class="vc-story-rail">
+            {videos.map((video, index) => (
+              <button class:list={['vc-story', { 'vc-story--lead': index === 0 }]} type="button" data-play-video={video.id}>
+                <img src={video.poster} alt="" loading="lazy" />
+                <span class="vc-story__shade"></span>
+                <span class="vc-story__top">{video.eyebrow}</span>
+                <span class="vc-story__play" aria-hidden="true">▶</span>
+                <span class="vc-story__bottom"><strong>{video.title}</strong><small>{video.duration}</small></span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="vc-concept vc-concept--cinema" data-concept="3">
+        <div class="vc-cinema">
+          <div class="vc-cinema__copy">
+            <p class="label">История 01 · 1:09</p>
+            <h2>Выбор начинается<br /><em>с деталей</em></h2>
+            <p>{videos[0].description}</p>
+            <button class="vc-button" type="button" data-play-video="review-01">Смотреть со звуком</button>
+          </div>
+          <button class="vc-cinema__frame" type="button" data-play-video="review-01" aria-label="Смотреть обзор">
+            <img src={videos[0].poster} alt="Ведущая рассказывает о выключателях AWS" loading="lazy" />
+            <span class="vc-cinema__glow"></span>
+            <span class="vc-cinema__play">▶</span>
+          </button>
+          <div class="vc-cinema__counter">
+            <strong>01</strong><span>/ 05</span>
+            <div class="vc-cinema__line"><i></i></div>
+            <small>Листайте истории</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="vc-concept vc-concept--guide" data-concept="4">
+        <div class="vc-shell">
+          <div class="vc-section-head vc-section-head--guide">
+            <div><p class="label">Пять вопросов перед выбором</p><h2>Понятный гид<br /><em>по электрике</em></h2></div>
+            <p>Каждый ролик отвечает на конкретный вопрос, поэтому видео работает не только на образ, но и на решение покупателя.</p>
+          </div>
+          <div class="vc-guide">
+            <div class="vc-guide__steps">
+              {videos.map((video, index) => (
+                <button class:list={['vc-guide-step', { 'is-active': index === 0 }]} type="button" data-guide-video={video.id}>
+                  <span>0{index + 1}</span>
+                  <span><strong>{video.title}</strong><small>{video.description}</small></span>
+                  <i>{video.duration}</i>
+                </button>
+              ))}
+            </div>
+            <div class="vc-guide__stage">
+              <div class="vc-phone vc-guide__phone">
+                <video controls playsinline preload="metadata" poster={videos[0].poster} data-guide-player>
+                  <source src={videos[0].src} type="video/mp4" />
+                </video>
+              </div>
+              <div class="vc-guide__caption"><span data-guide-number>01</span><strong data-guide-title>{videos[0].title}</strong></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="vc-concept vc-concept--journal" data-concept="5">
+        <div class="vc-shell">
+          <div class="vc-section-head">
+            <div><p class="label">AWS Journal</p><h2>Истории о качестве<br /><em>без лишних слов</em></h2></div>
+            <p>Модульная сетка легко растёт: сегодня пять выпусков, завтра — полноценная библиотека обзоров.</p>
+          </div>
+          <div class="vc-journal-grid">
+            {videos.map((video, index) => (
+              <article class:list={['vc-journal-card', `vc-journal-card--${index + 1}`]}>
+                <button type="button" data-play-video={video.id} aria-label={`Смотреть: ${video.title}`}>
+                  <img src={video.poster} alt="" loading="lazy" />
+                  <span class="vc-journal-card__shade"></span>
+                  <span class="vc-journal-card__play">▶</span>
+                </button>
+                <div><span>{video.eyebrow} · {video.duration}</span><h3>{video.title}</h3></div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <dialog class="vc-modal" data-video-modal>
+      <div class="vc-modal__backdrop" data-close-modal></div>
+      <div class="vc-modal__panel">
+        <button class="vc-modal__close" type="button" aria-label="Закрыть видео" data-close-modal>×</button>
+        <div class="vc-modal__video"><video controls playsinline preload="none" data-modal-player></video></div>
+        <div class="vc-modal__copy"><span data-modal-eyebrow></span><h2 data-modal-title></h2><p data-modal-description></p></div>
+      </div>
+    </dialog>
+    </Fragment>}
+  </div>
+
+  <script define:vars={{ videos }} is:inline>
+    const initVideoConcepts = () => {
+      const page = document.querySelector('.vc-page');
+      if (!page || page.dataset.initialized) return;
+      page.dataset.initialized = 'true';
+
+      const stopAll = () => page.querySelectorAll('video').forEach((video) => video.pause());
+      const byId = Object.fromEntries(videos.map((video) => [video.id, video]));
+      const scrollPlayer = page.querySelector('[data-scroll-player]');
+      const scrollStage = page.querySelector('.vs-stage__frame');
+      const scrollAmbient = page.querySelector('.vs-stage__ambient');
+      const soundButton = page.querySelector('[data-sound-toggle]');
+      const playButton = page.querySelector('[data-play-toggle]');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let activeVideoId = videos[0].id;
+      let soundEnabled = false;
+
+      const updatePlayState = () => {
+        if (!scrollPlayer) return;
+        page.querySelector('[data-play-icon]').textContent = scrollPlayer.paused ? '▶' : 'Ⅱ';
+        playButton?.setAttribute('aria-label', scrollPlayer.paused ? 'Воспроизвести' : 'Пауза');
+        playButton?.setAttribute('title', scrollPlayer.paused ? 'Воспроизвести' : 'Пауза');
+      };
+
+      const activateStory = (id, autoplay = true) => {
+        const video = byId[id];
+        if (!video || !scrollPlayer || activeVideoId === id && scrollPlayer.currentSrc) {
+          if (autoplay && !reducedMotion) scrollPlayer?.play().catch(() => {});
+          return;
+        }
+        activeVideoId = id;
+        scrollStage?.classList.add('is-switching');
+        scrollPlayer.pause();
+        scrollPlayer.poster = video.poster;
+        scrollPlayer.src = video.src;
+        if (scrollAmbient) scrollAmbient.style.backgroundImage = `url(${video.poster})`;
+        scrollPlayer.muted = !soundEnabled;
+        scrollPlayer.load();
+        page.querySelector('[data-stage-eyebrow]').textContent = video.eyebrow;
+        page.querySelector('[data-stage-title]').textContent = video.title;
+        const activeIndex = videos.findIndex((item) => item.id === id);
+        page.querySelector('[data-stage-index]').textContent = `0${activeIndex + 1}`;
+        page.querySelectorAll('[data-scroll-chapter]').forEach((chapter) => chapter.classList.toggle('is-active', chapter.dataset.scrollChapter === id));
+        window.setTimeout(() => scrollStage?.classList.remove('is-switching'), 360);
+        if (autoplay && !reducedMotion) {
+          scrollPlayer.play().catch(() => {
+            scrollPlayer.muted = true;
+            soundEnabled = false;
+            page.querySelector('[data-sound-label]').textContent = 'Включить звук';
+            scrollPlayer.play().catch(() => {});
+          });
+        }
+      };
+
+      const stories = page.querySelector('[data-scroll-stories]');
+      const chapterObserver = new IntersectionObserver((entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) activateStory(visible.target.dataset.scrollChapter);
+      }, { root: null, rootMargin: '-32% 0px -32% 0px', threshold: [0, .2, .5, .8] });
+      page.querySelectorAll('[data-scroll-chapter]').forEach((chapter) => chapterObserver.observe(chapter));
+
+      const storiesObserver = new IntersectionObserver(([entry]) => {
+        if (!scrollPlayer) return;
+        if (!entry.isIntersecting) scrollPlayer.pause();
+        else if (!reducedMotion) scrollPlayer.play().catch(() => {});
+      }, { threshold: .08 });
+      if (stories) storiesObserver.observe(stories);
+
+      soundButton?.addEventListener('click', () => {
+        soundEnabled = !soundEnabled;
+        scrollPlayer.muted = !soundEnabled;
+        page.querySelector('[data-sound-label]').textContent = soundEnabled ? 'Выключить звук' : 'Включить звук';
+        soundButton.setAttribute('aria-label', soundEnabled ? 'Выключить звук' : 'Включить звук');
+        soundButton.setAttribute('title', soundEnabled ? 'Выключить звук' : 'Включить звук');
+        soundButton.classList.toggle('is-muted', !soundEnabled);
+        scrollPlayer.play().catch(() => {});
+      });
+      playButton?.addEventListener('click', () => scrollPlayer.paused ? scrollPlayer.play() : scrollPlayer.pause());
+      scrollPlayer?.addEventListener('play', updatePlayState);
+      scrollPlayer?.addEventListener('pause', updatePlayState);
+      scrollPlayer?.addEventListener('timeupdate', () => {
+        const progress = scrollPlayer.duration ? scrollPlayer.currentTime / scrollPlayer.duration : 0;
+        page.querySelector('[data-video-progress]').style.transform = `scaleX(${progress})`;
+      });
+      page.querySelectorAll('[data-chapter-play]').forEach((button) => {
+        button.addEventListener('click', () => {
+          activateStory(button.dataset.chapterPlay, false);
+          scrollPlayer.currentTime = 0;
+          scrollPlayer.play().catch(() => {});
+        });
+      });
+
+      page.querySelectorAll('[data-concept-tab]').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          stopAll();
+          const target = tab.dataset.conceptTab;
+          page.querySelectorAll('[data-concept-tab]').forEach((item) => {
+            const active = item === tab;
+            item.classList.toggle('is-active', active);
+            item.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          page.querySelectorAll('[data-concept]').forEach((concept) => concept.classList.toggle('is-active', concept.dataset.concept === target));
+          document.querySelector('.vc-intro').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      const modal = page.querySelector('[data-video-modal]');
+      const modalPlayer = page.querySelector('[data-modal-player]');
+      const closeModal = () => {
+        modalPlayer.pause();
+        modalPlayer.removeAttribute('src');
+        modalPlayer.load();
+        modal.close();
+        document.body.style.overflow = '';
+      };
+      page.querySelectorAll('[data-close-modal]').forEach((button) => button.addEventListener('click', closeModal));
+      page.querySelectorAll('[data-play-video]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const video = byId[button.dataset.playVideo];
+          if (!video) return;
+          stopAll();
+          modalPlayer.src = video.src;
+          modalPlayer.poster = video.poster;
+          page.querySelector('[data-modal-eyebrow]').textContent = `${video.eyebrow} · ${video.duration}`;
+          page.querySelector('[data-modal-title]').textContent = video.title;
+          page.querySelector('[data-modal-description]').textContent = video.description;
+          modal.showModal();
+          document.body.style.overflow = 'hidden';
+          modalPlayer.play().catch(() => {});
+        });
+      });
+
+      const guidePlayer = page.querySelector('[data-guide-player]');
+      page.querySelectorAll('[data-guide-video]').forEach((button, index) => {
+        button.addEventListener('click', () => {
+          const video = byId[button.dataset.guideVideo];
+          if (!video || !guidePlayer) return;
+          page.querySelectorAll('[data-guide-video]').forEach((item) => item.classList.toggle('is-active', item === button));
+          guidePlayer.pause();
+          guidePlayer.poster = video.poster;
+          guidePlayer.src = video.src;
+          guidePlayer.load();
+          page.querySelector('[data-guide-number]').textContent = `0${index + 1}`;
+          page.querySelector('[data-guide-title]').textContent = video.title;
+          guidePlayer.play().catch(() => {});
+        });
+      });
+    };
+    initVideoConcepts();
+    document.addEventListener('astro:page-load', initVideoConcepts);
+  </script>
+</BaseLayout>

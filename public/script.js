@@ -1370,3 +1370,244 @@ document.querySelectorAll('.series__card-visual, .categories__card-img').forEach
         });
     }, { passive: true });
 })();
+
+
+// ─── ВИДЕОИСТОРИИ: один плеер, пять экранов, отложенная загрузка ───
+(function initHomeStories() {
+    const section = document.querySelector('[data-home-stories]');
+    if (!section || section.dataset.initialized) return;
+    section.dataset.initialized = 'true';
+
+    const videos = [
+        { id: 'review-01', title: 'Обзор серии ДИЗАЙН', eyebrow: 'Серия ДИЗАЙН' },
+        { id: 'review-02', title: 'АУРА в деталях', eyebrow: 'Серия АУРА' },
+        { id: 'review-03', title: 'Обзор серии УНО', eyebrow: 'Серия УНО' },
+        { id: 'review-04', title: 'Электрика в интерьере', eyebrow: 'Советы перед ремонтом' },
+        { id: 'review-05', title: 'Цвета серии АУРА', eyebrow: 'Серия АУРА' }
+    ].map(video => ({
+        ...video,
+        src: `/video-reviews/web/${video.id}.mp4`,
+        poster: `/video-reviews/web/${video.id}-poster.jpg`
+    }));
+
+    const byId = Object.fromEntries(videos.map(video => [video.id, video]));
+    const player = section.querySelector('[data-home-story-player]');
+    const frame = section.querySelector('[data-home-story-frame]');
+    const ambient = section.querySelector('[data-home-story-ambient]');
+    const soundButton = section.querySelector('[data-home-story-sound]');
+    const playButton = section.querySelector('[data-home-story-play]');
+    const hint = section.querySelector('.home-story-stage__hint');
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const saveData = Boolean(navigator.connection && navigator.connection.saveData);
+    let activeId = videos[0].id;
+    let soundEnabled = false;
+    let sectionVisible = false;
+    let loadAllowed = false;
+
+    const updatePlayState = () => {
+        if (!player) return;
+        const paused = player.paused;
+        const icon = section.querySelector('[data-home-story-play-icon]');
+        if (icon) icon.textContent = paused ? '▶' : 'Ⅱ';
+        playButton?.setAttribute('aria-label', paused ? 'Воспроизвести' : 'Пауза');
+        playButton?.setAttribute('title', paused ? 'Воспроизвести' : 'Пауза');
+    };
+
+    const updateStoryCopy = video => {
+        const eyebrow = section.querySelector('[data-home-story-eyebrow]');
+        const title = section.querySelector('[data-home-story-title]');
+        const index = section.querySelector('[data-home-story-index]');
+        const activeIndex = videos.findIndex(item => item.id === video.id);
+        if (eyebrow) eyebrow.textContent = video.eyebrow;
+        if (title) title.textContent = video.title;
+        if (index) index.textContent = `0${activeIndex + 1}`;
+        section.querySelectorAll('[data-home-story-chapter]').forEach(chapter => {
+            chapter.classList.toggle('is-active', chapter.dataset.homeStoryChapter === video.id);
+        });
+        hint?.classList.toggle('is-hidden', activeIndex > 0);
+    };
+
+    const loadStory = (id, autoplay = true, restart = false) => {
+        const video = byId[id];
+        if (!video || !player) return;
+
+        const sourceChanged = player.dataset.videoId !== id;
+        activeId = id;
+        updateStoryCopy(video);
+
+        if (!loadAllowed && !restart) return;
+
+        if (sourceChanged) {
+            frame?.classList.add('is-switching');
+            player.pause();
+            player.poster = video.poster;
+            player.src = video.src;
+            player.dataset.videoId = id;
+            player.muted = !soundEnabled;
+            if (ambient) ambient.style.backgroundImage = `url(${video.poster})`;
+            player.load();
+            const finishSwitch = () => frame?.classList.remove('is-switching');
+            player.addEventListener('loadeddata', finishSwitch, { once: true });
+            setTimeout(finishSwitch, 900);
+        }
+
+        if (restart) player.currentTime = 0;
+        if (autoplay && sectionVisible && !reducedMotion && !saveData) {
+            player.play().catch(() => {
+                player.muted = true;
+                soundEnabled = false;
+                soundButton?.classList.add('is-muted');
+                player.play().catch(() => {});
+            });
+        }
+    };
+
+    const approachObserver = new IntersectionObserver(([entry]) => {
+        if (!entry.isIntersecting || loadAllowed) return;
+        loadAllowed = true;
+        loadStory(activeId, sectionVisible);
+        approachObserver.disconnect();
+    }, { rootMargin: '700px 0px' });
+    approachObserver.observe(section);
+
+    const chapters = [...section.querySelectorAll('[data-home-story-chapter]')];
+    const headerOffset = () => innerWidth <= 700 ? 72 : 80;
+    const storyTargetY = chapter => window.scrollY + chapter.getBoundingClientRect().top - headerOffset();
+
+    const closestStoryIndex = () => {
+        const anchor = headerOffset() + (innerHeight - headerOffset()) / 2;
+        return chapters.reduce((closest, chapter, index) => {
+            const rect = chapter.getBoundingClientRect();
+            const distance = Math.abs(rect.top + rect.height / 2 - anchor);
+            return distance < closest.distance ? { index, distance } : closest;
+        }, { index: 0, distance: Infinity }).index;
+    };
+
+    let scrollFrame = 0;
+    const syncStoryToScroll = () => {
+        if (scrollFrame) return;
+        scrollFrame = requestAnimationFrame(() => {
+            scrollFrame = 0;
+            const next = videos[closestStoryIndex()];
+            if (next && next.id !== activeId) loadStory(next.id);
+        });
+    };
+    window.addEventListener('scroll', syncStoryToScroll, { passive: true });
+
+    let wheelLocked = false;
+    let wheelReleaseTimer = 0;
+    const releaseWheel = (delay = 320) => {
+        clearTimeout(wheelReleaseTimer);
+        wheelReleaseTimer = setTimeout(() => { wheelLocked = false; }, delay);
+    };
+
+    const goToStory = index => {
+        const chapter = chapters[index];
+        const video = videos[index];
+        if (!chapter || !video) return;
+        loadStory(video.id);
+        const y = storyTargetY(chapter);
+        if (lenis?.scrollTo) {
+            lenis.scrollTo(y, {
+                duration: .72,
+                easing: t => 1 - Math.pow(1 - t, 4)
+            });
+        } else {
+            window.scrollTo({ top: y, behavior: reducedMotion ? 'auto' : 'smooth' });
+        }
+    };
+
+    section.addEventListener('wheel', event => {
+        if (reducedMotion || Math.abs(event.deltaY) < 2) return;
+
+        const firstY = storyTargetY(chapters[0]);
+        const lastY = storyTargetY(chapters[chapters.length - 1]);
+        const inStoryRange = window.scrollY >= firstY - 3 && window.scrollY <= lastY + 3;
+        if (!inStoryRange) return;
+
+        if (wheelLocked) {
+            event.preventDefault();
+            releaseWheel();
+            return;
+        }
+
+        const currentIndex = closestStoryIndex();
+        const direction = Math.sign(event.deltaY);
+        if ((currentIndex === 0 && direction < 0) || (currentIndex === chapters.length - 1 && direction > 0)) return;
+
+        event.preventDefault();
+        wheelLocked = true;
+        goToStory(currentIndex + direction);
+        releaseWheel(760);
+    }, { passive: false, capture: true });
+
+    const coarsePointer = matchMedia('(pointer: coarse)').matches;
+    let touchSnapTimer = 0;
+    if (coarsePointer) {
+        window.addEventListener('scroll', () => {
+            clearTimeout(touchSnapTimer);
+            touchSnapTimer = setTimeout(() => {
+                const firstY = storyTargetY(chapters[0]);
+                const lastY = storyTargetY(chapters[chapters.length - 1]);
+                if (window.scrollY > firstY + 3 && window.scrollY < lastY - 3) goToStory(closestStoryIndex());
+            }, 180);
+        }, { passive: true });
+    }
+
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+        sectionVisible = entry.isIntersecting;
+        if (!player) return;
+        if (!sectionVisible) player.pause();
+        else if (loadAllowed && !reducedMotion && !saveData) player.play().catch(() => {});
+    }, { threshold: .08 });
+    visibilityObserver.observe(section);
+
+    soundButton?.addEventListener('click', () => {
+        if (!loadAllowed) {
+            loadAllowed = true;
+            loadStory(activeId, false);
+        }
+        soundEnabled = !soundEnabled;
+        player.muted = !soundEnabled;
+        const label = soundEnabled ? 'Выключить звук' : 'Включить звук';
+        soundButton.classList.toggle('is-muted', !soundEnabled);
+        soundButton.setAttribute('aria-label', label);
+        soundButton.setAttribute('title', label);
+        const hiddenLabel = section.querySelector('[data-home-story-sound-label]');
+        if (hiddenLabel) hiddenLabel.textContent = label;
+        player.play().catch(() => {});
+    });
+
+    const togglePlayback = () => {
+        if (!loadAllowed) {
+            loadAllowed = true;
+            loadStory(activeId, false);
+        }
+        if (player.paused) player.play().catch(() => {});
+        else player.pause();
+    };
+
+    playButton?.addEventListener('click', togglePlayback);
+    player?.addEventListener('click', togglePlayback);
+    player?.addEventListener('play', updatePlayState);
+    player?.addEventListener('pause', updatePlayState);
+    player?.addEventListener('timeupdate', () => {
+        const progress = player.duration ? player.currentTime / player.duration : 0;
+        const bar = section.querySelector('[data-home-story-progress]');
+        if (bar) bar.style.transform = `scaleX(${progress})`;
+    });
+
+    section.querySelectorAll('[data-home-story-restart]').forEach(button => {
+        button.addEventListener('click', () => {
+            loadAllowed = true;
+            loadStory(button.dataset.homeStoryRestart, false, true);
+            player.play().catch(() => {});
+        });
+    });
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) player?.pause();
+    });
+
+    updatePlayState();
+})();

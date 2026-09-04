@@ -48,6 +48,7 @@
             <div class="header__right">
                 <a href="#about" class="header__link desktop-only">О бренде</a>
                 <a href="#buy" class="header__link desktop-only">Где купить</a>
+                <a href="#stories" class="header__link desktop-only">Видео</a>
                 <a href="#contacts" class="header__link desktop-only">Контакты</a>
             </div>
         </div>
@@ -75,6 +76,7 @@
                 </div>
                 <a href="#about" class="side-menu__item">О бренде</a>
                 <a href="#buy" class="side-menu__item">Где купить</a>
+                <a href="#stories" class="side-menu__item">Видеообзоры</a>
                 <a href="#contacts" class="side-menu__item">Контакты</a>
             </nav>
             <div class="side-menu__contacts">
@@ -622,6 +624,100 @@
         </div>
     </section>
 
+    <!-- ========== ВИДЕОИСТОРИИ ========== -->
+    <section class="home-stories" id="stories" data-home-stories>
+        <div class="home-stories__threshold">
+            <p class="label">Видеоистории AWS Products</p>
+            <div class="home-stories__threshold-line">
+                <span>Качество в движении</span>
+                <span aria-hidden="true">↓</span>
+            </div>
+        </div>
+
+        <div class="home-stories__grid">
+            <div class="home-story-stage">
+                <div class="home-story-stage__ambient" data-home-story-ambient aria-hidden="true"></div>
+                <div class="home-story-stage__frame" data-home-story-frame>
+                    <video
+                        muted
+                        playsinline
+                        preload="none"
+                        poster="/video-reviews/web/review-01-poster.jpg"
+                        data-home-story-player
+                    ></video>
+                    <div class="home-story-stage__veil" aria-hidden="true"></div>
+                    <div class="home-story-stage__meta">
+                        <span data-home-story-eyebrow>Серия ДИЗАЙН</span>
+                        <strong data-home-story-title>Обзор серии ДИЗАЙН</strong>
+                    </div>
+                    <div class="home-story-stage__progress"><i data-home-story-progress></i></div>
+                </div>
+
+                <div class="home-story-stage__controls" aria-label="Управление видео">
+                    <button class="home-story-stage__sound is-muted" type="button" data-home-story-sound aria-label="Включить звук" title="Включить звук">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5 9v6h4l5 4V5L9 9H5Z"></path>
+                            <path d="M17 9.5c.7.7 1 1.5 1 2.5s-.3 1.8-1 2.5"></path>
+                        </svg>
+                        <span class="home-story-sr-only" data-home-story-sound-label>Включить звук</span>
+                    </button>
+                    <button class="home-story-stage__play" type="button" data-home-story-play aria-label="Воспроизвести" title="Воспроизвести">
+                        <span data-home-story-play-icon>▶</span>
+                    </button>
+                </div>
+
+                <div class="home-story-stage__index" aria-hidden="true">
+                    <span data-home-story-index>01</span>
+                    <i></i>
+                    <span>05</span>
+                </div>
+
+                <div class="home-story-stage__hint" aria-hidden="true">
+                    <span>Прокручивайте вниз</span>
+                    <i><b></b></i>
+                </div>
+            </div>
+
+            <div class="home-story-chapters">
+                <article class="home-story-chapter is-active" data-home-story-chapter="review-01">
+                    <span class="home-story-chapter__number">01</span>
+                    <p>Серия ДИЗАЙН</p>
+                    <h2>Обзор серии ДИЗАЙН</h2>
+                    <div class="home-story-chapter__description">Знакомимся с формой, цветами и деталями серии ДИЗАЙН.</div>
+                    <button type="button" data-home-story-restart="review-01">Смотреть с начала <span>▶</span></button>
+                </article>
+                <article class="home-story-chapter" data-home-story-chapter="review-02">
+                    <span class="home-story-chapter__number">02</span>
+                    <p>Серия АУРА</p>
+                    <h2>АУРА в деталях</h2>
+                    <div class="home-story-chapter__description">Стеклянные рамки, чистая геометрия и глубокие оттенки — рассматриваем материалы серии вблизи.</div>
+                    <button type="button" data-home-story-restart="review-02">Смотреть с начала <span>▶</span></button>
+                </article>
+                <article class="home-story-chapter" data-home-story-chapter="review-03">
+                    <span class="home-story-chapter__number">03</span>
+                    <p>Серия УНО</p>
+                    <h2>Обзор серии УНО</h2>
+                    <div class="home-story-chapter__description">Мягкое покрытие, лаконичная форма и чёткая механика — знакомимся с серией УНО ближе.</div>
+                    <button type="button" data-home-story-restart="review-03">Смотреть с начала <span>▶</span></button>
+                </article>
+                <article class="home-story-chapter" data-home-story-chapter="review-04">
+                    <span class="home-story-chapter__number">04</span>
+                    <p>Советы перед ремонтом</p>
+                    <h2>Электрика в интерьере</h2>
+                    <div class="home-story-chapter__description">Практический рассказ о выборе электрики ещё до чистовой отделки.</div>
+                    <button type="button" data-home-story-restart="review-04">Смотреть с начала <span>▶</span></button>
+                </article>
+                <article class="home-story-chapter" data-home-story-chapter="review-05">
+                    <span class="home-story-chapter__number">05</span>
+                    <p>Серия АУРА</p>
+                    <h2>Цвета серии АУРА</h2>
+                    <div class="home-story-chapter__description">Смотрим, как разные оттенки серии АУРА раскрываются в интерьере.</div>
+                    <button type="button" data-home-story-restart="review-05">Смотреть с начала <span>▶</span></button>
+                </article>
+            </div>
+        </div>
+    </section>
+
 
     <!-- ========== FAQ (компактный, 2 колонки) ========== -->
     <section class="faq faq--compact" id="faq">
@@ -694,6 +790,7 @@
                     <a href="#about">О бренде</a>
                     <a href="#advantages">Преимущества</a>
                     <a href="#buy">Где купить</a>
+                    <a href="#stories">Видеообзоры</a>
                 </div>
                 <div class="footer-v2__col">
                     <span class="footer-v2__col-title">Связь</span>

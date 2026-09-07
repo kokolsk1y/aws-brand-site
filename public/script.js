@@ -1379,9 +1379,9 @@ document.querySelectorAll('.series__card-visual, .categories__card-img').forEach
     section.dataset.initialized = 'true';
 
     const videos = [
-        { id: 'review-01', title: 'Обзор серии ДИЗАЙН', eyebrow: 'Серия ДИЗАЙН' },
-        { id: 'review-02', title: 'АУРА в деталях', eyebrow: 'Серия АУРА' },
-        { id: 'review-03', title: 'Обзор серии УНО', eyebrow: 'Серия УНО' },
+        { id: 'review-01', title: 'Серия ДИЗАЙН', eyebrow: 'Обзор' },
+        { id: 'review-02', title: 'Серия АУРА', eyebrow: 'Обзор' },
+        { id: 'review-03', title: 'Серия УНО', eyebrow: 'Обзор' },
         { id: 'review-04', title: 'Электрика в интерьере', eyebrow: 'Советы перед ремонтом' },
         { id: 'review-05', title: 'Цвета серии АУРА', eyebrow: 'Серия АУРА' }
     ].map(video => ({

@@ -15,6 +15,33 @@
     "aluminum"
   ],
   "series": {
+    "standard": {
+      "slug": "standard",
+      "label": "СТАНДАРТ",
+      "hasFrames": false,
+      "colors": [
+        {
+          "key": "white",
+          "label": "Белый",
+          "swatch": "#e7e5e1",
+          "light": true,
+          "cover": "/img/series/standard-white.webp",
+          "materials": [],
+          "img": {},
+          "hasCombo": false
+        },
+        {
+          "key": "black",
+          "label": "Чёрный",
+          "swatch": "#1c1a1a",
+          "light": false,
+          "cover": "/img/series/standard-black.webp",
+          "materials": [],
+          "img": {},
+          "hasCombo": false
+        }
+      ]
+    },
     "uno": {
       "slug": "uno",
       "label": "УНО",

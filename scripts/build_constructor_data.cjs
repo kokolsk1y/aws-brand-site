@@ -100,7 +100,7 @@ const out = {
   series: {},
 };
 // Порядок серий для UI
-const ORDER = ['uno', 'aura', 'design'];
+const ORDER = ['standard', 'uno', 'aura', 'design'];
 for (const slug of ORDER) {
   if (series[slug]) out.series[slug] = buildSeries(slug, series[slug]);
 }

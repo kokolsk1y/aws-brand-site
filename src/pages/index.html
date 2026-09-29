@@ -21,6 +21,7 @@
     <link rel="prefetch" as="image" href="/img/series/uno-1kl-b.webp?v=20260507">
     <link rel="prefetch" as="image" href="/img/series/aura-1kl-w.webp?v=20260507">
     <link rel="prefetch" as="image" href="/img/series/aura-1kl-b.webp?v=20260507">
+    <link rel="prefetch" as="image" href="/img/series/standard-white.webp">
     <link rel="stylesheet" href="/style.css?v=20260512">
     <link rel="stylesheet" href="/bg-switch.css?v=20260714">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
@@ -66,6 +67,7 @@
                         <a href="/series/uno" class="side-menu__sub">Серия УНО</a>
                         <a href="/series/aura" class="side-menu__sub">Серия АУРА</a>
                         <a href="/series/design" class="side-menu__sub">Серия ДИЗАЙН</a>
+                        <a href="/series/standard" class="side-menu__sub">Серия СТАНДАРТ</a>
                         <a href="/category/extensions-home" class="side-menu__sub">Удлинители бытовые</a>
                         <a href="/category/extensions-garden" class="side-menu__sub">Удлинители садовые</a>
                         <a href="/category/power-connectors" class="side-menu__sub">Силовые разъёмы</a>
@@ -180,9 +182,30 @@
         <div class="series__inner">
             <div class="series__header">
                 <p class="label" data-reveal="blur">Розетки и выключатели</p>
-                <h2 class="series__title" data-reveal="focus">Три серии —<br><em>один стандарт качества</em></h2>
+                <h2 class="series__title" data-reveal="focus">Четыре серии —<br><em>один стандарт качества</em></h2>
             </div>
             <div class="series__grid">
+
+                <!-- СТАНДАРТ -->
+                <div class="series__card" id="standard" data-series="standard" data-reveal="slide">
+                    <div class="series__card-visual">
+                        <div class="series__photo"
+                             data-white="img/series/standard-white.webp"
+                             data-black="img/series/standard-black.webp">
+                            <img src="/img/series/standard-white.webp" alt="СТАНДАРТ" class="series__photo-img" width="800" height="800" loading="lazy" decoding="async">
+                            <div class="series__photo-placeholder" style="display:none">Фото скоро</div>
+                        </div>
+                    </div>
+                    <div class="series__card-info">
+                        <span class="series__card-badge">Новая серия</span>
+                        <h3 class="series__card-name">СТАНДАРТ</h3>
+                        <p class="series__card-desc">Практичная серия для дома и рабочих пространств</p>
+                        <div class="series__card-colors">
+                            <span class="dot dot--white active" data-color="white" title="Белый"></span>
+                            <span class="dot dot--black" data-color="black" title="Чёрный"></span>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- УНО -->
                 <div class="series__card" id="uno" data-series="uno" data-reveal="slide">
@@ -775,6 +798,7 @@
                     <a href="/series/uno">УНО</a>
                     <a href="/series/aura">АУРА</a>
                     <a href="/series/design">ДИЗАЙН</a>
+                    <a href="/series/standard">СТАНДАРТ</a>
                 </div>
                 <div class="footer-v2__col">
                     <span class="footer-v2__col-title">Ассортимент</span>

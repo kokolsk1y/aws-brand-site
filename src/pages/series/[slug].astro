@@ -20,6 +20,7 @@ const groupsDef = [
   { key: 'switches', title: 'Выключатели', items: visibleItems(series.groups?.switches, 'switches', colorOrder) },
   { key: 'sockets',  title: 'Розетки',     items: visibleItems(series.groups?.sockets,  'sockets',  colorOrder) },
   { key: 'frames',   title: 'Рамки',       items: visibleItems(series.groups?.frames,   'frames',   colorOrder) },
+  { key: 'surface',  title: 'Накладные',   items: visibleItems(series.groups?.surface,  'surface',  colorOrder) },
   { key: 'other',    title: 'Прочие',      items: visibleItems(series.groups?.other,    'other',    colorOrder) },
 ];
 const cnt = Object.fromEntries(groupsDef.map(g => [g.key, g.items.length]));
@@ -39,9 +40,21 @@ function getCardPhotoStyle(article) {
   // Рамки — всегда 1:1 (аксиома: карточки одного размера независимо от числа постов)
   // Уменьшаем только padding чтобы многопостные рамки не выглядели крошечными
   const m = article.match(/-0(28|29|30|31|32)\b/);
-  if (!m) return '';
-  const n = parseInt(m[1]);
-  const pad = { 28: '28px', 29: '20px', 30: '14px', 31: '14px', 32: '10px' }[n];
+  if (m) {
+    const n = parseInt(m[1]);
+    const pad = { 28: '28px', 29: '20px', 30: '14px', 31: '14px', 32: '10px' }[n];
+    return `--photo-pad: ${pad}`;
+  }
+
+  const standardGlass = article.match(/^SD-G300([1-4])[BW]$/i);
+  const standardPlain = article.match(/^SD-P10(18|19|20)[BW]$/i);
+  const posts = standardGlass
+    ? parseInt(standardGlass[1])
+    : standardPlain
+      ? parseInt(standardPlain[1]) - 16
+      : null;
+  if (!posts) return '';
+  const pad = { 1: '28px', 2: '20px', 3: '14px', 4: '10px' }[posts];
   return `--photo-pad: ${pad}`;
 }
 ---
@@ -92,9 +105,9 @@ function getCardPhotoStyle(article) {
     </div>
   </section>
 
-  <!-- LINEUP — все 3 группы -->
+  <!-- LINEUP — группы товаров серии -->
   {cntTotal > 0 && (
-    <section class="ser-lineup">
+    <section class={`ser-lineup ser-lineup--${slug}`}>
       <div class="ser-lineup__inner">
         <h2 class="ser-lineup__title" data-reveal="focus">Что входит в серию</h2>
         <p class="ser-lineup__subtitle" data-reveal="blur">
@@ -103,6 +116,12 @@ function getCardPhotoStyle(article) {
           <a href="#ser-group-sockets" class="ser-lineup__count-link" data-jump="ser-group-sockets">{cnt.sockets} розеток</a>
           <span class="ser-lineup__dot">·</span>
           <a href="#ser-group-frames" class="ser-lineup__count-link" data-jump="ser-group-frames">{cnt.frames} рамок</a>
+          {cnt.surface > 0 && (
+            <>
+              <span class="ser-lineup__dot">·</span>
+              <a href="#ser-group-surface" class="ser-lineup__count-link" data-jump="ser-group-surface">{cnt.surface} накладных</a>
+            </>
+          )}
           {cnt.other > 0 && (
             <>
               <span class="ser-lineup__dot">·</span>
@@ -774,6 +793,12 @@ function getCardPhotoStyle(article) {
       transform: translateY(-6px) scale(1.06);
       filter: drop-shadow(0 18px 26px rgba(0,0,0,0.22));
     }
+    .ser-lineup--standard .ser-lineup__photo img {
+      transform: scale(1.15);
+    }
+    .ser-lineup--standard .ser-lineup__card:hover .ser-lineup__photo img {
+      transform: translateY(-6px) scale(1.2);
+    }
     .ser-lineup__photo-fallback {
       width: 56px; height: 56px;
       display: flex; align-items: center; justify-content: center;
@@ -881,7 +906,7 @@ function getCardPhotoStyle(article) {
     /* Адаптив */
     @media (max-width: 900px) {
       .ser-hero__inner, .ser-features__inner, .ser-lineup__inner, .ser-related__inner { padding: 0 24px; }
-      .ser-hero__grid { grid-template-columns: 1fr; gap: 40px; }
+      .ser-hero__grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
       .ser-features__grid { grid-template-columns: repeat(2, 1fr); }
       .ser-lineup__grid { grid-template-columns: repeat(2, 1fr); }
       .ser-related__grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -897,6 +922,17 @@ function getCardPhotoStyle(article) {
       .ser-related { padding: 60px 0; }
       /* Контейнеры: 16px */
       .ser-hero__inner, .ser-features__inner, .ser-lineup__inner, .ser-related__inner { padding: 0 16px; }
+      .ser-hero__text { min-width: 0; }
+      .ser-hero__title {
+        font-size: clamp(42px, 12.5vw, 72px);
+        letter-spacing: -1.5px;
+        overflow-wrap: anywhere;
+      }
+      .ser-hero__tagline, .ser-hero__desc {
+        width: 100%; max-width: 100%;
+        white-space: normal;
+        overflow-wrap: break-word;
+      }
       /* Заголовки */
       .ser-features__title, .ser-lineup__title, .ser-related__title { font-size: clamp(24px, 6.5vw, 36px); letter-spacing: -0.5px; }
       /* Фильтр на мобиле: sticky к хедеру, полупрозрачный фон как у хедера */

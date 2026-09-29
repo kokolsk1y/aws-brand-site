@@ -2679,5 +2679,395 @@
         }
       ]
     }
+  },
+  "standard": {
+    "slug": "standard",
+    "name": "СТАНДАРТ",
+    "tagline": "Чистая форма. Продуманная функция.",
+    "description": "Серия СТАНДАРТ — лаконичные выключатели, розетки и рамки для повседневных интерьеров. В линейке есть решения для скрытого и накладного монтажа, модели с подсветкой, USB и защитой IP54. Базовая палитра помогает собрать цельную электрофурнитуру для жилых и рабочих пространств.",
+    "colors": [
+      {
+        "key": "white",
+        "label": "Белый",
+        "img": "/img/series/standard-white.webp",
+        "swatch": "#e7e5e1"
+      },
+      {
+        "key": "black",
+        "label": "Чёрный",
+        "img": "/img/series/standard-black.webp",
+        "swatch": "#1c1a1a"
+      }
+    ],
+    "features": [
+      {
+        "title": "Единый стиль",
+        "text": "Выключатели, розетки и рамки в общей геометрии"
+      },
+      {
+        "title": "Для разных задач",
+        "text": "Скрытый и накладной монтаж"
+      },
+      {
+        "title": "Практичные функции",
+        "text": "Подсветка, USB и защита IP54"
+      },
+      {
+        "title": "Материалы",
+        "text": "Поликарбонат и стеклянные рамки"
+      }
+    ],
+    "groups": {
+      "switches": [
+        {
+          "article": "SD-P1001W",
+          "name": "Выключатель 1-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1002W",
+          "name": "Выключатель 1-кл. с подсветкой белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1002B",
+          "name": "Выключатель 1-кл. с подсветкой чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1001B",
+          "name": "Выключатель 1-кл. чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1005W",
+          "name": "Выключатель 2-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1006W",
+          "name": "Выключатель 2-кл. с подсветкой белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1006B",
+          "name": "Выключатель 2-кл. с подсветкой чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1005B",
+          "name": "Выключатель 2-кл. чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1010W",
+          "name": "Выключатель 3-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1010B",
+          "name": "Выключатель 3-кл. чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1009W",
+          "name": "Выключатель звонковый 1-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1009B",
+          "name": "Выключатель звонковый 1-кл. чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1003W",
+          "name": "Выключатель проходной 1-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1004W",
+          "name": "Выключатель проходной 1-кл. с подсветкой белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1004B",
+          "name": "Выключатель проходной 1-кл. с подсветкой чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1003B",
+          "name": "Выключатель проходной 1-кл. чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1007W",
+          "name": "Выключатель проходной 2-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1008W",
+          "name": "Выключатель проходной 2-кл. с подсветкой белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1008B",
+          "name": "Выключатель проходной 2-кл. с подсветкой чёрный",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1007B",
+          "name": "Выключатель проходной 2-кл. чёрный",
+          "color": "black",
+          "price": null
+        }
+      ],
+      "sockets": [
+        {
+          "article": "SD-P1013W",
+          "name": "Розетка с заземлением и крышкой белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1013B",
+          "name": "Розетка с заземлением и крышкой чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1011W",
+          "name": "Розетка с заземлением белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1017W",
+          "name": "Розетка с заземлением и 2 USB белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1017B",
+          "name": "Розетка с заземлением и 2 USB чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1011B",
+          "name": "Розетка с заземлением чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1012W",
+          "name": "Розетка двойная с заземлением белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1012B",
+          "name": "Розетка двойная с заземлением чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1015W",
+          "name": "Розетка RJ45 Cat.5e одинарная белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1015B",
+          "name": "Розетка RJ45 Cat.5e одинарная чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1016W",
+          "name": "Розетка RJ45 Cat.5e двойная белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1016B",
+          "name": "Розетка RJ45 Cat.5e двойная чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1014W",
+          "name": "Розетка телевизионная белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1014B",
+          "name": "Розетка телевизионная чёрная",
+          "color": "black",
+          "price": null
+        }
+      ],
+      "frames": [
+        {
+          "article": "SD-G3001W",
+          "name": "Рамка стеклянная 1-постовая белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-G3001B",
+          "name": "Рамка стеклянная 1-постовая чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-G3002W",
+          "name": "Рамка стеклянная 2-постовая белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1018W",
+          "name": "Рамка 2-постовая белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-G3002B",
+          "name": "Рамка стеклянная 2-постовая чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1018B",
+          "name": "Рамка 2-постовая чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-G3003W",
+          "name": "Рамка стеклянная 3-постовая белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1019W",
+          "name": "Рамка 3-постовая белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-G3003B",
+          "name": "Рамка стеклянная 3-постовая чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-P1019B",
+          "name": "Рамка 3-постовая чёрная",
+          "color": "black",
+          "price": null
+        },
+        {
+          "article": "SD-G3004W",
+          "name": "Рамка стеклянная 4-постовая белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1020W",
+          "name": "Рамка 4-постовая белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-P1020B",
+          "name": "Рамка 4-постовая чёрная",
+          "color": "black",
+          "price": null
+        }
+      ],
+      "surface": [
+        {
+          "article": "SD-V1001WG",
+          "name": "Выключатель накладной 1-кл. IP54 серо-белый",
+          "color": "grey_white",
+          "price": null
+        },
+        {
+          "article": "SD-S001W",
+          "name": "Выключатель накладной 1-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-V1002WG",
+          "name": "Выключатель накладной 2-кл. IP54 серо-белый",
+          "color": "grey_white",
+          "price": null
+        },
+        {
+          "article": "SD-S002W",
+          "name": "Выключатель накладной 2-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-S003W",
+          "name": "Выключатель проходной накладной 1-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-S004W",
+          "name": "Выключатель проходной накладной 2-кл. белый",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-V1003WG",
+          "name": "Розетка накладная с крышкой IP54 серо-белая",
+          "color": "grey_white",
+          "price": null
+        },
+        {
+          "article": "SD-S005W",
+          "name": "Розетка накладная с заземлением белая",
+          "color": "white",
+          "price": null
+        },
+        {
+          "article": "SD-V1004WG",
+          "name": "Розетка двойная накладная IP54 серо-белая",
+          "color": "grey_white",
+          "price": null
+        },
+        {
+          "article": "SD-S006W",
+          "name": "Розетка двойная накладная с заземлением белая",
+          "color": "white",
+          "price": null
+        }
+      ]
+    }
   }
 }

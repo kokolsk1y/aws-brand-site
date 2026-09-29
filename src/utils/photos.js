@@ -20,6 +20,13 @@ const PRODUCTS_FILES = fs.existsSync(PRODUCTS_DIR) ? fs.readdirSync(PRODUCTS_DIR
 // Приоритет форматов для главного фото: webp > png > jpg
 // (webp обычно в 5-10 раз легче — экономия трафика).
 const FMT_PRIORITY = { webp: 0, png: 1, jpg: 2, jpeg: 2 };
+const STANDARD_WITHOUT_SEPARATE_ANGLE = new Set([
+  'SD-P1001W',
+  'SD-P1009B',
+  'SD-P1012W',
+  'SD-P1016W',
+  'SD-V1001WG',
+]);
 function pickByFormat(matches) {
   if (!matches.length) return null;
   return matches.sort((a, b) => {
@@ -44,12 +51,15 @@ export function getProductPhotos(article) {
     if (!byIdx.has(idx)) byIdx.set(idx, []);
     byIdx.get(idx).push(f);
   }
-  // Последовательность (индекс, файл).
-  // Индекс _1 — канонический ¾-ракурс АУРА («ракурс 3х4»): он ГЕРОЙСКИЙ,
-  // ставим его ПЕРВЫМ — перед лицом/main (плоское лицо АУРА невыразительно).
-  // У золото/серых main-файла нет; у чёрных/белых main = лицо → ¾ всё равно впереди.
-  // У остальных серий файлов _1 нет — поведение не меняется.
-  const HERO = 1;
+  const normalizedArticle = String(article).toUpperCase();
+  const isStandard = normalizedArticle.startsWith('SD-');
+  // В выгрузке СТАНДАРТ перспективный ¾-ракурс сохранён как _2.
+  // У пяти товаров отдельного перспективного файла нет — там первым остаётся main.
+  const HERO = isStandard && !STANDARD_WITHOUT_SEPARATE_ANGLE.has(normalizedArticle) ? 2 : 1;
+  if (isStandard && !main && !byIdx.has(HERO)) return [];
+
+  // Последовательность (индекс, файл): выразительный ¾-ракурс перед анфасом,
+  // затем остальные технические виды. Для других серий канонический hero — _1.
   const seq = [];
   if (byIdx.has(HERO)) seq.push([HERO, pickByFormat(byIdx.get(HERO))]);
   if (main) seq.push([1, main]);

@@ -33,7 +33,7 @@ function keysCount(name) {
 // Число постов рамки/розетки: "Рамка 3-я" → 3. «для двойной розетки» → в конец.
 function postsCount(name) {
   if (/для двойной розетки/i.test(name)) return 90;
-  const m = name.match(/(\d+)\s*-\s*я(?![а-яё])/i);
+  const m = name.match(/(\d+)\s*-\s*(?:я(?![а-яё])|пост)/i);
   return m ? parseInt(m[1], 10) : 1;
 }
 
@@ -104,6 +104,13 @@ function makeComparator(groupKey, colorOrder) {
     return by(
       (x) => socketTypeRank(x.name),
       (x) => socketSize(x.name),
+      (x) => colorRank(x.color),
+    );
+  }
+  if (groupKey === 'surface') {
+    return by(
+      (x) => /розетка/i.test(x.name) ? 1 : 0,
+      (x) => /розетка/i.test(x.name) ? socketTypeRank(x.name) : keysCount(x.name),
       (x) => colorRank(x.color),
     );
   }

@@ -143,7 +143,7 @@
   "clamps": {
     "slug": "clamps",
     "title": "Клеммы",
-    "subtitle": "0.2 — 4 мм² · 18 моделей",
+    "subtitle": "0,2 — 4,0 мм² · 27 моделей",
     "description": "Соединительные клеммы Wago-style: рычажковые и классические. Защёлкивание с первого раза, надёжный контакт без пайки.",
     "cover": "/img/products/SN-222415.png",
     "filters": [
@@ -161,6 +161,11 @@
         "key": "24a",
         "label": "24 А",
         "test": "i.name.includes('24А')"
+      },
+      {
+        "key": "6a",
+        "label": "6 А",
+        "test": "i.name.includes('6А')"
       }
     ],
     "groups": [

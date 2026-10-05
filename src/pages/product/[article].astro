@@ -30,6 +30,7 @@ export async function getStaticPaths() {
     }
   }
   for (const [slug, series] of Object.entries(seriesData)) {
+    if (slug === 'standard') continue;
     if (!series.groups) continue;
     for (const groupKey of ['switches', 'sockets', 'frames', 'surface', 'accessories', 'other']) {
       const items = series.groups[groupKey] || [];

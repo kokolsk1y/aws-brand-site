@@ -5,14 +5,16 @@ import { visibleItems, visibleColors, colorOrderOf } from '../../utils/catalog.j
 import seriesData from '../../data/series.json';
 
 export async function getStaticPaths() {
-  return Object.keys(seriesData).map(slug => ({ params: { slug } }));
+  return Object.keys(seriesData)
+    .filter(slug => slug !== 'standard')
+    .map(slug => ({ params: { slug } }));
 }
 
 const { slug } = Astro.params;
 const series = seriesData[slug];
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-const otherSeries = Object.values(seriesData).filter(s => s.slug !== slug);
+const otherSeries = Object.values(seriesData).filter(s => s.slug !== slug && s.slug !== 'standard');
 
 // Нормализованный каталог: только товары с фото, отсортированы (тип → цвет).
 const colorOrder = colorOrderOf(series);

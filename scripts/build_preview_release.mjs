@@ -25,8 +25,8 @@ const html = sourceHtml
     '<link rel="canonical" href="https://awsproducts.ru/">',
     '<link rel="canonical" href="https://preview.awsproducts.ru/">',
   )
-  .replace('/motion-integration.css?v=20261007', '/preview/motion-integration.css?v=20261008-2')
-  .replace('/motion-integration.js?v=20261007', '/preview/motion-integration.js?v=20261008-2')
+  .replace('/motion-integration.css?v=20261007', '/preview/motion-integration.css?v=20261008-3')
+  .replace('/motion-integration.js?v=20261007', '/preview/motion-integration.js?v=20261008-3')
   .replace(/href="\/(series|category)\//g, 'href="https://awsproducts.ru/$1/');
 
 const js = sourceJs.replace(

@@ -15,7 +15,8 @@
   const colors = root.querySelector('.ic-series-colors');
   const seriesLink = root.querySelector('.ic-series-actions a');
   const scrollScene = root.querySelector('.ic-series-scroll');
-  const constructorPreview = root.querySelector('#cstPrevA');
+  const constructorSection = root.querySelector('.ic-constructor-shell');
+  const constructorStage = root.querySelector('.constructor__preview');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const shortScene = matchMedia('(max-width: 1000px)');
   let data = null;
@@ -23,7 +24,7 @@
   let activeColor = 0;
   let frame = 0;
   let coverToken = 0;
-  let handoffComplete = false;
+  let handoffActive = false;
   const handoffProduct = document.createElement('img');
   handoffProduct.className = 'ic-handoff-product';
   handoffProduct.alt = '';
@@ -87,42 +88,38 @@
   }
 
   function resetHandoff() {
-    handoffComplete = false;
-    root.classList.remove('is-handoff', 'is-handoff-complete');
+    handoffActive = false;
     handoffProduct.hidden = true;
+    product.style.visibility = '';
+    constructorStage?.classList.remove('ic-handoff');
   }
 
-  function updateHandoff(progress) {
-    if (!constructorPreview) return;
-    const handoff = clamp((progress - .82) / .18);
-
-    if (handoff <= 0) {
+  function updateHandoff() {
+    if (!constructorSection || !constructorStage) return;
+    const handoff = clamp((innerHeight * .93 - constructorSection.getBoundingClientRect().top) / (innerHeight * .78));
+    if (handoff <= 0 || handoff >= 1) {
       resetHandoff();
       return;
     }
 
-    const target = constructorPreview.getBoundingClientRect();
-    if (progress < .96) handoffComplete = false;
-    if (progress >= .995 && target.top <= innerHeight * .68) handoffComplete = true;
-
-    if (handoffComplete) {
-      root.classList.remove('is-handoff');
-      root.classList.add('is-handoff-complete');
-      handoffProduct.hidden = true;
-      return;
+    const constructorPreview = constructorStage.querySelector('.constructor__preview-img.is-active') || constructorStage.querySelector('.constructor__preview-img');
+    if (!constructorPreview) return;
+    if (!handoffActive) {
+      handoffProduct.src = product.currentSrc || product.src;
+      handoffActive = true;
     }
-
     const source = product.getBoundingClientRect();
+    const target = constructorPreview.getBoundingClientRect();
     const eased = handoff * handoff * (3 - 2 * handoff);
     const lerp = (from, to) => from + (to - from) * eased;
-    handoffProduct.src = product.currentSrc || product.src;
     handoffProduct.style.left = `${lerp(source.left, target.left)}px`;
     handoffProduct.style.top = `${lerp(source.top, target.top)}px`;
     handoffProduct.style.width = `${lerp(source.width, target.width)}px`;
     handoffProduct.style.height = `${lerp(source.height, target.height)}px`;
+    handoffProduct.style.opacity = '1';
     handoffProduct.hidden = false;
-    root.classList.remove('is-handoff-complete');
-    root.classList.add('is-handoff');
+    product.style.visibility = 'hidden';
+    constructorStage.classList.add('ic-handoff');
   }
 
   function updateScroll() {
@@ -135,12 +132,12 @@
       return;
     }
     const progress = sceneProgress();
-    const index = progress < .3 ? 0 : progress < .6 ? 1 : 2;
+    const index = Math.min(2, Math.floor(progress * 3));
     selectSeries(index);
     root.style.setProperty('--ic-product-y', '0px');
     root.style.setProperty('--ic-product-scale', '1');
     root.style.setProperty('--ic-product-opacity', '1');
-    updateHandoff(progress);
+    updateHandoff();
   }
 
   function queueScroll() {

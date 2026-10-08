@@ -23,7 +23,7 @@
   let activeIndex = -1;
   let activeColor = 0;
   let frame = 0;
-  let coverToken = 0;
+  const coverCache = new Map();
   let handoffActive = false;
   const handoffProduct = document.createElement('img');
   handoffProduct.className = 'ic-handoff-product';
@@ -34,17 +34,26 @@
 
   const clamp = value => Math.max(0, Math.min(1, value));
 
+  function preloadCover(src) {
+    if (!src) return Promise.resolve();
+    if (coverCache.has(src)) return coverCache.get(src).ready;
+    const image = new Image();
+    image.src = src;
+    const ready = typeof image.decode === 'function'
+      ? image.decode().catch(() => {})
+      : new Promise(resolve => {
+          image.onload = resolve;
+          image.onerror = resolve;
+        });
+    coverCache.set(src, {image, ready});
+    return ready;
+  }
+
   function showCover(src, label) {
     if (!src || product.getAttribute('src') === src) return;
-    const token = ++coverToken;
-    const preload = new Image();
-    preload.onload = () => {
-      if (token !== coverToken) return;
-      product.animate([{opacity:.35},{opacity:1}], {duration:260,easing:'ease-out'});
-      product.src = src;
-      product.alt = `Выключатель ${label}`;
-    };
-    preload.src = src;
+    product.getAnimations().forEach(animation => animation.cancel());
+    product.src = src;
+    product.alt = `Выключатель ${label}`;
   }
 
   function renderColors(series, selected = 0) {
@@ -155,7 +164,8 @@
 
   fetch('/constructor-data.json')
     .then(response => response.json())
-    .then(payload => {
+    .then(async payload => {
+      await Promise.all(order.map(key => preloadCover(payload.series[key]?.colors[0]?.cover)));
       data = payload;
       selectSeries(shortScene.matches ? 2 : 0);
       updateScroll();

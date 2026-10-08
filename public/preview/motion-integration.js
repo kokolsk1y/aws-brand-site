@@ -40,7 +40,7 @@
     const preload = new Image();
     preload.onload = () => {
       if (token !== coverToken) return;
-      product.animate([{opacity:.35,transform:'translateY(5px) scale(.985)'},{opacity:1,transform:'none'}], {duration:320,easing:'cubic-bezier(.22,1,.36,1)'});
+      product.animate([{opacity:.35},{opacity:1}], {duration:260,easing:'ease-out'});
       product.src = src;
       product.alt = `Выключатель ${label}`;
     };

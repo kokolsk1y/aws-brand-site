@@ -22,8 +22,14 @@
 .motion-integration .ic-product-scene { position:relative; min-height:0; display:grid; place-items:center; isolation:isolate; }
 .motion-integration .ic-product-halo { position:absolute; z-index:-1; width:83%; height:82%; top:3%; border-radius:49% 49% 2px 2px; background:linear-gradient(128deg,rgba(247,244,239,.82),rgba(237,232,223,.42)),url('/img/backgrounds/travertine.webp') center/cover; box-shadow:24px 30px 65px rgba(17,17,17,.07); }
 .motion-integration .ic-product-halo::after { content:''; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.58) 25.2%,rgba(255,255,255,.1) 49%,transparent 49.2%); }
-.motion-integration .ic-product { position:relative; z-index:1; width:min(93%,750px); height:min(72svh,650px); object-fit:contain; transform:translate3d(0,var(--ic-product-y),0) scale(var(--ic-product-scale)); opacity:var(--ic-product-opacity); transform-origin:50% 70%; filter:drop-shadow(0 24px 24px rgba(17,17,17,.12)); transition:opacity .12s linear; }
+.motion-integration .ic-product { position:relative; z-index:1; width:min(93%,750px); height:min(72svh,650px); object-fit:contain; transform:translate3d(0,calc(-30px + var(--ic-product-y)),0) scale(var(--ic-product-scale)); opacity:var(--ic-product-opacity); transform-origin:50% 70%; filter:drop-shadow(0 24px 24px rgba(17,17,17,.12)); transition:opacity .12s linear; }
 .motion-integration .ic-product-name { position:absolute; z-index:2; right:4%; bottom:2%; font-family:'Caveat',cursive; font-size:clamp(78px,9vw,142px); font-weight:700; line-height:.9; color:var(--gray-800); rotate:-8deg; transform:translateY(calc(var(--ic-product-y) * .48)); opacity:var(--ic-product-opacity); }
+.motion-integration .ic-series.is-handoff .ic-product,
+.motion-integration .ic-series.is-handoff .ic-product-name,
+.motion-integration .ic-series.is-handoff-complete .ic-product,
+.motion-integration .ic-series.is-handoff-complete .ic-product-name { visibility:hidden; }
+.motion-integration .ic-series.is-handoff .constructor__preview-img { visibility:hidden!important; }
+.motion-integration .ic-handoff-product { position:fixed; z-index:140; display:block; margin:0; object-fit:contain; pointer-events:none; filter:drop-shadow(0 24px 24px rgba(17,17,17,.12)); transform:translateZ(0); will-change:left,top,width,height; }
 .motion-integration .ic-scroll-cue { position:absolute; left:var(--ic-pad); bottom:25px; margin:0; color:var(--gray-400); font-size:8px; letter-spacing:1.5px; text-transform:uppercase; }
 .motion-integration .ic-scroll-cue::after { content:''; display:inline-block; width:38px; height:1px; margin:0 0 3px 12px; background:currentColor; }
 
@@ -54,7 +60,7 @@
  .motion-integration .ic-series-head h2 { font-size:36px; letter-spacing:-1.3px; }
  .motion-integration .ic-series-layout { display:flex; flex-direction:column-reverse; gap:12px; }
  .motion-integration .ic-product-scene { height:390px; }
- .motion-integration .ic-product { width:100%; height:350px; transform:none; opacity:1; }
+ .motion-integration .ic-product { width:100%; height:350px; transform:translateY(-30px); opacity:1; }
  .motion-integration .ic-product-halo { width:90%; height:88%; }
  .motion-integration .ic-product-name { right:3%; bottom:0; font-size:72px; transform:none; }
  .motion-integration .ic-series-copy { width:100%; }
@@ -71,5 +77,7 @@
  .motion-integration .ic-constructor-shell .constructor__title { font-size:32px; }
 }
 @media (prefers-reduced-motion:reduce) {
- .motion-integration .ic-product,.motion-integration .ic-product-name { transform:none!important; transition:none!important; }
+ .motion-integration .ic-product { transform:translateY(-30px)!important; transition:none!important; }
+ .motion-integration .ic-product-name { transform:none!important; transition:none!important; }
+ .motion-integration .ic-handoff-product { display:none!important; }
 }

@@ -15,6 +15,7 @@
   const colors = root.querySelector('.ic-series-colors');
   const seriesLink = root.querySelector('.ic-series-actions a');
   const scrollScene = root.querySelector('.ic-series-scroll');
+  const constructorPreview = root.querySelector('#cstPrevA');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const shortScene = matchMedia('(max-width: 1000px)');
   let data = null;
@@ -22,6 +23,13 @@
   let activeColor = 0;
   let frame = 0;
   let coverToken = 0;
+  let handoffComplete = false;
+  const handoffProduct = document.createElement('img');
+  handoffProduct.className = 'ic-handoff-product';
+  handoffProduct.alt = '';
+  handoffProduct.setAttribute('aria-hidden', 'true');
+  handoffProduct.hidden = true;
+  document.body.append(handoffProduct);
 
   const clamp = value => Math.max(0, Math.min(1, value));
 
@@ -78,22 +86,61 @@
     return clamp((scrollY - start) / range);
   }
 
+  function resetHandoff() {
+    handoffComplete = false;
+    root.classList.remove('is-handoff', 'is-handoff-complete');
+    handoffProduct.hidden = true;
+  }
+
+  function updateHandoff(progress) {
+    if (!constructorPreview) return;
+    const handoff = clamp((progress - .82) / .18);
+
+    if (handoff <= 0) {
+      resetHandoff();
+      return;
+    }
+
+    const target = constructorPreview.getBoundingClientRect();
+    if (progress < .96) handoffComplete = false;
+    if (progress >= .995 && target.top <= innerHeight * .68) handoffComplete = true;
+
+    if (handoffComplete) {
+      root.classList.remove('is-handoff');
+      root.classList.add('is-handoff-complete');
+      handoffProduct.hidden = true;
+      return;
+    }
+
+    const source = product.getBoundingClientRect();
+    const eased = handoff * handoff * (3 - 2 * handoff);
+    const lerp = (from, to) => from + (to - from) * eased;
+    handoffProduct.src = product.currentSrc || product.src;
+    handoffProduct.style.left = `${lerp(source.left, target.left)}px`;
+    handoffProduct.style.top = `${lerp(source.top, target.top)}px`;
+    handoffProduct.style.width = `${lerp(source.width, target.width)}px`;
+    handoffProduct.style.height = `${lerp(source.height, target.height)}px`;
+    handoffProduct.hidden = false;
+    root.classList.remove('is-handoff-complete');
+    root.classList.add('is-handoff');
+  }
+
   function updateScroll() {
     frame = 0;
     if (shortScene.matches || reducedMotion.matches) {
       root.style.setProperty('--ic-product-y', '0px');
       root.style.setProperty('--ic-product-scale', '1');
       root.style.setProperty('--ic-product-opacity', '1');
+      resetHandoff();
       return;
     }
     const progress = sceneProgress();
     const index = progress < .3 ? 0 : progress < .6 ? 1 : 2;
     selectSeries(index);
-    const handoff = clamp((progress - .72) / .28);
-    const eased = handoff * handoff * (3 - 2 * handoff);
-    root.style.setProperty('--ic-product-y', `${eased * Math.min(185, innerHeight * .21)}px`);
-    root.style.setProperty('--ic-product-scale', String(1 - eased * .18));
+    root.style.setProperty('--ic-product-y', '0px');
+    root.style.setProperty('--ic-product-scale', '1');
     root.style.setProperty('--ic-product-opacity', '1');
+    updateHandoff(progress);
   }
 
   function queueScroll() {

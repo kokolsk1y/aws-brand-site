@@ -1,0 +1,12 @@
+{
+  "$schema": "../promo-app/node_modules/wrangler/config-schema.json",
+  "name": "aws-motion-preview",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-08",
+  "routes": [
+    {
+      "pattern": "preview.awsproducts.ru",
+      "custom_domain": true
+    }
+  ]
+}

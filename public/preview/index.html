@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWSProducts — демонстрация обновлённой главной</title>
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="description" content="Бренд электрики с вниманием к деталям, дизайну и честной цене. Выключатели, розетки, удлинители, клеммы, патч-корды.">
+    <meta name="theme-color" content="#0a0908">
+    <meta property="og:title" content="AWSProducts — Электрика нового стандарта">
+    <meta property="og:description" content="Бренд электрики. Качество в каждой детали.">
+    <meta property="og:image" content="https://awsproducts.ru/logo/AWS.png">
+    <meta property="og:url" content="https://preview.awsproducts.ru/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://preview.awsproducts.ru/">
+    <link rel="icon" type="image/png" href="/logo/AWS.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="prefetch" as="image" href="/img/series/uno-1kl-b.webp?v=20260507">
+    <link rel="prefetch" as="image" href="/img/series/aura-1kl-w.webp?v=20260507">
+    <link rel="prefetch" as="image" href="/img/series/aura-1kl-b.webp?v=20260507">
+    <link rel="stylesheet" href="/style.css?v=20261005">
+    <link rel="stylesheet" href="/preview/motion-integration.css?v=20261008">
+    <link rel="stylesheet" href="/bg-switch.css?v=20260714">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
+</head>
+<body class="motion-integration">
+
+    <!-- ========== NAVIGATION PROGRESS BAR ========== -->
+    <div class="nav-progress" id="navProgress" aria-hidden="true"><div class="nav-progress__fill"></div></div>
+
+    <!-- ========== HEADER ========== -->
+    <header class="header dark" id="header">
+        <div class="header__inner">
+            <div class="header__left">
+                <button class="header__burger" id="menuToggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="sideMenu">
+                    <span></span><span></span><span></span>
+                </button>
+                <span class="header__slogan desktop-only">Качество в каждой детали</span>
+            </div>
+            <div class="header__center">
+                <a href="#" class="header__logo">
+                    <img src="/logo/AWS.png" alt="AWSProducts" class="header__logo-img">
+                </a>
+            </div>
+            <div class="header__right">
+                <a href="#about" class="header__link desktop-only">О бренде</a>
+                <a href="#buy" class="header__link desktop-only">Где купить</a>
+                <a href="#stories" class="header__link desktop-only">Видео</a>
+                <a href="#contacts" class="header__link desktop-only">Контакты</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== БОКОВОЕ МЕНЮ ========== -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu__overlay" id="menuOverlay"></div>
+        <div class="side-menu__panel">
+            <button class="side-menu__close" id="menuClose">&times;</button>
+            <nav class="side-menu__nav">
+                <div class="side-menu__group">
+                    <button class="side-menu__toggle">Ассортимент <span class="side-menu__arrow">&#9662;</span></button>
+                    <div class="side-menu__dropdown">
+                        <a href="https://awsproducts.ru/series/uno" class="side-menu__sub">Серия УНО</a>
+                        <a href="https://awsproducts.ru/series/aura" class="side-menu__sub">Серия АУРА</a>
+                        <a href="https://awsproducts.ru/series/design" class="side-menu__sub">Серия ДИЗАЙН</a>
+                        <a href="https://awsproducts.ru/category/extensions-home" class="side-menu__sub">Удлинители бытовые</a>
+                        <a href="https://awsproducts.ru/category/extensions-garden" class="side-menu__sub">Удлинители садовые</a>
+                        <a href="https://awsproducts.ru/category/power-connectors" class="side-menu__sub">Силовые разъёмы</a>
+                        <a href="https://awsproducts.ru/category/clamps" class="side-menu__sub">Клеммы</a>
+                        <a href="https://awsproducts.ru/category/patch-cords" class="side-menu__sub">Патч-корды</a>
+                        <a href="https://awsproducts.ru/category/cables" class="side-menu__sub">Кабель</a>
+                    </div>
+                </div>
+                <a href="#about" class="side-menu__item">О бренде</a>
+                <a href="#buy" class="side-menu__item">Где купить</a>
+                <a href="#stories" class="side-menu__item">Видеообзоры</a>
+                <a href="#contacts" class="side-menu__item">Контакты</a>
+            </nav>
+            <div class="side-menu__contacts">
+                <a href="mailto:info@awsproducts.ru">info@awsproducts.ru</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== HERO СЛАЙДЕР (5 слайдов по ТЗ) ========== -->
+    <section class="hero">
+        <div class="swiper hero-swiper">
+            <div class="swiper-wrapper">
+
+                <!-- Слайд 1: Стекло + игра света на выключателе AWS (текст справа) -->
+                <div class="swiper-slide" data-swiper-autoplay="8000">
+                    <div class="hero-slide hero-slide--right" data-theme="dark">
+                        <div class="hero-slide__bg hero-slide__bg--dark">
+                            <video muted playsinline preload="metadata" poster="img/hero/hero-1-glass-poster.jpg" class="hero-slide__video">
+                                <source src="/hero-1-glass.mp4" type="video/mp4">
+                            </video>
+                            <div class="hero-slide__overlay hero-slide__overlay--right"></div>
+                        </div>
+                        <div class="hero-slide__content hero-slide__content--right">
+                            <h1 class="hero-slide__title">Качество<br>в каждой детали</h1>
+                            <p class="hero-slide__subtitle">Контактные группы, механизмы и покрытия,<br>которые рассчитаны на годы работы</p>
+                            <div class="hero-slide__tags">
+                                <a href="#advantages" class="hero-slide__tag" data-adv-slide="0">латунные контакты</a>
+                                <a href="#advantages" class="hero-slide__tag" data-adv-slide="2">устойчивое покрытие</a>
+                                <a href="#advantages" class="hero-slide__tag" data-adv-slide="1">точная механика</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Слайд 2: Интерьер — гостиная (текст справа) -->
+                <div class="swiper-slide" data-swiper-autoplay="11000">
+                    <div class="hero-slide hero-slide--right" data-theme="dark">
+                        <div class="hero-slide__bg">
+                            <video autoplay muted loop playsinline preload="none" poster="img/hero/hero-living-poster.jpg" class="hero-slide__video">
+                                <source src="/hero-living.mp4" type="video/mp4">
+                            </video>
+                            <div class="hero-slide__overlay hero-slide__overlay--right"></div>
+                        </div>
+                        <div class="hero-slide__content hero-slide__content--right">
+                            <h2 class="hero-slide__title">Детали, которые<br>формируют<br>пространство</h2>
+                            <a href="#series" class="hero-slide__btn">Коллекции</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Слайд 3: Интерьер — кухня (текст справа) -->
+                <div class="swiper-slide" data-swiper-autoplay="11000">
+                    <div class="hero-slide hero-slide--right" data-theme="dark">
+                        <div class="hero-slide__bg">
+                            <video autoplay muted loop playsinline preload="none" poster="img/hero/hero-kitchen-poster.jpg" class="hero-slide__video">
+                                <source src="/hero-kitchen.mp4" type="video/mp4">
+                            </video>
+                            <div class="hero-slide__overlay hero-slide__overlay--right"></div>
+                        </div>
+                        <div class="hero-slide__content hero-slide__content--right">
+                            <h2 class="hero-slide__title">Детали, которые<br>формируют<br>пространство</h2>
+                            <a href="#series" class="hero-slide__btn">Коллекции</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Слайд 4: Софт-тач — ролик с прикосновением -->
+                <div class="swiper-slide" data-swiper-autoplay="7000">
+                    <div class="hero-slide hero-slide--right" data-theme="dark">
+                        <div class="hero-slide__bg hero-slide__bg--dark">
+                            <video muted playsinline preload="metadata" poster="img/hero/hero-softtouch-poster.jpg" class="hero-slide__video">
+                                <source src="/hero-softtouch.mp4" type="video/mp4">
+                            </video>
+                            <div class="hero-slide__overlay hero-slide__overlay--right"></div>
+                        </div>
+                        <!-- Плавающий выключатель АУРА -->
+                        <div class="hero-product-float" id="heroAuraFloat">
+                            <div class="hero-product-float__glow"></div>
+                            <img src="/img/series/aura-1kl-w.webp"
+                                 alt="Выключатель АУРА"
+                                 class="hero-product-float__img"
+                                 width="320" height="320"
+                                 loading="eager" decoding="async">
+                            <div class="hero-product-float__shadow"></div>
+                        </div>
+                        <div class="hero-slide__content hero-slide__content--right">
+                            <h2 class="hero-slide__title">Софт&#8209;тач</h2>
+                            <p class="hero-slide__subtitle">Поверхность, к которой хочется прикоснуться&nbsp;— как тёплый бархат под подушечкой пальца</p>
+                            <a href="https://awsproducts.ru/series/aura" class="hero-slide__btn" data-astro-reload>Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="hero-pagination"></div>
+        </div>
+    </section>
+
+
+<!-- ========== ЛОКАЛЬНАЯ ИНТЕГРАЦИЯ: СЕРИИ + КОНСТРУКТОР ========== -->
+<section class="ic-series" id="series" data-ic-series>
+    <div class="ic-series-scroll">
+        <div class="ic-series-stage">
+            <div class="ic-series-head">
+                <p class="label">Розетки и выключатели</p>
+                <h2>Три серии —<br><em>один стандарт качества</em></h2>
+            </div>
+            <div class="ic-series-layout">
+                <div class="ic-series-copy">
+                    <div class="ic-series-nav" aria-label="Выбор серии">
+                        <button type="button" data-ic-series-go="0" aria-pressed="true">УНО</button>
+                        <button type="button" data-ic-series-go="1" aria-pressed="false">АУРА</button>
+                        <button type="button" data-ic-series-go="2" aria-pressed="false">ДИЗАЙН</button>
+                    </div>
+                    <p class="ic-series-desc">Тактильная классика — мягкое покрытие, чёткое нажатие</p>
+                    <div class="ic-series-colors" aria-label="Цвет изделия"></div>
+                    <div class="ic-series-actions"><a class="ic-series-link" href="https://awsproducts.ru/series/uno">Вся серия ↗</a><a class="ic-series-link" href="#constructor">Собрать свой ↓</a></div>
+                </div>
+                <div class="ic-product-scene">
+                    <div class="ic-product-halo" aria-hidden="true"></div>
+                    <img class="ic-product" src="/img/series/uno-1kl-w.webp" alt="Выключатель УНО" width="800" height="800" decoding="async">
+                    <span class="ic-product-name" aria-hidden="true">УНО</span>
+                </div>
+            </div>
+            <p class="ic-scroll-cue" aria-hidden="true">Прокручивайте</p>
+        </div>
+    </div>
+    <div class="ic-constructor-shell">
+        <p class="label ic-constructor-kicker">Ваше пространство. Ваше сочетание.</p>
+        <div class="constructor" id="constructor">
+                <div class="constructor__inner">
+                    <div class="constructor__preview" data-bg-stage data-bg-shadow>
+                        <img src="" alt="Превью выбранной конфигурации" class="constructor__preview-img" id="cstPrevA" width="800" height="800" decoding="async" fetchpriority="high">
+                        <img src="" alt="" aria-hidden="true" class="constructor__preview-img" id="cstPrevB" width="800" height="800" decoding="async">
+                        <div class="constructor__preview-placeholder" id="constructorPlaceholder" style="display:none">Фото скоро</div>
+                        <div data-bg-control></div>
+                    </div>
+                    <div class="constructor__controls">
+                        <p class="label">Конструктор</p>
+                        <h3 class="constructor__title">Соберите свой выключатель</h3>
+                        <p class="constructor__summary" id="cstSummary"></p>
+                        <div class="constructor__option">
+                            <span class="constructor__option-label">Серия</span>
+                            <div class="constructor__chips" id="cstSeries"></div>
+                        </div>
+                        <div class="constructor__option">
+                            <span class="constructor__option-label">Цвет</span>
+                            <div class="constructor__chips constructor__swatches" id="cstColor"></div>
+                        </div>
+                        <div class="constructor__option" id="cstMaterialOption" hidden>
+                            <span class="constructor__option-label">Материал рамки</span>
+                            <div class="constructor__chips" id="cstMaterial"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</section>
+    <!-- ========== КАТЕГОРИИ ТОВАРОВ ========== -->
+    <section class="categories" id="categories">
+        <div class="categories__inner">
+            <div class="categories__header">
+                <p class="label" data-reveal="blur">Ассортимент</p>
+                <h2 class="categories__title" data-reveal="focus">Всё для подключения</h2>
+            </div>
+            <div class="categories__grid">
+                <a href="https://awsproducts.ru/category/extensions-home" class="categories__card" data-cat="udl_home" data-reveal="slide">
+                    <div class="categories__card-img">
+                        <img src="/img/products/AWS-H03-1,5.webp?v=20260507" alt="Удлинители бытовые" loading="lazy">
+                    </div>
+                    <h3 class="categories__card-name">Удлинители бытовые</h3>
+                    <span class="categories__card-sub">1.5 — 5 м · 10 моделей</span>
+                </a>
+                <a href="https://awsproducts.ru/category/extensions-garden" class="categories__card" data-cat="udl_garden" data-reveal="slide">
+                    <div class="categories__card-img">
+                        <img src="/img/products/AWS-HZ2-01-10.webp?v=20260508" alt="Удлинители садовые" loading="lazy">
+                    </div>
+                    <h3 class="categories__card-name">Удлинители садовые</h3>
+                    <span class="categories__card-sub">10 — 25 м · 3 модели</span>
+                </a>
+                <a href="https://awsproducts.ru/category/power-connectors" class="categories__card" data-cat="power" data-reveal="slide">
+                    <div class="categories__card-img">
+                        <img src="/img/products/SLN-025.webp?v=20260508" alt="Силовые разъёмы" loading="lazy">
+                    </div>
+                    <h3 class="categories__card-name">Силовые разъёмы</h3>
+                    <span class="categories__card-sub">IP44 / IP67 · 16-125 А · 42 модели</span>
+                </a>
+                <a href="https://awsproducts.ru/category/clamps" class="categories__card" data-cat="clamps" data-reveal="slide">
+                    <div class="categories__card-img">
+                        <img src="/img/products/SN-222415.png?v=20260508" alt="Клеммы" loading="lazy">
+                    </div>
+                    <h3 class="categories__card-name">Клеммы</h3>
+                    <span class="categories__card-sub">0.2 — 4 мм² · 18 моделей</span>
+                </a>
+                <a href="https://awsproducts.ru/category/patch-cords" class="categories__card" data-cat="patch" data-reveal="slide">
+                    <div class="categories__card-img categories__card-img--smaller">
+                        <img src="/img/products/AWS-13010.webp?v=20260507" alt="Патч-корды UTP" loading="lazy">
+                    </div>
+                    <h3 class="categories__card-name">Патч-корды UTP</h3>
+                    <span class="categories__card-sub">Cat.5e / Cat.6e · 0.5—30 м · 25 моделей · 5 цветов</span>
+                </a>
+                <a href="https://awsproducts.ru/category/cables" class="categories__card" data-cat="cable" data-reveal="slide">
+                    <div class="categories__card-img categories__card-img--smaller">
+                        <img src="/img/products/AWS-12982.webp?v=20260507" alt="Кабель" loading="lazy">
+                    </div>
+                    <h3 class="categories__card-name">Кабель</h3>
+                    <span class="categories__card-sub">FTP / UTP / SAT · 19 моделей</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== О БРЕНДЕ ========== -->
+    <section class="about" id="about">
+        <div class="about__inner">
+            <div class="about__text">
+                <p class="label" data-reveal="blur" style="--reveal-delay: 0s">О бренде</p>
+                <h2 class="about__title" data-reveal="focus" style="--reveal-delay: .1s">AWSProducts</h2>
+                <p class="about__desc" data-reveal="blur" style="--reveal-delay: .25s">Бренд электротехнических изделий с&nbsp;вниманием к&nbsp;деталям, дизайну и&nbsp;честной цене. Мы&nbsp;делаем вещи, которые становятся частью пространства&nbsp;&mdash; работают тихо, выглядят аккуратно и&nbsp;ощущаются комфортно каждый день.</p>
+                <a href="#buy" class="about__link" data-reveal="slide" style="--reveal-delay: .4s">Где купить</a>
+            </div>
+            <div class="about__image" data-reveal="zoom">
+                <div class="about__logo-anim">
+                    <img src="/logo/AWS.png" alt="AWSProducts" class="about__logo-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ПРЕИМУЩЕСТВА (чередование лево-право) ========== -->
+    <section class="advantages" id="advantages">
+        <div class="swiper advantages-swiper">
+            <div class="swiper-wrapper">
+
+                <!-- 01 — Надёжные материалы (интерактивная декомпозиция) -->
+                <div class="swiper-slide">
+                    <div class="advantages__slide">
+                        <div class="advantages__media advantages__media--exploded">
+                            <svg class="advantages__decomp" viewBox="0 0 1200 1300" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                                <image href="/img/advantages/01-exploded.png?v=20260422c" x="50" y="50" width="755" height="1200" preserveAspectRatio="xMidYMid meet"/>
+
+                                <g class="adv-callout adv-callout--1">
+                                    <circle class="adv-callout__dot" cx="567" cy="165" r="5"/>
+                                    <line x1="567" y1="165" x2="820" y2="130"/>
+                                    <text x="832" y="126">Клавиша</text>
+                                    <text x="832" y="154" class="adv-callout__sub">из поликарбоната</text>
+                                </g>
+
+                                <g class="adv-callout adv-callout--2">
+                                    <circle class="adv-callout__dot" cx="517" cy="292" r="5"/>
+                                    <line x1="517" y1="292" x2="820" y2="290"/>
+                                    <text x="832" y="286">Рамка</text>
+                                    <text x="832" y="314" class="adv-callout__sub">из закалённого стекла</text>
+                                </g>
+
+                                <g class="adv-callout adv-callout--3">
+                                    <circle class="adv-callout__dot" cx="509" cy="463" r="5"/>
+                                    <line x1="509" y1="463" x2="820" y2="460"/>
+                                    <text x="832" y="456">Стальной суппорт</text>
+                                    <text x="832" y="484" class="adv-callout__sub">толщиной 1.2 мм</text>
+                                </g>
+
+                                <g class="adv-callout adv-callout--4">
+                                    <circle class="adv-callout__dot" cx="473" cy="633" r="5"/>
+                                    <line x1="473" y1="633" x2="820" y2="640"/>
+                                    <text x="832" y="636">Литой корпус</text>
+                                    <text x="832" y="664" class="adv-callout__sub">из поликарбоната</text>
+                                </g>
+
+                                <g class="adv-callout adv-callout--5">
+                                    <circle class="adv-callout__dot" cx="335" cy="836" r="5"/>
+                                    <line x1="335" y1="836" x2="820" y2="840"/>
+                                    <text x="832" y="836">Латунные контакты</text>
+                                    <text x="832" y="864" class="adv-callout__sub">с добавлением серебра</text>
+                                </g>
+
+                                <g class="adv-callout adv-callout--6">
+                                    <circle class="adv-callout__dot" cx="231" cy="1076" r="5"/>
+                                    <line x1="231" y1="1076" x2="820" y2="1080"/>
+                                    <text x="832" y="1076">Основание</text>
+                                    <text x="832" y="1104" class="adv-callout__sub">из термостойкого поликарбоната</text>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="advantages__gradient advantages__gradient--right"></div>
+                        <div class="advantages__content advantages__content--right">
+                            <span class="advantages__num">01</span>
+                            <h3 class="advantages__heading">Надёжные материалы</h3>
+                            <p class="advantages__text">Шесть материалов в одном выключателе. Каждый выбран под конкретную нагрузку — от термостойкости основания до точности латунных контактов.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 02 — Точное исполнение (клемма + tech-specs) -->
+                <div class="swiper-slide">
+                    <div class="advantages__slide advantages__slide--reverse">
+                        <div class="advantages__media advantages__media--lever">
+                            <div class="advantages__lever-wrap">
+                                <img src="/img/products/SN-222415.png?v=20260422c" alt="Клемма AWS SN-222415" class="advantages__lever-img">
+                                <div class="lever-selector" data-lever-selector>
+                                    <div class="lever-selector__label">Сечение провода</div>
+                                    <div class="lever-selector__active">
+                                        <span class="lever-selector__val" data-lever-val>0.08</span>
+                                        <span class="lever-selector__unit">мм²</span>
+                                    </div>
+                                    <div class="lever-selector__sub" data-lever-sub>сигнальная жила</div>
+                                    <div class="lever-selector__bar"><div class="lever-selector__bar-fill" data-lever-bar></div></div>
+                                    <ul class="lever-gauges">
+                                        <li class="lever-gauge" data-val="0.08" data-sub="сигнальная жила" tabindex="0">0.08</li>
+                                        <li class="lever-gauge" data-val="0.5" data-sub="слаботочка / аудио" tabindex="0">0.5</li>
+                                        <li class="lever-gauge" data-val="1.5" data-sub="освещение" tabindex="0">1.5</li>
+                                        <li class="lever-gauge" data-val="2.5" data-sub="розетки" tabindex="0">2.5</li>
+                                        <li class="lever-gauge" data-val="4" data-sub="вводная / силовая" tabindex="0">4</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="advantages__gradient advantages__gradient--left"></div>
+                        <div class="advantages__content advantages__content--left">
+                            <span class="advantages__num">02</span>
+                            <h3 class="advantages__heading">Одна на все соединения</h3>
+                            <p class="advantages__text">Пять проводов в одной клемме — от осветительной жилы 0.08 мм² до силовой 4 мм². Щёлкает, держит, переносится. Любое сечение одним механизмом.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 03 — Эстетика (фото СЛЕВА) -->
+                <div class="swiper-slide">
+                    <div class="advantages__slide">
+                        <div class="advantages__media advantages__media--color-switch">
+                            <img src="/img/series/uno-1kl-w.webp?v=20260507" alt="УНО белый" class="advantages__color-img advantages__color-img--white" width="800" height="800" loading="lazy" decoding="async">
+                            <img src="/img/series/uno-1kl-b.webp?v=20260507" alt="УНО чёрный" class="advantages__color-img advantages__color-img--black" width="800" height="800" loading="lazy" decoding="async">
+                        </div>
+                        <div class="advantages__gradient advantages__gradient--right"></div>
+                        <div class="advantages__content advantages__content--right">
+                            <span class="advantages__num">03</span>
+                            <h3 class="advantages__heading">Эстетика</h3>
+                            <p class="advantages__text">Универсальные формы и цвета. Два тона — для любого пространства. Минимум формы, максимум смысла.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 04 — Честное соотношение (двойной тикер) -->
+                <div class="swiper-slide">
+                    <div class="advantages__slide advantages__slide--reverse">
+                        <div class="advantages__media advantages__media--prices">
+                            <div class="adv-ticker adv-ticker--up">
+                                <div class="adv-ticker__track">
+                                    <div class="adv-price-card"><img src="/img/products/A-002W.png" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Выключатель</span><span class="adv-price-card__series">Аура · с подсветкой</span></div><span class="adv-price-card__price">от 227₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/A-001W.png" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Выключатель</span><span class="adv-price-card__series">Аура · 1 кл.</span></div><span class="adv-price-card__price">от 173₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/A-022B.png" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Розетка</span><span class="adv-price-card__series">Аура · с з/у</span></div><span class="adv-price-card__price">от 228₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/P50-1W.png" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Рамка</span><span class="adv-price-card__series">1 пост</span></div><span class="adv-price-card__price">от 72₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/A-001B.png" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Выключатель</span><span class="adv-price-card__series">Аура · чёрный</span></div><span class="adv-price-card__price">от 189₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/SN-205.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Клемма</span><span class="adv-price-card__series">5 отв. · 100шт</span></div><span class="adv-price-card__price">от 12₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-H03-3.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Удлинитель</span><span class="adv-price-card__series">Бытовой 3м</span></div><span class="adv-price-card__price">от 286₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-HZ2-01-25.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Удлинитель</span><span class="adv-price-card__series">Садовый 25м</span></div><span class="adv-price-card__price">от 1731₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/SLN-025.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Силовая вилка</span><span class="adv-price-card__series">32А · IP44</span></div><span class="adv-price-card__price">от 668₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/SLN-014.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Силовая вилка</span><span class="adv-price-card__series">16А · IP44</span></div><span class="adv-price-card__price">от 364₽</span></div>
+                                    <!-- Дубль для бесшовного цикла -->
+                                    <div class="adv-price-card"><img src="/img/products/A-002W.png" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Выключатель</span><span class="adv-price-card__series">Аура · с подсветкой</span></div><span class="adv-price-card__price">от 227₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/A-001W.png" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Выключатель</span><span class="adv-price-card__series">Аура · 1 кл.</span></div><span class="adv-price-card__price">от 173₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/A-022B.png" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Розетка</span><span class="adv-price-card__series">Аура · с з/у</span></div><span class="adv-price-card__price">от 228₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/P50-1W.png" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Рамка</span><span class="adv-price-card__series">1 пост</span></div><span class="adv-price-card__price">от 72₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/A-001B.png" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Выключатель</span><span class="adv-price-card__series">Аура · чёрный</span></div><span class="adv-price-card__price">от 189₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/SN-205.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Клемма</span><span class="adv-price-card__series">5 отв. · 100шт</span></div><span class="adv-price-card__price">от 12₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-H03-3.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Удлинитель</span><span class="adv-price-card__series">Бытовой 3м</span></div><span class="adv-price-card__price">от 286₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-HZ2-01-25.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Удлинитель</span><span class="adv-price-card__series">Садовый 25м</span></div><span class="adv-price-card__price">от 1731₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/SLN-025.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Силовая вилка</span><span class="adv-price-card__series">32А · IP44</span></div><span class="adv-price-card__price">от 668₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/SLN-014.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Силовая вилка</span><span class="adv-price-card__series">16А · IP44</span></div><span class="adv-price-card__price">от 364₽</span></div>
+                                </div>
+                            </div>
+                            <div class="adv-ticker adv-ticker--down">
+                                <div class="adv-ticker__track">
+                                    <div class="adv-price-card"><img src="/img/products/SN-222415.png" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Клемма</span><span class="adv-price-card__series">Рычажковая · 5 отв.</span></div><span class="adv-price-card__price">от 24₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/SN-222415D.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Клемма WAGO</span><span class="adv-price-card__series">10 отв. · 50шт</span></div><span class="adv-price-card__price">от 75₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/SLN-1132.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Розетка</span><span class="adv-price-card__series">Стационарная · IP67</span></div><span class="adv-price-card__price">от 812₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-12982.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Кабель</span><span class="adv-price-card__series">FTP4 · Cat.5e</span></div><span class="adv-price-card__price">от 26₽/м</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-12985.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Кабель</span><span class="adv-price-card__series">FTP4 · Cat.6</span></div><span class="adv-price-card__price">от 62₽/м</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-13001.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Кабель ТВ</span><span class="adv-price-card__series">SAT-703 цифровой</span></div><span class="adv-price-card__price">от 43₽/м</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-13010.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Патч-корд</span><span class="adv-price-card__series">Cat.5e · 1м серый</span></div><span class="adv-price-card__price">от 41₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-13027.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Патч-корд</span><span class="adv-price-card__series">Cat.6e · 3м синий</span></div><span class="adv-price-card__price">от 179₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-13007.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Патч-корд</span><span class="adv-price-card__series">Cat.5e · 1м жёлтый</span></div><span class="adv-price-card__price">от 41₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-HZ2-01-10.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Удлинитель</span><span class="adv-price-card__series">Садовый 10м</span></div><span class="adv-price-card__price">от 768₽</span></div>
+                                    <!-- Дубль для бесшовного цикла -->
+                                    <div class="adv-price-card"><img src="/img/products/SN-222415.png" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Клемма</span><span class="adv-price-card__series">Рычажковая · 5 отв.</span></div><span class="adv-price-card__price">от 24₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/SN-222415D.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Клемма WAGO</span><span class="adv-price-card__series">10 отв. · 50шт</span></div><span class="adv-price-card__price">от 75₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/SLN-1132.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Розетка</span><span class="adv-price-card__series">Стационарная · IP67</span></div><span class="adv-price-card__price">от 812₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-12982.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Кабель</span><span class="adv-price-card__series">FTP4 · Cat.5e</span></div><span class="adv-price-card__price">от 26₽/м</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-12985.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Кабель</span><span class="adv-price-card__series">FTP4 · Cat.6</span></div><span class="adv-price-card__price">от 62₽/м</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-13001.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Кабель ТВ</span><span class="adv-price-card__series">SAT-703 цифровой</span></div><span class="adv-price-card__price">от 43₽/м</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-13010.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Патч-корд</span><span class="adv-price-card__series">Cat.5e · 1м серый</span></div><span class="adv-price-card__price">от 41₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-13027.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Патч-корд</span><span class="adv-price-card__series">Cat.6e · 3м синий</span></div><span class="adv-price-card__price">от 179₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-13007.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Патч-корд</span><span class="adv-price-card__series">Cat.5e · 1м жёлтый</span></div><span class="adv-price-card__price">от 41₽</span></div>
+                                    <div class="adv-price-card"><img src="/img/products/AWS-HZ2-01-10.webp" alt="" class="adv-price-card__img" loading="lazy" decoding="async"><div class="adv-price-card__info"><span class="adv-price-card__name">Удлинитель</span><span class="adv-price-card__series">Садовый 10м</span></div><span class="adv-price-card__price">от 768₽</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="advantages__gradient advantages__gradient--left"></div>
+                        <div class="advantages__content advantages__content--left">
+                            <span class="advantages__num">04</span>
+                            <h3 class="advantages__heading">Честное<br>соотношение</h3>
+                            <p class="advantages__text">Профессиональная электрика по справедливой цене. Без наценки за бренд — только за качество материалов и сборки.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="advantages-pagination"></div>
+            <div class="advantages-controls" aria-label="Управление слайдером">
+                <button type="button" class="adv-ctl" id="advPrev" aria-label="Предыдущий слайд">
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5V3z"/></svg>
+                </button>
+                <button type="button" class="adv-ctl" id="advToggle" data-state="play" aria-label="Пауза">
+                    <svg class="adv-ctl__pause" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.2" height="12" rx="0.6"/><rect x="9.8" y="2" width="3.2" height="12" rx="0.6"/></svg>
+                    <svg class="adv-ctl__play" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 2.2 13.2 8 3.2 13.8z"/></svg>
+                </button>
+                <button type="button" class="adv-ctl" id="advNext" aria-label="Следующий слайд">
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5V3z"/></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ОТЗЫВЫ — бесконечная лента ========== -->
+    <section class="reviews" id="reviews">
+        <div class="reviews__inner">
+            <div class="reviews__head">
+                <div>
+                    <p class="label" data-reveal="blur">Отзывы</p>
+                    <h2 class="reviews__title" data-reveal="focus">Что говорят покупатели</h2>
+                </div>
+                <p class="reviews__subtitle" data-reveal="blur">Отзывы наших покупателей</p>
+            </div>
+        </div>
+
+        <!-- Единый ряд — движется влево, включает Ozon и WB -->
+        <div class="reviews__marquee reviews__marquee--left">
+            <div class="reviews__track">
+                <!-- 2 Ozon -->
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-ozon.jpg" alt="Ozon"></span></div><p class="review-card__text">Товар пришёл вовремя, качество хорошее, зажимы удобные, рекомендую</p><div class="review-card__author"><span class="review-card__name">Руслан Ш.</span><span class="review-card__product">Патч-корд UTP Cat.6e 5м</span></div></article>
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-ozon.jpg" alt="Ozon"></span></div><p class="review-card__text">Удлинитель отличный, провода качественные, толстые, описанию соответствует. Упаковано в заводскую упаковку. Могу рекомендовать.</p><div class="review-card__author"><span class="review-card__name">Лариса У.</span><span class="review-card__product">Удлинитель 5 гнезд 1,5м</span></div></article>
+                <!-- 2 WB -->
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-wb.jpg" alt="Wildberries"></span></div><p class="review-card__text">Качество продукции отменное! Во время ремонта убедились в надёжности товара, поэтому планируем полностью перейти на розетки и выключатели этой линейки. Рекомендую к покупке!</p><div class="review-card__author"><span class="review-card__name">Илья</span><span class="review-card__product">Розетка внутренняя УНО</span></div></article>
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-wb.jpg" alt="Wildberries"></span></div><p class="review-card__text">Приобрел этот удлинитель для домашнего использования, и он оправдал все мои ожидания. Качество сборки, материалы и работа в реальных условиях на высоте. Однозначно стоит своих денег.</p><div class="review-card__author"><span class="review-card__name">Юрий</span><span class="review-card__product">Удлинитель с выключателем 3 гн. 1,5м</span></div></article>
+                <!-- 2 Ozon -->
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-ozon.jpg" alt="Ozon"></span></div><p class="review-card__text">Хорошая розетка. Хорошо выглядит, подошла в наш разъём, все замечательно.</p><div class="review-card__author"><span class="review-card__name">Анастасия С.</span><span class="review-card__product">Розетка чёрная</span></div></article>
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-ozon.jpg" alt="Ozon"></span></div><p class="review-card__text">Отличные самозажимные клеммы, очень ускоряют и упрощают монтаж</p><div class="review-card__author"><span class="review-card__name">Михаил С.</span><span class="review-card__product">Клемма WAGO SN-205 (100 шт)</span></div></article>
+                <!-- 2 WB -->
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-wb.jpg" alt="Wildberries"></span></div><p class="review-card__text">Отличный вариант, супер цена советую к приобретению</p><div class="review-card__author"><span class="review-card__name">Вячеслав</span><span class="review-card__product">Розетка внутренняя УНО</span></div></article>
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-wb.jpg" alt="Wildberries"></span></div><p class="review-card__text">Качественный переключатель, ход клавиши уверенный</p><div class="review-card__author"><span class="review-card__name">Иван</span><span class="review-card__product">Выключатель одноклавишный УНО</span></div></article>
+                <!-- Дубль для бесшовного цикла -->
+                <!-- 2 Ozon -->
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-ozon.jpg" alt="Ozon"></span></div><p class="review-card__text">Товар пришёл вовремя, качество хорошее, зажимы удобные, рекомендую</p><div class="review-card__author"><span class="review-card__name">Руслан Ш.</span><span class="review-card__product">Патч-корд UTP Cat.6e 5м</span></div></article>
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-ozon.jpg" alt="Ozon"></span></div><p class="review-card__text">Удлинитель отличный, провода качественные, толстые, описанию соответствует. Упаковано в заводскую упаковку. Могу рекомендовать.</p><div class="review-card__author"><span class="review-card__name">Лариса У.</span><span class="review-card__product">Удлинитель 5 гнезд 1,5м</span></div></article>
+                <!-- 2 WB -->
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-wb.jpg" alt="Wildberries"></span></div><p class="review-card__text">Качество продукции отменное! Во время ремонта убедились в надёжности товара, поэтому планируем полностью перейти на розетки и выключатели этой линейки. Рекомендую к покупке!</p><div class="review-card__author"><span class="review-card__name">Илья</span><span class="review-card__product">Розетка внутренняя УНО</span></div></article>
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-wb.jpg" alt="Wildberries"></span></div><p class="review-card__text">Приобрел этот удлинитель для домашнего использования, и он оправдал все мои ожидания. Качество сборки, материалы и работа в реальных условиях на высоте. Однозначно стоит своих денег.</p><div class="review-card__author"><span class="review-card__name">Юрий</span><span class="review-card__product">Удлинитель с выключателем 3 гн. 1,5м</span></div></article>
+                <!-- 2 Ozon -->
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-ozon.jpg" alt="Ozon"></span></div><p class="review-card__text">Хорошая розетка. Хорошо выглядит, подошла в наш разъём, все замечательно.</p><div class="review-card__author"><span class="review-card__name">Анастасия С.</span><span class="review-card__product">Розетка чёрная</span></div></article>
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-ozon.jpg" alt="Ozon"></span></div><p class="review-card__text">Отличные самозажимные клеммы, очень ускоряют и упрощают монтаж</p><div class="review-card__author"><span class="review-card__name">Михаил С.</span><span class="review-card__product">Клемма WAGO SN-205 (100 шт)</span></div></article>
+                <!-- 2 WB -->
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-wb.jpg" alt="Wildberries"></span></div><p class="review-card__text">Отличный вариант, супер цена советую к приобретению</p><div class="review-card__author"><span class="review-card__name">Вячеслав</span><span class="review-card__product">Розетка внутренняя УНО</span></div></article>
+                <article class="review-card"><div class="review-card__head"><div class="review-card__stars">★★★★★</div><span class="review-card__source"><img src="/logo/retailers/review-wb.jpg" alt="Wildberries"></span></div><p class="review-card__text">Качественный переключатель, ход клавиши уверенный</p><div class="review-card__author"><span class="review-card__name">Иван</span><span class="review-card__product">Выключатель одноклавишный УНО</span></div></article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ГДЕ КУПИТЬ ========== -->
+    <section class="where-buy" id="buy">
+        <div class="where-buy__inner">
+            <p class="label" data-reveal="blur">Наличие</p>
+            <h2 class="where-buy__title" data-reveal="focus">Доступно там,<br>где вам удобно</h2>
+            <div class="where-buy__grid">
+                <a href="https://www.ozon.ru/seller/ip-popov-a-yu/" target="_blank" rel="noopener" class="where-buy__card" data-reveal="slide">
+                    <div class="where-buy__watermark where-buy__watermark--ozon" aria-hidden="true">
+                        <img src="/logo/retailers/ozon.png" alt="" />
+                    </div>
+                    <span class="where-buy__card-label">Маркетплейс</span>
+                    <span class="where-buy__card-name">Ozon</span>
+                    <span class="where-buy__card-desc">Быстрая доставка по всей России · ПВЗ в каждом городе</span>
+                    <span class="where-buy__card-arrow">&rarr;</span>
+                </a>
+                <a href="https://www.wildberries.ru/brands/312201750-awsproducts" target="_blank" rel="noopener" class="where-buy__card" data-reveal="slide">
+                    <div class="where-buy__watermark where-buy__watermark--wb" aria-hidden="true">
+                        <img src="/logo/retailers/wildberries.png" alt="" />
+                    </div>
+                    <span class="where-buy__card-label">Маркетплейс</span>
+                    <span class="where-buy__card-name">Wildberries</span>
+                    <span class="where-buy__card-desc">Пункты выдачи по всей стране · примерка на ПВЗ</span>
+                    <span class="where-buy__card-arrow">&rarr;</span>
+                </a>
+                <a href="https://stv39.ru/help/nashi-partnery/awsproducts/" target="_blank" rel="noopener" class="where-buy__card" data-reveal="slide">
+                    <div class="where-buy__watermark where-buy__watermark--ec" aria-hidden="true">
+                        <img src="/logo/retailers/electrocentre.png" alt="" />
+                    </div>
+                    <span class="where-buy__card-label">Партнёр · опт</span>
+                    <span class="where-buy__card-name">Электроцентр</span>
+                    <span class="where-buy__card-desc">Профессиональная консультация · опт для монтажников</span>
+                    <span class="where-buy__card-arrow">&rarr;</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ВИДЕОИСТОРИИ ========== -->
+    <section class="home-stories" id="stories" data-home-stories>
+        <div class="home-stories__threshold">
+            <p class="label">Видеоистории AWS Products</p>
+            <div class="home-stories__threshold-line">
+                <span>Качество в движении</span>
+                <span aria-hidden="true">↓</span>
+            </div>
+        </div>
+
+        <div class="home-stories__grid">
+            <div class="home-story-stage">
+                <div class="home-story-stage__ambient" data-home-story-ambient aria-hidden="true"></div>
+                <div class="home-story-stage__frame" data-home-story-frame>
+                    <video
+                        muted
+                        playsinline
+                        preload="none"
+                        poster="/video-reviews/web/review-01-poster.jpg"
+                        data-home-story-player
+                    ></video>
+                    <div class="home-story-stage__veil" aria-hidden="true"></div>
+                    <div class="home-story-stage__meta">
+                        <span data-home-story-eyebrow>Обзор</span>
+                        <strong data-home-story-title>Серия ДИЗАЙН</strong>
+                    </div>
+                    <div class="home-story-stage__progress"><i data-home-story-progress></i></div>
+                </div>
+
+                <div class="home-story-stage__controls" aria-label="Управление видео">
+                    <button class="home-story-stage__sound is-muted" type="button" data-home-story-sound aria-label="Включить звук" title="Включить звук">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5 9v6h4l5 4V5L9 9H5Z"></path>
+                            <path d="M17 9.5c.7.7 1 1.5 1 2.5s-.3 1.8-1 2.5"></path>
+                        </svg>
+                        <span class="home-story-sr-only" data-home-story-sound-label>Включить звук</span>
+                    </button>
+                    <button class="home-story-stage__play" type="button" data-home-story-play aria-label="Воспроизвести" title="Воспроизвести">
+                        <span data-home-story-play-icon>▶</span>
+                    </button>
+                </div>
+
+                <div class="home-story-stage__index" aria-hidden="true">
+                    <span data-home-story-index>01</span>
+                    <i></i>
+                    <span>05</span>
+                </div>
+
+                <div class="home-story-stage__hint" aria-hidden="true">
+                    <span>Прокручивайте вниз</span>
+                    <i><b></b></i>
+                </div>
+            </div>
+
+            <div class="home-story-chapters">
+                <article class="home-story-chapter is-active" data-home-story-chapter="review-01">
+                    <span class="home-story-chapter__number">01</span>
+                    <p>Обзор</p>
+                    <h2>Серия ДИЗАЙН</h2>
+                    <div class="home-story-chapter__description">Минимализм, матовая поверхность и тонкие рамки в деталях.</div>
+                    <button type="button" data-home-story-restart="review-01">Смотреть с начала <span>▶</span></button>
+                </article>
+                <article class="home-story-chapter" data-home-story-chapter="review-02">
+                    <span class="home-story-chapter__number">02</span>
+                    <p>Обзор</p>
+                    <h2>Серия АУРА</h2>
+                    <div class="home-story-chapter__description">Стеклянные рамки, чистая геометрия и глубокие оттенки — рассматриваем серию вблизи.</div>
+                    <button type="button" data-home-story-restart="review-02">Смотреть с начала <span>▶</span></button>
+                </article>
+                <article class="home-story-chapter" data-home-story-chapter="review-03">
+                    <span class="home-story-chapter__number">03</span>
+                    <p>Обзор</p>
+                    <h2>Серия УНО</h2>
+                    <div class="home-story-chapter__description">Мягкое покрытие, лаконичная форма и чёткая механика — знакомимся с УНО поближе.</div>
+                    <button type="button" data-home-story-restart="review-03">Смотреть с начала <span>▶</span></button>
+                </article>
+                <article class="home-story-chapter" data-home-story-chapter="review-04">
+                    <span class="home-story-chapter__number">04</span>
+                    <p>Советы перед ремонтом</p>
+                    <h2>Электрика в интерьере</h2>
+                    <div class="home-story-chapter__description">Практический рассказ о выборе электрики ещё до чистовой отделки.</div>
+                    <button type="button" data-home-story-restart="review-04">Смотреть с начала <span>▶</span></button>
+                </article>
+                <article class="home-story-chapter" data-home-story-chapter="review-05">
+                    <span class="home-story-chapter__number">05</span>
+                    <p>Серия АУРА</p>
+                    <h2>Цвета серии АУРА</h2>
+                    <div class="home-story-chapter__description">Смотрим, как разные оттенки серии АУРА раскрываются в интерьере.</div>
+                    <button type="button" data-home-story-restart="review-05">Смотреть с начала <span>▶</span></button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== FAQ (компактный, 2 колонки) ========== -->
+    <section class="faq faq--compact" id="faq">
+        <div class="faq__inner">
+            <div class="faq__head">
+                <div>
+                    <p class="label" data-reveal="blur">Частые вопросы</p>
+                    <h2 class="faq__title" data-reveal="focus">Что важно знать</h2>
+                </div>
+            </div>
+            <div class="faq__list faq__list--cols">
+                <details class="faq-item" data-reveal="slide">
+                    <summary class="faq-item__q">Какая у вас гарантия на продукцию?</summary>
+                    <div class="faq-item__a">На всю продукцию — 1 год. Гарантия распространяется на заводские дефекты при соблюдении условий эксплуатации.</div>
+                </details>
+                <details class="faq-item" data-reveal="slide">
+                    <summary class="faq-item__q">Можно ли устанавливать AWS в ванной?</summary>
+                    <div class="faq-item__a">Серии УНО и АУРА предназначены для сухих жилых помещений. Для ванных комнат требуются устройства с защитой IP44 и выше — уточняйте наличие по запросу на info@awsproducts.ru.</div>
+                </details>
+                <details class="faq-item" data-reveal="slide">
+                    <summary class="faq-item__q">Совместимы ли рамки AWS с другими брендами?</summary>
+                    <div class="faq-item__a">Рамки AWS рассчитаны на механизмы серий УНО и АУРА. Посадочный размер отличается от Werkel, Schneider и Legrand — перед покупкой уточните геометрию подрозетника.</div>
+                </details>
+                <details class="faq-item" data-reveal="slide">
+                    <summary class="faq-item__q">Есть ли сертификаты соответствия?</summary>
+                    <div class="faq-item__a">Вся продукция сертифицирована EAC и соответствует ГОСТ. Копии документов — по запросу на info@awsproducts.ru.</div>
+                </details>
+                <details class="faq-item" data-reveal="slide">
+                    <summary class="faq-item__q">Как вернуть товар, если не подошёл?</summary>
+                    <div class="faq-item__a">На Ozon и Wildberries — через сам маркетплейс в течение 14 дней. Оптом через «Электроцентр» — по договорённости.</div>
+                </details>
+                <details class="faq-item" data-reveal="slide">
+                    <summary class="faq-item__q">Продаётесь ли вы оптом?</summary>
+                    <div class="faq-item__a">Да, для электромонтажников и B2B — через партнёра «Электроцентр» (stv39.ru). Условия — на info@awsproducts.ru.</div>
+                </details>
+                <details class="faq-item" data-reveal="slide">
+                    <summary class="faq-item__q">Какой кабель нужен для скрытой проводки?</summary>
+                    <div class="faq-item__a">Для выключателей и освещения — ВВГ-нг 3×1,5 мм², для розеток — ВВГ-нг 3×2,5 мм². Это стандарт для скрытой проводки. Кабель разных сечений есть в каталоге.</div>
+                </details>
+                <details class="faq-item" data-reveal="slide">
+                    <summary class="faq-item__q">Чем серия УНО отличается от АУРА?</summary>
+                    <div class="faq-item__a">УНО — матовое софт-тач покрытие с бевелем по краю, лаконичная форма. АУРА — более тонкий профиль и глянцевые вставки. Обе серии представлены в широкой цветовой палитре — под любой интерьер.</div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER v2 ========== -->
+    <footer class="footer-v2" id="contacts">
+        <div class="footer-v2__inner">
+
+            <div class="footer-v2__cols">
+                <div class="footer-v2__col">
+                    <span class="footer-v2__col-title">Коллекции</span>
+                    <a href="https://awsproducts.ru/series/uno">УНО</a>
+                    <a href="https://awsproducts.ru/series/aura">АУРА</a>
+                    <a href="https://awsproducts.ru/series/design">ДИЗАЙН</a>
+                </div>
+                <div class="footer-v2__col">
+                    <span class="footer-v2__col-title">Ассортимент</span>
+                    <a href="https://awsproducts.ru/category/extensions-home">Удлинители бытовые</a>
+                    <a href="https://awsproducts.ru/category/extensions-garden">Удлинители садовые</a>
+                    <a href="https://awsproducts.ru/category/power-connectors">Силовые разъёмы</a>
+                    <a href="https://awsproducts.ru/category/clamps">Клеммы</a>
+                    <a href="https://awsproducts.ru/category/patch-cords">Патч-корды</a>
+                    <a href="https://awsproducts.ru/category/cables">Кабель</a>
+                </div>
+                <div class="footer-v2__col">
+                    <span class="footer-v2__col-title">Компания</span>
+                    <a href="#about">О бренде</a>
+                    <a href="#advantages">Преимущества</a>
+                    <a href="#buy">Где купить</a>
+                    <a href="#stories">Видеообзоры</a>
+                </div>
+                <div class="footer-v2__col">
+                    <span class="footer-v2__col-title">Связь</span>
+                    <a href="mailto:info@awsproducts.ru">info@awsproducts.ru</a>
+                </div>
+            </div>
+
+            <div class="footer-v2__bottom">
+                <div class="footer-v2__brand">
+                    <img src="/logo/AWS.png" alt="" class="footer-v2__logo">
+                </div>
+                <div class="footer-v2__legal">
+                    <span>&copy; 2026 AWSProducts</span>
+                    <span class="footer-v2__sep">·</span>
+                    <span class="footer-v2__legal-soon" title="Появится скоро">Политика конфиденциальности</span>
+                    <span class="footer-v2__sep">·</span>
+                    <span class="footer-v2__legal-soon" title="Появится скоро">Оферта</span>
+                </div>
+                <div class="footer-v2__loc">Россия</div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Navigation progress bar: показывает загрузку при переходе между страницами -->
+    <script>
+    (function() {
+        var bar = document.getElementById('navProgress');
+        if (!bar) return;
+        var fill = bar.querySelector('.nav-progress__fill');
+        function startProgress() {
+            bar.classList.add('is-active', 'is-animating');
+            bar.classList.remove('is-done');
+        }
+        // Вешаем на все внутренние ссылки (не открывающиеся в новой вкладке)
+        document.addEventListener('click', function(e) {
+            var link = e.target.closest('a[href]');
+            if (!link) return;
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            if (link.target === '_blank') return;
+            var href = link.getAttribute('href');
+            if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+            startProgress();
+        });
+    })();
+    </script>
+
+    <!-- Scripts -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script defer src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
+    <script defer src="/script.js"></script>
+    <script defer src="/preview/motion-integration.js?v=20261008"></script>
+    <script defer src="/bg-switch.js?v=20260714"></script>
+</body>
+</html>

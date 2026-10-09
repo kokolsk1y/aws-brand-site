@@ -47,6 +47,15 @@ const ORANGE_LEVER_TERMINALS = new Set([
   'SN-222415D',
 ]);
 const ORANGE_LEVER_IMAGE_VERSION = '20261009';
+const CLASSIC_TERMINALS = new Set([
+  'SN-202',
+  'SN-203',
+  'SN-204',
+  'SN-205',
+  'SN-206',
+  'SN-208',
+]);
+const CLASSIC_TERMINAL_IMAGE_VERSION = '20261009';
 function pickByFormat(matches) {
   if (!matches.length) return null;
   return matches.sort((a, b) => {
@@ -97,8 +106,11 @@ export function getProductPhotos(article) {
     if (pos > 0) seq.push(seq.splice(pos, 1)[0]);
   }
 
-  const version = ORANGE_LEVER_TERMINALS.has(normalizedArticle)
-    ? `?v=${ORANGE_LEVER_IMAGE_VERSION}`
-    : '';
+  let version = '';
+  if (ORANGE_LEVER_TERMINALS.has(normalizedArticle)) {
+    version = `?v=${ORANGE_LEVER_IMAGE_VERSION}`;
+  } else if (CLASSIC_TERMINALS.has(normalizedArticle)) {
+    version = `?v=${CLASSIC_TERMINAL_IMAGE_VERSION}`;
+  }
   return seq.map(([, f]) => f).filter(Boolean).map(f => `/img/products/${f}${version}`);
 }

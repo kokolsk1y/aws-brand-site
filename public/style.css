@@ -2390,8 +2390,8 @@ a { text-decoration: none; color: inherit; }
 
 .where-buy__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
 }
 
 .where-buy__card {
@@ -4076,9 +4076,9 @@ a { text-decoration: none; color: inherit; }
     height: 100%;
     object-fit: contain;
     object-position: bottom right;
-    /* Все 3 лого — прозрачные PNG, blend-mode не нужен */
+    /* Оба лого — прозрачные PNG, blend-mode не нужен */
 }
-/* ЭЦ PNG теперь 1600×900 с прозрачным padding — как Ozon/WB.
+/* ЭЦ PNG теперь 1600×900 с прозрачным padding — как Ozon.
    Override не нужен, используется общее правило. */
 
 /* На hover — лого увеличивается и становится ярче */

@@ -27,6 +27,26 @@ const STANDARD_WITHOUT_SEPARATE_ANGLE = new Set([
   'SD-P1016W',
   'SD-V1001WG',
 ]);
+const ORANGE_LEVER_TERMINALS = new Set([
+  'SN-221412',
+  'SN-221412N',
+  'SN-221413',
+  'SN-221413N',
+  'SN-221414',
+  'SN-221414N',
+  'SN-221415',
+  'SN-221415N',
+  'SN-222411D',
+  'SN-222412',
+  'SN-222412D',
+  'SN-222413',
+  'SN-222413D',
+  'SN-222414',
+  'SN-222414D',
+  'SN-222415',
+  'SN-222415D',
+]);
+const ORANGE_LEVER_IMAGE_VERSION = '20261009';
 function pickByFormat(matches) {
   if (!matches.length) return null;
   return matches.sort((a, b) => {
@@ -65,6 +85,7 @@ export function getProductPhotos(article) {
   if (main) seq.push([1, main]);
   for (const idx of [...byIdx.keys()].sort((a, b) => a - b)) {
     if (idx === HERO) continue;
+    if (ORANGE_LEVER_TERMINALS.has(normalizedArticle) && idx > 2) continue;
     seq.push([idx, pickByFormat(byIdx.get(idx))]);
   }
 
@@ -76,5 +97,8 @@ export function getProductPhotos(article) {
     if (pos > 0) seq.push(seq.splice(pos, 1)[0]);
   }
 
-  return seq.map(([, f]) => f).filter(Boolean).map(f => `/img/products/${f}`);
+  const version = ORANGE_LEVER_TERMINALS.has(normalizedArticle)
+    ? `?v=${ORANGE_LEVER_IMAGE_VERSION}`
+    : '';
+  return seq.map(([, f]) => f).filter(Boolean).map(f => `/img/products/${f}${version}`);
 }

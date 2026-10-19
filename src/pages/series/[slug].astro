@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getProductPhotos } from '../../utils/photos.js';
 import { visibleItems, visibleColors, colorOrderOf } from '../../utils/catalog.js';
 import seriesData from '../../data/series.json';
+import { canonicalUrl, breadcrumbs, itemList, publicImages, seriesLatin } from '../../utils/seo.js';
 
 export async function getStaticPaths() {
   return Object.keys(seriesData)
@@ -34,6 +35,14 @@ const palette = visibleColors(series);
 // defaultColor берём ТОЛЬКО из палитры: иначе hero мог бы показать цвет
 // (напр. махагон без фото), которого нет в переключателе → рассинхрон.
 const defaultColor = palette[0] || null;
+const seriesUrl = canonicalUrl(`/series/${slug}`, import.meta.env.BASE_URL);
+const seoTitle = `Розетки, выключатели и рамки AWS ${series.name} (${seriesLatin[slug]})`;
+const seoDescription = `Розетки и выключатели AWS ${series.name} (${seriesLatin[slug]}) для современного интерьера. Сравните внешний вид, цвета и характеристики моделей. ${series.description} Артикулы и фотографии изделий.`;
+const structuredData = [
+  breadcrumbs(seriesUrl, [['Главная', '/'], ['Коллекции', '/#series'], [series.name, seriesUrl]], import.meta.env.BASE_URL),
+  itemList(seriesUrl, groupsDef.flatMap(group => group.items), import.meta.env.BASE_URL),
+];
+const seoImage = defaultColor?.img && publicImages([defaultColor.img])[0];
 
 // Цвет кружка по ключу цвета (из series.json colors[].swatch, подобрано по фото)
 const swatchByColor = Object.fromEntries((series.colors || []).map(c => [c.key, c.swatch]).filter(([, v]) => v));
@@ -60,7 +69,7 @@ function getCardPhotoStyle(article) {
   return `--photo-pad: ${pad}`;
 }
 ---
-<BaseLayout title={`${series.name} — серия AWSProducts`} description={series.description}>
+<BaseLayout title={seoTitle} description={seoDescription} ogImage={seoImage || undefined} structuredData={structuredData} pageType="CollectionPage">
 
   <!-- HERO СЕРИИ -->
   <section class="ser-hero">

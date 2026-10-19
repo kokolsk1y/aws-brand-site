@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import categoriesMeta from '../../data/categories.json';
 import productsAll from '../../../public/products.json';
 import { getProductPhotos } from '../../utils/photos.js';
+import { canonicalUrl, breadcrumbs, itemList, categoryTitles } from '../../utils/seo.js';
 
 export async function getStaticPaths() {
   return Object.keys(categoriesMeta).map(slug => ({ params: { slug } }));
@@ -42,6 +43,14 @@ function buildGroups(items, groupDefs) {
   return groups;
 }
 const productGroups = buildGroups(products, category.groups);
+const seoBase = import.meta.env.BASE_URL;
+const categoryUrl = canonicalUrl(`/category/${slug}`, seoBase);
+const seoTitle = categoryTitles[slug] || `${category.title} AWSProducts — каталог`;
+const seoDescription = `Каталог AWS Products: ${category.description} Артикулы, характеристики и фотографии товаров.`;
+const structuredData = [
+  breadcrumbs(categoryUrl, [['Главная', '/'], ['Ассортимент', '/#categories'], [category.title, categoryUrl]], seoBase),
+  itemList(categoryUrl, (productGroups ? productGroups.flatMap(group => group.items) : products).map(item => ({ ...item, name: shortName(item.name) })), seoBase),
+];
 
 // Cross-sell: все остальные категории (до 5 на странице)
 const otherCats = Object.values(categoriesMeta)
@@ -125,7 +134,7 @@ function shortName(name) {
     .trim();
 }
 ---
-<BaseLayout title={`${category.title} — AWSProducts`} description={category.description}>
+<BaseLayout title={seoTitle} description={seoDescription} ogImage={category.cover} structuredData={structuredData} pageType="CollectionPage">
 
   <!-- HERO КАТЕГОРИИ -->
   <section class="cat-hero">

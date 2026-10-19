@@ -1,12 +1,27 @@
 ---
-const { title = 'AWSProducts — Электрика нового стандарта', description = 'Бренд электрики с вниманием к деталям', ogImage } = Astro.props;
+const { title = 'AWSProducts — Электрика нового стандарта', description = 'Бренд электрики с вниманием к деталям', ogImage, structuredData = [], pageType = 'WebPage', robots } = Astro.props;
 import '../styles/main.css';
 import { ClientRouter } from 'astro:transitions';
+import { SITE, absoluteUrl, canonicalUrl as pageUrl, serializeSchema } from '../utils/seo.js';
 
-const SITE = 'https://awsproducts.ru';
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
-const canonicalUrl = SITE + BASE + Astro.url.pathname;
-const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BASE + ogImage) : SITE + BASE + '/logo/AWS.png';
+const canonicalUrl = pageUrl(Astro.url.pathname, import.meta.env.BASE_URL);
+const finalOgImage = absoluteUrl(ogImage || `${BASE}/logo/AWS.png`, import.meta.env.BASE_URL);
+const breadcrumb = structuredData.find(item => item['@type'] === 'BreadcrumbList');
+const mainEntity = structuredData.find(item => ['Product', 'ItemList'].includes(item['@type']));
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': pageType, '@id': `${canonicalUrl}#webpage`, url: canonicalUrl,
+      name: title, description, inLanguage: 'ru-RU',
+      isPartOf: { '@id': `${pageUrl('/', import.meta.env.BASE_URL)}#website` },
+      ...(breadcrumb ? { breadcrumb: { '@id': breadcrumb['@id'] } } : {}),
+      ...(mainEntity ? { mainEntity: { '@id': mainEntity['@id'] } } : {}),
+    },
+    ...structuredData,
+  ],
+};
 ---
 <!DOCTYPE html>
 <html lang="ru">
@@ -15,6 +30,7 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {robots && <meta name="robots" content={robots} />}
     <link rel="canonical" href={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -23,6 +39,7 @@ const finalOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : SITE + BA
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ru_RU" />
     <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline type="application/ld+json" set:html={serializeSchema(schema)} />
     <meta name="theme-color" content="#0a0908" />
     <link rel="icon" type="image/png" href={`${BASE}/logo/AWS.png`} />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />

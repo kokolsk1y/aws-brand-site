@@ -7,6 +7,9 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "verify:seo": "node scripts/verify-seo.mjs",
+    "build:seo-preview": "node scripts/build-seo-preview.mjs",
+    "preview:seo": "astro preview --outDir tmp/search-metadata-verified/site --host 127.0.0.1 --port 4334",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -15,6 +18,7 @@
     "astro": "^5.0.0"
   },
   "devDependencies": {
+    "parse5": "7.3.0",
     "xlsx": "^0.18.5"
   }
 }

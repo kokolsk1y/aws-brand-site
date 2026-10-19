@@ -1,0 +1,13 @@
+{
+  "reason": "Confirmed before SEO changes: hidden A-039W/A-040W variants have no supplied image. Preserve catalog and photographs; reject every new missing resource outside these exact page/ref pairs.",
+  "images": {
+    "product/A-039B.html": ["/img/products/A-039W.webp", "/img/products/A-040W.webp"],
+    "product/A-039G.html": ["/img/products/A-039W.webp", "/img/products/A-040W.webp"],
+    "product/A-039GR.html": ["/img/products/A-039W.webp", "/img/products/A-040W.webp"],
+    "product/A-039W.html": ["/img/products/A-039W.webp", "/img/products/A-040W.webp"],
+    "product/A-040B.html": ["/img/products/A-039W.webp"],
+    "product/A-040G.html": ["/img/products/A-039W.webp"],
+    "product/A-040GR.html": ["/img/products/A-039W.webp"],
+    "product/A-040W.html": ["/img/products/A-039W.webp", "/img/products/A-040W.webp"]
+  }
+}

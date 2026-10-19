@@ -5,6 +5,7 @@ import seriesData from '../../data/series.json';
 import productsAll from '../../../public/products.json';
 import productContent from '../../data/product_content.json';
 import { getProductPhotos } from '../../utils/photos.js';
+import { canonicalUrl, breadcrumbs, productSchema, publicImages, productSearchMetadata } from '../../utils/seo.js';
 
 // Маппинг: ключ в products.json → slug категории на сайте
 const keyToCategory = {
@@ -362,6 +363,16 @@ function buildDescription() {
 // Описание из STV-переписанного (если готово), иначе шаблонный фолбэк по типу.
 const description = (pc && pc.description) ? pc.description : buildDescription();
 
+// Метаданные отделены от title/description, которые также формируют видимую карточку.
+const { title: seoTitle, description: seoDescription } = productSearchMetadata(product, title, specs);
+const seoBase = import.meta.env.BASE_URL;
+const productUrl = canonicalUrl(`/product/${encodeURIComponent(product.article)}`, seoBase);
+const productBreadcrumbs = product.crumbType === 'category'
+  ? [['Главная', '/'], ['Ассортимент', '/#categories'], [product.categoryTitle, canonicalUrl(`/category/${product.category}`, seoBase)], [product.article, productUrl]]
+  : [['Главная', '/'], ['Коллекции', '/#series'], [`Серия ${product.seriesName}`, canonicalUrl(`/series/${product.series}`, seoBase)], [product.article, productUrl]];
+const structuredData = [productSchema(product, title, description, specs, seoBase), breadcrumbs(productUrl, productBreadcrumbs, seoBase)];
+const seoImage = publicImages(product.photos)[0];
+
 // Маркетплейсы — стиль как у блока "Где купить" на главной
 const marketplaceLinks = [
   {
@@ -381,7 +392,7 @@ const marketplaceLinks = [
 ];
 
 ---
-<BaseLayout title={`${title || product.article} — AWSProducts`} description={description.slice(0, 160)}>
+<BaseLayout title={seoTitle} description={seoDescription} ogImage={seoImage} structuredData={structuredData}>
 
   <!-- Переключатель фона превью (единый компонент, см. public/bg-switch.*) -->
   <link rel="stylesheet" href="/bg-switch.css?v=20260714" />
@@ -415,7 +426,7 @@ const marketplaceLinks = [
         <div class="prod-hero__media-wrap">
           <div class="prod-hero__media" data-reveal="zoom" data-bg-stage data-bg-shadow>
             {product.photos.map((src, i) => (
-              <img src={src} alt={title} class={`prod-hero__photo${i === 0 ? ' is-active' : ''}`} data-photo-index={i} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" onerror="this.dataset.broken='1';this.style.display='none';this.parentElement.classList.add('has-broken');" />
+              <img src={src} alt={`${title}, ${product.article}${i ? `, фото ${i + 1}` : ''}`} class={`prod-hero__photo${i === 0 ? ' is-active' : ''}`} data-photo-index={i} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} decoding="async" onerror="this.dataset.broken='1';this.style.display='none';this.parentElement.classList.add('has-broken');" />
             ))}
             <div class="prod-hero__placeholder">Фото готовится</div>
             <div data-bg-control data-bg-set={isSeriesProduct ? undefined : 'light,graphite'}></div>
